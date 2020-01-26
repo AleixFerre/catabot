@@ -8,7 +8,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-prebuild": "npm install -d",
+    "heroku-prebuild": "npm install --save discord.js; npm install --save ffmpeg; npm install --save opusscript; npm install --save ytdl-core",
     "start": "node app.js"
   },
   "author": "CatalaHD",
