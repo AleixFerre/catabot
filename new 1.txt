@@ -1,6 +1,0 @@
-
-npm install --save discord.js
-npm install --save ffmpeg
-npm install --save ytdl-core
-npm install --save opusscript
-
