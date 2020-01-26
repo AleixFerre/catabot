@@ -1,1 +1,1 @@
-worker: forever node .
+worker: node .
