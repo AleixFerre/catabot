@@ -5,8 +5,11 @@ This is our new BETA Discord Bot
 
 Dowload it and download dependencies with
 ``` 
-npm install -d
+npm install --save discord.js ffmpeg-binaries opusscript ytdl-core
 ```
 
+You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
+
+
 ## Current JS Version
-ES5 (need to update to ES6)
+ES6

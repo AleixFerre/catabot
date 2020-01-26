@@ -1,8 +1,8 @@
 {
   "name": "app",
-  "version": "1.0.0",
+  "version": "1.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,9 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^11.4.2",
+    "discord.js": "^11.5.1",
     "ffmpeg-binaries": "^4.0.0",
-    "opusscript": "0.0.6",
-    "ytdl-core": "^0.28.3"
+    "opusscript": "0.0.7",
+    "ytdl-core": "^1.0.7"
   }
 }

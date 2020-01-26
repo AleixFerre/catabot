@@ -1,13 +1,6 @@
 COMANDOS
 
--> ping           :: Comprueba la latencia del bot y de tus mensajes.
--> avatar <@user> :: Muestra el avatar de un usuario.
--> user <@user>   :: Muestra información sobre un usuario mencioando.
--> server         :: Muestra información de un servidor determinado.
--> españita       :: Muestra la bandera de NUESTRO PAIS.
--> hola           :: Retorna un saludo como mensaje.
--> uwu            :: Retorna uwu.
--> say            :: Haz que el bot diga lo que quieras.
--> manueh         :: Muestra información de @ElManueh.
--> join           :: Entra en el canal de voz en el que estés.
--> leave          :: Se va del canal de voz.
+-> ping           :: Comprova la latencia del bot i dels teus missatges.
+-> prefix         :: Et mostra el prefix i et permet cambiar-lo amb un segon argument
+-> play           :: Posa la musica que vulguis amb un link
+-> leave          :: Se'n va del canal de veu
