@@ -1,9 +1,15 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const config = require("./config.json");
 const ytdl = require("ytdl-core");
 
+// HEROKU APP
+// const config = require("./config.json");
+const config = process.env;
+
+// --------------------------------------
+
 var servers = {};
+
 var prefix = config.prefix;
 
 client.on("ready", () => {
@@ -196,7 +202,9 @@ client.on('message', (message) => {
     }
 
 });
-client.login(config.token);
 
+// HEROKU APP
+//client.login(config.token);
+client.login(process.env.token);
 
 
