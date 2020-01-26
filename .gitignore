@@ -2,3 +2,4 @@ node_modules/
 .vscode/
 DISCORD.pem
 config.json
+_package-lock.json
