@@ -1,19 +1,17 @@
 {
   "name": "app",
-  "version": "1.0",
-  "description": "",
+  "version": "0.1",
+  "engines": {
+    "node": "8.x",
+    "npm": "*"
+  },
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "engines": {
-    "node": "12.x",
-    "npm": "*"
-  },
+  "author": "CatalaHD",
+  "license": "MIT",
   "dependencies": {
     "discord.js": "^11.5.1",
     "ffmpeg-binaries": "^4.0.0",
