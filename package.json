@@ -1,15 +1,10 @@
 {
   "name": "app",
-  "version": "0.1",
-  "engines": {
-    "node": "12.13.x",
-    "npm": "*"
-  },
+  "version": "1.0",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "heroku-postbuild": "npm install"
+    "start": "node app.js"
   },
   "author": "CatalaHD",
   "license": "MIT",
