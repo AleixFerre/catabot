@@ -2,9 +2,10 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json");
 const ytdl = require("ytdl-core");
+const fs = require('fs');
 
-let servers = {};
-let prefix = config.prefix;
+var servers = {};
+var prefix = config.prefix;
 
 client.on("ready", () => {
     console.log("Estic llest! Ver: " + config.version);
@@ -27,7 +28,7 @@ client.on('message', (message) => {
     switch (command) {
     
         case 'ping': 
-            let ping = Math.floor(message.client.ping);
+            var ping = Math.floor(message.client.ping);
             message.channel.send(":ping_pong: Pong!")
                 .then(m => {
                     m.edit(`:incoming_envelope: Ping Missatges: \`${Math.floor(m.createdTimestamp - Date.now())} ms\`\n:satellite_orbital: Ping DiscordAPI: \`${ping} ms\``);
@@ -70,7 +71,7 @@ client.on('message', (message) => {
                 
                 console.log(server.queue[0]);
 
-                servers.dispatcher = connection.playStream(ytdl(server.queue[0].toString(), {filter: "audioonly"}));
+                server.dispatcher = connection.playStream(ytdl(server.queue[0], {filter: "audioonly"}));
                 
                 server.queue.shift();
                 
@@ -111,19 +112,61 @@ client.on('message', (message) => {
             }
         break;
 
+        case 'skip':
+            server = servers[message.guild.id];
+            if (server.dispatcher) {
+                server.dispatcher.end();
+            }
+            message.channel.send("Passant a la següent cançó...");
+        break;
+
+        case 'stop':
+            server = servers[message.guild.id];
+            if (message.guild.voiceConnection) {
+                for(var i = server.queue.length-1; i>=0; i--) {
+                    server.queue.splice(i,1);
+                }
+                server.dispatcher.end();
+                message.channel.send("Borrant la cua i sortint del canal...");
+                console.log('stopped the queue');
+            }
+
+            if (message.guild.connection) {
+                message.guild.connection.voiceConnection.disconnect();
+            }
+        break;
+
+        case 'q':
+            server = servers[message.guild.id];
+            if (message.guild.voiceConnection) {
+                if (server.queue.length < 1) {
+                    message.channel.send("No hi ha elements a la cua!");
+                } else {
+                    var content = "**CUA DE CANÇONS**\n```\n";
+                    
+                    for(var j=0; j<server.queue.length; j++) {
+                        content += (j+1) + ' ' + server.queue[j] + '\n';
+                    }
+                    message.channel.send(content + "```\n");
+                }
+            } else {
+                message.channel.send("No s'ha creat cap cua encara!");
+            }
+        break;
+
         case 'leave':
             if(!message.guild.voiceConnection) {
                 message.channel.send('No estic a cap canal de veu!');
                 return;
             }
 
-            let userVoiceChannel = message.member.voiceChannel;
+            var userVoiceChannel = message.member.voiceChannel;
             if (!userVoiceChannel) {
                 message.channel.send('No estàs a cap canal!');
                 return;
             }
 
-            let clientVoiceConnection = message.guild.voiceConnection;
+            var clientVoiceConnection = message.guild.voiceConnection;
             if (userVoiceChannel === clientVoiceConnection.channel) {
                 clientVoiceConnection.disconnect();
                 message.channel.send('Desconnectat correctament.');
@@ -133,12 +176,22 @@ client.on('message', (message) => {
         break;
 
         case 'help':
-            message.channel.send('**COMANDES DEL CATABOT**\n```\n' +
+
+            var hcontent = '**COMANDES DEL CATABOT**\n```\n' +
             '-> ' + prefix + 'ping      :: Comprova la latencia del bot i dels teus missatges.\n' +
             '-> ' + prefix + 'prefix    :: Et mostra el prefix i et permet cambiar-lo amb un segon argument\n' +
             '-> ' + prefix + 'join      :: Entra dins del teu canal de veu\n' +
             '-> ' + prefix + 'play      :: Posa la musica que vulguis amb un link\n' +
-            '-> ' + prefix + 'leave     :: Se\'n va del canal de veu.\n```\n\n');
+            '-> ' + prefix + 'skip      :: Passa a la següent de la cua\n' +
+            '-> ' + prefix + 'q         :: Mostra la cua\n' +
+            '-> ' + prefix + 'stop      :: Borra tota la cua i desconnecta el bot del canal\n' +
+            '-> ' + prefix + 'leave     :: Se\'n va del canal de veu.\n```\n\n';
+            
+            message.channel.send(hcontent);
+            fs.writeFile('Lista de comandos.md', hcontent, function (err) {
+                if (err) throw err;
+                console.log('Saved!');
+            });
         break;
 
     }

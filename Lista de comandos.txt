@@ -1,6 +1,0 @@
-COMANDOS
-
--> ping           :: Comprova la latencia del bot i dels teus missatges.
--> prefix         :: Et mostra el prefix i et permet cambiar-lo amb un segon argument
--> play           :: Posa la musica que vulguis amb un link
--> leave          :: Se'n va del canal de veu
