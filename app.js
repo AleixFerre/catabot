@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const config = require("./config.json");
+const config = require("_config.json");
 const ytdl = require("ytdl-core");
 
 let servers = {};
