@@ -2,7 +2,6 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json");
 const ytdl = require("ytdl-core");
-const fs = require('fs');
 
 var servers = {};
 var prefix = config.prefix;
@@ -33,6 +32,10 @@ client.on('message', (message) => {
                 .then(m => {
                     m.edit(`:incoming_envelope: Ping Missatges: \`${Math.floor(m.createdTimestamp - Date.now())} ms\`\n:satellite_orbital: Ping DiscordAPI: \`${ping} ms\``);
                 });
+        break;
+		
+		case 'prova': 
+            message.channel.send("Prova de reply");
         break;
         
         case 'join':
@@ -176,7 +179,7 @@ client.on('message', (message) => {
         break;
 
         case 'help':
-
+        case 'h':
             var hcontent = '**COMANDES DEL CATABOT**\n```\n' +
             '-> ' + prefix + 'ping      :: Comprova la latencia del bot i dels teus missatges.\n' +
             '-> ' + prefix + 'prefix    :: Et mostra el prefix i et permet cambiar-lo amb un segon argument\n' +
@@ -188,10 +191,6 @@ client.on('message', (message) => {
             '-> ' + prefix + 'leave     :: Se\'n va del canal de veu.\n```\n\n';
             
             message.channel.send(hcontent);
-            fs.writeFile('Lista de comandos.md', hcontent, function (err) {
-                if (err) throw err;
-                console.log('Saved!');
-            });
         break;
 
     }
