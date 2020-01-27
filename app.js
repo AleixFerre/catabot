@@ -397,6 +397,10 @@ client.on('message', (message) => {
             '-> ' + prefix + 'ban  @user [desc] :: Beta un usuari del servidor\n```\n\n';
             
             message.channel.send(hcontent);
+            
+            // Per mantindre el xat net, esborrem el missatge de l'usuari
+            message.delete();
+            
         break;
     }
 });
