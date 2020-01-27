@@ -13,7 +13,7 @@ var servers = {};
 var prefix = config.prefix;
 
 client.on("ready", () => {
-    console.log("Estic llest! Version: " + config.version);
+    console.log("Estic llest :: Version: " + config.version);
     client.user.setPresence({
         status: "online",
         game: {
@@ -56,6 +56,10 @@ client.on('message', (message) => {
                 .then(m => {
                     m.edit(`:incoming_envelope: Ping Missatges: \`${Math.floor(m.createdTimestamp - Date.now())} ms\`\n:satellite_orbital: Ping DiscordAPI: \`${ping} ms\``);
                 });
+
+            // Per mantindre el xat net, esborrem el missatge de l'usuari
+            message.delete();
+        
         break;
         
 
@@ -71,6 +75,10 @@ client.on('message', (message) => {
                     m.edit("Posa't a un canal de veu perquè pugui unir-me.");
                 }
             });
+
+            // Per mantindre el xat net, esborrem el missatge de l'usuari
+            message.delete();
+
         break;
 
 
@@ -92,6 +100,10 @@ client.on('message', (message) => {
                 });
                 message.channel.send("El prefix ha cambiat a: " + prefix);
             }
+
+            // Per mantindre el xat net, esborrem el missatge de l'usuari
+            message.delete();
+        
         break;
 
         
@@ -175,6 +187,10 @@ client.on('message', (message) => {
                     msg.edit("No es pot passar a la següent cançó!");
                 }
             });
+
+            // Per mantindre el xat net, esborrem el missatge de l'usuari
+            message.delete();
+
         break;
 
 
@@ -196,6 +212,10 @@ client.on('message', (message) => {
             if (message.guild.connection) {
                 message.guild.connection.voiceConnection.disconnect();
             }
+
+            // Per mantindre el xat net, esborrem el missatge de l'usuari
+            message.delete();
+
         break;
 
 
@@ -220,6 +240,10 @@ client.on('message', (message) => {
                     msg.edit("No s'ha creat cap cua encara!");
                 }
             });
+
+            // Per mantindre el xat net, esborrem el missatge de l'usuari
+            message.delete();
+
         break;
 
 
@@ -247,6 +271,10 @@ client.on('message', (message) => {
                     msg.edit('Només pots executar aquesta comanda si estàs al mateix canal que el bot!');
                 }
             });
+
+            // Per mantindre el xat net, esborrem el missatge de l'usuari
+            message.delete();
+
         break;
 
 
@@ -297,6 +325,8 @@ client.on('message', (message) => {
                 message.reply('Menciona a la persona que vols fer fora!');
                 kickHelp();
             }
+            // Les comandes de moderació no s'esborren per mantindre l'ordre i saber qui ha
+            // executat cada comanda
         break;
 
 
@@ -343,6 +373,8 @@ client.on('message', (message) => {
                 message.reply('A qui vols que faci fora?');
                 banHelp();
             }
+            // Les comandes de moderació no s'esborren per mantindre l'ordre i saber qui ha
+            // executat cada comanda
         break;
 
 
