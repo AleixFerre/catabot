@@ -3,8 +3,8 @@ const client = new Discord.Client();
 const ytdl = require("ytdl-core");
 
 // HEROKU APP
-// const config = require("./config.json");
-const config = process.env;
+const config = require("./config.json");
+// const config = process.env;
 
 // --------------------------------------
 
@@ -29,6 +29,14 @@ client.on('reconnecting', () => {
 
 client.on('disconnect', () => {
 	console.log('Disconnect!');
+});
+
+client.on('guildMemberAdd', member => {
+    const channel = member.guild.channels.find(ch => ch.name === 'member-log');
+    if (!channel) {
+        return;
+    }
+    channel.send('Benvingut, ' + member + "!");
 });
 
 client.on('message', (message) => {
@@ -242,12 +250,107 @@ client.on('message', (message) => {
         break;
 
 
+        // ---------------
+        // KICK
+        // ---------------
+        case 'kick':
+            function kickHelp() {
+                var kcontent = '**COM USAR EL KICK?**\n```\n' +
+                '-> ' + prefix + 'kick @user [ Descripció del kick ]\n' + 
+                '       Expulsa permanentment la persona del servidor.\n' +
+                '       Aquesta acció es pot desfer si ets Administrador \n```\n';
+
+                message.channel.send(kcontent);
+            }
+
+            var user = args[0]; 
+            if (user) {
+                const member = message.guild.member(user);
+                if (member) {
+                    /**
+                     * Kick the member
+                     * Make sure you run this on a member, not a user!
+                     * There are big differences between a user and a member
+                     */
+                    let kickmsg = 'Motiu del kick desconegut';
+                    if (args[1]) kickmsg = args[1];
+
+                    member.kick(kickmsg).then(() => {
+                    // We let the message author know we were able to kick the person
+                    message.reply("S'ha expulsat a " + user + " amb èxit.");
+                    }).catch(err => {
+                        // An error happened
+                        // This is generally due to the bot not being able to kick the member,
+                        // either due to missing permissions or role hierarchy
+                        message.reply('No es pot expulsar al membre.\nTens permisos?\nProva-ho manualment.');
+                        kickHelp();
+                        // Log the error
+                        console.error(err);
+                    });
+                } else {
+                    // The mentioned user isn't in this guild
+                    message.reply('Aquesta persona no pertany al servidor');
+                    kickHelp();
+                }
+            // Otherwise, if no user was mentioned
+            } else {
+                message.reply('Menciona a la persona que vols fer fora!');
+                kickHelp();
+            }
+        break;
+
+
+        // ---------------
+        // BAN
+        // ---------------
+        case 'ban':
+            function banHelp() {
+                var kcontent = '**COM USAR EL BAN?**\n```\n' +
+                '-> ' + prefix + 'ban @user [ Descripció del ban ]\n' + 
+                '       Baneja la persona del servidor.\n' +
+                '       Aquesta acció es pot desfer si ets Administrador \n```\n';
+
+                message.channel.send(kcontent);
+            }
+            user = args[0];
+            // If we have a user mentioned
+            if (user) {
+                // Now we get the member from the user
+                const member = message.guild.member(user);
+                // If the member is in the guild
+                if (member) {
+                    member.ban({
+                    reason: args[0] + ' no seas malo... :/',
+                    }).then(() => {
+                        // We let the message author know we were able to ban the person
+                        message.reply("S'ha banejat a " + user + " amb èxit.");
+                    }).catch(err => {
+                        // An error happened
+                        // This is generally due to the bot not being able to ban the member,
+                        // either due to missing permissions or role hierarchy
+                        message.reply('No es pot banejar a l\'usuari\nTens permisos?\nProba-ho manualment');
+                        banHelp();
+                        // Log the error
+                        console.error(err);
+                    });
+                } else {
+                    // The mentioned user isn't in this guild
+                    message.reply('Aquest usuari no pertany al servidor!');
+                    banHelp();
+                }
+            } else {
+                // Otherwise, if no user was mentioned
+                message.reply('A qui vols que faci fora?');
+                banHelp();
+            }
+        break;
+
+
         // ----------------
         // HELP
         // ----------------
         case 'help':
         case 'h':
-        default:
             var hcontent = '**COMANDES DEL CATABOT**\n```\n' +
             '-> ' + prefix + 'ping      :: Comprova la latencia del bot i dels teus missatges.\n' +
             '-> ' + prefix + 'prefix    :: Et mostra el prefix i et permet cambiar-lo amb un segon argument\n' +
@@ -256,7 +359,10 @@ client.on('message', (message) => {
             '-> ' + prefix + 'skip      :: Passa a la següent de la cua\n' +
             '-> ' + prefix + 'q         :: Mostra la cua\n' +
             '-> ' + prefix + 'stop      :: Borra tota la cua i desconnecta el bot del canal\n' +
-            '-> ' + prefix + 'leave     :: Se\'n va del canal de veu.\n```\n\n';
+            '-> ' + prefix + 'leave     :: Se\'n va del canal de veu.\n```\n\n' +
+            '**COMANDES DE MODERACIÓ**\n```\n' +
+            '-> ' + prefix + 'kick @user [desc] :: Expulsa permanentment un usuari del servidor\n' +
+            '-> ' + prefix + 'ban  @user [desc] :: Beta un usuari del servidor\n```\n\n';
             
             message.channel.send(hcontent);
         break;
