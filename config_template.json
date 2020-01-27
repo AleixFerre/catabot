@@ -2,5 +2,6 @@
     "token":"",
     "prefix":"!",
     "IdOwner":"",
-    "version":"0.1"
+    "version":"0.1",
+    "GOOGLE-API-KEY":""
 }

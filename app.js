@@ -1,12 +1,15 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const ytdl = require("ytdl-core");
+const YouTube = require('simple-youtube-api');
 
 // HEROKU APP
 const config = require("./config.json");
 // const config = process.env;
 
 // --------------------------------------
+
+const  youtube = new YouTube(config.GOOGLE_API_KEY);
 
 var servers = {};
 
@@ -48,7 +51,7 @@ client.on('message', (message) => {
     switch (command) {
     
         // ----------------
-        // JOIN
+        // PING
         // ----------------
         case 'ping': 
             var ping = Math.floor(message.client.ping);
@@ -115,29 +118,25 @@ client.on('message', (message) => {
                 var server = servers[message.guild.id];
 
                 try {
-                    server.dispatcher = connection.playStream(ytdl(server.queue[0], {filter: "audioonly"}));
-                    msg.edit("S'està reproduint: " + server.queue[0]);
+                    server.dispatcher = connection.playStream(ytdl(server.queue[0].url, {filter: "audioonly"}));
+                    msg.edit("S'està reproduint: " + server.queue[0].title + "\n" + server.queue[0].url);
                 } catch (error) {
-                    msg.edit("--> " + error);
+                    msg.edit("--> " + error + '\n Link: ' + server.queue[0].url);
                 }
                 
                 server.queue.shift();
                 
                 server.dispatcher.on("end", function() {
                     if (server.queue[0]) {
-                        play(connection, message);
+                        play(connection, message, msg);
                     } else {
                         connection.disconnect();
                     }
                 });
             }
             
-            let pattern = RegExp("/https?:\/\/www.youtube.com\/watch\?v=+.{11}/", "g");
             if (!args[0]) {
-                message.channel.send("Necessito un link!");
-                return;
-            } else if (pattern.test(args[0])) {
-                message.channel.send("Necessito un link vàlid!");
+                message.channel.send("No se el que vols buscar... :(");
                 return;
             }
     
@@ -155,15 +154,24 @@ client.on('message', (message) => {
                 }
         
                 var server = servers[message.guild.id];
-                server.queue.push(args[0]);
 
-                msg.edit("S'ha afegit a la cua: " + args[0]);
-        
-                if (!message.guild.voiceConnection) {
-                    message.member.voiceChannel.join().then((connection) => {
-                        play(connection, message, msg);
-                    });
-                }
+                youtube.searchVideos(args[0])
+                .then(results => {
+                    msg.edit("S'ha afegit a la cua: " + results[0].title + '\n');
+                    server.queue.push(
+                        {
+                            "url": results[0].url,
+                            "title": results[0].title
+                        }
+                    );
+                    
+                    if (!message.guild.voiceConnection) {
+                        message.member.voiceChannel.join().then((connection) => {
+                            play(connection, message, msg);
+                        });
+                    }
+                })
+                .catch(console.error);
             });
 
             // Per mantindre el xat net, esborrem el missatge de l'usuari
@@ -182,9 +190,45 @@ client.on('message', (message) => {
                     if (server.dispatcher) {
                         server.dispatcher.end();
                     }
-                    msg.edit("Cançó actual: " + server.queue[0]);
                 } else {
                     msg.edit("No es pot passar a la següent cançó!");
+                }
+            });
+
+            // Per mantindre el xat net, esborrem el missatge de l'usuari
+            message.delete();
+
+        break;
+
+
+        // ----------------
+        // DELETE
+        // ----------------
+        case 'delete':
+
+            function deleteHelp() {
+                var dcontent = '**COM USAR EL DELETE?**\n```\n' +
+                '-> ' + prefix + 'delete [ pos ]\n' + 
+                '       Esborra la cançó de la posició que vulguis; per defecte la següent \n```\n';
+                message.channel.send(dcontent);
+            }
+
+            let position = 1;
+            if (args[1]) {
+                position = args[1];
+            }
+            message.channel.send("Borrant la cançó de la posicio "+ position +"...").then((msg) => {
+                server = servers[message.guild.id];
+                if (server) {
+                    if (server.queue[i-1]) {
+                        server.queue.splice(i-1,1);
+                    } else {
+                        msg.edit("No existeix cap cançó a la posicio " + position);
+                        deleteHelp();
+                    }
+                } else {
+                    msg.edit("No es pot esborrar la cançó de la cua!");
+                    deleteHelp();
                 }
             });
 
@@ -232,7 +276,7 @@ client.on('message', (message) => {
                         var content = "**CUA DE CANÇONS**\n```\n";
                         
                         for(var j=0; j<server.queue.length; j++) {
-                            content += (j+1) + ' ' + server.queue[j] + '\n';
+                            content += (j+1) + ' ' + server.queue[j].title + '\n';
                         }
                         msg.edit(content + "```\n");
                     }
@@ -387,10 +431,11 @@ client.on('message', (message) => {
             '-> ' + prefix + 'ping      :: Comprova la latencia del bot i dels teus missatges.\n' +
             '-> ' + prefix + 'prefix    :: Et mostra el prefix i et permet cambiar-lo amb un segon argument\n' +
             '-> ' + prefix + 'join      :: Entra dins del teu canal de veu\n' +
-            '-> ' + prefix + 'play      :: Posa la musica que vulguis amb un link\n' +
+            '-> ' + prefix + 'play l    :: Posa la musica que vulguis amb un link\n' +
             '-> ' + prefix + 'skip      :: Passa a la següent de la cua\n' +
             '-> ' + prefix + 'q         :: Mostra la cua\n' +
             '-> ' + prefix + 'stop      :: Borra tota la cua i desconnecta el bot del canal\n' +
+            '-> ' + prefix + 'delete p  :: Borra tota la cua i desconnecta el bot del canal\n' +
             '-> ' + prefix + 'leave     :: Se\'n va del canal de veu.\n```\n\n' +
             '**COMANDES DE MODERACIÓ**\n```\n' +
             '-> ' + prefix + 'kick @user [desc] :: Expulsa permanentment un usuari del servidor\n' +
