@@ -329,15 +329,16 @@ client.on('message', (message) => {
             }
 
             let position = 1;
-            if (args[1]) {
-                position = args[1];
+            if (args[0]) {
+                position = args[0];
             }
             message.channel.send("Borrant la cançó de la posicio "+ position +"...").then((msg) => {
                 server = servers[message.guild.id];
                 if (server) {
                     if (server.queue.length > 0) {
-                        if (server.queue[i-1]) {
-                            server.queue.splice(i-1,1);
+                        if ( position > 0 && position <= server.queue.length ) {
+                            server.queue.splice(position-1, 1);
+                            msg.edit("Esborrat a la posicio " + position);
                         } else {
                             msg.edit("No existeix cap cançó a la posicio " + position);
                             deleteHelp();
@@ -550,8 +551,9 @@ client.on('message', (message) => {
             '-> ' + prefix + 'prefix [newPrefix]    :: Et mostra el prefix i et permet cambiar-lo amb un segon argument\n' +
             '-> ' + prefix + 'join                  :: Entra dins del teu canal de veu\n' +
             '-> ' + prefix + 'play <link, cerca>    :: Posa la musica que vulguis amb un link\n' +
-            '-> ' + prefix + 'playlist <link>       :: Posa la musica que vulguis amb un link\n' +
+            '-> ' + prefix + 'playlist <link>       :: Posa les primeres 20 cançons d\'una llista de reproducció\n' +
             '-> ' + prefix + 'skip/next             :: Passa a la següent de la cua\n' +
+            '-> ' + prefix + 'delete <pos>          :: Esborra a la posicio de la cua que vulguis\n' +
             '-> ' + prefix + 'q/queue               :: Mostra la cua\n' +
             '-> ' + prefix + 'shuffle               :: Barreja la cua\n' +
             '-> ' + prefix + 'stop                  :: Borra tota la cua i desconnecta el bot del canal\n' +
