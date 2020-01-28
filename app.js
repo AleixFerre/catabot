@@ -9,19 +9,19 @@ const config = require("./config.json");
 
 // --------------------------------------
 
-const  youtube = new YouTube(config.GOOGLE_API_KEY);
+const youtube = new YouTube(config.GOOGLE_API_KEY);
 
 var servers = {};
 
 var prefix = config.prefix;
 
 client.on("ready", () => {
-    console.log("Estic llest :: Version: " + config.version);
+    console.log("READY :: Version: " + config.version + '\nON ' + client.guilds.size + " servers");
     client.user.setPresence({
         status: "online",
         game: {
-            name: prefix + "help :: Version " + config.version,
-            type: "PLAYING"
+            name: client.guilds.size + " servers | " + prefix + "help",
+            type: "WATCHING"
         }
     });
 });
@@ -35,7 +35,7 @@ client.on('disconnect', () => {
 });
 
 client.on('guildMemberAdd', member => {
-    const channel = member.guild.channels.find(ch => ch.name === 'member-log');
+    const channel = member.guild.channels.find(ch => ch.name === 'general');
     if (!channel) {
         return;
     }
@@ -47,9 +47,15 @@ client.on('message', (message) => {
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
+    if (!message.channel.members) {
+        // Estem a DM
+        message.author.send("No es poden utilitzar les comandes aqui!");
+        return;
+    }
 
     switch (command) {
-    
+        
+
         // ----------------
         // PING
         // ----------------
@@ -58,11 +64,31 @@ client.on('message', (message) => {
             message.channel.send(":ping_pong: Pong!")
                 .then(m => {
                     m.edit(`:incoming_envelope: Ping Missatges: \`${Math.floor(m.createdTimestamp - Date.now())} ms\`\n:satellite_orbital: Ping DiscordAPI: \`${ping} ms\``);
-                });
+                }).catch(console.error);        
+        break;
+        
+        // ----------------
+        // INVITE
+        // ----------------
+        case 'invite':
+            // Get the invite link With admin permissions
+            let link = 'https://discordapp.com/oauth2/authorize?client_id='+ config.clientid +'&permissions=8&scope=bot';
+
+            const embedMessage = new Discord.RichEmbed()
+                .setColor('#0099ff')
+                .setTitle('Invite link')
+                .setURL(link)
+                .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://discord.js.org')
+                .setDescription('Aqui tens el link')
+                .setThumbnail('https://i.imgur.com/UXoPSuU.jpg')
+                .setTimestamp()
+                .setFooter('Convida amb precaució');
+
+            message.author.send(embedMessage);
 
             // Per mantindre el xat net, esborrem el missatge de l'usuari
-            message.delete();
-        
+            message.delete().catch(console.error);
+
         break;
         
 
@@ -77,10 +103,7 @@ client.on('message', (message) => {
                 } else {
                     m.edit("Posa't a un canal de veu perquè pugui unir-me.");
                 }
-            });
-
-            // Per mantindre el xat net, esborrem el missatge de l'usuari
-            message.delete();
+            }).catch(console.error);
 
         break;
 
@@ -97,16 +120,13 @@ client.on('message', (message) => {
                 client.user.setPresence({
                     status: "online",
                     game: {
-                        name: prefix + "help :: Version " + config.version,
-                        type: "PLAYING"
+                        name: client.guilds.size + " servers | " + prefix + "help",
+                        type: "WATCHING"
                     }
                 });
                 message.channel.send("El prefix ha cambiat a: " + prefix);
             }
 
-            // Per mantindre el xat net, esborrem el missatge de l'usuari
-            message.delete();
-        
         break;
 
         
@@ -136,12 +156,14 @@ client.on('message', (message) => {
             }
             
             if (!args[0]) {
-                message.channel.send("No se el que vols buscar... :(");
+                message.reply("No se el que vols buscar... :(");
+                message.delete().catch(console.error);
                 return;
             }
     
             if (!message.member.voiceChannel) {
-                message.channel.send("Posa't a un canal de veu perquè pugui unir-me.");
+                message.reply("Posa't a un canal de veu perquè pugui unir-me.");
+                message.delete().catch(console.error);
                 return;
             }
 
@@ -156,14 +178,9 @@ client.on('message', (message) => {
                 var server = servers[message.guild.id];
 
                 youtube.searchVideos(args[0])
-                .then(results => {
+                .then((results) => {
                     msg.edit("S'ha afegit a la cua: " + results[0].title + '\n');
-                    server.queue.push(
-                        {
-                            "url": results[0].url,
-                            "title": results[0].title
-                        }
-                    );
+                    server.queue.push(results[0]);
                     
                     if (!message.guild.voiceConnection) {
                         message.member.voiceChannel.join().then((connection) => {
@@ -172,18 +189,62 @@ client.on('message', (message) => {
                     }
                 })
                 .catch(console.error);
-            });
+            }).catch(console.error);
 
-            // Per mantindre el xat net, esborrem el missatge de l'usuari
-            message.delete();
+        break;
+
+        
+        // ----------------
+        // PLAYLIST
+        // ----------------
+        case 'playlist':
+
+            if (!message.member.voiceChannel) {
+                message.reply("Posa't a un canal de veu perquè pugui unir-me.");
+                return;
+            }
+
+            if (!args[0]) {
+                message.reply("Posa el link de la playlist que vulguis!");
+                return;
+            }
+
+            if (!servers[message.guild.id]) {
+                servers[message.guild.id] = {
+                    queue: []
+                };
+            }
+
+            youtube.getPlaylist(args[0])
+            .then(playlist => {
+                message.channel.send(`Inserint la playlist "${playlist.title}"`);
+                playlist.getVideos(20)
+                .then(videos => {
+                    server = servers[message.guild.id];
+                    for(let k=0; k<videos.length; k++) {
+                        server.queue.push(videos[k]);
+                    }
+                    message.channel.send(`S'ha afegit la playlist amb ${videos.length} videos.`);
+                    if (!message.guild.voiceConnection) {
+                        message.member.voiceChannel.join().then((connection) => {
+                            message.channel.send(`Reproduint...`).then((msg) => {
+                                play(connection, message, msg);
+                            });
+                        });
+                    }
+                })
+                .catch(console.error);
+            })
+            .catch(console.error);
 
         break;
 
 
         // ----------------
-        // SKIP
+        // SKIP or NEXT
         // ----------------
         case 'skip':
+        case 'next':
             message.channel.send("Passant a la següent cançó...").then((msg) => {
                 server = servers[message.guild.id];
                 if (server) {
@@ -195,8 +256,62 @@ client.on('message', (message) => {
                 }
             });
 
-            // Per mantindre el xat net, esborrem el missatge de l'usuari
-            message.delete();
+        break;
+
+
+        // ----------------
+        // CLEAR
+        // ----------------
+        case 'clear':
+            message.channel.send("Borrant la cua...").then((msg) => {
+                server = servers[message.guild.id];
+                if (message.guild.voiceConnection) {
+                    if (server.queue.length > 0) {
+                        for(var i = server.queue.length-1; i>=0; i--) {
+                            server.queue.splice(i,1);
+                        }
+                        msg.edit("S'ha borrat la cua correctament!");
+                    } else {
+                        msg.edit("No hi ha elements a la cua!");
+                    }
+                } else {
+                    msg.edit("Has d'estar en un canal de veu amb el bot!");
+                }
+            }).catch(console.error);
+
+        break;
+
+
+        // ----------------
+        // SHUFFLE
+        // ----------------
+        case 'shuffle':
+
+            async function shuffle(a) {
+                var j, x, i;
+                for (i = a.length - 1; i > 0; i--) {
+                    j = Math.floor(Math.random() * (i + 1));
+                    x = a[i];
+                    a[i] = a[j];
+                    a[j] = x;
+                }
+                return a;
+            }
+
+            message.channel.send("Barrejant la cua...").then((msg) => {
+                server = servers[message.guild.id];
+                if (server) {
+                    if (server.queue.length > 1) {
+                        shuffle(server.queue).then(() => {
+                            msg.edit("S'ha barrejat amb èxit!\nFes !q o !queue per visualitzar-la");
+                        }).catch(console.error);
+                    } else {
+                        msg.edit("No hi ha prous elements per barrejar!");
+                    }
+                } else {
+                    msg.edit("No hi ha cua!");
+                }
+            }).catch(console.error);
 
         break;
 
@@ -220,20 +335,22 @@ client.on('message', (message) => {
             message.channel.send("Borrant la cançó de la posicio "+ position +"...").then((msg) => {
                 server = servers[message.guild.id];
                 if (server) {
-                    if (server.queue[i-1]) {
-                        server.queue.splice(i-1,1);
+                    if (server.queue.length > 0) {
+                        if (server.queue[i-1]) {
+                            server.queue.splice(i-1,1);
+                        } else {
+                            msg.edit("No existeix cap cançó a la posicio " + position);
+                            deleteHelp();
+                        }
                     } else {
-                        msg.edit("No existeix cap cançó a la posicio " + position);
+                        msg.edit("La cua és buida!"); 
                         deleteHelp();
                     }
                 } else {
-                    msg.edit("No es pot esborrar la cançó de la cua!");
+                    msg.edit("No has creat cap cua encara!");
                     deleteHelp();
                 }
-            });
-
-            // Per mantindre el xat net, esborrem el missatge de l'usuari
-            message.delete();
+            }).catch(console.error);
 
         break;
 
@@ -250,25 +367,22 @@ client.on('message', (message) => {
                 }
                 server.dispatcher.end();
                 message.channel.send("S'ha borrat la cua i s'ha sortit del canal correctament!");
-                console.log('stopped the queue');
             }
 
             if (message.guild.connection) {
                 message.guild.connection.voiceConnection.disconnect();
             }
 
-            // Per mantindre el xat net, esborrem el missatge de l'usuari
-            message.delete();
-
         break;
 
 
         // ----------------
-        // QUEUE
+        // QUEUE or Q
         // ----------------
+        case 'queue':
         case 'q':
-            server = servers[message.guild.id];
             message.channel.send("Obtenint cua...").then((msg) => {
+                let server = servers[message.guild.id];
                 if (message.guild.voiceConnection) {
                     if (server.queue.length < 1) {
                         msg.edit("No hi ha elements a la cua!");
@@ -276,17 +390,14 @@ client.on('message', (message) => {
                         var content = "**CUA DE CANÇONS**\n```\n";
                         
                         for(var j=0; j<server.queue.length; j++) {
-                            content += (j+1) + ' ' + server.queue[j].title + '\n';
+                            content += (j+1) + '.- ' + server.queue[j].title + '\n';
                         }
                         msg.edit(content + "```\n");
                     }
                 } else {
-                    msg.edit("No s'ha creat cap cua encara!");
+                    msg.edit("No pots executar això si el bot no està en cap canal de veu!");
                 }
-            });
-
-            // Per mantindre el xat net, esborrem el missatge de l'usuari
-            message.delete();
+            }).catch(console.error);
 
         break;
 
@@ -314,10 +425,23 @@ client.on('message', (message) => {
                 } else {
                     msg.edit('Només pots executar aquesta comanda si estàs al mateix canal que el bot!');
                 }
-            });
+            }).catch(console.error);
 
+        break;
+
+
+        // ----------------
+        // SAY
+        // ----------------
+        case 'say':
+            if (args[0]) {
+                message.channel.send(args.join(" ")).catch(console.error);
+            } else {
+                message.reply("Què vols que digui?").catch(console.error);
+            }
+                
             // Per mantindre el xat net, esborrem el missatge de l'usuari
-            message.delete();
+            message.delete().catch(console.error);
 
         break;
 
@@ -339,18 +463,13 @@ client.on('message', (message) => {
             if (user) {
                 const member = message.guild.member(user);
                 if (member) {
-                    /**
-                     * Kick the member
-                     * Make sure you run this on a member, not a user!
-                     * There are big differences between a user and a member
-                     */
                     let kickmsg = 'Motiu del kick desconegut';
                     if (args[1]) kickmsg = args[1];
 
                     member.kick(kickmsg).then(() => {
                     // We let the message author know we were able to kick the person
                     message.reply("S'ha expulsat a " + user + " amb èxit.");
-                    }).catch(err => {
+                    }).catch((err) => {
                         // An error happened
                         // This is generally due to the bot not being able to kick the member,
                         // either due to missing permissions or role hierarchy
@@ -369,8 +488,7 @@ client.on('message', (message) => {
                 message.reply('Menciona a la persona que vols fer fora!');
                 kickHelp();
             }
-            // Les comandes de moderació no s'esborren per mantindre l'ordre i saber qui ha
-            // executat cada comanda
+            
         break;
 
 
@@ -398,7 +516,7 @@ client.on('message', (message) => {
                     }).then(() => {
                         // We let the message author know we were able to ban the person
                         message.reply("S'ha banejat a " + user + " amb èxit.");
-                    }).catch(err => {
+                    }).catch((err) => {
                         // An error happened
                         // This is generally due to the bot not being able to ban the member,
                         // either due to missing permissions or role hierarchy
@@ -417,8 +535,7 @@ client.on('message', (message) => {
                 message.reply('A qui vols que faci fora?');
                 banHelp();
             }
-            // Les comandes de moderació no s'esborren per mantindre l'ordre i saber qui ha
-            // executat cada comanda
+            
         break;
 
 
@@ -428,26 +545,30 @@ client.on('message', (message) => {
         case 'help':
         case 'h':
             var hcontent = '**COMANDES DEL CATABOT**\n```\n' +
-            '-> ' + prefix + 'ping      :: Comprova la latencia del bot i dels teus missatges.\n' +
-            '-> ' + prefix + 'prefix    :: Et mostra el prefix i et permet cambiar-lo amb un segon argument\n' +
-            '-> ' + prefix + 'join      :: Entra dins del teu canal de veu\n' +
-            '-> ' + prefix + 'play l    :: Posa la musica que vulguis amb un link\n' +
-            '-> ' + prefix + 'skip      :: Passa a la següent de la cua\n' +
-            '-> ' + prefix + 'q         :: Mostra la cua\n' +
-            '-> ' + prefix + 'stop      :: Borra tota la cua i desconnecta el bot del canal\n' +
-            '-> ' + prefix + 'delete p  :: Esborra la cançó de la posició que vulguis; per defecte, la següent\n' +
-            '-> ' + prefix + 'leave     :: Se\'n va del canal de veu.\n```\n\n' +
+            '-> ' + prefix + 'ping                  :: Comprova la latencia del bot i dels teus missatges.\n' +
+            '-> ' + prefix + 'invite                :: T\'envia un missatge amb el invite link del bot.\n' +
+            '-> ' + prefix + 'prefix [newPrefix]    :: Et mostra el prefix i et permet cambiar-lo amb un segon argument\n' +
+            '-> ' + prefix + 'join                  :: Entra dins del teu canal de veu\n' +
+            '-> ' + prefix + 'play <link, cerca>    :: Posa la musica que vulguis amb un link\n' +
+            '-> ' + prefix + 'playlist <link>       :: Posa la musica que vulguis amb un link\n' +
+            '-> ' + prefix + 'skip/next             :: Passa a la següent de la cua\n' +
+            '-> ' + prefix + 'q/queue               :: Mostra la cua\n' +
+            '-> ' + prefix + 'shuffle               :: Barreja la cua\n' +
+            '-> ' + prefix + 'stop                  :: Borra tota la cua i desconnecta el bot del canal\n' +
+            '-> ' + prefix + 'delete [pos]          :: Esborra la cançó de la posició que vulguis; per defecte, la següent\n' +
+            '-> ' + prefix + 'leave                 :: Se\'n va del canal de veu.\n```' +
             '**COMANDES DE MODERACIÓ**\n```\n' +
-            '-> ' + prefix + 'kick @user [desc] :: Expulsa permanentment un usuari del servidor\n' +
-            '-> ' + prefix + 'ban  @user [desc] :: Beta un usuari del servidor\n```\n\n';
+            '-> ' + prefix + 'kick <@user> [desc] 	:: Expulsa permanentment un usuari del servidor\n' +
+            '-> ' + prefix + 'ban  <@user> [desc] 	:: Beta un usuari del servidor\n```';
             
-            message.channel.send(hcontent);
+            message.author.send(hcontent).catch(console.error);
             
             // Per mantindre el xat net, esborrem el missatge de l'usuari
-            message.delete();
+            message.delete().catch(console.error);
             
         break;
     }
+
 });
 
 client.login(config.token);
