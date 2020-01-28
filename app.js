@@ -435,7 +435,7 @@ client.on('message', (message) => {
             '-> ' + prefix + 'skip      :: Passa a la següent de la cua\n' +
             '-> ' + prefix + 'q         :: Mostra la cua\n' +
             '-> ' + prefix + 'stop      :: Borra tota la cua i desconnecta el bot del canal\n' +
-            '-> ' + prefix + 'delete p  :: Borra tota la cua i desconnecta el bot del canal\n' +
+            '-> ' + prefix + 'delete p  :: Esborra la cançó de la posició que vulguis; per defecte, la següent\n' +
             '-> ' + prefix + 'leave     :: Se\'n va del canal de veu.\n```\n\n' +
             '**COMANDES DE MODERACIÓ**\n```\n' +
             '-> ' + prefix + 'kick @user [desc] :: Expulsa permanentment un usuari del servidor\n' +

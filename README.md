@@ -24,7 +24,7 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 -> !skip      :: Passa a la següent de la cua
 -> !q         :: Mostra la cua
 -> !stop      :: Borra tota la cua i desconnecta el bot del canal
--> !delete p  :: Borra tota la cua i desconnecta el bot del canal
+-> !delete p  :: Esborra la cançó de la posició que vulguis; per defecte, la següent
 -> !leave     :: Se'n va del canal de veu.
 ```
 
