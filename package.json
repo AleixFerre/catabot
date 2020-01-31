@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "1.0",
+  "version": "0.2",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,6 +9,7 @@
   "author": "CatalaHD",
   "license": "MIT",
   "dependencies": {
+    "canvas": "^2.6.1",
     "discord.js": "^11.5.1",
     "ffmpeg-binaries": "^4.0.0",
     "opusscript": "0.0.7",

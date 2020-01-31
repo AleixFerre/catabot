@@ -10,6 +10,7 @@ npm install --save ffmpeg
 npm install --save opusscript 
 npm install --save ytdl-core
 npm install simple-youtube-api
+npm install canvas
 ```
 If you are running this locally
 You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
@@ -39,5 +40,5 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 ```
 
 ## CURRENT VERSION
-0.1
+0.2
             
