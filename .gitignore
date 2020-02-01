@@ -3,3 +3,4 @@ node_modules/
 DISCORD.pem
 config.json
 package-lock.json
+Storage/

@@ -4,5 +4,6 @@
     "IdOwner":"",
     "version":"0.2",
     "GOOGLE-API-KEY":"",
-    "clientid": ""
+    "clientid": "",
+    "ownerDiscordUsername": ""
 }
