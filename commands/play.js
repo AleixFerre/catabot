@@ -10,18 +10,30 @@ module.exports = {
 	execute(message, args, servers) {
         function play (connection, message, msg) {
             let server = servers[message.guild.id];
+            
+            let musica = server.queue[0].video;
+            if (server.loop) {
+                musica = server.nowPlayingVideo;
+            }
 
             try {
-                server.dispatcher = connection.playStream(ytdl(server.queue[0].url, {filter: "audioonly"}));
-                msg.edit("S'està reproduint: " + server.queue[0].title + "\n" + server.queue[0].url);
+                server.dispatcher = connection.playStream(musica);
+                msg.edit("S'està reproduint: " + server.nowPlayingVideoInfo.title + "\n" + server.nowPlayingVideoInfo.url);
             } catch (error) {
                 msg.edit("--> " + error + '\n Link: ' + server.queue[0].url);
             }
             
-            server.queue.shift();
+            if (!server.loop) {
+                // Update now playing
+                server.nowPlayingVideo = server.queue[0].video;
+                server.nowPlayingVideoInfo = server.queue[0].videoInfo;
+                
+                // Next sond
+                server.queue.shift();
+            }
             
             server.dispatcher.on("end", function() {
-                if (server.queue[0]) {
+                if (server.queue[0] || server.loop) {
                     play(connection, message, msg);
                 } else {
                     connection.disconnect();
@@ -41,28 +53,41 @@ module.exports = {
             return;
         }
 
-        message.channel.send("Inserint la cançó...").then((msg) => {
-            // Creem la cua de cançons...
-            if (!servers[message.guild.id]) {
-                servers[message.guild.id] = {
-                    queue: []
-                };
-            }
-    
-            let server = servers[message.guild.id];
+        // Creem la estructura de dades...
+        if (!servers[message.guild.id]) {
+            servers[message.guild.id] = {
+                queue: [],
+                nowPlayingVideo: [Video],
+                nowPlayingVideoInfo: [PassThrough],
+                prefix: '!',
+                loop: false
+            };
+        }
 
-            youtube.searchVideos(args[0])
+        message.channel.send("Buscant la cançó...").then((msg) => {
+            youtube.searchVideos(args[0], 1) // Get the first one
             .then((results) => {
+                        
+                let server = servers[message.guild.id];
+
+                server.queue.push({
+                    video: ytdl(results[0].url, {filter: "audioonly"}),
+                    videoInfo: results[0]
+                });
+
                 msg.edit("S'ha afegit a la cua: " + results[0].title + '\n');
-                server.queue.push(results[0]);
                 
                 if (!message.guild.voiceConnection) {
+
+                    server.nowPlayingVideo = server.queue[0].video;
+                    server.nowPlayingVideoInfo = server.queue[0].videoInfo;
+
+
                     message.member.voiceChannel.join().then((connection) => {
                         play(connection, message, msg);
                     });
                 }
-            })
-            .catch(console.error);
+            }).catch(console.error);
         }).catch(console.error);
 	},
 };

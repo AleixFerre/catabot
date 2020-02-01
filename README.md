@@ -1,5 +1,5 @@
-# DiscordBot
-This is our new BETA Discord Bot
+# CataBot
+This is our new BETA Discord Bot called CataBot
 
 ## To keep it up to date:
 

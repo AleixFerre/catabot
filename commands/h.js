@@ -4,6 +4,6 @@ module.exports = {
     aliases: ['commands'],
 	usage: '[ nom de la comanda ]',
 	execute(message) {
-        message.channel.send('!help');
+        message.author.send('Envia !help');
 	},
 };

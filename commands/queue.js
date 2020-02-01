@@ -5,13 +5,12 @@ module.exports = {
         message.channel.send("Obtenint cua...").then((msg) => {
             let server = servers[message.guild.id];
             if (message.guild.voiceConnection) {
+                let content = "**CUA DE CANÇONS**\n```\n";  
                 if (server.queue.length < 1) {
-                    msg.edit("No hi ha elements a la cua!");
+                    msg.edit(content + "No hi ha elements a la cua!```\n");
                 } else {
-                    var content = "**CUA DE CANÇONS**\n```\n";
-                    
-                    for(var j=0; j<server.queue.length; j++) {
-                        content += (j+1) + '.- ' + server.queue[j].title + '\n';
+                    for(let i = 0; i < server.queue.length; i++) {
+                        content += (i + 1) + '.- ' + server.queue[i].videoInfo.title + '\n';
                     }
                     msg.edit(content + "```\n");
                 }

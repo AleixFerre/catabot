@@ -1,0 +1,375 @@
+{
+  "356928052099416068": {
+    "queue": [],
+    "nowPlayingVideo": {},
+    "nowPlayingVideoInfo": {},
+    "prefix": "!",
+    "loop": false
+  },
+  "564785724843360267": {
+    "queue": [],
+    "nowPlayingVideo": {},
+    "nowPlayingVideoInfo": {},
+    "prefix": "!",
+    "loop": false
+  },
+  "667675227181940746": {
+    "queue": [],
+    "nowPlayingVideo": {},
+    "nowPlayingVideoInfo": {},
+    "prefix": "!",
+    "loop": false
+  },
+  "672991564351537154": {
+    "queue": [
+      {
+        "videoInfo": {
+          "type": "video",
+          "raw": {
+            "kind": "youtube#searchResult",
+            "etag": "\"Fznwjl6JEQdo1MGvHOGaz_YanRU/FKS7gfyiiClG2612hgtE8Ya9BLo\"",
+            "id": {
+              "kind": "youtube#video",
+              "videoId": "tbneQDc2H3I"
+            },
+            "snippet": {
+              "publishedAt": "2019-11-08T02:00:10.000Z",
+              "channelId": "UCz9yS18zJGQObwUL_K-ICnw",
+              "title": "KAROL G, Nicki Minaj - Tusa (Official Video)",
+              "description": "KAROL G, Nicki Minaj - Tusa (Official Video) Stream \"Tusa\" on your favorite streaming platform: https://UMLE.lnk.to/TusaYD Subscribe to my YouTube channel ...",
+              "thumbnails": {
+                "default": {
+                  "url": "https://i.ytimg.com/vi/tbneQDc2H3I/default.jpg",
+                  "width": 120,
+                  "height": 90
+                },
+                "medium": {
+                  "url": "https://i.ytimg.com/vi/tbneQDc2H3I/mqdefault.jpg",
+                  "width": 320,
+                  "height": 180
+                },
+                "high": {
+                  "url": "https://i.ytimg.com/vi/tbneQDc2H3I/hqdefault.jpg",
+                  "width": 480,
+                  "height": 360
+                }
+              },
+              "channelTitle": "KarolGVEVO",
+              "liveBroadcastContent": "none"
+            }
+          },
+          "full": false,
+          "kind": "youtube#searchResult",
+          "id": "tbneQDc2H3I",
+          "title": "KAROL G, Nicki Minaj - Tusa (Official Video)",
+          "description": "KAROL G, Nicki Minaj - Tusa (Official Video) Stream \"Tusa\" on your favorite streaming platform: https://UMLE.lnk.to/TusaYD Subscribe to my YouTube channel ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/tbneQDc2H3I/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/tbneQDc2H3I/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/tbneQDc2H3I/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "publishedAt": "2019-11-08T02:00:10.000Z",
+          "channel": {
+            "type": "channel",
+            "raw": {
+              "kind": "youtube#searchResult",
+              "etag": "\"Fznwjl6JEQdo1MGvHOGaz_YanRU/FKS7gfyiiClG2612hgtE8Ya9BLo\"",
+              "id": {
+                "kind": "youtube#video",
+                "videoId": "tbneQDc2H3I"
+              },
+              "snippet": {
+                "publishedAt": "2019-11-08T02:00:10.000Z",
+                "channelId": "UCz9yS18zJGQObwUL_K-ICnw",
+                "title": "KAROL G, Nicki Minaj - Tusa (Official Video)",
+                "description": "KAROL G, Nicki Minaj - Tusa (Official Video) Stream \"Tusa\" on your favorite streaming platform: https://UMLE.lnk.to/TusaYD Subscribe to my YouTube channel ...",
+                "thumbnails": {
+                  "default": {
+                    "url": "https://i.ytimg.com/vi/tbneQDc2H3I/default.jpg",
+                    "width": 120,
+                    "height": 90
+                  },
+                  "medium": {
+                    "url": "https://i.ytimg.com/vi/tbneQDc2H3I/mqdefault.jpg",
+                    "width": 320,
+                    "height": 180
+                  },
+                  "high": {
+                    "url": "https://i.ytimg.com/vi/tbneQDc2H3I/hqdefault.jpg",
+                    "width": 480,
+                    "height": 360
+                  }
+                },
+                "channelTitle": "KarolGVEVO",
+                "liveBroadcastContent": "none"
+              }
+            },
+            "full": false,
+            "kind": "youtube#searchResult",
+            "id": "UCz9yS18zJGQObwUL_K-ICnw",
+            "title": "KarolGVEVO"
+          }
+        },
+        "video": {
+          "_readableState": {
+            "objectMode": false,
+            "highWaterMark": 16384,
+            "buffer": {
+              "head": null,
+              "tail": null,
+              "length": 0
+            },
+            "length": 0,
+            "pipes": null,
+            "pipesCount": 0,
+            "flowing": null,
+            "ended": false,
+            "endEmitted": false,
+            "reading": false,
+            "sync": false,
+            "needReadable": true,
+            "emittedReadable": false,
+            "readableListening": false,
+            "resumeScheduled": false,
+            "paused": true,
+            "emitClose": true,
+            "destroyed": false,
+            "defaultEncoding": "utf8",
+            "awaitDrain": 0,
+            "readingMore": false,
+            "decoder": null,
+            "encoding": null
+          },
+          "readable": true,
+          "_events": {},
+          "_eventsCount": 1,
+          "_writableState": {
+            "objectMode": false,
+            "highWaterMark": 16384,
+            "finalCalled": false,
+            "needDrain": false,
+            "ending": false,
+            "ended": false,
+            "finished": false,
+            "destroyed": false,
+            "decodeStrings": true,
+            "defaultEncoding": "utf8",
+            "length": 0,
+            "writing": false,
+            "corked": 0,
+            "sync": true,
+            "bufferProcessing": false,
+            "writecb": null,
+            "writelen": 0,
+            "bufferedRequest": null,
+            "lastBufferedRequest": null,
+            "pendingcb": 0,
+            "prefinished": false,
+            "errorEmitted": false,
+            "emitClose": true,
+            "bufferedRequestCount": 0,
+            "corkedRequestsFree": {
+              "next": null,
+              "entry": null
+            }
+          },
+          "writable": true,
+          "allowHalfOpen": true,
+          "_transformState": {
+            "needTransform": false,
+            "transforming": false,
+            "writecb": null,
+            "writechunk": null,
+            "writeencoding": null
+          }
+        }
+      }
+    ],
+    "nowPlayingVideo": {
+      "_readableState": {
+        "objectMode": false,
+        "highWaterMark": 16384,
+        "buffer": {
+          "head": null,
+          "tail": null,
+          "length": 0
+        },
+        "length": 0,
+        "pipes": null,
+        "pipesCount": 0,
+        "flowing": null,
+        "ended": false,
+        "endEmitted": false,
+        "reading": false,
+        "sync": false,
+        "needReadable": true,
+        "emittedReadable": false,
+        "readableListening": false,
+        "resumeScheduled": false,
+        "paused": true,
+        "emitClose": true,
+        "destroyed": false,
+        "defaultEncoding": "utf8",
+        "awaitDrain": 0,
+        "readingMore": false,
+        "decoder": null,
+        "encoding": null
+      },
+      "readable": true,
+      "_events": {},
+      "_eventsCount": 1,
+      "_writableState": {
+        "objectMode": false,
+        "highWaterMark": 16384,
+        "finalCalled": false,
+        "needDrain": false,
+        "ending": false,
+        "ended": false,
+        "finished": false,
+        "destroyed": false,
+        "decodeStrings": true,
+        "defaultEncoding": "utf8",
+        "length": 0,
+        "writing": false,
+        "corked": 0,
+        "sync": true,
+        "bufferProcessing": false,
+        "writecb": null,
+        "writelen": 0,
+        "bufferedRequest": null,
+        "lastBufferedRequest": null,
+        "pendingcb": 0,
+        "prefinished": false,
+        "errorEmitted": false,
+        "emitClose": true,
+        "bufferedRequestCount": 0,
+        "corkedRequestsFree": {
+          "next": null,
+          "entry": null
+        }
+      },
+      "writable": true,
+      "allowHalfOpen": true,
+      "_transformState": {
+        "needTransform": false,
+        "transforming": false,
+        "writecb": null,
+        "writechunk": null,
+        "writeencoding": null
+      }
+    },
+    "nowPlayingVideoInfo": {
+      "type": "video",
+      "raw": {
+        "kind": "youtube#searchResult",
+        "etag": "\"Fznwjl6JEQdo1MGvHOGaz_YanRU/FKS7gfyiiClG2612hgtE8Ya9BLo\"",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "tbneQDc2H3I"
+        },
+        "snippet": {
+          "publishedAt": "2019-11-08T02:00:10.000Z",
+          "channelId": "UCz9yS18zJGQObwUL_K-ICnw",
+          "title": "KAROL G, Nicki Minaj - Tusa (Official Video)",
+          "description": "KAROL G, Nicki Minaj - Tusa (Official Video) Stream \"Tusa\" on your favorite streaming platform: https://UMLE.lnk.to/TusaYD Subscribe to my YouTube channel ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/tbneQDc2H3I/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/tbneQDc2H3I/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/tbneQDc2H3I/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "KarolGVEVO",
+          "liveBroadcastContent": "none"
+        }
+      },
+      "full": false,
+      "kind": "youtube#searchResult",
+      "id": "tbneQDc2H3I",
+      "title": "KAROL G, Nicki Minaj - Tusa (Official Video)",
+      "description": "KAROL G, Nicki Minaj - Tusa (Official Video) Stream \"Tusa\" on your favorite streaming platform: https://UMLE.lnk.to/TusaYD Subscribe to my YouTube channel ...",
+      "thumbnails": {
+        "default": {
+          "url": "https://i.ytimg.com/vi/tbneQDc2H3I/default.jpg",
+          "width": 120,
+          "height": 90
+        },
+        "medium": {
+          "url": "https://i.ytimg.com/vi/tbneQDc2H3I/mqdefault.jpg",
+          "width": 320,
+          "height": 180
+        },
+        "high": {
+          "url": "https://i.ytimg.com/vi/tbneQDc2H3I/hqdefault.jpg",
+          "width": 480,
+          "height": 360
+        }
+      },
+      "publishedAt": "2019-11-08T02:00:10.000Z",
+      "channel": {
+        "type": "channel",
+        "raw": {
+          "kind": "youtube#searchResult",
+          "etag": "\"Fznwjl6JEQdo1MGvHOGaz_YanRU/FKS7gfyiiClG2612hgtE8Ya9BLo\"",
+          "id": {
+            "kind": "youtube#video",
+            "videoId": "tbneQDc2H3I"
+          },
+          "snippet": {
+            "publishedAt": "2019-11-08T02:00:10.000Z",
+            "channelId": "UCz9yS18zJGQObwUL_K-ICnw",
+            "title": "KAROL G, Nicki Minaj - Tusa (Official Video)",
+            "description": "KAROL G, Nicki Minaj - Tusa (Official Video) Stream \"Tusa\" on your favorite streaming platform: https://UMLE.lnk.to/TusaYD Subscribe to my YouTube channel ...",
+            "thumbnails": {
+              "default": {
+                "url": "https://i.ytimg.com/vi/tbneQDc2H3I/default.jpg",
+                "width": 120,
+                "height": 90
+              },
+              "medium": {
+                "url": "https://i.ytimg.com/vi/tbneQDc2H3I/mqdefault.jpg",
+                "width": 320,
+                "height": 180
+              },
+              "high": {
+                "url": "https://i.ytimg.com/vi/tbneQDc2H3I/hqdefault.jpg",
+                "width": 480,
+                "height": 360
+              }
+            },
+            "channelTitle": "KarolGVEVO",
+            "liveBroadcastContent": "none"
+          }
+        },
+        "full": false,
+        "kind": "youtube#searchResult",
+        "id": "UCz9yS18zJGQObwUL_K-ICnw",
+        "title": "KarolGVEVO"
+      }
+    },
+    "prefix": "!",
+    "loop": false
+  }
+}
