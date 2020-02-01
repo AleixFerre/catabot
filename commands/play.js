@@ -27,7 +27,7 @@ module.exports = {
                 // Update now playing
                 server.nowPlayingVideo = server.queue[0].video;
                 server.nowPlayingVideoInfo = server.queue[0].videoInfo;
-                
+
                 // Next sond
                 server.queue.shift();
             }
@@ -40,18 +40,6 @@ module.exports = {
                 }
             });
         }
-        
-        if (!args[0]) {
-            message.reply("No se el que vols buscar... :(");
-            message.delete().catch(console.error);
-            return;
-        }
-
-        if (!message.member.voiceChannel) {
-            message.reply("Posa't a un canal de veu perquè pugui unir-me.");
-            message.delete().catch(console.error);
-            return;
-        }
 
         // Creem la estructura de dades...
         if (!servers[message.guild.id]) {
@@ -62,6 +50,18 @@ module.exports = {
                 prefix: '!',
                 loop: false
             };
+        }
+        
+        if (!args[0]) {
+            message.reply("No se el que vols buscar... :(");
+            message.channel.send(server.prefix + "help play");
+            return;
+        }
+
+        if (!message.member.voiceChannel) {
+            message.reply("Posa't a un canal de veu perquè pugui unir-me.");
+            message.channel.send(server.prefix + "help play");
+            return;
         }
 
         message.channel.send("Buscant la cançó...").then((msg) => {
@@ -81,7 +81,6 @@ module.exports = {
 
                     server.nowPlayingVideo = server.queue[0].video;
                     server.nowPlayingVideoInfo = server.queue[0].videoInfo;
-
 
                     message.member.voiceChannel.join().then((connection) => {
                         play(connection, message, msg);

@@ -1,11 +1,6 @@
-const { GOOGLE_API_KEY } = require("../config.json");
-const ytdl = require("ytdl-core");
-const YouTube = require('simple-youtube-api');
-const youtube = new YouTube(GOOGLE_API_KEY);
-
 module.exports = {
 	name: 'loop',
-	description: 'Activa o Desactiva el Mode Loop',
+	description: 'Activa o Desactiva el Mode Loop :: Quan està activat, repeteix la mateixa cançó una i altra vegada',
 	usage: '[ true/false ]',
 	execute(message, args, servers) {
         
