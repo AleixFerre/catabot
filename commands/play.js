@@ -6,7 +6,7 @@ const youtube = new YouTube(GOOGLE_API_KEY);
 module.exports = {
 	name: 'play',
 	description: 'Posa la musica que vulguis a Youtube!',
-	usage: '< link/cerca >',
+    usage: '< link/cerca >',
 	execute(message, args, servers) {
         function play (connection, message, msg) {
             let server = servers[message.guild.id];
@@ -51,6 +51,8 @@ module.exports = {
                 loop: false
             };
         }
+        
+        let server = servers[message.guild.id];
         
         if (!args[0]) {
             message.reply("No se el que vols buscar... :(");

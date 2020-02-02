@@ -84,7 +84,7 @@ client.on('guildMemberAdd', async (member) => {
 
 	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
 	
-	let channel = message.guild.systemChannel;
+	let channel = member.guild.systemChannel;
 	if (!channel) channel = member.guild.channels.find(ch => ch.name === 'general');
 	if (!channel) channel = message.channel;
 	if (!channel) return;
@@ -139,31 +139,15 @@ client.on('message', async (message) => {
     if (!message.content.startsWith(prefix))
 		return;
 	
-    if (!client.commands.has(commandName))
-		return;
-	
 	if (!message.channel.members && commandName != 'help') {
 		// Estem a DM, només funciona el help
 		message.author.send("Aqui només funciona el help!");
 		return;
 	}
 
-	if (commandName != 'help') {
-		let userData = JSON.parse(fs.readFileSync("./Storage/userData.json", 'utf8'));
-		
-		if (!userData[message.guild.id + message.author.id]) {
-			userData[message.guild.id + message.author.id] = {};
-		}
-		
-		if (!userData[message.guild.id + message.author.id].money) {
-			userData[message.guild.id + message.author.id].money = 1000;
-		}
-		
-		fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
-	}
-		
-
-    const command = client.commands.get(commandName);
+	const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+	
+	if (!command) return;
 
     try {
         command.execute(message, args, servers, userData);
@@ -172,11 +156,9 @@ client.on('message', async (message) => {
 		message.reply('alguna cosa ha anat malament, siusplau contacta amb ' + config.ownerDiscordUsername);
 	}
 	
-	// In order to keep all the history clean, we delete all the users commands from the chat.
+	// In order to keep all the history clean, we delete all the users' commands from the chat.
 	// message.delete();
 
 });
 
 client.login(config.token);
-
-

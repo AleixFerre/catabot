@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'queue',
 	description: 'Mostra la cua',
+    aliases: ['q'],
 	execute(message, args, servers) {
         message.channel.send("Obtenint cua...").then((msg) => {
             let server = servers[message.guild.id];

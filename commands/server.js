@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'server',
 	description: 'Display info about this server.',
+    aliases: ['serverinfo'],
 	execute(message) {
 		message.channel.send({embed: {
             title: "Server info",
@@ -13,7 +14,8 @@ module.exports = {
                 name: "Total members",
                 value: message.guild.memberCount,
                 inline: true
-            }]
+            }],
+            timestamp: new Date()
         }});
 	},
 };
