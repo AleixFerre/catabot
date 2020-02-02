@@ -20,8 +20,6 @@ module.exports = {
             };
         }
 
-        let server = servers[message.guild.id];
-
         if (!args[0]) {
             message.reply("necessito saber el què buscar...");
             message.channel.send("!help search");
@@ -134,6 +132,8 @@ module.exports = {
                             videoInfo: results[id-1]
                         });
 
+                        msg.clearReactions();
+
                         if (!message.guild.voiceConnection) {
                             server.nowPlayingVideo = server.queue[0].video;
                             server.nowPlayingVideoInfo = server.queue[0].videoInfo;
@@ -141,7 +141,7 @@ module.exports = {
                             message.member.voiceChannel.join().then((connection) => {
                                 play(connection, message, msg);
                             });
-                        }                        
+                        }
                         
                         // ---------------------------------
                         function play (connection, message, msg) {

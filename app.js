@@ -83,6 +83,8 @@ client.on('guildMemberAdd', async (member) => {
 	}
 
 	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
+
+	console.log("Nou membre afegit i dades actualitzades");
 	
 	let channel = member.guild.systemChannel;
 	if (!channel) channel = member.guild.channels.find(ch => ch.name === 'general');
