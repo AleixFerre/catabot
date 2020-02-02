@@ -28,7 +28,7 @@ module.exports = {
                 server.nowPlayingVideo = server.queue[0].video;
                 server.nowPlayingVideoInfo = server.queue[0].videoInfo;
 
-                // Next sond
+                // Next song
                 server.queue.shift();
             }
             
@@ -80,7 +80,6 @@ module.exports = {
                 msg.edit("S'ha afegit a la cua: " + results[0].title + '\n');
                 
                 if (!message.guild.voiceConnection) {
-
                     server.nowPlayingVideo = server.queue[0].video;
                     server.nowPlayingVideoInfo = server.queue[0].videoInfo;
 

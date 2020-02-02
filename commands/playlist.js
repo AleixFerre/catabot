@@ -52,6 +52,8 @@ module.exports = {
                 loop: false
             };
         }
+        
+        let server = servers[message.guild.id];
 
         if (!args[0]) {
             message.reply("Posa el link de la playlist que vulguis!");
