@@ -3,7 +3,10 @@ module.exports = {
 	description: 'Fes que el bot digui el que vulguis',
 	usage: '< text >',
 	execute(message, args, servers) {
+
         if (args[0]) {
+
+            if (args[0] === '!say') return message.reply("no em facis tornar boig!!");
             message.channel.send(args.join(" ")).catch(console.error);
         } else {
             message.reply("Què vols que digui?").catch(console.error);
