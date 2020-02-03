@@ -39,6 +39,10 @@ module.exports = {
 		if (!command) {
 			return message.reply(command + ' no és una comanda vàlida!');
 		}
+		
+		if (message.author.bot) {
+			message.delete();
+		} 
 
 		data.push(`**Nom:** ${command.name}`);
 

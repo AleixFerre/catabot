@@ -2,10 +2,14 @@ module.exports = {
 	name: 'loop',
 	description: 'Activa o Desactiva el Mode Loop :: Quan està activat, repeteix la mateixa cançó una i altra vegada',
 	usage: '[ true/false ]',
+    aliases: ['lp', 'l'],
 	execute(message, args, servers) {
         
+        let prefix = servers[message.guild.id].prefix;
+
         if (!message.member.voiceChannel) {
-            message.reply("Posa't a un canal de veu perquè pugui unir-me.");
+            message.reply("posa't a un canal de veu perquè pugui unir-me.");
+            message.channel.send(prefix + 'help loop');
             message.delete().catch(console.error);
             return;
         }
@@ -16,7 +20,8 @@ module.exports = {
             else if (args[0] === 'false')
                 servers[message.guild.id].loop = false;
             else {
-                message.channel.send(servers[message.guild.id].prefix + "help loop");
+                message.reply("insereix un paràmetre vàlid (true/false)");
+                message.channel.send(prefix + "help loop");
                 return;
             }
         } else {

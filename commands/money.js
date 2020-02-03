@@ -1,7 +1,12 @@
 module.exports = {
 	name: 'money',
 	description: 'Et mostra els diners que tens',
+    aliases: ['profile', 'diners'],
 	execute(message, args, servers, userData) {
+
+
+        //TODO: ESTARIA BÉ QUE SI MENCIONES A ALGU, ET MOSTRÉS EL SEU PERFIL
+
         message.channel.send({embed: {
             title: "Banc",
             color: 0xFF0000,

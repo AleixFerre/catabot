@@ -6,10 +6,6 @@ module.exports = {
 
         let prefix = servers[message.guild.id].prefix;
 
-        function kickHelp() {
-            message.channel.send(prefix + 'help kick').then((msg) => {msg.delete();});
-        }
-
         let user = message.mentions.users.first();
 
         if (user) {
@@ -30,19 +26,19 @@ module.exports = {
                     // This is generally due to the bot not being able to kick the member,
                     // either due to missing permissions or role hierarchy
                     message.reply('No es pot expulsar al membre.\nTens permisos?\nProva-ho manualment.');
-                    kickHelp();
+                    message.channel.send(prefix + 'help kick');
                     // Log the error
                     console.error(err);
                 });
             } else {
                 // The mentioned user isn't in this guild
                 message.reply('Aquesta persona no pertany al servidor');
-                kickHelp();
+                message.channel.send(prefix + 'help kick');
             }
         // Otherwise, if no user was mentioned
         } else {
             message.reply('Menciona a la persona que vols fer fora!');
-            kickHelp();
+            message.channel.send(prefix + 'help kick');
         }
 	},
 };

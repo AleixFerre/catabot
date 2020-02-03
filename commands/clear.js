@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'clear',
 	description: 'Esborra tota la cua',
+    aliases: ['c'],
 	execute(message,args,servers) {
         message.channel.send("Borrant la cua...").then((msg) => {
             let server = servers[message.guild.id];
@@ -12,9 +13,11 @@ module.exports = {
                     msg.edit("S'ha borrat la cua correctament!");
                 } else {
                     msg.edit("No hi ha elements a la cua!");
+                    message.channel.send(server.prefix + 'help clear');
                 }
             } else {
                 msg.edit("Has d'estar en un canal de veu amb el bot!");
+                message.channel.send(server.prefix + 'help clear');
             }
         }).catch(console.error);
 	},

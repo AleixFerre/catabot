@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'queue',
-	description: 'Mostra la cua',
+	description: 'Mostra la cua i la cançó actual',
     aliases: ['q'],
 	execute(message, args, servers) {
         message.channel.send("Obtenint cua...").then((msg) => {
@@ -17,6 +17,7 @@ module.exports = {
                 }
             } else {
                 msg.edit("No pots executar això si el bot no està en cap canal de veu!");
+                message.channel.send(server.prefix + "help queue");
             }
         }).catch(console.error);
 	},

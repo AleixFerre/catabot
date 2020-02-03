@@ -22,9 +22,11 @@ module.exports = {
                     }).catch(console.error);
                 } else {
                     msg.edit("No hi ha prous elements per barrejar!");
+                    message.channel.send(server.prefix + "help shuffle");
                 }
             } else {
                 msg.edit("No hi ha cua!");
+                message.channel.send(server.prefix + "help shuffle");
             }
         }).catch(console.error);
 	},

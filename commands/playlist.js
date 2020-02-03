@@ -7,6 +7,7 @@ module.exports = {
 	name: 'playlist',
 	description: 'Posa les primeres n cançons d\'una llista de reproducció, per defecte 20',
 	usage: '< link_playlist > [ n_cançons <= 20 ]',
+    aliases: ['pl'],
 	execute(message, args, servers) {
         
         function play (connection, message, msg) {
@@ -22,6 +23,7 @@ module.exports = {
                 msg.edit("S'està reproduint: " + server.nowPlayingVideoInfo.title + "\n" + server.nowPlayingVideoInfo.url);
             } catch (error) {
                 msg.edit("--> " + error + '\n Link: ' + server.queue[0].url);
+                message.channel.send(server.prefix + "help playlist");
             }
             
             if (!server.loop) {
@@ -63,6 +65,7 @@ module.exports = {
 
         if (!message.member.voiceChannel) {
             message.reply("Posa't a un canal de veu perquè pugui unir-me.");
+            message.channel.send(server.prefix + "help playlist");
             return;
         }
 
@@ -72,32 +75,35 @@ module.exports = {
             if (args[1]) {
                 mida = args[1];
             }
-            message.channel.send("Inserint " + mida + " cançons de la playlist " + playlist.title);
-            playlist.getVideos(mida)
-            .then((videos) => {
-                let server = servers[message.guild.id];
-                for(let k = 0; k < videos.length; k++) {
-                    server.queue.push({
-                        videoInfo: videos[k],
-                        video: ytdl(videos[k].url, {filter: "audioonly"})
-                    });
-                }
-                message.channel.send(`S'ha afegit la playlist amb ${videos.length} videos.`);
-                if (!message.guild.voiceConnection) {
-                    message.member.voiceChannel.join().then((connection) => {
+            
+            message.channel.send("Inserint " + mida + " cançons de la playlist " + playlist.title).then((msg) => {
 
-                        server.nowPlayingVideo = server.queue[0].video;
-                        server.nowPlayingVideoInfo = server.queue[0].videoInfo;
-    
-                        play(connection, message, msg);
-                    });
-                }
-            })
-            .catch(console.error);
+                playlist.getVideos(mida)
+                .then((videos) => {
+                    let server = servers[message.guild.id];
+                    for(let k = 0; k < videos.length; k++) {
+                        server.queue.push({
+                            videoInfo: videos[k],
+                            video: ytdl(videos[k].url, {filter: "audioonly"})
+                        });
+                    }
+                    msg.edit(`S'ha afegit la playlist amb ${videos.length} videos.`);
+                    if (!message.guild.voiceConnection) {
+                        message.member.voiceChannel.join().then((connection) => {
+                            
+                            server.nowPlayingVideo = server.queue[0].video;
+                            server.nowPlayingVideoInfo = server.queue[0].videoInfo;
+                            
+                            play(connection, message, msg);
+                        });
+                    }
+                })
+                .catch(console.error);
+            });
         })
-        .catch( (err) => {
+        .catch(() => {
             message.reply("Siusplau posa un link!");
-            message.channel.send("!help playlist");
+            message.channel.send(server.prefix + "help playlist");
         });
 	},
 };

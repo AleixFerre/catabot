@@ -7,7 +7,9 @@ module.exports = {
 	name: 'play',
 	description: 'Posa la musica que vulguis a Youtube!',
     usage: '< link/cerca >',
+    aliases: ['p'],
 	execute(message, args, servers) {
+
         function play (connection, message, msg) {
             let server = servers[message.guild.id];
             
@@ -21,6 +23,7 @@ module.exports = {
                 msg.edit("S'està reproduint: " + server.nowPlayingVideoInfo.title + "\n" + server.nowPlayingVideoInfo.url);
             } catch (error) {
                 msg.edit("--> " + error + '\n Link: ' + server.queue[0].url);
+                message.channel.send(server.prefix + "help play");
             }
             
             if (!server.loop) {

@@ -5,10 +5,6 @@ module.exports = {
 	execute(message, args, servers) {
 
         let prefix = servers[message.guild.id].prefix;
-
-        function banHelp() {
-            message.channel.send(prefix + 'help ban').then((msg) => {msg.delete();});
-        }
         
         user = message.mentions.users.first();
         // If we have a user mentioned
@@ -27,17 +23,17 @@ module.exports = {
                     // This is generally due to the bot not being able to ban the member,
                     // either due to missing permissions or role hierarchy
                     message.reply('No es pot banejar a l\'usuari\nTens permisos?\nProba-ho manualment\n'+err);
-                    banHelp();
+                    message.channel.send(prefix + 'help ban');
                 });
             } else {
                 // The mentioned user isn't in this guild
                 message.reply('Aquest usuari no pertany al servidor!');
-                banHelp();
+                message.channel.send(prefix + 'help ban');
             }
         } else {
             // Otherwise, if no user was mentioned
             message.reply('A qui vols que faci fora?');
-            banHelp();
+            message.channel.send(prefix + 'help ban');
         }
 	},
 };

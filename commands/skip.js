@@ -11,6 +11,7 @@ module.exports = {
                 }
             } else {
                 msg.edit("No es pot passar a la següent cançó!");
+                message.channel.send(server.prefix + "help skip");
             }
         });
 	},

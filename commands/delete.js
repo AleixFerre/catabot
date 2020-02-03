@@ -2,13 +2,10 @@ module.exports = {
 	name: 'delete',
 	description: 'Esborra la cançó de la posició que vulguis; per defecte, la següent',
 	usage: '< posicio >',
+    aliases: ['del'],
 	execute(message, args, servers) {
-        function deleteHelp() {
-            var dcontent = '**COM USAR EL DELETE?**\n```\n' +
-            '-> ' + prefix + 'delete [ pos ]\n' + 
-            '       Esborra la cançó de la posició que vulguis; per defecte la següent \n```\n';
-            message.channel.send(dcontent);
-        }
+
+        let prefix = servers[message.guild.id].prefix;
 
         let position = 1;
         if (args[0]) {
@@ -23,15 +20,15 @@ module.exports = {
                         msg.edit("Esborrat a la posicio " + position);
                     } else {
                         msg.edit("No existeix cap cançó a la posicio " + position);
-                        deleteHelp();
+                        message.channel.send(prefix + 'help delete');
                     }
                 } else {
                     msg.edit("La cua és buida!"); 
-                    deleteHelp();
+                    message.channel.send(prefix + 'help delete');
                 }
             } else {
                 msg.edit("No has creat cap cua encara!");
-                deleteHelp();
+                message.channel.send(prefix + 'help delete');
             }
         }).catch(console.error);
 	},
