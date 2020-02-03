@@ -7,13 +7,11 @@ module.exports = {
             let server = servers[message.guild.id];
             
             if (message.guild.voiceConnection) {
-                let content = "**S'està reproduint...**\n```\n";
+                let content = "**S'està reproduint...**\n```";
                 if (server.loop) {
-                    content += "LOOP ACTIVAT\n";
-                } else {
-                    content += "LOOP DESACTIVAT\n";
+                    content += "diff\n-LOOP ACTIVAT 🔁\n```\n```";
                 }
-                content += server.nowPlayingVideoInfo.title + '\n' + server.nowPlayingVideoInfo.url + '\n';
+                content += '\n' + server.nowPlayingVideoInfo.title + '\n' + server.nowPlayingVideoInfo.url + '\n';
                 msg.edit(content + "```\n");
             } else {
                 msg.edit("No pots executar això si el bot no està en cap canal de veu!");

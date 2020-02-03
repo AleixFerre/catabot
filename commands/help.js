@@ -37,7 +37,7 @@ module.exports = {
 		const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
 
 		if (!command) {
-			return message.reply(command + ' no és una comanda vàlida!');
+			return message.reply(name + ' no és una comanda vàlida!');
 		}
 		
 		if (message.author.bot) {

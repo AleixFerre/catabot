@@ -2,8 +2,9 @@
     "token":"",
     "prefix":"!",
     "IdOwner":"",
-    "version":"0.2",
+    "version":"0.3",
     "GOOGLE-API-KEY":"",
     "clientid": "",
-    "ownerDiscordUsername": ""
+    "ownerDiscordUsername": "",
+    "catAPIKey": ""
 }

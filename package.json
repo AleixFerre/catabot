@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "0.2",
+  "version": "0.3",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,6 +12,8 @@
     "canvas": "^2.6.1",
     "discord.js": "^11.5.1",
     "ffmpeg-binaries": "^4.0.0",
+    "jquery": "^3.4.1",
+    "jsdom": "^16.1.0",
     "opusscript": "0.0.7",
     "simple-youtube-api": "^5.2.1",
     "ytdl-core": "^1.0.7"

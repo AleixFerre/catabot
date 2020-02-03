@@ -60,6 +60,7 @@ module.exports = {
                         await msg.react('8️⃣');
                         await msg.react('9️⃣');
                         await msg.react('🔟');
+                        await msg.react('❌');
                     } catch (error) {
                         console.error('One of the emojis failed to react.');
                     }
@@ -75,7 +76,8 @@ module.exports = {
                                                         reaction.emoji.name === '7️⃣' || 
                                                         reaction.emoji.name === '8️⃣' || 
                                                         reaction.emoji.name === '9️⃣' || 
-                                                        reaction.emoji.name === '🔟' ) &&
+                                                        reaction.emoji.name === '🔟' || 
+                                                        reaction.emoji.name === '❌' ) &&
                                                         user.id === message.author.id;
                 
                     msg_react.edit("Esperant la resposta (15s)...").then((waiting) => {
@@ -127,7 +129,12 @@ module.exports = {
                                 case '🔟':
                                     id = 10;
                                 break;
+                                case '❌':
+                                    id = -1;
+                                break;
                             }
+
+                            if (id === -1) return msg.delete();
                             
                             let server = servers[message.guild.id];
 
