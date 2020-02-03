@@ -2,6 +2,7 @@ module.exports = {
 	name: 'money',
 	description: 'Et mostra els diners que tens',
     aliases: ['profile', 'diners'],
+	type: 'banc',
 	execute(message, args, servers, userData) {
 
 

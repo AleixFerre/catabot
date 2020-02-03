@@ -14,9 +14,97 @@ module.exports = {
         }
         
         if (!args.length) {
-			data.push('**COMANDES DEL CATABOT**\n```\n');
-			data.push(commands.map(command => command.name).join(', '));
-			data.push('\nPots enviar ' + prefix + 'help [nom comanda] per obtenir informació més detallada de la comanda!```');
+			data.push('**COMANDES DEL CATABOT**');
+
+			// Creem una variable string per anar guardant tot el contingut del help que anem posant al embed
+			let helpContent = "```\n";
+
+			// Creem les taules auxiliars per guardar les comandes de cada tipus
+			let musica = [];
+			let mod = [];
+			let banc = [];
+			let entreteniment = [];
+			let altres = [];
+			let maxLength = 0;
+
+			commands.forEach((command) => {
+				switch (command.type) {
+					case 'musica':
+						musica.push(command);
+						break;
+					case 'mod':
+						mod.push(command);
+						break;
+					case 'banc':
+						banc.push(command);
+						break;
+					case 'entreteniment':
+						entreteniment.push(command);
+						break;
+					case 'altres':
+						altres.push(command);
+						break;
+					default:
+						altres.push(command);
+						break;
+				}
+
+				if (command.name.length > maxLength) {
+					maxLength = command.name.length;
+				}
+
+			});
+
+			maxLength += 2; // Deixem un marge
+
+			helpContent += '**COMANDES DE MUSICA**\n';
+			musica.forEach((command) => {
+				let spaces = "";
+				for(let i=0; i<maxLength-command.name.length; i++) {
+					spaces += " ";
+				}
+				helpContent += spaces + command.name + ' :: ' + command.description + '\n';
+			});
+
+			helpContent += '\n**COMANDES DE MODERACIÓ**\n';
+			mod.forEach((command) => {
+				let spaces = "";
+				for(let i=0; i<maxLength-command.name.length; i++) {
+					spaces += " ";
+				}
+				helpContent += spaces + command.name + ' :: ' + command.description + '\n';
+			});
+
+			helpContent += '\n**COMANDES DE BANC**\n';
+			banc.forEach((command) => {
+				let spaces = "";
+				for(let i=0; i<maxLength-command.name.length; i++) {
+					spaces += " ";
+				}
+				helpContent += spaces + command.name + ' :: ' + command.description + '\n';
+			});
+
+			helpContent += '\n**COMANDES DE ENTRETENIMENT**\n';
+			entreteniment.forEach((command) => {
+				let spaces = "";
+				for(let i=0; i<maxLength-command.name.length; i++) {
+					spaces += " ";
+				}
+				helpContent += spaces + command.name + ' :: ' + command.description + '\n';
+			});
+
+			helpContent += '\n**ALTRES COMANDES**\n';
+			altres.forEach((command) => {
+				let spaces = "";
+				for(let i=0; i<maxLength-command.name.length; i++) {
+					spaces += " ";
+				}
+				helpContent += spaces + command.name + ' :: ' + command.description + '\n';
+			});
+
+			data.push(helpContent);
+
+			data.push('Pots enviar ' + prefix + 'help [nom comanda] per obtenir informació més detallada de la comanda!```');
 
 			return message.author.send(data, { split: true })
 				.then(() => {

@@ -50,7 +50,7 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 ### **COMANDES D'ENTRETENIMENT**
 ```
 -> !cat                 :: Mostra una imatge d'un gat aleatori.
--> !welcome             :: Et dóna la benvinguda, també s'executa al entrar un nou membre.
+-> !welcome             :: Et dóna la benvinguda; també s'executa al entrar un nou membre.
 -> !say                 :: Fés que el bot digui el que vulguis.
 ```
 
@@ -60,6 +60,7 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 -> !invite              :: T'envia un missatge amb el invite link del bot.
 -> !prefix [new]        :: Et mostra el prefix i et permet cambiar-lo amb un segon argument
 -> !server              :: Et mostra informació sobre el servidor
+-> !help                :: Et mostra informació sobre les comandes del bot
 ```
 
 ## CURRENT VERSION

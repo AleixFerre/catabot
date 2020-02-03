@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'shuffle',
 	description: 'Barreja la cua',
+	type: 'musica',
 	execute(message, args, servers) {
         async function shuffle(a) {
             var j, x, i;

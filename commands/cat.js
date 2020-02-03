@@ -9,6 +9,7 @@ const config = require('../config.json');
 module.exports = {
 	name: 'cat',
 	description: 'Mostra una imatge d\'un gat aleatori',
+	type: 'entreteniment',
 	execute(message) {
 
         let $ = require('jquery')(window);

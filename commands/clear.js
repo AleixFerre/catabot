@@ -2,6 +2,7 @@ module.exports = {
 	name: 'clear',
 	description: 'Esborra tota la cua',
     aliases: ['c'],
+	type: 'musica',
 	execute(message,args,servers) {
         message.channel.send("Borrant la cua...").then((msg) => {
             let server = servers[message.guild.id];

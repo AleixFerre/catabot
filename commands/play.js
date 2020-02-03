@@ -8,6 +8,7 @@ module.exports = {
 	description: 'Posa la musica que vulguis a Youtube!',
     usage: '< link/cerca >',
     aliases: ['p'],
+	type: 'musica',
 	execute(message, args, servers) {
 
         function play (connection, message, msg) {

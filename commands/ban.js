@@ -2,6 +2,7 @@ module.exports = {
 	name: 'ban',
     description: 'Beta un usuari del servidor',
 	usage: '< @usuari > [ descripcio del ban ]',
+	type: 'mod',
 	execute(message, args, servers) {
 
         let prefix = servers[message.guild.id].prefix;

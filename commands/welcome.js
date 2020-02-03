@@ -15,6 +15,7 @@ const applyText = (canvas, text) => {
 module.exports = {
 	name: 'welcome',
 	description: 'Et dona la benvinguda',
+	type: 'entreteniment',
 	async execute(message) {
 
         const member = message.member;

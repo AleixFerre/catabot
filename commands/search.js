@@ -7,6 +7,7 @@ module.exports = {
 	name: 'search',
 	description: 'Mostra els 10 primers resultats de YouTube i pots escollir',
     usage: '< cerca >',
+	type: 'musica',
 	execute(message, args, servers) {
 
         // Creem la estructura de dades...

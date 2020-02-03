@@ -8,6 +8,7 @@ module.exports = {
 	description: 'Posa les primeres n cançons d\'una llista de reproducció, per defecte 20',
 	usage: '< link_playlist > [ n_cançons <= 20 ]',
     aliases: ['pl'],
+	type: 'musica',
 	execute(message, args, servers) {
         
         function play (connection, message, msg) {

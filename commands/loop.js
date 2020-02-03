@@ -3,6 +3,7 @@ module.exports = {
 	description: 'Activa o Desactiva el Mode Loop :: Quan està activat, repeteix la mateixa cançó una i altra vegada',
 	usage: '[ true/false ]',
     aliases: ['lp', 'l'],
+	type: 'musica',
 	execute(message, args, servers) {
         
         let prefix = servers[message.guild.id].prefix;

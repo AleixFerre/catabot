@@ -2,6 +2,7 @@ module.exports = {
 	name: 'join',
 	description: 'El bot entra dins del teu canal de veu',
     aliases: ['j'],
+	type: 'musica',
 	execute(message, args, servers) {
         
         let prefix = servers[message.guild.id].prefix;

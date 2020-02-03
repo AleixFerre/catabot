@@ -2,6 +2,7 @@ module.exports = {
 	name: 'queue',
 	description: 'Mostra la cua i la cançó actual',
     aliases: ['q'],
+	type: 'musica',
 	execute(message, args, servers) {
         message.channel.send("Obtenint cua...").then((msg) => {
             let server = servers[message.guild.id];

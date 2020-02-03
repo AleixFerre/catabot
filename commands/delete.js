@@ -3,6 +3,7 @@ module.exports = {
 	description: 'Esborra la cançó de la posició que vulguis; per defecte, la següent',
 	usage: '< posicio >',
     aliases: ['del'],
+	type: 'musica',
 	execute(message, args, servers) {
 
         let prefix = servers[message.guild.id].prefix;

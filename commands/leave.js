@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'leave',
 	description: 'Se\'n va del canal de veu',
+	type: 'musica',
 	execute(message, args, servers) {
 
         let prefix = servers[message.guild.id].prefix;

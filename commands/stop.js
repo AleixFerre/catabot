@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'stop',
 	description: 'Borra tota la cua i desconnecta el bot del canal',
+	type: 'musica',
     execute(message, args, servers) {
         let server = servers[message.guild.id];
         message.channel.send("Borrant la cua i sortint del canal...");

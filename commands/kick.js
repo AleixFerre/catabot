@@ -2,6 +2,7 @@ module.exports = {
 	name: 'kick',
 	description: 'Expulsa permanentment un usuari del servidor',
 	usage: '< @usuari > [ descripcio del kick ]',
+	type: 'mod',
 	execute(message, args, servers) {
 
         let prefix = servers[message.guild.id].prefix;

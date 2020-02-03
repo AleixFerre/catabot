@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'resume',
 	description: 'Torna a reproduir la cançó que s\'estava reproduint',
+	type: 'musica',
 	execute(message, args, servers) {     
 
         let server = servers[message.guild.id];

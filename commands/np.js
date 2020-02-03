@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'np',
 	description: 'Mostra la cançó que s\'està reproduint ara mateix',
+	type: 'musica',
 	execute(message, args, servers) {
         message.channel.send("S'està reproduint...").then((msg) => {
 

@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'pause',
 	description: 'Pausa la cançó que s\'està reproduint actualment',
+	type: 'musica',
 	execute(message, args, servers) {
                 
         let server = servers[message.guild.id];

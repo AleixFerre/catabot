@@ -2,6 +2,7 @@ module.exports = {
 	name: 'skip',
 	description: 'Passa a la següent de la cua',
     aliases: ['next'],
+	type: 'musica',
 	execute(message, args, servers) {
         message.channel.send("Passant a la següent cançó...").then((msg) => {
             let server = servers[message.guild.id];
