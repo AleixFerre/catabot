@@ -48,8 +48,13 @@ client.on("ready", () => {
 			};
 		}
 
-		let newName = "[ " + config.prefix + " ] CataBOT";
-		guild.members.get(config.clientid).setNickname(newName);
+		try {
+			let newName = "[ " + config.prefix + " ] CataBOT";
+			guild.members.get(config.clientid).setNickname(newName);
+		} catch (err) {
+			console.error(err);
+		}
+
 	});
 
 	console.log("READY :: Version: " + config.version + "\nON " + client.guilds.size + " servers\n" + 

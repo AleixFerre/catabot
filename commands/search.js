@@ -35,15 +35,28 @@ module.exports = {
             return;
         }
 
-        message.channel.send('Cercant ' + args[0] + '...').then((msg) => {
-            youtube.searchVideos(args[0], 10) // Get the first one
+        let cerca = "";
+
+        for(let i=0; i<args.length; i++) {
+            cerca += args[i] + " ";
+        }
+
+        message.channel.send('Cercant ' + cerca + '...').then((msg) => {
+            youtube.searchVideos(cerca, 10)
             .then(async (results) => {
-                let content = "**CERCA per "+ args[0] +"**\n```";
+                let content = "**CERCA per "+ cerca +"**\n```";
+                if (results.length === 0) {
+                    content += "No s'han trobat resultats per " + cerca;
+                    msg.edit(content + '```');
+                    return;
+                }
+
                 let i = 1;
                 results.forEach((res) => {
                     content += i + '.- ' + res.title + '\n';
                     i++;
                 });
+                
                 msg.edit(content + '```');
 
                 msg.channel.send("Espera a que carreguin les reaccions...").then( async (msg_react) => {
@@ -151,15 +164,15 @@ module.exports = {
                                 server.nowPlayingVideoInfo = server.queue[0].videoInfo;
             
                                 message.member.voiceChannel.join().then((connection) => {
-                                    play(connection, message, msg);
+                                    play(connection, server, msg);
                                 });
                             }
                             
                             // ---------------------------------
-                            function play (connection, message, msg) {
-                                let server = servers[message.guild.id];
+                            function play (connection, server, msg) {
                                 
                                 let musica = server.queue[0].video;
+
                                 if (server.loop) {
                                     musica = server.nowPlayingVideo;
                                 }
@@ -182,7 +195,7 @@ module.exports = {
                                 
                                 server.dispatcher.on("end", function() {
                                     if (server.queue[0] || server.loop) {
-                                        play(connection, message, msg);
+                                        play(connection, server, msg);
                                     } else {
                                         connection.disconnect();
                                     }
