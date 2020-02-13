@@ -46,8 +46,8 @@ client.on("guildCreate", (guild) => {
 		console.error(err);
 	}
 
-	console.log("El bot ha entrat al servidor " + guild.name + 
-				"\nStoring " + nMembers + " users");
+	console.log("El bot ha entrat al servidor \"" + guild.name + "\"\n" +
+				"Storing " + nMembers + " users");
 	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
 
 });
@@ -65,8 +65,8 @@ client.on("guildDelete", (guild) => {
 		servers[guild.id] = null;
 	}
 
-	console.log("El bot ha sigut expulsat del servidor " + guild.name + 
-				"\nStoring " + nMembers + " users");
+	console.log("El bot ha sigut expulsat del servidor \"" + guild.name + "\"\n" +
+				"Storing " + nMembers + " users");
 	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
 
 });
@@ -143,7 +143,7 @@ client.on('guildMemberAdd', async (member) => {
 
 	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
 
-	console.log("Nou membre \"" + member.name + "\" afegit i dades actualitzades\n" + 
+	console.log("Nou membre \"" + member.user.username + "\" afegit i dades actualitzades\n" + 
 				"Storing " + nMembers + " users");
 	
 	let channel = member.guild.systemChannel;
@@ -196,7 +196,7 @@ client.on('guildMemberRemove', (member) => {
 
 	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
 
-	console.log("El membre \"" + member.name + "\" ha sigut esborrat i dades actualitzades\n" + 
+	console.log("El membre \"" + member.user.username + "\" ha sigut esborrat i dades actualitzades\n" + 
 				"Storing " + nMembers + " users");
 	
 });
