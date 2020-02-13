@@ -49,7 +49,8 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 
 ### **COMANDES D'ENTRETENIMENT**
 ```
--> !cat                 :: Mostra una imatge d'un gat aleatori.
+-> !cat                 :: Mostra una imatge d'un gat aleatori
+-> !meme                :: Mostra una imatge d'un gat aleatori
 -> !welcome             :: Et dóna la benvinguda; també s'executa al entrar un nou membre.
 -> !say                 :: Fés que el bot digui el que vulguis.
 ```
