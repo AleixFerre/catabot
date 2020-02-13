@@ -6,6 +6,7 @@ client.commands = new Discord.Collection();
 
 const config = require("./config.json");
 let userData = JSON.parse(fs.readFileSync("./Storage/userData.json", 'utf8'));
+let nMembers = 0;
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
@@ -15,6 +16,60 @@ for (const file of commandFiles) {
 }
 
 var servers = {};
+
+client.on("guildCreate", (guild) => {
+
+	guild.members.forEach(member => {
+		if (!userData[guild.id + member.user.id]) {
+			userData[guild.id + member.user.id] = {};
+		}
+		if (!userData[guild.id + member.user.id].money) {
+			userData[guild.id + member.user.id].money = 1000;
+		}
+		nMembers++;
+	});
+	
+	if (!servers[guild.id]) {
+		servers[guild.id] = {
+			queue: [],
+			nowPlayingVideo: {},
+			nowPlayingVideoInfo: {},
+			prefix: config.prefix,
+			loop: false
+		};
+	}
+
+	try {
+		let newName = "[ " + config.prefix + " ] CataBOT";
+		guild.members.get(config.clientid).setNickname(newName);
+	} catch (err) {
+		console.error(err);
+	}
+
+	console.log("El bot ha entrat al servidor " + guild.name + 
+				"\nStoring " + nMembers + " users");
+	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
+
+});
+
+client.on("guildDelete", (guild) => {
+
+	guild.members.forEach(member => {
+		if (userData[guild.id + member.user.id]) {
+			userData[guild.id + member.user.id] = null;
+		}
+		nMembers--;
+	});
+	
+	if (servers[guild.id]) {
+		servers[guild.id] = null;
+	}
+
+	console.log("El bot ha sigut expulsat del servidor " + guild.name + 
+				"\nStoring " + nMembers + " users");
+	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
+
+});
 
 client.on("ready", () => {
 
@@ -26,7 +81,6 @@ client.on("ready", () => {
         }
 	});
 
-	let users_count = 0;
 	client.guilds.forEach(guild => {
 		guild.members.forEach(member => {
 			if (!userData[guild.id + member.user.id]) {
@@ -35,9 +89,9 @@ client.on("ready", () => {
 			if (!userData[guild.id + member.user.id].money) {
 				userData[guild.id + member.user.id].money = 1000;
 			}
-			users_count++;
+			nMembers++;
 		});
-			
+		
 		if (!servers[guild.id]) {
 			servers[guild.id] = {
 				queue: [],
@@ -58,7 +112,7 @@ client.on("ready", () => {
 	});
 
 	console.log("READY :: Version: " + config.version + "\nON " + client.guilds.size + " servers\n" + 
-				"Storing " + users_count + " users");
+				"Storing " + nMembers + " users");
 	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
 
 });
@@ -77,8 +131,6 @@ const applyText = (canvas, text) => {
 
 client.on('guildMemberAdd', async (member) => {
 
-	let userData = JSON.parse(fs.readFileSync("./Storage/userData.json", 'utf8'));
-
 	if (!userData[member.guild.id + member.user.id]) {
 		userData[member.guild.id + member.user.id] = {};
 	}
@@ -87,9 +139,12 @@ client.on('guildMemberAdd', async (member) => {
 		userData[member.guild.id + member.user.id].money = 1000;
 	}
 
+	nMembers++;
+
 	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
 
-	console.log("Nou membre afegit i dades actualitzades");
+	console.log("Nou membre \"" + member.name + "\" afegit i dades actualitzades\n" + 
+				"Storing " + nMembers + " users");
 	
 	let channel = member.guild.systemChannel;
 	if (!channel) channel = member.guild.channels.find(ch => ch.name === 'general');
@@ -129,6 +184,21 @@ client.on('guildMemberAdd', async (member) => {
 	const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
 
 	channel.send(`Benvingut al servidor, ${member}!`, attachment);
+});
+
+client.on('guildMemberRemove', (member) => {
+
+	if (userData[member.guild.id + member.user.id]) {
+		userData[member.guild.id + member.user.id] = null;
+	}
+
+	nMembers--;
+
+	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
+
+	console.log("El membre \"" + member.name + "\" ha sigut esborrat i dades actualitzades\n" + 
+				"Storing " + nMembers + " users");
+	
 });
 
 
