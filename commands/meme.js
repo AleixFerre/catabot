@@ -1,9 +1,5 @@
-var jsdom = require("jsdom");
-const { JSDOM } = jsdom;
-const { window } = new JSDOM();
-const { document } = (new JSDOM('')).window;
-global.document = document;
 const Discord = require("discord.js");
+const fetch = require('node-fetch');
 
 module.exports = {
 	name: 'meme',
@@ -11,10 +7,9 @@ module.exports = {
 	type: 'entreteniment',
 	execute(message) {
 
-        let $ = require('jquery')(window);
-        
-        $.getJSON( "https://meme-api.herokuapp.com/gimme", function(data) {
-            
+        fetch("https://meme-api.herokuapp.com/gimme")
+        .then(res => res.json())
+        .then((data) => {
             const exampleEmbed = new Discord.RichEmbed()
             .setColor('#0099ff')
             .setTitle(data.title)

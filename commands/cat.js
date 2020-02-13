@@ -1,10 +1,6 @@
-var jsdom = require("jsdom");
-const { JSDOM } = jsdom;
-const { window } = new JSDOM();
-const { document } = (new JSDOM('')).window;
-global.document = document;
 const Discord = require("discord.js");
 const config = require('../config.json');
+const fetch = require('node-fetch');
 
 module.exports = {
 	name: 'cat',
@@ -12,17 +8,27 @@ module.exports = {
 	type: 'entreteniment',
 	async execute(message) {
 
-        let $ = require('jquery')(window);
         let title = "Gatito";
         let catUrl = "";
         
         async function getCat() {
-            await $.getJSON( "https://api.thecatapi.com/v1/images/search?api_key='" + config.catAPIKey + "'?mime_types=gif", (data) => {
+            await fetch("https://api.thecatapi.com/v1/images/search?api_key='" + config.catAPIKey + "'?mime_types=gif")
+            .then(res => res.json())
+            .then((data) => {
                 catUrl = data[0].url;
             });
         }
 
+        async function getTitle() {
+            await fetch("https://some-random-api.ml/facts/cat")
+            .then(res => res.json())
+            .then((data) => {
+                title = data.fact;
+            });
+        }
+
         await getCat().catch(console.error);
+        await getTitle().catch(console.error);
     
         const exampleEmbed = new Discord.RichEmbed()
         .setColor('#0099ff')

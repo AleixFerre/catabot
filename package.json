@@ -12,8 +12,7 @@
     "canvas": "^2.6.1",
     "discord.js": "^11.5.1",
     "ffmpeg-binaries": "^4.0.0",
-    "jquery": "^3.4.1",
-    "jsdom": "^16.1.0",
+    "node-fetch": "^2.6.0",
     "opusscript": "0.0.7",
     "simple-youtube-api": "^5.2.1",
     "ytdl-core": "^1.0.7"

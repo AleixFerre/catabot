@@ -6,16 +6,17 @@ client.commands = new Discord.Collection();
 
 const config = require("./config.json");
 let userData = JSON.parse(fs.readFileSync("./Storage/userData.json", 'utf8'));
-let nMembers = 0;
+let nMembers = 0; ///< The actual Number of Members in total (all guilds the bot is in)
 
+
+/// Load the commands from all the files
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
 	client.commands.set(command.name, command);
 }
 
-var servers = {};
+var servers = {}; ///< The data structure that handles all the info for the servers
 
 client.on("guildCreate", (guild) => {
 

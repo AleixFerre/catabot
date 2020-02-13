@@ -11,8 +11,7 @@ npm install --save opusscript
 npm install --save ytdl-core
 npm install simple-youtube-api
 npm install canvas
-npm install jquery
-npm install jsdom
+npm install node-fetch --save
 ```
 If you are running this locally
 You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
