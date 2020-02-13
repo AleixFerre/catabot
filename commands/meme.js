@@ -4,22 +4,21 @@ const { window } = new JSDOM();
 const { document } = (new JSDOM('')).window;
 global.document = document;
 const Discord = require("discord.js");
-const config = require('../config.json');
 
 module.exports = {
-	name: 'cat',
-	description: 'Mostra una imatge d\'un gat aleatori',
+	name: 'meme',
+	description: 'Mostra un meme aleatori de reddit',
 	type: 'entreteniment',
 	execute(message) {
 
         let $ = require('jquery')(window);
         
-        $.getJSON( "https://api.thecatapi.com/v1/images/search?api_key='" + config.catAPIKey + "'?mime_types=gif", function(data) {
+        $.getJSON( "https://meme-api.herokuapp.com/gimme", function(data) {
             
             const exampleEmbed = new Discord.RichEmbed()
             .setColor('#0099ff')
-            .setTitle('Mira quin gatet més mono! :3')
-            .setImage(data[0].url);
+            .setTitle(data.title)
+            .setImage(data.url);
             
             message.channel.send(exampleEmbed);
         });

@@ -46,6 +46,14 @@ client.on("guildCreate", (guild) => {
 		console.error(err);
 	}
 
+	client.user.setPresence({
+        status: "online",
+        game: {
+            name: client.guilds.size + " servers.",
+            type: "WATCHING"
+        }
+	});
+
 	console.log("El bot ha entrat al servidor \"" + guild.name + "\"\n" +
 				"Storing " + nMembers + " users");
 	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
@@ -64,6 +72,14 @@ client.on("guildDelete", (guild) => {
 	if (servers[guild.id]) {
 		servers[guild.id] = null;
 	}
+
+	client.user.setPresence({
+        status: "online",
+        game: {
+            name: client.guilds.size + " servers.",
+            type: "WATCHING"
+        }
+	});
 
 	console.log("El bot ha sigut expulsat del servidor \"" + guild.name + "\"\n" +
 				"Storing " + nMembers + " users");
@@ -143,7 +159,7 @@ client.on('guildMemberAdd', async (member) => {
 
 	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
 
-	console.log("Nou membre \"" + member.user.username + "\" afegit i dades actualitzades\n" + 
+	console.log("Nou membre \"" + member.user.username + "\" afegit\n" + 
 				"Storing " + nMembers + " users");
 	
 	let channel = member.guild.systemChannel;
@@ -196,7 +212,7 @@ client.on('guildMemberRemove', (member) => {
 
 	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
 
-	console.log("El membre \"" + member.user.username + "\" ha sigut esborrat i dades actualitzades\n" + 
+	console.log("El membre \"" + member.user.username + "\" ha sigut esborrat\n" + 
 				"Storing " + nMembers + " users");
 	
 });
@@ -230,7 +246,9 @@ client.on('message', async (message) => {
         command.execute(message, args, servers, userData);
     } catch (error) {
         console.error(error);
-		message.reply('alguna cosa ha anat malament, siusplau contacta amb ' + config.ownerDiscordUsername);
+		message.reply('alguna cosa ha anat malament, siusplau contacta amb ' + config.ownerDiscordUsername +
+						'\nSi saps el que ha passat i vols reportar un bug pots fer-ho a\n'+
+						'https://github.com/CatalaHD/DiscordBot/issues');
 	}
 	
 	// In order to keep all the history clean, we delete all the users' commands from the chat.

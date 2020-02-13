@@ -38,8 +38,8 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 
 ### **COMANDES DE MODERACIÓ**
 ```
--> !kick <@user> [desc]   :: Expulsa permanentment un usuari del servidor
--> !ban  <@user> [desc]   :: Beta un usuari del servidor
+-> !kick <@user> [desc] :: Expulsa permanentment un usuari del servidor
+-> !ban  <@user> [desc] :: Beta un usuari del servidor
 ```
 
 ### **COMANDES DE BANC**
