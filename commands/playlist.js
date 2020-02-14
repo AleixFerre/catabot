@@ -5,7 +5,7 @@ const youtube = new YouTube(GOOGLE_API_KEY);
 
 module.exports = {
 	name: 'playlist',
-	description: 'Posa les primeres n cançons d\'una llista de reproducció, per defecte 20',
+	description: "Posa les primeres n cançons d'una llista de reproducció, per defecte 20",
 	usage: '< link_playlist > [ n_cançons <= 20 ]',
     aliases: ['pl'],
 	type: 'musica',

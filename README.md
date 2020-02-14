@@ -22,7 +22,7 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 ```
 -> !join                :: Entra dins del teu canal de veu.
 -> !play <search>       :: Posa la musica que vulguis amb un link.
--> !playlist <link>     :: Posa les primeres 20 cançons d\'una llista de reproducció.
+-> !playlist <link>     :: Posa les primeres 20 cançons d'una llista de reproducció.
 -> !skip/next           :: Passa a la següent de la cua.
 -> !delete <pos>        :: Esborra a la posicio de la cua que vulguis.
 -> !q/queue             :: Mostra la cua.
