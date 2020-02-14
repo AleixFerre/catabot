@@ -10,12 +10,22 @@ module.exports = {
         fetch("https://meme-api.herokuapp.com/gimme")
         .then(res => res.json())
         .then((data) => {
-            const exampleEmbed = new Discord.RichEmbed()
-            .setColor('#0099ff')
+
+            function getRandomColor() {
+                let letters = '0123456789ABCDEF';
+                let color = '#';
+                for (let i = 0; i < 6; i++) {
+                  color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+            const memeEmbed = new Discord.RichEmbed()
+            .setColor(getRandomColor())
             .setTitle(data.title)
-            .setImage(data.url);
+            .setImage(data.url).setTimestamp().setFooter("Catabot 2020 © All rights reserved");
             
-            message.channel.send(exampleEmbed);
+            message.channel.send(memeEmbed);
         });
 	},
 };

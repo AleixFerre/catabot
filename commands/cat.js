@@ -9,7 +9,7 @@ module.exports = {
 	async execute(message) {
 
         let title = "Gatito";
-        let catUrl = "";
+        let catUrl = "https://stockpictures.io/wp-content/uploads/2020/01/image-not-found-big.png";
         
         async function getCat() {
             await fetch("https://api.thecatapi.com/v1/images/search?api_key='" + config.catAPIKey + "'?mime_types=gif")
@@ -29,13 +29,22 @@ module.exports = {
 
         await getCat().catch(console.error);
         await getTitle().catch(console.error);
-    
-        const exampleEmbed = new Discord.RichEmbed()
-        .setColor('#0099ff')
+        
+        function getRandomColor() {
+            let letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        const catEmbed = new Discord.RichEmbed()
+        .setColor(getRandomColor())
         .setTitle(title)
-        .setImage(catUrl);
+        .setImage(catUrl).setTimestamp().setFooter("Catabot 2020 © All rights reserved");
                 
-        message.channel.send(exampleEmbed);
+        message.channel.send(catEmbed);
         
 	},
 };

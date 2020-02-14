@@ -235,7 +235,7 @@ client.on('message', async (message) => {
 	
 	if (!message.channel.members && commandName != 'help' && commandName != 'h') {
 		// Estem a DM, només funciona el help
-		message.author.send("Aqui només funciona el help!");
+		message.author.send("Aqui només funciona el !help");
 		return;
 	}
 

@@ -1,3 +1,5 @@
+const Discord = require("discord.js");
+
 module.exports = {
 	name: 'help',
     description: 'Mostra informació de les comandes',
@@ -14,10 +16,9 @@ module.exports = {
         }
         
         if (!args.length) {
-			data.push('**COMANDES DEL CATABOT**');
 
 			// Creem una variable string per anar guardant tot el contingut del help que anem posant al embed
-			let helpContent = "```\n";
+			let helpContent = "\n";
 
 			// Creem les taules auxiliars per guardar les comandes de cada tipus
 			let musica = [];
@@ -27,6 +28,7 @@ module.exports = {
 			let altres = [];
 			let maxLength = 0;
 
+			// Encuem cada comanda a la taula que toca
 			commands.forEach((command) => {
 				switch (command.type) {
 					case 'musica':
@@ -57,56 +59,37 @@ module.exports = {
 
 			maxLength += 2; // Deixem un marge
 
-			helpContent += '**COMANDES DE MUSICA**\n';
-			musica.forEach((command) => {
-				let spaces = "";
-				for(let i=0; i<maxLength-command.name.length; i++) {
-					spaces += " ";
-				}
-				helpContent += spaces + command.name + ' :: ' + command.description + '\n';
-			});
+			// Creem l'embed i l'anem omplint
+			const fullHelpEmbed = new Discord.RichEmbed()
+            .setColor(getRandomColor())
+			.setTitle('**Comandes del CataBOT**')
+			.setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
+			.setThumbnail('https://i.imgur.com/UXoPSuU.jpg');
+			
+			
+			helpContent += '🎵 **COMANDES DE MUSICA** 🎵\n `';
+			helpContent += musica.map(c => c.name).join(", ");
 
-			helpContent += '\n**COMANDES DE MODERACIÓ**\n';
-			mod.forEach((command) => {
-				let spaces = "";
-				for(let i=0; i<maxLength-command.name.length; i++) {
-					spaces += " ";
-				}
-				helpContent += spaces + command.name + ' :: ' + command.description + '\n';
-			});
+			helpContent += '`\n\n👮 **COMANDES DE MODERACIÓ** 👮\n`';
+			helpContent += mod.map(c => c.name).join(", ");
 
-			helpContent += '\n**COMANDES DE BANC**\n';
-			banc.forEach((command) => {
-				let spaces = "";
-				for(let i=0; i<maxLength-command.name.length; i++) {
-					spaces += " ";
-				}
-				helpContent += spaces + command.name + ' :: ' + command.description + '\n';
-			});
+			helpContent += '`\n\n💰 **COMANDES DE BANC** 💰\n`';
+			helpContent += banc.map(c => c.name).join(", ");
 
-			helpContent += '\n**COMANDES DE ENTRETENIMENT**\n';
-			entreteniment.forEach((command) => {
-				let spaces = "";
-				for(let i=0; i<maxLength-command.name.length; i++) {
-					spaces += " ";
-				}
-				helpContent += spaces + command.name + ' :: ' + command.description + '\n';
-			});
+			helpContent += '`\n\n🥳 **COMANDES DE ENTRETENIMENT** 🥳\n`';
+			helpContent += entreteniment.map(c => c.name).join(", ");
 
-			helpContent += '\n**ALTRES COMANDES**\n';
-			altres.forEach((command) => {
-				let spaces = "";
-				for(let i=0; i<maxLength-command.name.length; i++) {
-					spaces += " ";
-				}
-				helpContent += spaces + command.name + ' :: ' + command.description + '\n';
-			});
+			helpContent += '`\n\n🌈 **ALTRES COMANDES** 🌈\n`';
+			helpContent += altres.map(c => c.name).join(", ");
 
-			data.push(helpContent);
+			data.push(helpContent + '`');
+			data.push('\nPots enviar ' + prefix + 'help [nom comanda] per obtenir informació més detallada de la comanda!');
+			
+			fullHelpEmbed.setDescription(data);
+			
+            fullHelpEmbed.setTimestamp().setFooter("Catabot 2020 © All rights reserved");
 
-			data.push('Pots enviar ' + prefix + 'help [nom comanda] per obtenir informació més detallada de la comanda!```');
-
-			return message.author.send(data, { split: true })
+			return message.author.send(fullHelpEmbed)
 				.then(() => {
 					if (message.channel.type === 'dm') return;
                     message.reply('T\'he enviat un DM amb tota la info').then(async (msg) => {
@@ -116,8 +99,8 @@ module.exports = {
                     });
 				})
 				.catch(error => {
-					console.error(`Could not send help DM to ${message.author.tag}.\n`, error);
-					message.reply('it seems like I can\'t DM you!');
+					console.error(`No puc enviar un DM a ${message.author.tag}.\n`, error);
+					message.reply('sembla que no et puc enviar un DM!');
 				});
         }
         
@@ -130,14 +113,39 @@ module.exports = {
 		
 		if (message.author.bot) {
 			message.delete();
-		} 
+		}
 
-		data.push(`**Nom:** ${command.name}`);
+		function getRandomColor() {
+			let letters = '0123456789ABCDEF';
+			let color = '#';
+			for (let i = 0; i < 6; i++) {
+			  color += letters[Math.floor(Math.random() * 16)];
+			}
+			return color;
+		}
 
-		if (command.aliases) data.push(`**Alias:** ${command.aliases.join(', ')}`);
-		if (command.description) data.push(`**Descripció:** ${command.description}`);
-		if (command.usage) data.push(`**Ús:** ${prefix}${command.name} ${command.usage}`);
+		const helpEmbed = new Discord.RichEmbed()
+		.setColor(getRandomColor())
+		.setAuthor('CataBot', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')    
+		.setTitle(command.name.toUpperCase())
+		.setThumbnail('https://i.imgur.com/UXoPSuU.jpg');
 
-		message.channel.send(data, { split: true });
+		if (command.description)
+			helpEmbed.setDescription(command.description);
+
+		if (command.type) 
+			helpEmbed.addField('Tipus', command.type);
+		else
+			helpEmbed.addField('Tipus', 'altres');
+
+		if (command.aliases) 
+			helpEmbed.addField('Alias', command.aliases.join(', '));
+		
+		if (command.usage)
+			helpEmbed.addField('Ús', prefix + command.name + ' ' +  command.usage);
+
+		helpEmbed.setTimestamp().setFooter("Catabot 2020 © All rights reserved");
+
+		message.channel.send(helpEmbed);
 	},
 };
