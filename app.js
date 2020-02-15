@@ -128,7 +128,7 @@ client.on("ready", () => {
 
 	});
 
-	console.log("READY :: Version: " + config.version + "\nON " + client.guilds.size + " servers\n" + 
+	console.log("READY :: Version " + config.version + "\nON " + client.guilds.size + " servers\n" + 
 				"Storing " + nMembers + " users");
 	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
 

@@ -44,7 +44,7 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 
 ### **COMANDES DE BANC**
 ```
--> !money               :: Mostra el teu balanç de monedes al servidor
+-> !money [@user]       :: Mostra el teu balanç de monedes al servidor o al de la persona que mencionis
 ```
 
 ### **COMANDES D'ENTRETENIMENT**
@@ -54,6 +54,11 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 -> !welcome             :: Et dóna la benvinguda; també s'executa al entrar un nou membre.
 -> !say                 :: Fés que el bot digui el que vulguis.
 -> !pokedex             :: Mostra la pokedex del pokemon.
+-> !penis               :: Mostra la mida del teu penis.
+-> !coin                :: Te la jugues al 50%.
+-> !8ball               :: Et permet preguntar-li a la bola de la sort el que et passarà al futur.
+-> !howgay              :: Et diu lo gay que ets.
+-> !flipword            :: Posa la paraula al revés.
 ```
 
 ### **ALTRES COMANDES**
@@ -66,4 +71,4 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 ```
 
 ## CURRENT VERSION
-0.3
+0.4

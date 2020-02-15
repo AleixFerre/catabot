@@ -4,7 +4,7 @@ module.exports = {
     aliases: ['next'],
 	type: 'musica',
 	execute(message, args, servers) {
-        message.channel.send("Passant a la següent cançó...").then((msg) => {
+        message.channel.send("⏭️Passant a la següent cançó⏭️").then((msg) => {
             let server = servers[message.guild.id];
             if (server) {
                 if (server.dispatcher) {

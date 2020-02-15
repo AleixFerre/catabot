@@ -9,6 +9,7 @@ module.exports = {
             if (message.guild.voiceConnection) {
                 let content = "**CUA DE CANÇONS**\n```\n";
                 if (server.queue.length < 1) {
+                    content += "S'està reproduint: " + server.nowPlayingVideoInfo.title + '\n\n';
                     msg.edit(content + "No hi ha elements a la cua!```\n");
                 } else {
 

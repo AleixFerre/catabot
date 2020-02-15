@@ -76,6 +76,12 @@ module.exports = {
                         
                 let server = servers[message.guild.id];
 
+                if (results.length === 0) {
+                    message.reply("No s'han trobat resultats!");
+                    message.channel.send("!help play");
+                    return;
+                }
+
                 server.queue.push({
                     video: ytdl(results[0].url, {filter: "audioonly"}),
                     videoInfo: results[0]

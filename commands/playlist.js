@@ -21,7 +21,7 @@ module.exports = {
 
             try {
                 server.dispatcher = connection.playStream(musica);
-                msg.edit("S'està reproduint: " + server.nowPlayingVideoInfo.title + "\n" + server.nowPlayingVideoInfo.url);
+                msg.edit("⏯️S'està reproduint: " + server.nowPlayingVideoInfo.title + "\n" + server.nowPlayingVideoInfo.url);
             } catch (error) {
                 msg.edit("--> " + error + '\n Link: ' + server.queue[0].url);
                 message.channel.send(server.prefix + "help playlist");
@@ -72,6 +72,12 @@ module.exports = {
 
         youtube.getPlaylist(args[0])
         .then(playlist => {
+
+            if (!playlist) {
+                message.reply("No s'han trobat resultats!");
+                return;
+            }
+
             let mida = 20;
             if (args[1]) {
                 mida = args[1];

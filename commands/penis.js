@@ -1,19 +1,11 @@
 const Discord = require("discord.js");
 
 module.exports = {
-	name: 'money',
-	description: 'Et mostra els diners que tens',
-    aliases: ['profile', 'diners'],
-	type: 'banc',
-	execute(message, args, servers, userData) {
-
-        let mention = {};
-    
-        if (message.mentions.users.first()) {
-            mention = message.mentions.users.first();
-        } else {
-            mention = message.author;
-        }
+    name: 'penis',
+    description: 'Mostra la mida del teu penis',
+    type: 'entreteniment',
+    aliases: ['tita', 'pito', 'pene'],
+    execute(message) {
         
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
@@ -24,15 +16,21 @@ module.exports = {
             return color;
         }
         
+        let penis = Math.round(Math.random()*9+1); // Clamped bewteen 1 : 10
+        penisString = "8";
+        for(let i=0; i<penis; i++) {
+            penisString += "=";
+        }
+        penisString += 'D';
+
         let msg = new Discord.RichEmbed()
         .setColor(getRandomColor())
-        .setTitle("💰 Banc 💰")
+        .setTitle("**PENIS LENGTH**")
         .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
-        .setThumbnail(mention.avatarURL)
-        .addField('Conta', mention.username, true)
-        .addField('Balanç', userData[message.guild.id + mention.id].money, true)
+        .setThumbnail('http://bit.ly/CataBot_Icon')
+        .addField('Mida del teu penis', penisString, true)
         .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
 
         message.channel.send(msg);
-	},
+    },
 };
