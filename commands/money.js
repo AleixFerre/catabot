@@ -3,6 +3,7 @@ const Discord = require("discord.js");
 module.exports = {
 	name: 'money',
 	description: 'Et mostra els diners que tens',
+    usage: '[ @user ]',
     aliases: ['profile', 'diners'],
 	type: 'banc',
 	execute(message, args, servers, userData) {

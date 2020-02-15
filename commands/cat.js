@@ -41,7 +41,7 @@ module.exports = {
 
         const catEmbed = new Discord.RichEmbed()
         .setColor(getRandomColor())
-        .setTitle(title)
+        .setTitle("Fun fact: " + title)
         .setImage(catUrl).setTimestamp().setFooter("Catabot 2020 © All rights reserved");
                 
         message.channel.send(catEmbed);

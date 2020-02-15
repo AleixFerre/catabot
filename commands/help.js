@@ -64,7 +64,7 @@ module.exports = {
             .setColor(getRandomColor())
 			.setTitle('**Comandes del CataBOT**')
 			.setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
-			.setThumbnail('https://i.imgur.com/UXoPSuU.jpg');
+			.setThumbnail('https://i.imgur.com/OMp4api.png');
 			
 			
 			helpContent += '🎵 **COMANDES DE MUSICA** 🎵\n `';
@@ -128,7 +128,7 @@ module.exports = {
 		.setColor(getRandomColor())
 		.setAuthor('CataBot', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')    
 		.setTitle(command.name.toUpperCase())
-		.setThumbnail('https://i.imgur.com/UXoPSuU.jpg');
+		.setThumbnail('https://i.imgur.com/OMp4api.png');
 
 		if (command.description)
 			helpEmbed.setDescription(command.description);
