@@ -40,11 +40,13 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 ```
 -> !kick <@user> [desc] :: Expulsa permanentment un usuari del servidor
 -> !ban  <@user> [desc] :: Beta un usuari del servidor
+-> !randomize [max]     :: Posa un valor aleatori de monedes a tots els usuaris del servidor
 ```
 
 ### **COMANDES DE BANC**
 ```
 -> !money [@user]       :: Mostra el teu balanç de monedes al servidor o al de la persona que mencionis
+-> !leaderboard         :: Mostra la classificació de monedes del servidor
 ```
 
 ### **COMANDES D'ENTRETENIMENT**

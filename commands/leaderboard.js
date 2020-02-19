@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 
 module.exports = {
 	name: 'leaderboard',
-	description: 'Et mostra la classificació de monedes del servidor',
+	description: 'Mostra la classificació de monedes del servidor',
     aliases: ['leader'],
 	type: 'banc',
 	execute(message, args, servers, userData) {
