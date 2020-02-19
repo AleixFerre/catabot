@@ -61,6 +61,7 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 -> !8ball               :: Et permet preguntar-li a la bola de la sort el que et passarà al futur.
 -> !howgay              :: Et diu lo gay que ets.
 -> !flipword            :: Posa la paraula al revés.
+-> !dice                :: Tira els daus que vulguis com vulguis.
 ```
 
 ### **ALTRES COMANDES**
