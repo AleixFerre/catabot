@@ -25,7 +25,10 @@ client.on("guildCreate", (guild) => {
 			userData[guild.id + member.user.id] = {};
 		}
 		if (!userData[guild.id + member.user.id].money) {
-			userData[guild.id + member.user.id].money = 1000;
+			if (member.user.bot)
+				userData[guild.id + member.user.id].money = -1;
+			else
+				userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
 		}
 		nMembers++;
 	});
@@ -100,11 +103,14 @@ client.on("ready", () => {
 
 	client.guilds.forEach(guild => {
 		guild.members.forEach(member => {
-			if (!userData[guild.id + member.user.id]) {
+			if (!userData[guild.id + member.user.id])
 				userData[guild.id + member.user.id] = {};
-			}
+
 			if (!userData[guild.id + member.user.id].money) {
-				userData[guild.id + member.user.id].money = 1000;
+				if (member.user.bot)
+					userData[guild.id + member.user.id].money = -1;
+				else
+					userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
 			}
 			nMembers++;
 		});
@@ -153,7 +159,10 @@ client.on('guildMemberAdd', async (member) => {
 	}
 
 	if (!userData[member.guild.id + member.user.id].money) {
-		userData[member.guild.id + member.user.id].money = 1000;
+		if (member.user.bot)
+			userData[member.guild.id + member.user.id].money = -1;
+		else
+			userData[member.guild.id + member.user.id].money = Math.round(Math.random() * 1000);
 	}
 
 	nMembers++;
@@ -242,6 +251,13 @@ client.on('message', async (message) => {
 	const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 	
 	if (!command) return;
+
+	if (command.type == 'mod') {
+		if (!message.member.hasPermission("ADMINISTRATOR")) {
+			message.reply("no tens permisos d'administrador per executar aquesta comanda!");
+			return;
+		}
+	}
 
     try {
         command.execute(message, args, servers, userData);

@@ -13,27 +13,25 @@ module.exports = {
             message.reply('el servidor no està disponible!');
             return;
         }
-        
 
-        // ALGORISME per Inserció Directa || O(N) Optimized one [we can also multiply N with 10 but is a constant value, but with the O notation, we don't keep it]
+        // ALGORISME per Inserció Directa || O(N) Optimized algorithm [we can also multiply N with 10 but is a constant value, but with the O notation, we don't keep it]
         // Per cada usuari del servidor (en el que s'ha enviat el missatge)
             // inserció ordenada per monedes // O(array_lenght(10)) but only with 10 elements max [max length fixed with the leaderboard]
             // si la mida de la taula > 10
                 // pop_back (l'ultim)
             // La taula s'ha de mantenir sempre amb 10 elements com a maxim
         // Mostrar la info amb un embed corresponent
-
         
         function insercioOrdenada(user, nom) {
             //Pre:	0<=board.length<MAX, board[0..board.length-1] ordenat creixentment
             //Post:	x inserit ordenadament a board
             
-            if (!user.money)
+            if (user.money === -1)
                 return;
 
             // Busquem la posicio on volem inserir
             let i = board.length;
-            while (i>0 && user.money<board[i-1].money) { 
+            while (i>0 && user.money>board[i-1].money) { 
                 i--;
             }
 
@@ -72,7 +70,7 @@ module.exports = {
         
         let msg = new Discord.RichEmbed()
         .setColor(getRandomColor())
-        .setTitle("🏆 Leaderboard 🏆")
+        .setTitle("🏆 Leaderboard for "+ message.guild.name +" 🏆")
         .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
         //.setDescription(desc)
         .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
