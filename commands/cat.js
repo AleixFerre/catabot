@@ -8,7 +8,7 @@ module.exports = {
 	type: 'entreteniment',
 	async execute(message) {
 
-        let title = "Gatito";
+        let desc = "";
         let catUrl = "https://stockpictures.io/wp-content/uploads/2020/01/image-not-found-big.png";
         
         async function getCat() {
@@ -23,7 +23,7 @@ module.exports = {
             await fetch("https://some-random-api.ml/facts/cat")
             .then(res => res.json())
             .then((data) => {
-                title = data.fact;
+                desc += data.fact;
             });
         }
 
@@ -41,7 +41,8 @@ module.exports = {
 
         const catEmbed = new Discord.RichEmbed()
         .setColor(getRandomColor())
-        .setTitle("Fun fact: " + title)
+        .setTitle("Fun fact about cats!")
+        .setDescription(desc)
         .setImage(catUrl).setTimestamp().setFooter("Catabot 2020 © All rights reserved");
                 
         message.channel.send(catEmbed);

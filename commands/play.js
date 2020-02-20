@@ -70,8 +70,10 @@ module.exports = {
             return;
         }
 
-        message.channel.send("Buscant la cançó...").then((msg) => {
-            youtube.searchVideos(args[0], 1) // Get the first one
+        let search = args.join(" ");
+
+        message.channel.send("Buscant la cançó "+search+"...").then((msg) => {
+            youtube.searchVideos(search, 1) // Get the first one
             .then((results) => {
                         
                 let server = servers[message.guild.id];

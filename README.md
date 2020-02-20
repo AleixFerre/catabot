@@ -41,12 +41,15 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 -> !kick <@user> [desc] :: Expulsa permanentment un usuari del servidor
 -> !ban  <@user> [desc] :: Beta un usuari del servidor
 -> !randomize [max]     :: Posa un valor aleatori de monedes a tots els usuaris del servidor
+-> !clearmessages <n>   :: Borra n missatges del canal de text on s'estigui executant la comanda
+-> !generate <n> <@u>   :: Ingresa una quantitat a una persona
 ```
 
 ### **COMANDES DE BANC**
 ```
 -> !money [@user]       :: Mostra el teu balanç de monedes al servidor o al de la persona que mencionis
 -> !leaderboard         :: Mostra la classificació de monedes del servidor
+-> !pay <n> <@user>     :: Paga una quantitat a una persona
 ```
 
 ### **COMANDES D'ENTRETENIMENT**
@@ -54,14 +57,14 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 -> !cat                 :: Mostra una imatge d'un gat aleatori.
 -> !meme                :: Mostra una imatge d'un gat aleatori.
 -> !welcome             :: Et dóna la benvinguda; també s'executa al entrar un nou membre.
--> !say                 :: Fés que el bot digui el que vulguis.
--> !pokedex             :: Mostra la pokedex del pokemon.
+-> !say <word>          :: Fés que el bot digui el que vulguis.
+-> !pokedex <pokemon>   :: Mostra la pokedex del pokemon.
 -> !penis               :: Mostra la mida del teu penis.
 -> !coin                :: Te la jugues al 50%.
--> !8ball               :: Et permet preguntar-li a la bola de la sort el que et passarà al futur.
+-> !8ball <question>    :: Et permet preguntar-li a la bola de la sort el que et passarà al futur.
 -> !howgay              :: Et diu lo gay que ets.
--> !flipword            :: Posa la paraula al revés.
--> !dice                :: Tira els daus que vulguis com vulguis.
+-> !flipword <word>     :: Posa la paraula al revés.
+-> !dice [max] [n]      :: Tira els daus que vulguis com vulguis.
 ```
 
 ### **ALTRES COMANDES**
@@ -70,7 +73,7 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 -> !invite              :: T'envia un missatge amb el invite link del bot.
 -> !prefix [new]        :: Et mostra el prefix i et permet cambiar-lo amb un segon argument.
 -> !server              :: Et mostra informació sobre el servidor.
--> !help                :: Et mostra informació sobre les comandes del bot.
+-> !help [cmd]          :: Et mostra informació sobre les comandes del bot.
 ```
 
 ## CURRENT VERSION

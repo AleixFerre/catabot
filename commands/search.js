@@ -35,11 +35,7 @@ module.exports = {
             return;
         }
 
-        let cerca = "";
-
-        for(let i=0; i<args.length; i++) {
-            cerca += args[i] + " ";
-        }
+        let cerca = args.join(" ");
 
         message.channel.send('Cercant ' + cerca + '...').then((msg) => {
             youtube.searchVideos(cerca, 10)
