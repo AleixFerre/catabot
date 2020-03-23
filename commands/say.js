@@ -5,8 +5,8 @@ module.exports = {
 	type: 'entreteniment',
 	execute(message, args, servers) {
         if (args[0]) {
-            if (args[0] === '!say')
-                return message.reply("no em facis tornar boig!!");
+            if (args[0][0] === '!')
+                return message.reply("recorda que les comandes les has d'executar tu 😅");
             message.channel.send(args.join(" ")).catch(console.error);
         } else {
             message.reply("Què vols que digui?").catch(console.error);

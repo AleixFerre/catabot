@@ -15,6 +15,10 @@ module.exports = {
         } else {
             mention = message.author;
         }
+
+        if (mention.bot) {
+            return message.reply("els Bots no tenen diners... pobres Bots :(");
+        }
         
         function getRandomColor() {
             let letters = '0123456789ABCDEF';

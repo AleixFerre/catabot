@@ -13,7 +13,7 @@ module.exports = {
             const member = message.guild.member(user);
             if (member) {
                 if (!member.kickable)
-                    return message.reply('No es pot fer fora a l\'usuari.');
+                    return message.reply('No es pot fer fora a l\'usuari.\nTinc un rol permisos d\'administrador?');
                 
                 let kickmsg = 'Motiu del kick desconegut';
                 if (args[0])

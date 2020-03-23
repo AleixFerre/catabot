@@ -55,6 +55,7 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 ### **COMANDES D'ENTRETENIMENT**
 ```
 -> !cat                 :: Mostra una imatge d'un gat aleatori.
+-> !dog                 :: Mostra una imatge d'un gos aleatori.
 -> !meme                :: Mostra una imatge d'un gat aleatori.
 -> !welcome             :: Et dóna la benvinguda; també s'executa al entrar un nou membre.
 -> !say <word>          :: Fés que el bot digui el que vulguis.
@@ -65,6 +66,8 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 -> !howgay              :: Et diu lo gay que ets.
 -> !flipword <word>     :: Posa la paraula al revés.
 -> !dice [max] [n]      :: Tira els daus que vulguis com vulguis.
+-> !rps                 :: Juga a pedra-paper-tissora amb el bot.
+-> !choice              :: Deix que el bot escolleixi per tu.
 ```
 
 ### **ALTRES COMANDES**

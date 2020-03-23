@@ -4,7 +4,7 @@ module.exports = {
 	type: 'mod',
 	usage: '< nMessages >',
     aliases: ['cls', 'clm'],
-	execute(message, args) {
+	async execute (message, args) {
         
         let amount = 1;
 
@@ -23,15 +23,15 @@ module.exports = {
         }
 
 
-        message.channel.fetchMessages({ limit: amount })
-        .then(messages => {
-            message.channel.send("🤔Borrant " + amount + " missatges...🤔").then((msg) => {
-                messages.forEach(message => {
-                    message.delete();
-                });
-                msg.edit("☑️S'han borrat " + amount + " missatges correctament.☑️");
-            });
-        })
-        .catch(console.error);
+        let messages = await message.channel.fetchMessages({ limit: amount }).catch(console.error);
+        let msg = await message.channel.send("🤔Borrant " + amount + " missatges...🤔");
+
+        
+        await Promise.all(messages.map(async (delMessage) => {
+            await delMessage.delete();
+        }));
+
+        await msg.edit("☑️S'han borrat " + amount + " missatges correctament.☑️");
+    
 	},
 };

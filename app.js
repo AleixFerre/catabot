@@ -135,11 +135,11 @@ client.on("ready", () => {
 	});
 
 	console.log("READY :: Version " + config.version + "\nON " + client.guilds.size + " servers\n" + 
-				"Storing " + nMembers + " users");
+				"Storing " + nMembers + " users\n"+
+				"---------------------------------");
 	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
 
 });
-
 
 const applyText = (canvas, text) => {
 	const ctx = canvas.getContext('2d');
@@ -266,7 +266,6 @@ client.on('guildMemberRemove', async (member) => {
 
 	
 });
-
 
 client.on('message', async (message) => {
 
