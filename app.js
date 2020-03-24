@@ -173,8 +173,7 @@ client.on('guildMemberAdd', async (member) => {
 				"Storing " + nMembers + " users");
 	
 	let channel = member.guild.systemChannel;
-	if (!channel) channel = member.guild.channels.find(ch => ch.name === 'general');
-	if (!channel) channel = message.channel;
+	if (!channel) channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);
 	if (!channel) return;
 
 	const canvas = Canvas.createCanvas(700, 250);
@@ -226,8 +225,7 @@ client.on('guildMemberRemove', async (member) => {
 				"Storing " + nMembers + " users");
 		
 	let channel = member.guild.systemChannel;
-	if (!channel) channel = member.guild.channels.find(ch => ch.name === 'general');
-	if (!channel) channel = message.channel;
+	if (!channel) channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);
 	if (!channel) return;
 
 	const canvas = Canvas.createCanvas(700, 250);
@@ -299,7 +297,7 @@ client.on('message', async (message) => {
 	}
 
     try {
-        command.execute(message, args, servers, userData);
+        command.execute(message, args, servers, userData, client);
     } catch (error) {
         console.error(error);
 		message.reply('alguna cosa ha anat malament, siusplau contacta amb ' + config.ownerDiscordUsername +

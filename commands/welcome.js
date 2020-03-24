@@ -16,13 +16,21 @@ module.exports = {
 	name: 'welcome',
 	description: 'Et dona la benvinguda',
 	type: 'entreteniment',
-	async execute(message) {
+	async execute(message, args, servers, userData, client) {
 
-        const member = message.member;
+        function getMemberFromMention(mention) {
+            if (!mention) return;
+            return message.mentions.members.first();
+        }
+
+        let member = getMemberFromMention(args[0]);
+        if (!member)
+            member = message.member;
+
         let channel = message.guild.systemChannel;
-        if (!channel) channel = member.guild.channels.find(ch => ch.name === 'general');
+        if (!channel) channel = message.guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);
         if (!channel) channel = message.channel;
-        if (!channel) return;
+        if (!channel) return message.reply("no se a on ho he d'enviar!");
 
         const canvas = Canvas.createCanvas(700, 250);
         const ctx = canvas.getContext('2d');
