@@ -112,7 +112,7 @@ module.exports = {
 		}
 		
 		if (message.author.bot) {
-			message.delete();
+			return message.delete();
 		}
 
 		function getRandomColor() {
