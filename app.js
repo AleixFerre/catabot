@@ -100,6 +100,8 @@ client.on("ready", () => {
             type: "WATCHING"
         }
 	});
+	
+	userData = {};
 
 	client.guilds.forEach(guild => {
 		guild.members.forEach(member => {
