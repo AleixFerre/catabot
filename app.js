@@ -53,7 +53,7 @@ client.on("guildCreate", (guild) => {
 	client.user.setPresence({
         status: "online",
         game: {
-            name: client.guilds.size + " servers.",
+            name: client.guilds.size + " servers con " + nMembers + " miembros.",
             type: "WATCHING"
         }
 	});
@@ -80,7 +80,7 @@ client.on("guildDelete", (guild) => {
 	client.user.setPresence({
         status: "online",
         game: {
-            name: client.guilds.size + " servers.",
+            name: client.guilds.size + " servers con " + nMembers + " miembros.",
             type: "WATCHING"
         }
 	});
@@ -93,14 +93,6 @@ client.on("guildDelete", (guild) => {
 
 client.on("ready", () => {
 
-    client.user.setPresence({
-        status: "online",
-        game: {
-            name: client.guilds.size + " servers.",
-            type: "WATCHING"
-        }
-	});
-	
 	userData = {};
 
 	client.guilds.forEach(guild => {
@@ -136,6 +128,14 @@ client.on("ready", () => {
 
 	});
 
+	client.user.setPresence({
+        status: "online",
+        game: {
+            name: client.guilds.size + " servers con " + nMembers + " miembros.",
+            type: "WATCHING"
+        }
+	});
+
 	console.log("READY :: Version " + config.version + "\nON " + client.guilds.size + " servers\n" + 
 				"Storing " + nMembers + " users\n"+
 				"---------------------------------");
@@ -168,6 +168,14 @@ client.on('guildMemberAdd', async (member) => {
 	}
 
 	nMembers++;
+
+	client.user.setPresence({
+        status: "online",
+        game: {
+            name: client.guilds.size + " servers con " + nMembers + " miembros.",
+            type: "WATCHING"
+        }
+	});
 
 	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
 
@@ -221,6 +229,14 @@ client.on('guildMemberRemove', async (member) => {
 
 	nMembers--;
 
+	client.user.setPresence({
+        status: "online",
+        game: {
+            name: client.guilds.size + " servers con " + nMembers + " miembros.",
+            type: "WATCHING"
+        }
+	});
+
 	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
 
 	console.log("El membre \"" + member.user.username + "\" ha sigut esborrat\n" + 
@@ -264,7 +280,6 @@ client.on('guildMemberRemove', async (member) => {
 
 	channel.send(`Adeu, ${member}!`, attachment);
 
-	
 });
 
 client.on('message', async (message) => {
