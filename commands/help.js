@@ -4,7 +4,7 @@ module.exports = {
 	name: 'help',
     description: 'Mostra informació de les comandes',
 	usage: '[ nom de la comanda ]',
-    aliases: ['h'],
+    aliases: ['h', 'command', 'commands', 'list', 'c'],
 	execute(message, args, servers) {
 
         const data = [];

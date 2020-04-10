@@ -27,16 +27,23 @@ module.exports = {
 
         let choices = Object.keys(logic);
         let IA = choices[Math.floor(Math.random()*choices.length)];
+        let guanyador = "";
 
-        // Retorna true si guanya el player
-        let guanyador = logic[player].w === IA;
-        if (guanyador) {
-            guanyador = "Player";
+        if (player === IA) {
+            // si hi ha empat
+            guanyador = "Empat";
         } else {
-            guanyador = "IA";
+            // Si no hi ha empat, comprova el guanyador
+            // Retorna true si guanya el player
+            guanyador = logic[player].w === IA;
+            if (guanyador) {
+                guanyador = "Player";
+            } else {
+                guanyador = "IA";
+            }
         }
-
-        function getRandomColor() {
+            
+            function getRandomColor() {
             let letters = '0123456789ABCDEF';
             let color = '#';
             for (let i = 0; i < 6; i++) {
