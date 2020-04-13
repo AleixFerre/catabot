@@ -50,6 +50,7 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 -> !money [@user]       :: Mostra el teu balanç de monedes al servidor o al de la persona que mencionis
 -> !leaderboard         :: Mostra la classificació de monedes del servidor
 -> !pay <n> <@user>     :: Paga una quantitat a una persona
+-> !gamble <n/all>      :: Doble o nada, apostant monedes
 ```
 
 ### **COMANDES D'ENTRETENIMENT**
@@ -80,4 +81,4 @@ You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 ```
 
 ## CURRENT VERSION
-0.4
+0.7
