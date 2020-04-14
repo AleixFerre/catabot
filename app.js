@@ -68,7 +68,7 @@ client.on("guildDelete", (guild) => {
 
 	guild.members.forEach(member => {
 		if (userData[guild.id + member.user.id]) {
-			userData[guild.id + member.user.id] = null;
+			userData[guild.id + member.user.id] = {};
 		}
 		nMembers--;
 	});
@@ -109,6 +109,8 @@ client.on("ready", () => {
 			nMembers++;
 		});
 		
+		console.log(guild.name + ": " + guild.memberCount + " members");
+		
 		if (!servers[guild.id]) {
 			servers[guild.id] = {
 				queue: [],
@@ -136,7 +138,7 @@ client.on("ready", () => {
         }
 	});
 
-	console.log("READY :: Version " + config.version + "\nON " + client.guilds.size + " servers\n" + 
+	console.log("\nREADY :: Version " + config.version + "\nON " + client.guilds.size + " servers\n" + 
 				"Storing " + nMembers + " users\n"+
 				"---------------------------------");
 	fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
@@ -325,6 +327,11 @@ client.on('message', async (message) => {
 	// In order to keep all the history clean, we delete all the users' commands from the chat.
 	// message.delete();
 
+});
+
+client.on("disconnect", (event) => {
+	nMembers = 0;
+	console.log(`--------------- DISCONNECTING with code ${event.code}---------------\nReason: ${event.reason}\n---------------\n`);
 });
 
 client.login(config.token);
