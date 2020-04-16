@@ -35,6 +35,9 @@ client.on("guildCreate", (guild) => {
 			else
 				userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
 		}
+		if (!userData[guild.id + member.user.id].lastDaily) {
+			userData[guild.id + member.user.id].lastDaily = "Not Collected";
+		}
 		nMembers++;
 	});
 	
@@ -111,6 +114,11 @@ client.on("ready", () => {
 				else
 					userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
 			}
+
+			if (!userData[guild.id + member.user.id].lastDaily) {
+				userData[guild.id + member.user.id].lastDaily = "Not Collected";
+			}
+
 			nMembers++;
 		});
 		
@@ -172,6 +180,10 @@ client.on('guildMemberAdd', async (member) => {
 			userData[member.guild.id + member.user.id].money = -1;
 		else
 			userData[member.guild.id + member.user.id].money = Math.round(Math.random() * 1000);
+	}
+
+	if (!userData[guild.id + member.user.id].lastDaily) {
+		userData[guild.id + member.user.id].lastDaily = "Not Collected";
 	}
 
 	nMembers++;
