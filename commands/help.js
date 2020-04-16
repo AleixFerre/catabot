@@ -111,10 +111,6 @@ module.exports = {
 			return message.reply(name + ' no és una comanda vàlida!');
 		}
 		
-		if (message.author.bot) {
-			return message.delete();
-		}
-
 		function getRandomColor() {
 			let letters = '0123456789ABCDEF';
 			let color = '#';
@@ -147,5 +143,9 @@ module.exports = {
 		helpEmbed.setTimestamp().setFooter("Catabot 2020 © All rights reserved");
 
 		message.channel.send(helpEmbed);
+		
+		if (message.author.bot) {
+			return message.delete();
+		}
 	},
 };
