@@ -1,12 +1,14 @@
 # CataBot
+
 This is our new BETA Discord Bot called CataBot
 
-## To keep it up to date:
+## To keep it up to date
 
 Dowload it and download dependencies with
-``` 
+
+```txt
 npm install discord.js
-npm install opusscript 
+npm install opusscript
 npm install ytdl-core
 npm install simple-youtube-api
 npm install canvas
@@ -14,16 +16,21 @@ npm install node-fetch
 npm install express
 npm install moment
 ```
+
 If you are running this locally
 You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
-```
+
+```txt
 sudo apt-get install ffmpeg
 npm install ffmpeg
 ```
 
 ## **COMANDES DEL CATABOT**
+
 ### **COMANDES DE MUSICA**
-```
+
+```txt
+
 -> !join                :: Entra dins del teu canal de veu.
 -> !play <search>       :: Posa la musica que vulguis amb un link.
 -> !playlist <link>     :: Posa les primeres 20 cançons d'una llista de reproducció.
@@ -41,7 +48,8 @@ npm install ffmpeg
 ```
 
 ### **COMANDES DE MODERACIÓ**
-```
+
+```txt
 -> !kick <@user> [desc] :: Expulsa permanentment un usuari del servidor
 -> !ban  <@user> [desc] :: Beta un usuari del servidor
 -> !randomize [max]     :: Posa un valor aleatori de monedes a tots els usuaris del servidor
@@ -50,15 +58,19 @@ npm install ffmpeg
 ```
 
 ### **COMANDES DE BANC**
-```
+
+```txt
 -> !money [@user]       :: Mostra el teu balanç de monedes al servidor o al de la persona que mencionis
 -> !leaderboard         :: Mostra la classificació de monedes del servidor
 -> !pay <n> <@user>     :: Paga una quantitat a una persona
 -> !gamble <n/all>      :: Doble o nada, apostant monedes
+-> !slotmachine <n/all> :: Maquina tragaperras de toda la vida
+-> !daily               :: Recolleix la teva recompensa diaria!
 ```
 
 ### **COMANDES D'ENTRETENIMENT**
-```
+
+```txt
 -> !cat                 :: Mostra una imatge d'un gat aleatori.
 -> !dog                 :: Mostra una imatge d'un gos aleatori.
 -> !meme                :: Mostra una imatge d'un gat aleatori.
@@ -76,7 +88,8 @@ npm install ffmpeg
 ```
 
 ### **ALTRES COMANDES**
-```
+
+```txt
 -> !ping                :: Comprova la latencia del bot i dels teus missatges.
 -> !invite              :: T'envia un missatge amb el invite link del bot.
 -> !prefix [new]        :: Et mostra el prefix i et permet cambiar-lo amb un segon argument.
@@ -85,4 +98,5 @@ npm install ffmpeg
 ```
 
 ## CURRENT VERSION
+
 0.7
