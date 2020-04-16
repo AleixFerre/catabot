@@ -16,8 +16,10 @@ npm install moment
 ```
 If you are running this locally
 You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
+```
 sudo apt-get install ffmpeg
-npm install ffmpeg 
+npm install ffmpeg
+```
 
 ## **COMANDES DEL CATABOT**
 ### **COMANDES DE MUSICA**
