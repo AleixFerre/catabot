@@ -5,11 +5,13 @@ module.exports = {
     description: 'Deix que el bot escolleixi per tu',
     type: 'entreteniment',
     usage: '< choice1, choice2, ..., choiceN >\n[**MUST** be separated by **", "**]',
-    execute(message, args) {
+    execute(message, args, servers) {
+
+        let server = servers[message.guild.id];
 
         if (!args[0]) {
             message.reply("no se que escollir!");
-            return message.channel.send("!help choice");
+            return message.channel.send(server.prefix + "help choice");
         }
 
         let choices = args.join(" ").split(", ");

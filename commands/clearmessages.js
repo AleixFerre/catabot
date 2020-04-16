@@ -4,13 +4,14 @@ module.exports = {
 	type: 'mod',
 	usage: '< nMessages >',
     aliases: ['cls', 'clm'],
-	async execute (message, args) {
+	async execute (message, args, servers) {
         
         let amount = 1;
+        let server = servers[message.guild.id];
 
         if (!args[0]) {
             message.reply("no se quants missatges he de borrar!");
-            return message.channel.send("!help clearmessages");
+            return message.channel.send(server.prefix + "help clearmessages");
         } else {
             if (!isNaN(args[0]))
                 amount = Math.abs(args[0]);

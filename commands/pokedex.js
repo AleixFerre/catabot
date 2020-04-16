@@ -7,11 +7,13 @@ module.exports = {
     usage: '< pokemon >',
     aliases: ['poke', 'pokemon'],
 	type: 'entreteniment',
-	execute(message, args) {
+	execute(message, args, servers) {
         
+        let server = servers[message.guid.id];
+
         if (!args[0]) {
             message.reply("No se el que vols buscar!");
-            message.channel.send("!help pokedex");
+            message.channel.send(server.prefix + "help pokedex");
             return;
         }
 
@@ -21,7 +23,7 @@ module.exports = {
 
             if (data.error) {
                 message.channel.send("```No hi ha cap pokemon que es digui "+ args[0] +"```");
-                message.channel.send("!help pokedex");
+                message.channel.send(server.prefix + "help pokedex");
                 return;
             }
 

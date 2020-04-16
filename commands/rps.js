@@ -5,17 +5,19 @@ module.exports = {
     description: 'Juga a pedra-paper-tissora amb el bot',
     type: 'entreteniment',
     usage: '< rock/paper/scissors >',
-    execute(message, args) {
+    execute(message, args, servers) {
+
+        let server = servers[message.guid.id];
 
         let player = "rock";
         if (!args[0]) {
             message.reply("no se què jugar!");
-            return message.channel.send("!help rps");
+            return message.channel.send(server.prefix + "help rps");
         } else {
             player = args[0].toLowerCase();
             if (player != 'rock' && player != 'paper' && player != 'scissors') {
                 message.reply("has posat una opció que no es vàlida!");
-                return message.channel.send("!help rps");
+                return message.channel.send(server.prefix + "help rps");
             }
         }
 

@@ -79,9 +79,7 @@ module.exports = {
                 let server = servers[message.guild.id];
 
                 if (results.length === 0) {
-                    message.reply("No s'han trobat resultats!");
-                    message.channel.send("!help play");
-                    return;
+                    return message.reply("No s'han trobat resultats!");
                 }
 
                 server.queue.push({

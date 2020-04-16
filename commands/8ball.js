@@ -7,11 +7,13 @@ module.exports = {
 	type: 'entreteniment',
     usage: '< question >',
     aliases: ['8', 'ball'],
-	execute(message, args) {
+	execute(message, args, servers) {
+
+        let server = servers[message.guild.id];
 
         if (!args[0]) {
             message.reply("no se el que li vols preguntar a la pilota...");
-            message.channel.send("!help 8ball");
+            message.channel.send(server.prefix + "help 8ball");
             return;
         }
 

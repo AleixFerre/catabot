@@ -9,27 +9,29 @@ module.exports = {
         
         // ************* Precondicions *************
         
+        let server = servers[message.guild.id];
+
         // Si no hi ha diners
         if (!args[0]) {
             message.reply("no has posat els diners!");
-            return message.channel.send("!help pay");
+            return message.channel.send(server.prefix + "help pay");
         } else if (isNaN(args[0])) {
             // Si els diners no es un numero
             message.reply("els diners han de ser un numero!");
-            return message.channel.send("!help pay");
+            return message.channel.send(server.prefix + "help pay");
         } else if (args[0] <= 0) {
             // si el numero de diners es negatiu
             message.reply("els diners han de ser més grans que 0!");
-            return message.channel.send("!help pay");
+            return message.channel.send(server.prefix + "help pay");
         }
 
         // si no hi ha usuari mencionat
         if (!args[1]) {
             message.reply("no has posat l'usuari a pagar!");
-            return message.channel.send("!help pay");
+            return message.channel.send(server.prefix + "help pay");
         } else if (!message.mentions.members.first()) {
             message.reply("no has posat l'usuari a pagar!");
-            return message.channel.send("!help pay");
+            return message.channel.send(server.prefix + "help pay");
         }
 
         let amount = Number(args[0]);

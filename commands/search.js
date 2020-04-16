@@ -98,7 +98,6 @@ module.exports = {
 
                             if (collected.length === 0) {
                                 message.reply("no has escollit res!!");
-                                message.channel.send("!help search");
                                 msg.delete();
                                 return;
                             }

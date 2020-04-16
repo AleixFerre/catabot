@@ -6,11 +6,13 @@ module.exports = {
     type: 'entreteniment',
     usage: '< paraula >',
     aliases: ['flip'],
-    execute(message, args) {
+    execute(message, args, servers) {
+
+        let server = servers[message.guild.id];
 
         if (!args[0]) {
             message.reply("no se què girar!");
-            message.channel.send("!help flipword");
+            message.channel.send(server.prefix + "help flipword");
             return;
         }
 

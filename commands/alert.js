@@ -6,13 +6,15 @@ module.exports = {
     type: 'privat',
     usage: '< msg >',
     execute(message, args, servers, userData, client) {
+        
+        let server = servers[message.guild.id];
 
         if (!args[0]) {
             message.reply("no se de què avisar!");
-            return message.channel.send("!help alert");
+            return message.channel.send(server.prefix + "help alert");
         } else if (message.author.id != IdOwner) {
             message.reply("aquesta comanda només pot ser executada per administradors del bot!");
-            return message.channel.send("!help alert");
+            return message.channel.send(server.prefix + "help alert");
         }
 
         msg = args.join(" ");
