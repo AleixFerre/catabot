@@ -7,7 +7,7 @@ module.exports = {
 	type: 'banc',
     usage: '< amount/all >',
     aliases: ['slot'],
-    execute(message, args, servers, userData) {
+    async execute(message, args, servers, userData) {
 
         let server = servers[message.guild.id];
 
@@ -102,10 +102,8 @@ module.exports = {
             embed.addField((i+1)+'.', emojis[machine[i]], true);
         }
         
-        embed.addBlankField()
-        .addField('Resultat: ', content,  false)
-        .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
-
-        message.channel.send(embed);
+        embed.setTimestamp().setFooter("Catabot 2020 © All rights reserved");
+        await message.channel.send(embed);
+        await message.channel.send("```" + content + '```');
 	},
 };
