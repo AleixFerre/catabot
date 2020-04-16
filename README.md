@@ -5,17 +5,19 @@ This is our new BETA Discord Bot called CataBot
 
 Dowload it and download dependencies with
 ``` 
-sudo apt-get install ffmpeg
-npm install --save discord.js
-npm install --save ffmpeg 
-npm install --save opusscript 
-npm install --save ytdl-core
+npm install discord.js
+npm install opusscript 
+npm install ytdl-core
 npm install simple-youtube-api
 npm install canvas
-npm install node-fetch --save
+npm install node-fetch
+npm install express
+npm install moment
 ```
 If you are running this locally
 You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
+sudo apt-get install ffmpeg
+npm install ffmpeg 
 
 ## **COMANDES DEL CATABOT**
 ### **COMANDES DE MUSICA**

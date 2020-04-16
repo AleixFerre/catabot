@@ -1,8 +1,13 @@
 const fs = require('fs');
 const Canvas = require('canvas');
 const Discord = require("discord.js");
+const express = require('express');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
+
+const expressApp = express();
+expressApp.get("/", (req, res) => res.json("OK"));
+expressApp.listen(process.env.PORT);
 
 const config = require("./config.json");
 let userData = JSON.parse(fs.readFileSync("./Storage/userData.json", 'utf8'));
