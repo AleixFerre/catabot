@@ -3,8 +3,28 @@ const Discord = require("discord.js");
 module.exports = {
 	name: 'server',
 	description: 'Diu la informació del servidor.',
-    aliases: ['serverinfo'],
-	execute(message) {
+    aliases: ['serverinfo', 'guild'],
+	execute(message, args, servers, userData) {
+
+        let mesRicNom = "";
+        let mesRicDiners = 0;
+        let totalMoney = 0;
+
+        message.guild.members.forEach(member => {
+            
+            if (!userData[message.guild.id + member.id] || member.user.bot) {
+                return;
+            }
+
+            if (userData[message.guild.id + member.id].money > mesRicDiners) {
+                mesRicDiners = userData[message.guild.id + member.id].money;
+                mesRicNom = member.user.username;
+            }
+            
+            totalMoney += userData[message.guild.id + member.id].money;
+
+        });
+
 
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
@@ -22,6 +42,9 @@ module.exports = {
         .setThumbnail(message.guild.iconURL)
         .addField('Propietari', message.guild.owner.user.username, true)
         .addField('Num Membres', message.guild.memberCount, true)
+        .addField('Diners totals', totalMoney, false)
+        .addField('El mes ric', mesRicNom, true)
+        .addField('Diners del mes ric', mesRicDiners, true)
         .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
 
 		message.channel.send(msg);
