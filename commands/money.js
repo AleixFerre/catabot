@@ -9,7 +9,8 @@ module.exports = {
 	execute(message, args, servers, userData) {
 
         let mention = {};
-    
+        let posicio = 1;
+
         if (message.mentions.users.first()) {
             mention = message.mentions.users.first();
         } else {
@@ -17,8 +18,17 @@ module.exports = {
         }
 
         if (mention.bot) {
-            return message.reply("els Bots no tenen diners... pobres Bots :(");
+            return message.reply("els Bots no tenen diners... pobres Bots 😫");
         }
+        
+        let money = userData[message.guild.id + mention.id].money;
+
+        message.guild.members.forEach(member => {
+            if (userData[message.guild.id + member.id].money > money) {
+                posicio++;
+            }
+        });
+
         
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
@@ -35,7 +45,8 @@ module.exports = {
         .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
         .setThumbnail(mention.avatarURL)
         .addField('Conta', mention.username, true)
-        .addField('Balanç', userData[message.guild.id + mention.id].money, true)
+        .addField('Balanç', money, true)
+        .addField('Rank', posicio, true)
         .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
 
         message.channel.send(msg);
