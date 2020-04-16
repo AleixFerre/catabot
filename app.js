@@ -101,8 +101,6 @@ client.on("guildDelete", (guild) => {
 
 client.on("ready", () => {
 
-	userData = {};
-
 	client.guilds.forEach(guild => {
 		guild.members.forEach(member => {
 			if (!userData[guild.id + member.user.id])
