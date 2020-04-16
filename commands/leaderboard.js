@@ -76,8 +76,19 @@ module.exports = {
         .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
 
         let i = 1;
+        
+        // 🥇 🥈 🥉
+
         board.forEach((user) => {
-            msg.addField(i + '.- ' + user.name, user.money);
+            let num = i;
+            if (i === 1) {
+                num = '🥇';
+            } else if (i === 2) {
+                num = '🥈';
+            } else if (i === 3) {
+                num = '🥉';
+            }
+            msg.addField(num + '.- ' + user.name, user.money);
             i++;
         });
 
