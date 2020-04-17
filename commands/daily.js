@@ -9,6 +9,7 @@ module.exports = {
 	execute(message, args, servers, userData) {
 
         let content = "";
+        moment.locale("ca");
 
         if (userData[message.guild.id + message.member.id].lastDaily != moment().format('L')) {
             userData[message.guild.id + message.member.id].lastDaily = moment().format('L');

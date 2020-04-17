@@ -2,8 +2,11 @@ const fs = require('fs');
 const Canvas = require('canvas');
 const Discord = require("discord.js");
 const express = require('express');
+const moment = require('moment');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
+
+moment().utcOffset('120');
 
 const expressApp = express();
 expressApp.get("/", (req, res) => res.json("OK"));
@@ -180,8 +183,8 @@ client.on('guildMemberAdd', async (member) => {
 			userData[member.guild.id + member.user.id].money = Math.round(Math.random() * 1000);
 	}
 
-	if (!userData[guild.id + member.user.id].lastDaily) {
-		userData[guild.id + member.user.id].lastDaily = "Not Collected";
+	if (!userData[member.guild.id + member.user.id].lastDaily) {
+		userData[memberguild.id + member.user.id].lastDaily = "Not Collected";
 	}
 
 	nMembers++;
