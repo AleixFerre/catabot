@@ -26,7 +26,6 @@ module.exports = {
 			let banc = [];
 			let entreteniment = [];
 			let altres = [];
-			let maxLength = 0;
 
 			// Encuem cada comanda a la taula que toca
 			commands.forEach((command) => {
@@ -50,14 +49,7 @@ module.exports = {
 						altres.push(command);
 						break;
 				}
-
-				if (command.name.length > maxLength) {
-					maxLength = command.name.length;
-				}
-
 			});
-
-			maxLength += 2; // Deixem un marge
 
 			// Creem l'embed i l'anem omplint
 			const fullHelpEmbed = new Discord.RichEmbed()

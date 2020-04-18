@@ -184,7 +184,7 @@ client.on('guildMemberAdd', async (member) => {
 	}
 
 	if (!userData[member.guild.id + member.user.id].lastDaily) {
-		userData[memberguild.id + member.user.id].lastDaily = "Not Collected";
+		userData[member.guild.id + member.user.id].lastDaily = "Not Collected";
 	}
 
 	nMembers++;
