@@ -9,7 +9,7 @@ module.exports = {
 	type: 'entreteniment',
 	execute(message, args, servers) {
         
-        let server = servers[message.guid.id];
+        let server = servers[message.guild.id];
 
         if (!args[0]) {
             message.reply("No se el que vols buscar!");

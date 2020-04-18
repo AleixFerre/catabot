@@ -15,8 +15,8 @@ module.exports = {
             size = Number(args[0]);
         }
 
-        if (size > 10) {
-            return message.reply("la mida ha de ser <= 10");
+        if (size > 10 || size <= 0) {
+            return message.reply("la mida ha de ser entre 1 i 10");
         }
 
         if (!message.guild.available) {
