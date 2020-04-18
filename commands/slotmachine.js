@@ -53,14 +53,15 @@ module.exports = {
             // Iguals
             if (machine[0] === 0) {
                 // Mierda
-                amount = 0;
+                amount *= 2;
                 content = message.author.username + " has guanyat una merda...💩";
             } else if (machine[0] === 1) {
                 // Estrella
+                amount *= 3;
                 content = message.author.username + " has guanyat una estrella!⭐";
             } else if (machine[0] === 2) {
                 // Diamant
-                amount *= 2;
+                amount *= 5;
                 content = message.author.username + " has guanyat un diamant!!!💎";
             } else {
                 // Error
