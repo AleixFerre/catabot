@@ -8,6 +8,15 @@ module.exports = {
 	execute(message, args, servers, userData) {
 
         let board = [];
+        let size = 10;
+
+        if (args[0] && !isNaN(args[0])) {
+            size = Number(args[0]);
+        }
+
+        if (size > 10) {
+            return message.reply("la mida ha de ser <= 10");
+        }
 
         if (!message.guild.available) {
             message.reply('el servidor no està disponible!');
@@ -50,9 +59,9 @@ module.exports = {
             let user = userData[message.guild.id + member.id];
             insercioOrdenada(user, member.user.username);
             
-            // Mantenim la taula sempre com a maxim amb 10 elements
+            // Mantenim la taula sempre com a maxim amb size elements
             // This is really an IF statement but just in case
-            while (board.length > 10) {
+            while (board.length > size) {
                 board.pop();
             }
         });
