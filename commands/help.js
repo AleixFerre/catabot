@@ -54,25 +54,29 @@ module.exports = {
 			// Creem l'embed i l'anem omplint
 			const fullHelpEmbed = new Discord.RichEmbed()
             .setColor(getRandomColor())
-			.setTitle('**Comandes del CataBOT**')
+			.setTitle('El **CataBOT** té ' + commands.size + ' comandes')
 			.setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
 			.setThumbnail('https://i.imgur.com/OMp4api.png');
 			
-			
-			helpContent += '🎵 **COMANDES DE MUSICA** 🎵\n `';
-			helpContent += musica.map(c => c.name).join(", ");
+			let aux = musica.map(c => c.name);
+			helpContent += '🎵 **COMANDES DE MUSICA** 🎵 ['+aux.length+']\n `';
+			helpContent += aux.join(", ");
 
-			helpContent += '`\n\n👮 **COMANDES DE MODERACIÓ** 👮\n`';
-			helpContent += mod.map(c => c.name).join(", ");
+			aux = mod.map(c => c.name);
+			helpContent += '`\n\n👮 **COMANDES DE MODERACIÓ** 👮 ['+aux.length+']\n `';
+			helpContent += aux.join(", ");
 
-			helpContent += '`\n\n💰 **COMANDES DE BANC** 💰\n`';
-			helpContent += banc.map(c => c.name).join(", ");
+			aux = banc.map(c => c.name);
+			helpContent += '`\n\n💰 **COMANDES DE BANC** 💰 ['+aux.length+']\n `';
+			helpContent += aux.join(", ");
 
-			helpContent += '`\n\n🥳 **COMANDES DE ENTRETENIMENT** 🥳\n`';
-			helpContent += entreteniment.map(c => c.name).join(", ");
+			aux = entreteniment.map(c => c.name);
+			helpContent += '`\n\n🥳 **COMANDES DE ENTRETENIMENT** 🥳 ['+aux.length+']\n `';
+			helpContent += aux.join(", ");
 
-			helpContent += '`\n\n🌈 **ALTRES COMANDES** 🌈\n`';
-			helpContent += altres.map(c => c.name).join(", ");
+			aux = altres.map(c => c.name);
+			helpContent += '`\n\n🌈 **ALTRES COMANDES** 🌈 ['+aux.length+']\n `';
+			helpContent += aux.join(", ");
 
 			data.push(helpContent + '`');
 			data.push('\nPots enviar ' + prefix + 'help [nom comanda] per obtenir informació més detallada de la comanda!');
