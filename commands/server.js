@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 
 module.exports = {
-	name: 'server',
+    name: 'server',
+    type: 'altres',
 	description: 'Diu la informació del servidor.',
     aliases: ['serverinfo', 'guild'],
 	execute(message, args, servers, userData) {

@@ -334,7 +334,7 @@ client.on('message', async (message) => {
 	}
 
     try {
-        command.execute(message, args, servers, userData, client);
+        command.execute(message, args, servers, userData, client, nMembers);
     } catch (error) {
         console.error(error);
 		message.reply('alguna cosa ha anat malament, siusplau contacta amb ' + config.ownerDiscordUsername +

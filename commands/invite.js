@@ -2,7 +2,8 @@ const Discord = require("discord.js");
 let { clientid } = require('../config.json');
 
 module.exports = {
-	name: 'invite',
+    name: 'invite',
+    type: 'altres',
 	description: 'T\'envia un missatge amb el invite-link del bot.',
 	execute(message) {
         // Get the invite link With admin permissions
