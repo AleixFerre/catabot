@@ -7,7 +7,7 @@ module.exports = {
     usage: '< rock/paper/scissors >',
     execute(message, args, servers) {
 
-        let server = servers[message.guid.id];
+        let server = servers[message.guild.id];
 
         let player = "rock";
         if (!args[0]) {

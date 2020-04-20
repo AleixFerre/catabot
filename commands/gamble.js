@@ -27,7 +27,7 @@ module.exports = {
             message.reply("has de posar un numero vàlid o all");
             return message.channel.send(server.prefix + "help gamble");
         } else {
-            amount = args[0];
+            amount = Number(args[0]);
         }
 
         if (amount <= 0) {
