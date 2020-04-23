@@ -42,11 +42,6 @@ module.exports = {
             return message.reply("no pots pagar a un bot!");
         }
 
-        if (otherUser.id === message.author.id) {
-            // si el mencionat es un bot
-            return message.reply("no et pots pagar a tu mateix!");
-        }
-
         if (!message.guild.member(otherUser.id)) {
             // si el mencionat no esta al servidor
             return message.reply("l'usuari mencionat no es troba al servidor!");
