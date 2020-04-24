@@ -357,13 +357,11 @@ client.on('guildMemberRemove', async(member) => {
 
 client.on('message', async(message) => {
 
-    if (message.guild.id === "264445053596991498") {
-        // Ignoring discord list server
-        return;
-    }
-
     let prefix = "!";
     if (message.guild) {
+        if (message.guild.id === "264445053596991498") {
+            return; // Ignoring discord list server
+        }
         prefix = servers[message.guild.id].prefix;
     }
 

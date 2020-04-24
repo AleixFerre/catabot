@@ -1,23 +1,39 @@
 const fs = require('fs');
 
 module.exports = {
-	name: 'gamble',
-	description: 'Doble o nada, apostant monedes',
-	type: 'banc',
-    usage: '< amount/all >',
+    name: 'gamble',
+    description: '50% de guanyar, apostant monedes. Ara amb la possibilitat de multiplicar. Però recorda que tens menys probabilitats!!',
+    type: 'banc',
+    usage: '< amount/all > [ multiplyer ]',
     aliases: ['dobleonada'],
     execute(message, args, servers, userData) {
 
         let server = servers[message.guild.id];
 
         let amount = 0;
+        let multiplyer = 1; // Per defecte x1
+        let multiplicant = false;
         let content = "";
         let all = false;
         const money = userData[message.guild.id + message.author.id].money;
-        
+
         if (!args[0]) {
             message.reply("no se quant vols apostar!");
             return message.channel.send(server.prefix + "help gamble");
+        }
+
+        if (args[1]) {
+            if (!isNaN(args[1])) {
+                multiplicant = true;
+                multiplyer = Number(args[1]);
+                if (multiplyer < 1) {
+                    message.reply("només pots multiplicar per 1 (per defecte) o més!");
+                    return message.channel.send(server.prefix + "help gamble");
+                }
+            } else {
+                message.reply("el multiplicador ha de ser un numero!");
+                return message.channel.send(server.prefix + "help gamble");
+            }
         }
 
         if (args[0] === "all") {
@@ -38,14 +54,18 @@ module.exports = {
             return message.reply("no tens prous diners!!");
         }
 
-        // Comprovem si doble o nada
-        let coin = Math.round(Math.random()); // We round between 0-1 so we have randomly true or false
+        // Comprovem si guanyem o no
+        let coin = Math.round(Math.random() * multiplyer); // We round between 0:n so we have randomly true or false
         if (coin === 1) {
-            // Doble
+            // Guanyem
+            amount *= multiplyer; // Multipliquem per m per qui hagi apostat multiplicant
             userData[message.guild.id + message.author.id].money += parseInt(amount);
             content = message.author.username + " has guanyat😆!\n💰" + amount + " monedes afegides a la teva conta.💰";
+            if (multiplicant) {
+                content += "\nHas utilitzat el multiplicador x" + multiplyer;
+            }
         } else {
-            // Nada
+            // Perdem
             userData[message.guild.id + message.author.id].money -= parseInt(amount);
             if (all) {
                 content = message.author.username + " HAS PERDUT TOT";
@@ -53,11 +73,14 @@ module.exports = {
                 content = message.author.username + " has perdut";
             }
             content += "😞!\n💰" + amount + " monedes esborrades de la teva conta.💰";
+            if (multiplicant) {
+                content += "\nHas utilitzat el multiplicador x" + multiplyer + ".\nRecorda que només tens menys probabilitats de perdre, però perds la quantitat apostada.";
+            }
         }
 
         // Actualitzem el fitxer
-        fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
+        fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => { if (err) console.error(err); });
 
         message.channel.send("```" + content + "```");
-	},
+    },
 };
