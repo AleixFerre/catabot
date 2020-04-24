@@ -2,13 +2,13 @@ const Discord = require("discord.js");
 const fetch = require('node-fetch');
 
 module.exports = {
-	name: 'pokedex',
-	description: 'Mostra la pokedex del pokemon',
+    name: 'pokedex',
+    description: 'Mostra la pokedex del pokemon que li entris',
     usage: '< pokemon >',
     aliases: ['poke', 'pokemon'],
-	type: 'entreteniment',
-	execute(message, args, servers) {
-        
+    type: 'entreteniment',
+    execute(message, args, servers) {
+
         let server = servers[message.guild.id];
 
         if (!args[0]) {
@@ -17,41 +17,78 @@ module.exports = {
             return;
         }
 
-        fetch("https://some-random-api.ml/pokedex?pokemon=" + args[0])
-        .then(res => res.json())
-        .then((data) => {
+        let APIname = args.join("-");
+        let realName = args.join(" ");
 
-            if (data.error) {
-                message.channel.send("```No hi ha cap pokemon que es digui "+ args[0] +"```");
-                message.channel.send(server.prefix + "help pokedex");
-                return;
-            }
+        fetch("https://some-random-api.ml/pokedex?pokemon=" + APIname)
+            .then(res => res.json())
+            .then((data) => {
 
-            function getRandomColor() {
-                let letters = '0123456789ABCDEF';
-                let color = '#';
-                for (let i = 0; i < 6; i++) {
-                  color += letters[Math.floor(Math.random() * 16)];
+                if (data.error) {
+                    message.channel.send("```No hi ha cap pokemon que es digui " + realName + "```");
+                    message.channel.send(server.prefix + "help pokedex");
+                    return;
                 }
-                return color;
-            }
 
-            const pokeEmbed = new Discord.RichEmbed()
-            .setColor(getRandomColor())
-            .setAuthor('POKEDEX', 'https://pngimage.net/wp-content/uploads/2018/06/pokemon-go-icon-png-3.png', 'https://pokemon.fandom.com/es/wiki/' + data.name)
-            .setTitle(data.name.charAt(0).toUpperCase() + data.name.slice(1)) // Capitalize the first letter
-            .setDescription(data.description)
-            .setThumbnail(data.sprites.animated)
-            .addField('Types:', data.type.join(", "), true);
+                function getRandomColor() {
+                    let letters = '0123456789ABCDEF';
+                    let color = '#';
+                    for (let i = 0; i < 6; i++) {
+                        color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    return color;
+                }
 
-            if (data.family.evolutionLine.length > 0) {
-                let uniqueEvos = [...new Set(data.family.evolutionLine)];
-                pokeEmbed.addField('Evolutions:', uniqueEvos.join(", "), true);
-            }
+                function capitalize(s) {
+                    return s.charAt(0).toUpperCase() + s.slice(1);
+                }
 
-            pokeEmbed.setTimestamp().setFooter("Catabot 2020 © All rights reserved");
-            
-            message.channel.send(pokeEmbed).catch(console.error);
-        });
-	},
+                let body = "Height: `" + data.height.substring(0, data.height.indexOf('(')).slice(0, -1) + "`\n" +
+                    "Weight: `" + data.weight.substring(0, data.weight.indexOf('(')).slice(0, -1) + "`\n" +
+                    "Base experience: `" + data.base_experience + " xp`";
+
+                let gender = "";
+                if (data.gender === "Genderless") {
+                    gender = "Genderless";
+                } else {
+                    gender = data.gender.join("\n").replace("male", "♂️").replace("female", "♀");
+                }
+
+                // Si te un sol tipus, posem Type, sino posem Types
+                let type = data.type.length === 1 ? "Type" : "Types";
+
+                let stats = "HP: `" + data.stats.hp + '`\n' +
+                    "Attack: `" + data.stats.attack + '`\n' +
+                    "Defense: `" + data.stats.defense + '`\n' +
+                    "Special Attck: `" + data.stats.sp_atk + '`\n' +
+                    "Special Defense: `" + data.stats.sp_def + '`\n' +
+                    "Speed: `" + data.stats.speed + '`\n' +
+                    "Total: `" + data.stats.total + '`';
+
+
+                const pokeEmbed = new Discord.RichEmbed()
+                    .setColor(getRandomColor())
+                    .setAuthor('POKEDEX', 'https://pngimage.net/wp-content/uploads/2018/06/pokemon-go-icon-png-3.png', 'https://pokemon.fandom.com/es/wiki/' + args.join("_"))
+                    .setTitle("**#" + data.id + " | " + capitalize(realName) + " | " + data.generation + "º GEN**") // Capitalize the first letter
+                    .setDescription(data.description)
+                    .setThumbnail("http://i.some-random-api.ml/pokemon/" + APIname + ".gif")
+                    .addField(type + ':', data.type.join(", "), true)
+                    .addField('Abilities:', data.abilities.join(", "), true)
+                    .addField('Species:', data.species.join(", "), true)
+                    .addField("Stats: ", stats, true)
+                    .addField("Body:", body, true)
+                    .addField("Gender: ", gender, true)
+                    .addField("Egg groups:", data.egg_groups.join(", "), true);
+
+                if (data.family.evolutionLine.length > 0) {
+                    // Treu els repetits ja que està en un Set
+                    let uniqueEvos = [...new Set(data.family.evolutionLine)];
+                    pokeEmbed.addField('Evolutions:', uniqueEvos.join(", "), true);
+                }
+
+                pokeEmbed.setTimestamp().setFooter("Catabot 2020 © All rights reserved");
+
+                message.channel.send(pokeEmbed).catch(console.error);
+            });
+    },
 };

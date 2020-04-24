@@ -3,8 +3,9 @@ const Discord = require("discord.js");
 module.exports = {
     name: 'f',
     description: 'F en el chat chavales',
+    usage: " [ description of the F ]",
     type: 'entreteniment',
-    execute(message) {
+    execute(message, args) {
 
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
@@ -18,6 +19,7 @@ module.exports = {
         const msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
             .setTitle("**F**")
+            .setDescription(args.join(" "))
             .setImage("https://media.giphy.com/media/j6ZlX8ghxNFRknObVk/giphy.gif").setTimestamp().setFooter("Catabot 2020 © All rights reserved");
 
         message.channel.send(msg);
