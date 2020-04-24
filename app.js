@@ -8,9 +8,11 @@ client.commands = new Discord.Collection();
 
 moment().utcOffset('120');
 
+let port = process.env.PORT || 3000;
+
 const expressApp = express();
 expressApp.get("/", (req, res) => res.json("OK"));
-expressApp.listen(process.env.PORT);
+expressApp.listen(port);
 
 const config = require("./config.json");
 let userData = JSON.parse(fs.readFileSync("./Storage/userData.json", 'utf8'));
@@ -403,9 +405,9 @@ client.on('message', async(message) => {
 
 });
 
-client.on("disconnect", (event) => {
+client.on("reconnecting", () => {
     nMembers = 0;
-    console.log(`--------------- DISCONNECTING with code ${event.code}---------------\nReason: ${event.reason}\n---------------\n`);
+    console.log(`--------------- RECONNECTING ---------------\n`);
 });
 
 client.login(config.token);
