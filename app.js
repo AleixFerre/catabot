@@ -129,6 +129,8 @@ client.on("guildDelete", (guild) => {
 
 client.on("ready", () => {
 
+    nMembers = 0;
+
     client.guilds.forEach(guild => {
         if (guild.id === "264445053596991498") {
             nMembers += guild.members.size;
@@ -403,9 +405,5 @@ client.on('message', async(message) => {
 
 });
 
-client.on("reconnecting", () => {
-    nMembers = 0;
-    console.log(`--------------- RECONNECTING ---------------\n`);
-});
 
 client.login(config.token);
