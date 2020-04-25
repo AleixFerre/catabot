@@ -4,7 +4,9 @@ This is our new BETA Discord Bot called CataBot
 
 ## To keep it up to date
 
-Dowload it and download dependencies with
+First install ![Node.js](https://nodejs.org/en/download/) if you don't have it installed yet
+
+Clone it and download dependencies with
 
 ```txt
 npm install discord.js
@@ -30,7 +32,6 @@ npm install ffmpeg
 ### **COMANDES DE MUSICA**
 
 ```txt
-
 -> !join                :: Entra dins del teu canal de veu.
 -> !play <search>       :: Posa la musica que vulguis amb un link.
 -> !playlist <link>     :: Posa les primeres 20 cançons d'una llista de reproducció.
