@@ -30,7 +30,7 @@ module.exports = {
         }
 
         if (args[0] === "all") {
-            amount = money;
+            amount = moneyA;
             all = true;
         } else if (isNaN(args[0])) {
             message.reply("has de posar un numero vàlid o all");

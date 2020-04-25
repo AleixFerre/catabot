@@ -34,10 +34,8 @@ for (const file of commandFiles) {
     });
 }
 
-// console.log(cmds);
 
-
-fs.writeFile('Storage/commands.json', JSON.stringify(cmds, null, 2), (err) => { if (err) console.error(err); });
+fs.writeFile('docs/Storage/commands.json', JSON.stringify(cmds), (err) => { if (err) console.error(err); });
 
 var servers = {}; ///< The data structure that handles all the info for the servers
 
