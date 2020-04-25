@@ -57,7 +57,7 @@ module.exports = {
 
         // ******************* Aceptem la aposta ******************* 
 
-        async function calculateWinnerSendMessage() {
+        function calculateWinnerSendMessage() {
             // Comprovem si guanya A o B
             let coin = Math.round(Math.random()); // We round between 0-1 so we have randomly true or false
             let winner, looser = "";
@@ -83,7 +83,7 @@ module.exports = {
             // Actualitzem el fitxer
             fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => { if (err) console.error(err); });
 
-            await message.channel.send("```" + content + "```");
+            message.channel.send("```" + content + "```");
         }
 
         message.channel.send("```" + other.username + " clica al ✅ per acceptar l'aposta o a la ❌ per cancel·lar!\n(15s per contestar...)```")
@@ -96,10 +96,11 @@ module.exports = {
                     user.id === other.id;
 
                 msg.awaitReactions(filter, { max: 1, time: 15000, errors: ['time'] })
-                    .then(async(collected) => {
+                    .then((collected) => {
                         if (collected.length === 0) {
                             message.reply("no has escollit res!!");
-                            return msg.delete();
+                            msg.delete();
+                            return;
                         }
                         let id = -1;
                         const reaction = collected.first();
@@ -120,8 +121,13 @@ module.exports = {
                             return msg.delete();
                         }
 
-                        await calculateWinnerSendMessage();
+                        calculateWinnerSendMessage();
                         msg.delete();
+
+                    }).catch(collected => {
+                        message.channel.send("<@" + other.id + ">, no has escollit res, cancel·lant la proposta...");
+                        msg.delete();
+                        return;
                     });
             });
 
