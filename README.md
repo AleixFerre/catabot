@@ -4,7 +4,7 @@ This is our new BETA Discord Bot called CataBot
 
 ## To keep it up to date
 
-First install ![Node.js](https://nodejs.org/en/download/) if you don't have it installed yet
+First install [Node.js](https://nodejs.org/en/download/) if you don't have it installed yet
 
 Clone it and download dependencies with
 
