@@ -99,4 +99,4 @@ npm install ffmpeg
 
 ## CURRENT VERSION
 
-0.7
+1.0

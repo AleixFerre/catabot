@@ -1,32 +1,32 @@
 {
-  "name": "CataBOT",
-  "description": "Discord BOT en Catala!",
-  "version": "0.7",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"TESTING\" && node app.js",
-    "start": "node app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/CatalaHD/CataBot.git"
-  },
-  "keywords": [],
-  "author": "CatalaHD",
-  "license": "MIT",
-  "dependencies": {
-    "canvas": "^2.6.1",
-    "discord.js": "^11.5.1",
-    "express": "^4.17.1",
-    "ffmpeg-binaries": "^4.0.0",
-    "moment": "^2.24.0",
-    "node-fetch": "^2.6.0",
-    "opusscript": "0.0.7",
-    "simple-youtube-api": "^5.2.1",
-    "ytdl-core": "^1.0.7"
-  },
-  "bugs": {
-    "url": "https://github.com/CatalaHD/CataBot/issues"
-  },
-  "homepage": "https://github.com/CatalaHD/CataBot"
+    "name": "catabot",
+    "description": "Discord BOT en Catala!",
+    "version": "1.0",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"TESTING\" && node app.js",
+        "start": "node app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/CatalaHD/CataBot.git"
+    },
+    "keywords": [],
+    "author": "CatalaHD",
+    "license": "MIT",
+    "dependencies": {
+        "canvas": "^2.6.1",
+        "discord.js": "^11.5.1",
+        "express": "^4.17.1",
+        "ffmpeg-binaries": "^4.0.0",
+        "moment": "^2.24.0",
+        "node-fetch": "^2.6.0",
+        "opusscript": "0.0.7",
+        "simple-youtube-api": "^5.2.1",
+        "ytdl-core": "^1.0.7"
+    },
+    "bugs": {
+        "url": "https://github.com/CatalaHD/CataBot/issues"
+    },
+    "homepage": "https://github.com/CatalaHD/CataBot"
 }
