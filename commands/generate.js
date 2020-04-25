@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { IdOwner } = require("../config.json");
 
 module.exports = {
     name: 'generate',

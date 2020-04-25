@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { IdOwner } = require("../config.json");
 
 module.exports = {
     name: 'randomize',
@@ -6,6 +7,8 @@ module.exports = {
     usage: '[ max ]',
     type: 'privat',
     execute(message, args, servers, userData) {
+
+        let server = servers[message.guild.id];
 
         if (message.author.id != IdOwner) {
             message.reply("aquesta comanda només pot ser executada per administradors del bot!");
