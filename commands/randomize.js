@@ -1,11 +1,16 @@
 const fs = require('fs');
 
 module.exports = {
-	name: 'randomize',
-	description: 'Posa un valor aleatori de monedes a tots els usuaris del servidor',
+    name: 'randomize',
+    description: 'Posa un valor aleatori de monedes a tots els usuaris del servidor',
     usage: '[ max ]',
-	type: 'mod',
-	execute(message, args, servers, userData) {
+    type: 'privat',
+    execute(message, args, servers, userData) {
+
+        if (message.author.id != IdOwner) {
+            message.reply("aquesta comanda només pot ser executada per administradors del bot!");
+            return message.channel.send(server.prefix + "help alert");
+        }
 
         let max = 1000;
         if (args[0]) {
@@ -27,8 +32,8 @@ module.exports = {
                 }
             }
         });
-        
-	    fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
-        message.channel.send('🔀 Monedes randomitzades correctament amb un valor maxim de '+ max +'! ✅');
-	},
+
+        fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => { if (err) console.error(err); });
+        message.channel.send('🔀 Monedes randomitzades correctament amb un valor maxim de ' + max + '! ✅');
+    },
 };

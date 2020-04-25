@@ -1,15 +1,20 @@
 const fs = require('fs');
 
 module.exports = {
-	name: 'generate',
-	description: 'Ingresa una quantitat a una persona',
-	type: 'mod',
-	usage: '< amount > < @user >',
-	execute(message, args, servers, userData) {
-        
+    name: 'generate',
+    description: 'Ingresa una quantitat a una persona',
+    type: 'privat',
+    usage: '< amount > < @user >',
+    execute(message, args, servers, userData) {
+
         // ************* Precondicions *************
-    
+
         let server = servers[message.guild.id];
+
+        if (message.author.id != IdOwner) {
+            message.reply("aquesta comanda només pot ser executada per administradors del bot!");
+            return message.channel.send(server.prefix + "help alert");
+        }
 
         // Si no hi ha diners
         if (!args[0]) {
@@ -41,19 +46,19 @@ module.exports = {
             // si el mencionat es un bot
             return message.reply("no pots ingressar diners a un bot!");
         }
-        
+
         if (!message.guild.member(otherUser.id)) {
             // si el mencionat no esta al servidor
             return message.reply("l'usuari mencionat no es troba al servidor!");
         }
-        
+
         // ************* Transacció *************
 
         // Posar diners a otherUser
         userData[message.guild.id + otherUser.id].money += amount;
 
         // Actualitzem el fitxer de disc
-	    fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
+        fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => { if (err) console.error(err); });
         message.reply("has ingressat " + amount + " monedes a " + otherUser.username + " correctament! 💸");
-	},
+    },
 };

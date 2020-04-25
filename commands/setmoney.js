@@ -3,13 +3,18 @@ const fs = require('fs');
 module.exports = {
     name: 'setmoney',
     description: 'Adjudica una quantitat a una persona',
-    type: 'mod',
+    type: 'privat',
     usage: '< amount > < @user >',
     execute(message, args, servers, userData) {
 
         // ************* Precondicions *************
 
         let server = servers[message.guild.id];
+
+        if (message.author.id != IdOwner) {
+            message.reply("aquesta comanda només pot ser executada per administradors del bot!");
+            return message.channel.send(server.prefix + "help alert");
+        }
 
         // Si no hi ha diners
         if (!args[0]) {
