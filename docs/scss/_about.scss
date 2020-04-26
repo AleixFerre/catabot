@@ -1,0 +1,109 @@
+.about_area{
+    padding-top: 200px;
+    @media #{$mobile_device} {
+        padding-top: 60px;
+
+    }
+    .about_title{
+        font-size: 42px;
+        font-weight: 400;
+        color: #1F1F1F;
+        margin-bottom: 100px;
+        @media #{$mobile_device}{
+            margin-bottom: 40px;
+            font-size: 25px;
+        }
+    }
+    p{
+        font-size: 16px;
+        line-height: 28px;
+        color: #727272;
+    }
+    .about_info{
+        h3{
+            font-size: 30px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+    }
+}
+.mb-60{
+    margin-bottom: 60px;
+    @media #{$mobile_device} {
+        margin-bottom: 30px;
+    }
+}
+.mb-80{
+    margin-bottom: 80px;
+    @media #{$mobile_device} {
+        margin-bottom: 30px;
+    }
+    @media #{$tablet_device} {
+        margin-bottom: 40px;
+    }
+}
+.about_gallery_wrap{
+    padding: 200px 0 0 0;
+    @media #{$mobile_device} {
+        padding: 100px 0 0 0;
+    }
+    @media #{$tablet_device} {
+        padding: 120px 0 0 0;
+    }
+    .service_wrap{
+        @media #{$tablet_device}{
+            margin-bottom: 30px;
+        }
+        
+        @media #{$mid_device}{
+            margin-bottom: 30px;
+        }
+        
+        @media #{$mobile_device}{
+            margin-bottom: 30px;
+        }
+        img{
+            width: 100%;
+        }
+    }
+    .about_wrap_text_1{
+        h3{
+            font-size: 30px;
+            margin-bottom: 20px;
+            color: #2E004B;
+        }
+    }
+}
+.about_boxes{
+    padding-top: 200px;
+    @media #{$mobile_device} {
+        padding-top: 100px;
+    }
+    @media #{$tablet_device} {
+        padding-top: 100px;
+    }
+    .single_box{
+        box-shadow: 0 16px 15px rgba(0, 0, 0,.06);
+        text-align: center;
+        padding: 75px 0;
+        border: 1px solid transparent;
+        @include transition(.3s);
+        @media #{$mobile_device}{
+            margin-bottom: 30px;
+        }
+        h3{
+            font-weight: 400;
+            font-size: 42px;
+            margin-bottom: 0;
+            color: #670080;
+            margin-bottom: 10px;
+        }
+        p{
+            color: #727272;
+            font-size: 20px;
+        }
+        &:hover{
+            border: 1px solid #670080;
+        }
+    }
+}

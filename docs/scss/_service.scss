@@ -1,0 +1,102 @@
+.service_area{
+    position: relative;
+    z-index: 0;
+    padding-top: 134px;
+    @media #{$mobile_device}{
+        padding-top: 60px;
+    }
+    @media #{$tablet_device}{
+        padding-top: 60px;
+    }
+    &::after{
+        position: absolute;
+        content: "";
+        background-image: url(../img/banner/banner_service.png);
+        height: 650px;
+        left: 0;
+        right: 0;
+        background-size: cover;
+        background-repeat: no-repeat;
+        top: 0;
+        z-index: -1;
+    }
+    &::before{
+        position: absolute;
+        content: "";
+        background: #4A3600;
+        height: 650px;
+        left: 0;
+        right: 0;
+        background-size: cover;
+        background-repeat: no-repeat;
+        top: 0;
+        opacity: .2;
+    }
+    .section_title2{
+        i{
+            color: #fff;
+        }
+        h3{
+            color: #fff;
+        }
+    }
+    .single_service{
+        // padding: 20px 0px 20px 0px;
+        padding: 20px 0px 20px 0px;
+        margin: 0 44px;
+        border-bottom: 1px solid #ECEAE5;
+        @media #{$mobile_device}{
+            display: block !important;
+            margin: 0 30px;
+        }
+        @media #{$large_device}{
+            display: flex !important;
+            margin: 0 30px;
+        }
+        .service_inner {
+            .thumb{
+                margin-right: 20px;
+                width: 58px;
+                height: 58px;
+                img{
+                    width: 100%;
+                }
+            }
+
+            span{
+                color: #4A3600;
+                font-size: 18px;
+                font-weight: 900;
+                font-family: $font1;
+            }
+        }
+        p{
+            margin-bottom: 0;
+            font-size: 18px;
+            font-family: $font1;
+            color: #BC9321;
+
+        }
+    }
+    .white_bg_pos{
+        position: relative;
+        z-index: 2;
+        background: #fff;
+        @include box-shadow(0 10px 20px rgba(0,0,0,.8));
+        margin-bottom: 14px;
+        // padding: 40px 60px 0 60px;
+        padding: 40px 20px 0 20px;
+    }
+    .book_btn{
+        margin-top: 90px;
+        margin-bottom: 80px;
+        @media #{$mobile_device} {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        @media #{$tablet_device} {
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+    }
+}

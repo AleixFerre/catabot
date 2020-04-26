@@ -1,0 +1,192 @@
+.prising_area{
+    padding-top: 200px;
+    padding-bottom: 170px;
+    @media #{$mobile_device}{
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+    @media #{$tablet_device}{
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+    @media #{$mid_device}{
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
+    .single_prising{
+        border: 1px solid #E0CCE6;
+        border-radius: 5px;
+        padding: 29px 23px;
+        margin-bottom: 30px;
+        .prising_icon{
+            i{
+                font-size: 65px;
+                
+            }
+            &.blue{
+                color: #0181F5;
+            }
+            &.yellow{
+                color: #F3C306;
+            }
+            &.lite_blue{
+                color: #886CFE;
+            }
+            &.pink{
+                color: #FF87A3;
+            }
+        }
+        h3{
+            font-size: 24px;
+            font-weight: 500;
+            font-size: 24px;
+            font-weight: 500;
+            color: $theme-color4;
+            margin-bottom: 13px;
+            margin-top: 16px;
+        }
+        p.prising_text{
+            margin-bottom: 0;
+        }
+        .prise{
+            font-size: 14px;
+            line-height: 28px;
+            margin-top: 23px;
+            margin-bottom: 30px;
+            span{
+                font-size: 24px;
+                font-weight: 500;
+                color: $theme-color4;
+                padding-left: 10px;
+
+            }
+        }
+    }
+}
+
+// package_prsing_area
+.package_prsing_area{
+    padding-top: 200px;
+    padding-bottom: 170px;
+    @media #{$mobile_device} {
+        padding-top: 60px;
+        padding-bottom: 30px;
+    }
+    @media #{$tablet_device} {
+        padding-top: 100px;
+        padding-bottom: 70px;
+    }
+    .single_prising{
+        margin-bottom: 30px;
+        @include box-shadow(0 16px 15px rgba(0, 0, 0,.06));
+        .prising_header{
+            background: #0181F5;
+            padding: 26px 0;
+            text-align: center;
+            h3{
+                font-size: 24px;
+                font-weight: 400;
+                color: #fff;
+                text-transform: capitalize;
+            }
+            &.deep{
+                background: #886CFE;
+            }
+            &.yellow{
+                background: #F3C306;
+            }
+        }
+        .list{
+            padding-left: 50px;
+            ul{
+                li{
+                    font-size: 16px;
+                    margin-bottom: 20px;
+                    position: relative;
+                    z-index: 0;
+                    padding-left: 24px;
+                    &::before{
+                        position: absolute;
+                        left: 0;
+                        top: 50%;
+                        width: 10px;
+                        height: 10px;
+                        content: "";
+                        @include border-radius(50%);
+                        background: #00C95E;
+                        @include transform(translateY(-50%));
+                    }
+                }
+            }
+        }
+    }
+    .middle_content{
+        
+        padding-bottom: 50px;
+        padding-top: 50px;
+    }
+    .prise {
+        text-align: center;
+        font-size: 14px;
+        margin-bottom: 50px;
+        margin-top: 26px;
+        span{
+            font-size: 24px;
+            color: #2E004B;
+        }
+    }
+    .boxed_btn_green {
+        padding: 12px 49px;
+    }
+
+}
+.have_question{
+    padding: 200px 0;
+    @media #{$mobile_device} {
+        padding: 100px 0;
+    }
+    @media #{$tablet_device} {
+        padding: 100px 0;
+    }
+    @media #{$mid_device} {
+        padding: 100px 0;
+    }
+    h3{
+        font-size: 30px;
+        @media #{$mobile_device}{
+            font-size: 20px;
+        }
+        @media #{$tablet_device}{
+            font-size: 18px;
+        }
+    }
+    .single_border {
+        border: 1px solid #ddd;
+        padding: 38px 50px;
+        @media #{$mobile_device} {
+            padding: 35px 0;
+            text-align: center;
+        }
+    }
+    .chat{
+        text-align: right;
+        @media #{$mobile_device}{
+            text-align: center;
+        }
+        .boxed_btn_green{
+            margin-right: 10px;
+            @media #{$mobile_device} {
+                padding: 11px 50px;
+                margin-right: 0;
+            }
+        }
+        a{
+            @media #{$mobile_device}{
+                margin: 5px 0;
+            }
+        }
+    }
+    .boxed_btn_green2 {
+        padding: 11px 45px 14px 45px;
+    }
+}

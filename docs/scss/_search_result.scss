@@ -1,0 +1,93 @@
+.search_area{
+    padding-top: 200px;
+    @media #{$mobile_device}{
+        padding-top: 60px;
+    }
+    @media #{$tablet_device}{
+        padding-top: 80px;
+    }
+    @media #{$mid_device}{
+        padding-top: 100px;
+    }
+    .search_title{
+        h3{
+            font-size: 20px;
+            color: #2E004B;
+            font-weight: 400;
+            margin-bottom: 51px;
+
+        }
+    }
+    .search_result_name{
+        h4{
+            font-size: 18px;
+            font-weight: 400;
+            color: #727272;
+        }
+    }
+    .search_result_prise{
+        h4{
+            font-size: 18px;
+            font-weight: 400;
+            color: #727272;
+        }
+    }
+    .single_search{
+        border: 1px solid #D5CCDB;
+        padding: 13px 30px;
+        margin-bottom: 20px;
+        @media #{$mobile_device}{
+            display: block !important;
+            text-align: center;
+            padding: 20px;
+        }
+        &:last-child{
+            margin-bottom: 0;
+        }
+        .name_title{
+            h4{
+                font-size: 18px;
+                color: #727272;
+                font-weight: 400;
+            }
+        }
+        .prising_content{
+            a{
+                margin-left: 25px;
+                font-size: 18px;
+                color: #2E004B;
+                @media #{$mobile_device}{
+                    display: block !important;
+                    margin: 5px 0;
+                } 
+                &.premium{
+                    background: #F6F0F8;
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #670080;
+                    display: inline-block;
+                    padding: 5px 20px;
+                    border-radius: 30px;
+                    &.disable{
+                        background: #F6F0F8;
+                        color: #919191;
+                    }
+                }
+                &.boxed_btn_green{
+                    padding: 7px 36px;
+                    color: #fff;
+                    &.disable{
+                        background: #C7C7C7;
+                        &:hover{
+                            border:1px solid transparent;
+                            color: #fff !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.mb-20{
+    margin-bottom: 20px;
+}
