@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>CataBot - Catalan Discord Bot</title>
+    <title>CataBot - El Bot de Discord en Català</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -180,7 +180,7 @@
     </div>
     <!-- core_features_end -->
 
-    
+
     <!-- footer -->
     <footer class="footer">
         <div class="copy-right_text">
