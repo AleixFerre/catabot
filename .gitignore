@@ -4,3 +4,4 @@ DISCORD.pem
 config.json
 package-lock.json
 Storage/userData.json
+*.psd

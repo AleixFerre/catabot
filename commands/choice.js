@@ -4,7 +4,7 @@ module.exports = {
     name: 'choice',
     description: 'Deix que el bot escolleixi per tu',
     type: 'entreteniment',
-    usage: '< choice1, choice2, ..., choiceN >\n[**MUST** be separated by **", "**]',
+    usage: '< choice1, choice2, ...>',
     execute(message, args, servers) {
 
         let server = servers[message.guild.id];
@@ -15,8 +15,8 @@ module.exports = {
         }
 
         let choices = args.join(" ").split(", ");
-        let choice = choices[Math.floor(Math.random()*choices.length)];
-        
+        let choice = choices[Math.floor(Math.random() * choices.length)];
+
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
             let color = '#';
@@ -27,12 +27,12 @@ module.exports = {
         }
 
         let msg = new Discord.RichEmbed()
-        .setColor(getRandomColor())
-        .setTitle("**CHOICE**")
-        .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
-        .setThumbnail('http://bit.ly/CataBot_Icon')
-        .addField('Choice', choice, true)
-        .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
+            .setColor(getRandomColor())
+            .setTitle("**CHOICE**")
+            .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
+            .setThumbnail('http://bit.ly/CataBot_Icon')
+            .addField('Choice', choice, true)
+            .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
 
         message.channel.send(msg);
     },

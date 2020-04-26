@@ -1,10 +1,9 @@
 module.exports = {
-	name: 'join',
-	description: 'El bot entra dins del teu canal de veu',
-    aliases: ['j'],
-	type: 'musica',
-	execute(message, args, servers) {
-        
+    name: 'join',
+    description: 'El bot entra dins del teu canal de veu',
+    type: 'musica',
+    execute(message, args, servers) {
+
         let prefix = servers[message.guild.id].prefix;
 
         if (message.member.voiceChannel) {
@@ -14,5 +13,5 @@ module.exports = {
             message.reply("Posa't a un canal de veu perquè pugui unir-me.");
             message.channel.send(prefix + 'help join');
         }
-	},
+    },
 };

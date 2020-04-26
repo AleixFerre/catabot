@@ -3,6 +3,7 @@ const Discord = require("discord.js");
 module.exports = {
     name: 'help',
     description: 'Mostra informació de les comandes',
+    type: "altres",
     usage: '[ nom de la comanda ]',
     aliases: ['h', 'command', 'commands', 'list', 'c'],
     execute(message, args, servers) {

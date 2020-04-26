@@ -25,11 +25,15 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
+    let usage = "";
+    if (command.usage) {
+        usage = command.usage;
+    }
     cmds.push({
         name: command.name,
         description: command.description,
         type: command.type,
-        usage: command.usage,
+        usage: "!" + command.name + " " + usage,
         aliases: command.aliases
     });
 }

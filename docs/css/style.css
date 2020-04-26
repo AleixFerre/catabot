@@ -250,7 +250,7 @@ h3 {
 /* line 122, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_reset.scss */
 
 .white-bg {
-    background: #ffffff;
+    background: #fff;
 }
 
 
@@ -1441,7 +1441,7 @@ h3 {
 .slider_area .single_slider .slider_text p {
     font-size: 18px;
     font-weight: 400;
-    color: #00D363;
+    /*color: #00D363; */
     margin-bottom: 0;
     margin-top: 0;
     display: inline-block;
@@ -1515,7 +1515,7 @@ h3 {
 /* line 77, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_slider.scss */
 
 .slider_area .find_dowmain .find_dowmain_form button {
-    background: #670080;
+    /*background: #670080;*/
     width: 30%;
     float: right;
     height: 60px;
@@ -3691,7 +3691,7 @@ h3 {
 /* line 1, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_footer.scss */
 
 .footer {
-    background: #2E004B;
+    background: black;
 }
 
 
@@ -3730,7 +3730,7 @@ h3 {
 .footer .footer_top .footer_widget .footer_title {
     font-size: 22px;
     font-weight: 400;
-    color: #fff;
+    color: gray;
     text-transform: capitalize;
     margin-bottom: 40px;
 }
@@ -3783,8 +3783,8 @@ h3 {
 /* line 46, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_footer.scss */
 
 .footer .footer_top .footer_widget p.footer_text a.domain:hover {
-    color: #00D363;
-    border-bottom: 1px solid #00D363;
+    color: #B2B2B2;
+    border-bottom: 1px solid #B2B2B2;
 }
 
 
@@ -3799,8 +3799,8 @@ h3 {
 /* line 56, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_footer.scss */
 
 .footer .footer_top .footer_widget p.footer_text.doanar a:hover {
-    color: #00D363;
-    border-bottom: 1px solid #00D363;
+    color: #B2B2B2;
+    border-bottom: 1px solid #B2B2B2;
 }
 
 
@@ -3823,7 +3823,7 @@ h3 {
 /* line 73, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_footer.scss */
 
 .footer .footer_top .footer_widget ul li a:hover {
-    color: #00D363;
+    color: #B2B2B2;
 }
 
 
@@ -3866,7 +3866,7 @@ h3 {
     border: none;
     font-size: 14px;
     color: #fff;
-    background: #00D363;
+    background: #B2B2B2;
     padding: 10px;
     padding: 0 22px;
     cursor: pointer;
@@ -3916,7 +3916,7 @@ h3 {
 /* line 129, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_footer.scss */
 
 .footer .copy-right_text .copy_right a {
-    color: #00D363;
+    color: #B2B2B2;
 }
 
 @media (max-width: 767px) {

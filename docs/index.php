@@ -1,10 +1,10 @@
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html class="no-js" lang="es">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Hostza</title>
+    <title>CataBot - Catalan Discord Bot</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -32,60 +32,35 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
 
-    <!-- header-start -->
-    <header>
-        <div class="header-area ">
-            <div id="sticky-header" class="main-header-area">
-                <div class="container-fluid p-0">
-                    <div class="row align-items-center no-gutters">
-                        <div class="col-xl-2 col-lg-2">
-                            <div class="logo-img">
-                                <a href="index.html">
-                                    <img src="img/logo.png" alt="">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-xl-7 col-lg-7">
-                            <div class="main-menu  d-none d-lg-block">
-                                <nav>
-                                    <ul id="navigation">
-                                        <li><a class="active" href="index.html">home</a></li>
-                                        <li><a href="package.html">Package</a></li>
-                                        <li><a href="#">blog <i class="ti-angle-down"></i></a>
-                                            <ul class="submenu">
-                                                <li><a href="blog.html">blog</a></li>
-                                                <li><a href="single-blog.html">single-blog</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">pages <i class="ti-angle-down"></i></a>
-                                            <ul class="submenu">
-                                                <li><a href="elements.html">elements</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="Support.html">Support</a></li>
-                                        <li><a href="about.html">About</a></li>
-                                        <li><a href="contact.html">Contact</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- header-end -->
 
     <!-- slider_area_start -->
+    <style>
+        .parallax {
+        /* The image used */
+        background-image: url("img/banner/banner.png");
+
+        /* Set a specific height */
+        height: 500px;
+
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    </style>
+
     <div class="slider_area">
-        <div class="single_slider d-flex align-items-center justify-content-center slider_bg_1 overlay2">
+        <div class="single_slider d-flex align-items-center justify-content-center slider_bg_1 overlay2 parallax">
             <div class="container">
                 <div class="row align-items-center justify-content-center">
                     <div class="col-xl-9">
                         <div class="slider_text text-center">
+                            <p> El bot de Discord en Català </p>
+                            <h3> CataBot </h3>
+                            <a target="_blank" href="https://discordapp.com/oauth2/authorize?client_id=529787494510624768&permissions=8&scope=bot" class="genric-btn primary circle e-large">Add Bot</a>
+                            <a href="table.html" class="genric-btn info circle e-large">Commands</a>
+                            <a target="_blank" href="https://discord.gg/BNFBPym" class="genric-btn danger circle e-large">Get Support</a>
                         </div>
                     </div>
                 </div>
@@ -97,357 +72,115 @@
     <!-- core_features_start -->
     <div class="core_features">
         <div class="container">
-            <div class="border-bottm">
                 <div class="row">
-                    <div class="col-xl-6 col-md-6">
-                        <div class="featuures_heading">
-                            <h3>Comandes</h3>
-                        </div>
+                    <div class="col-md-5">
+                        <img src="img/leader.png" alt="" class="img-fluid">
                     </div>
-                    <div class="col-xl-6 col-md-6">
-                        <div class="featurest_tabs ">
-                            <nav>
-                                <div class="nav" id="nav-tab" role="tablist">
-                                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
-                                        href="#nav-home" role="tab" aria-controls="nav-home"
-                                        aria-selected="true">Features</a>
-                                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
-                                        href="#nav-profile" role="tab" aria-controls="nav-profile"
-                                        aria-selected="false">Advanced Features</a>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <div class="row">
-                                <div class="col-xl-6">
-                                    <div class="single_features">
-                                        <div class="icon"><i class="flaticon-browser"></i></div>
-                                        <div class="features_info">
-                                            <h4>
-                                                Free Domain for 1st Year
-                                            </h4>
-                                            <p>Our set he for firmament morning sixth subdue darkness creeping gathered
-                                                divide our let god moving.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="single_features">
-                                        <div class="icon blue"><i class="flaticon-security"></i></div>
-                                        <div class="features_info">
-                                            <h4>
-                                                Free SSL Certificate
-                                            </h4>
-                                            <p>Our set he for firmament morning sixth subdue darkness creeping gathered
-                                                divide our let god moving.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="single_features">
-                                        <div class="icon pink"><i class="flaticon-like"></i></div>
-                                        <div class="features_info">
-                                            <h4>
-                                                30-Day Money-Back Guarantee
-                                            </h4>
-                                            <p>Our set he for firmament morning sixth subdue darkness creeping gathered
-                                                divide our let god moving.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="single_features">
-                                        <div class="icon yellow"><i class="flaticon-lock"></i></div>
-                                        <div class="features_info">
-                                            <h4>
-                                                Spam Protection
-                                            </h4>
-                                            <p>Our set he for firmament morning sixth subdue darkness creeping gathered
-                                                divide our let god moving.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                            <div class="row">
-                                <div class="col-xl-6">
-                                    <div class="single_features">
-                                        <div class="icon"><i class="flaticon-browser"></i></div>
-                                        <div class="features_info">
-                                            <h4>
-                                                Free Domain for 1st Year
-                                            </h4>
-                                            <p>Our set he for firmament morning sixth subdue darkness creeping gathered
-                                                divide our let god moving.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="single_features">
-                                        <div class="icon blue"><i class="flaticon-security"></i></div>
-                                        <div class="features_info">
-                                            <h4>
-                                                Free SSL Certificate
-                                            </h4>
-                                            <p>Our set he for firmament morning sixth subdue darkness creeping gathered
-                                                divide our let god moving.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="single_features">
-                                        <div class="icon pink"><i class="flaticon-like"></i></div>
-                                        <div class="features_info">
-                                            <h4>
-                                                30-Day Money-Back Guarantee
-                                            </h4>
-                                            <p>Our set he for firmament morning sixth subdue darkness creeping gathered
-                                                divide our let god moving.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="single_features">
-                                        <div class="icon yellow"><i class="flaticon-lock"></i></div>
-                                        <div class="features_info">
-                                            <h4>
-                                                Spam Protection
-                                            </h4>
-                                            <p>Our set he for firmament morning sixth subdue darkness creeping gathered
-                                                divide our let god moving.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-md-7 mt-sm-20">
+                        <h1> MONEDES </h1>
+                        <p>Recently, the US Federal government banned online casinos from operating in America by making
+                            it illegal to
+                            transfer money to them through any US bank or payment system. As a result of this law, most
+                            of the popular
+                            online casino networks such as Party Gaming and PlayTech left the United States. Overnight,
+                            online casino
+                            players found themselves being chased by the Federal government. But, after a fortnight, the
+                            online casino
+                            industry came up with a solution and new online casinos started taking root. These began to
+                            operate under a
+                            different business umbrella, and by doing that, rendered the transfer of money to and from
+                            them legal. A major
+                            part of this was enlisting electronic banking systems that would accept this new
+                            clarification and start doing
+                            business with me. Listed in this article are the electronic banking systems that accept
+                            players from the United
+                            States that wish to play in online casinos.</p>
                     </div>
                 </div>
-            </div>
+
+
+            <div class="section-top-border text-right">
+				<div class="row">
+					<div class="col-md-7">
+                        <h1> ENTRETENIMENT </h1>
+						<p class="text-right">Over time, even the most sophisticated, memory packed computer can begin
+							to run slow if we
+							don’t do something to prevent it. The reason why has less to do with how computers are made
+							and how they age and
+							more to do with the way we use them. You see, all of the daily tasks that we do on our PC
+							from running programs
+							to downloading and deleting software can make our computer sluggish. To keep this from
+							happening, you need to
+							understand the reasons why your PC is getting slower and do something to keep your PC
+							running at its best. You
+							can do this through regular maintenance and PC performance optimization programs</p>
+						<p class="text-right">Before we discuss all of the things that could be affecting your PC’s
+							performance, let’s
+							talk a little about what symptoms</p>
+					</div>
+					<div class="col-md-5">
+						<img src="img/pokedex.png" alt="" class="img-fluid">
+					</div>
+				</div>
+			</div>
+                
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <img src="img/kick.png" alt="" class="img-fluid">
+                    </div>
+                    <div class="col-md-7 mt-sm-20">
+                        <h1> MODERACIÓ </h1>
+                        <p>Recently, the US Federal government banned online casinos from operating in America by making
+                            it illegal to
+                            transfer money to them through any US bank or payment system. As a result of this law, most
+                            of the popular
+                            online casino networks such as Party Gaming and PlayTech left the United States. Overnight,
+                            online casino
+                            players found themselves being chased by the Federal government. But, after a fortnight, the
+                            online casino
+                            industry came up with a solution and new online casinos started taking root. These began to
+                            operate under a
+                            different business umbrella, and by doing that, rendered the transfer of money to and from
+                            them legal. A major
+                            part of this was enlisting electronic banking systems that would accept this new
+                            clarification and start doing
+                            business with me. Listed in this article are the electronic banking systems that accept
+                            players from the United
+                            States that wish to play in online casinos.</p>
+                    </div>
+                </div>
+
+
+                
+            <div class="section-top-border text-right">
+				<div class="row">
+					<div class="col-md-7">
+                        <h1> SERVIDOR OFICIAL </h1>
+						<p class="text-right">Over time, even the most sophisticated, memory packed computer can begin
+							to run slow if we
+							don’t do something to prevent it. The reason why has less to do with how computers are made
+							and how they age and
+							more to do with the way we use them. You see, all of the daily tasks that we do on our PC
+							from running programs
+							to downloading and deleting software can make our computer sluggish. To keep this from
+							happening, you need to
+							understand the reasons why your PC is getting slower and do something to keep your PC
+							running at its best. You
+							can do this through regular maintenance and PC performance optimization programs</p>
+						<p class="text-right">Before we discuss all of the things that could be affecting your PC’s
+							performance, let’s
+							talk a little about what symptoms</p>
+					</div>
+					<div class="col-md-5"><iframe src="https://discordapp.com/widget?id=672991564351537154&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
         </div>
     </div>
     <!-- core_features_end -->
-<!--
-    <div class="container">
-        <div class="section-top-border">
-            <h3 class="mb-30">Table</h3>
-            <div class="progress-table-wrap">
-                <div class="progress-table">
-                    <div class="table-head">
-                        <div class="serial">#</div>
-                        <div class="country">Countries</div>
-                        <div class="visit">Visits</div>
-                        <div class="percentage">Percentages</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="serial">01</div>
-                        <div class="country"> <img src="img/elements/f1.jpg" alt="flag">Canada</div>
-                        <div class="visit">645032</div>
-                        <div class="percentage">
-                            <div class="progress">
-                                <div class="progress-bar color-1" role="progressbar" style="width: 80%"
-                                    aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-row">
-                        <div class="serial">02</div>
-                        <div class="country"> <img src="img/elements/f2.jpg" alt="flag">Canada</div>
-                        <div class="visit">645032</div>
-                        <div class="percentage">
-                            <div class="progress">
-                                <div class="progress-bar color-2" role="progressbar" style="width: 30%"
-                                    aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-row">
-                        <div class="serial">03</div>
-                        <div class="country"> <img src="img/elements/f3.jpg" alt="flag">Canada</div>
-                        <div class="visit">645032</div>
-                        <div class="percentage">
-                            <div class="progress">
-                                <div class="progress-bar color-3" role="progressbar" style="width: 55%"
-                                    aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-row">
-                        <div class="serial">04</div>
-                        <div class="country"> <img src="img/elements/f4.jpg" alt="flag">Canada</div>
-                        <div class="visit">645032</div>
-                        <div class="percentage">
-                            <div class="progress">
-                                <div class="progress-bar color-4" role="progressbar" style="width: 60%"
-                                    aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-row">
-                        <div class="serial">05</div>
-                        <div class="country"> <img src="img/elements/f5.jpg" alt="flag">Canada</div>
-                        <div class="visit">645032</div>
-                        <div class="percentage">
-                            <div class="progress">
-                                <div class="progress-bar color-5" role="progressbar" style="width: 40%"
-                                    aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-row">
-                        <div class="serial">06</div>
-                        <div class="country"> <img src="img/elements/f6.jpg" alt="flag">Canada</div>
-                        <div class="visit">645032</div>
-                        <div class="percentage">
-                            <div class="progress">
-                                <div class="progress-bar color-6" role="progressbar" style="width: 70%"
-                                    aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-row">
-                        <div class="serial">07</div>
-                        <div class="country"> <img src="img/elements/f7.jpg" alt="flag">Canada</div>
-                        <div class="visit">645032</div>
-                        <div class="percentage">
-                            <div class="progress">
-                                <div class="progress-bar color-7" role="progressbar" style="width: 30%"
-                                    aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-row">
-                        <div class="serial">08</div>
-                        <div class="country"> <img src="img/elements/f8.jpg" alt="flag">Canada</div>
-                        <div class="visit">645032</div>
-                        <div class="percentage">
-                            <div class="progress">
-                                <div class="progress-bar color-8" role="progressbar" style="width: 60%"
-                                    aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    -->
 
-    <script src="js/generate-table.js"></script>
-    <table>
-    </table>
-
-
-    <!-- faq_area_start -->
-    <div class="faq_area">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="accordion_heading">
-                        <h3>Frequently Ask Question</h3>
-                    </div>
-                    <div id="accordion">
-                        <div class="card">
-                            <div class="card-header" id="headingTwo">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse"
-                                        data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        <i class="flaticon-info"></i> Is WordPress hosting worth it?
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                data-parent="#accordion">
-                                <div class="card-body">
-                                    Our set he for firmament morning sixth subdue darkness creeping gathered divide our
-                                    let god moving. Moving in fourth air night bring upon
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse"
-                                        data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                        <i class="flaticon-info"></i> What are the advantages <span>of WordPress hosting
-                                            over shared?</span>
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion"
-                                style="">
-                                <div class="card-body">
-                                    Our set he for firmament morning sixth subdue darkness creeping gathered divide our
-                                    let god moving. Moving in fourth air night bring upon
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingThree">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse"
-                                        data-target="#collapseThree" aria-expanded="false"
-                                        aria-controls="collapseThree">
-                                        <i class="flaticon-info"></i> Will you transfer my site?
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                data-parent="#accordion">
-                                <div class="card-body">
-                                    Our set he for firmament morning sixth subdue darkness creeping gathered divide our
-                                    let god moving. Moving in fourth air night bring upon
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="heading_4">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse"
-                                        data-target="#collapse_4" aria-expanded="false" aria-controls="collapse_4">
-                                        <i class="flaticon-info"></i> Why should I host with Hostza?
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="collapse_4" class="collapse" aria-labelledby="heading_4" data-parent="#accordion">
-                                <div class="card-body">
-                                    Our set he for firmament morning sixth subdue darkness creeping gathered divide our
-                                    let god moving. Moving in fourth air night bring upon
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="heading_5">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse"
-                                        data-target="#collapse_5" aria-expanded="false" aria-controls="collapse_5">
-                                        <i class="flaticon-info"></i> How do I get started <span>with Shared
-                                            Hosting?</span>
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="collapse_5" class="collapse" aria-labelledby="heading_5" data-parent="#accordion">
-                                <div class="card-body">
-                                    Our set he for firmament morning sixth subdue darkness creeping gathered divide our
-                                    let god moving. Moving in fourth air night bring upon
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- faq_area_end -->
-
-
-
+    
     <!-- footer -->
     <footer class="footer">
         <div class="copy-right_text">

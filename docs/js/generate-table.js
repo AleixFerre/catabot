@@ -21,37 +21,32 @@ fetch("../Storage/commands.json")
         let entreteniment = [];
         let privat = [];
         let altres = [];
+        let headers = ['Nom', 'Descripció', 'Tipus', 'Ús', 'Alias'];
 
         // Encuem cada comanda a la taula que toca
         for (let i = 0; i < commands.length; i++) {
             let command = commands[i];
+
             switch (command.type) {
                 case 'musica':
-                    delete command.type;
                     musica.push(command);
                     break;
                 case 'mod':
-                    delete command.type;
                     mod.push(command);
                     break;
                 case 'banc':
-                    delete command.type;
                     banc.push(command);
                     break;
                 case 'entreteniment':
-                    delete command.type;
                     entreteniment.push(command);
                     break;
                 case 'privat':
-                    delete command.type;
                     privat.push(command);
                     break;
                 case 'altres':
-                    delete command.type;
                     altres.push(command);
                     break;
                 default:
-                    delete command.type;
                     altres.push(command);
                     break;
             }
@@ -65,7 +60,7 @@ fetch("../Storage/commands.json")
 
 
         let table = document.querySelector("table");
-        let data = Object.keys(commands[0]);
+        let data = headers;
         generateTableHead(table, data);
         generateTable(table, musica);
 
