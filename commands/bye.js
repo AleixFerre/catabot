@@ -16,7 +16,7 @@ module.exports = {
 	name: 'bye',
 	description: 'Et despedeix del servidor',
 	type: 'entreteniment',
-	async execute(message) {
+	async execute(message, args) {
 
         function getMemberFromMention(mention) {
             if (!mention) return;
