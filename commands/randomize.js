@@ -12,7 +12,7 @@ module.exports = {
 
         if (message.author.id != IdOwner) {
             message.reply("aquesta comanda només pot ser executada per administradors del bot!");
-            return message.channel.send(server.prefix + "help alert");
+            return message.channel.send(server.prefix + "help randomize");
         }
 
         let max = 1000;
