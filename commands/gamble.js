@@ -29,6 +29,9 @@ module.exports = {
                 if (multiplyer < 1) {
                     message.reply("només pots multiplicar per 1 (per defecte) o més!");
                     return message.channel.send(server.prefix + "help gamble");
+                } else if (multiplyer % 1 !== 0) {
+                    message.reply("només pots multiplicar nombres enters!");
+                    return message.channel.send(server.prefix + "help gamble");
                 }
             } else {
                 message.reply("el multiplicador ha de ser un numero!");
@@ -44,6 +47,11 @@ module.exports = {
             return message.channel.send(server.prefix + "help gamble");
         } else {
             amount = Number(args[0]);
+        }
+
+        if (amount % 1 !== 0) {
+            message.reply("només pots apostara nombres enters!");
+            return message.channel.send(server.prefix + "help gamble");
         }
 
         if (amount <= 0) {

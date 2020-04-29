@@ -256,7 +256,7 @@ client.on('guildMemberAdd', async(member) => {
 
     fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => { if (err) console.error(err); });
 
-    console.log("Nou membre \"" + member.user.username + "\" afegit\n" +
+    console.log("Nou membre \"" + member.user.username + "\" afegit a la guild " + member.guild.name + "\n" +
         "Storing " + nMembers + " users");
 
     let channel = member.guild.systemChannel;
@@ -313,9 +313,9 @@ client.on('guildMemberRemove', async(member) => {
         return;
     }
 
-    if (userData[member.guild.id + member.user.id]) {
-        userData[member.guild.id + member.user.id] = {};
-    }
+    // Es guardarà la info de cada membre SEMPRE perque no pugui fer relogin
+    // Per resetejar les seves monedes o recollir el daily altre cop
+    // El que vulgui parlar-ho, que contacti amb l'admin corresponent
 
     nMembers--;
 
@@ -327,9 +327,7 @@ client.on('guildMemberRemove', async(member) => {
         }
     });
 
-    fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => { if (err) console.error(err); });
-
-    console.log("El membre \"" + member.user.username + "\" ha sigut esborrat\n" +
+    console.log("El membre \"" + member.user.username + "\" ha sortit de la guild " + member.guild.name + "\n" +
         "Storing " + nMembers + " users");
 
     let channel = member.guild.systemChannel;
