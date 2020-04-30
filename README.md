@@ -38,6 +38,7 @@ You can now visit our page [here](https://catalahd.github.io/CataBot/) and see a
 ## LICENSE
 
 Copyright 2020 © All rights reserved
+
 Under MIT License, see [here](LICENSE)
 
 ## CURRENT VERSION
