@@ -1,9 +1,8 @@
 # CataBot
 
+## This is our new BETA Discord Bot called CataBot
+
 ![icon](imgs/icon_cat.png)
-
-### This is our new BETA Discord Bot called CataBot
-
 
 ## Contribuiting
 
@@ -35,6 +34,11 @@ npm install ffmpeg
 ## **COMMANDS**
 
 You can now visit our page [here](https://catalahd.github.io/CataBot/) and see all the [commands](https://catalahd.github.io/CataBot/table.html)
+
+## LICENSE
+
+Copyright 2020 © All rights reserved
+Under MIT License, see [here](LICENSE)
 
 ## CURRENT VERSION
 
