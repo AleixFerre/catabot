@@ -1,7 +1,9 @@
 # CataBot
 
-This is our new BETA Discord Bot called CataBot
 ![icon](imgs/icon_cat.png)
+
+### This is our new BETA Discord Bot called CataBot
+
 
 ## Contribuiting
 
