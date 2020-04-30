@@ -414,4 +414,22 @@ client.on('message', async(message) => {
 
 });
 
+client.on("reconnecting", () => {
+    nMembers = 0;
+    client.guilds.forEach(guild => {
+        nMembers += guild.memberCount;
+    });
+
+    client.user.setPresence({
+        status: "online",
+        game: {
+            name: client.guilds.size + " servers con " + nMembers + " miembros.",
+            type: "WATCHING"
+        }
+    });
+
+    console.log("Reconnecting...");
+
+});
+
 client.login(config.token);
