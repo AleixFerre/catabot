@@ -1,12 +1,12 @@
 const Discord = require("discord.js");
 
 module.exports = {
-	name: 'money',
-	description: 'Et mostra els diners que tens',
+    name: 'money',
+    description: 'Et mostra els diners que tens',
     usage: '[ @user ]',
     aliases: ['profile', 'diners'],
-	type: 'banc',
-	execute(message, args, servers, userData) {
+    type: 'banc',
+    execute(message, args, servers, userData) {
 
         let mention = {};
         let posicio = 1;
@@ -20,7 +20,7 @@ module.exports = {
         if (mention.bot) {
             return message.reply("els Bots no tenen diners... pobres Bots 😫");
         }
-        
+
         let money = userData[message.guild.id + mention.id].money;
 
         message.guild.members.forEach(member => {
@@ -29,7 +29,7 @@ module.exports = {
             }
         });
 
-        
+
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
             let color = '#';
@@ -38,17 +38,16 @@ module.exports = {
             }
             return color;
         }
-        
+
         let msg = new Discord.RichEmbed()
-        .setColor(getRandomColor())
-        .setTitle("💰 Banc 💰")
-        .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
-        .setThumbnail(mention.avatarURL)
-        .addField('Conta', mention.username, true)
-        .addField('Balanç', money, true)
-        .addField('Rank', posicio, true)
-        .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
+            .setColor(getRandomColor())
+            .setTitle("💰 Banc 💰")
+            .setThumbnail(mention.avatarURL)
+            .addField('Conta', mention.username, true)
+            .addField('Diners', money, true)
+            .addField('Rank', posicio, true)
+            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);
-	},
+    },
 };

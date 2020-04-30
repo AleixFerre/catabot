@@ -155,10 +155,12 @@ client.on("ready", () => {
                     userData[guild.id + member.user.id] = {};
 
                 if (!userData[guild.id + member.user.id].money) {
-                    if (member.user.bot)
-                        userData[guild.id + member.user.id].money = -1;
-                    else
-                        userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
+                    if (userData[guild.id + member.user.id].money !== 0) {
+                        if (member.user.bot)
+                            userData[guild.id + member.user.id].money = -1;
+                        else
+                            userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
+                    }
                 }
 
                 if (!userData[guild.id + member.user.id].lastDaily) {
@@ -409,7 +411,7 @@ client.on('message', async(message) => {
         console.error(error);
         message.reply('alguna cosa ha anat malament, siusplau contacta amb ' + config.ownerDiscordUsername +
             '\nSi saps el que ha passat i vols reportar un bug pots fer-ho a\n' +
-            'https://github.com/CatalaHD/DiscordBot/issues');
+            'https://github.com/CatalaHD/CataBot/issues');
     }
 
 });

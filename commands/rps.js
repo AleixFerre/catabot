@@ -28,7 +28,7 @@ module.exports = {
         };
 
         let choices = Object.keys(logic);
-        let IA = choices[Math.floor(Math.random()*choices.length)];
+        let IA = choices[Math.floor(Math.random() * choices.length)];
         let guanyador = "";
 
         if (player === IA) {
@@ -44,8 +44,8 @@ module.exports = {
                 guanyador = "IA";
             }
         }
-            
-		function getRandomColor() {
+
+        function getRandomColor() {
             let letters = '0123456789ABCDEF';
             let color = '#';
             for (let i = 0; i < 6; i++) {
@@ -55,14 +55,14 @@ module.exports = {
         }
 
         let msg = new Discord.RichEmbed()
-        .setColor(getRandomColor())
-        .setTitle("**ROCK PAPER SCISSORS**")
-        .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
-        .setThumbnail('http://bit.ly/CataBot_Icon')
-        .addField('Player', player, true)
-        .addField('IA', IA, true)
-        .addField('Resultat', guanyador)
-        .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
+            .setColor(getRandomColor())
+            .setTitle("**ROCK PAPER SCISSORS**")
+            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
+            .setThumbnail('http://bit.ly/CataBot_Icon')
+            .addField('Player', player, true)
+            .addField('IA', IA, true)
+            .addField('Resultat', guanyador)
+            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);
     },

@@ -159,7 +159,7 @@ iframe {
     width: auto;
     height: fill;
     margin: 0 auto;
-    background-color: #393939;
+    background-color: #F77F00;
 }
 
 .container-table100 {
@@ -361,24 +361,24 @@ td {
 [ Ver3 ]*/
 
 .table100.ver3 {
-    background-color: #393939;
+    background-color: #FCBF49;
 }
 
 .table100.ver3 th {
     font-family: Lato-Bold;
     font-size: 15px;
-    color: #00ad5f;
+    color: #EAE2B7;
     line-height: 1.4;
     text-transform: uppercase;
-    background-color: #393939;
+    background-color: #F77F00;
 }
 
 .table100.ver3 td {
     font-family: Lato-Regular;
     font-size: 15px;
-    color: #808080;
+    color: #003049;
     line-height: 1.4;
-    background-color: #222222;
+    background-color: #EAE2B7;
 }
 
 
@@ -399,11 +399,11 @@ td {
 }
 
 .table100.ver3 .ps__rail-y::before {
-    background-color: #4e4e4e;
+    background-color: #F77F00;
 }
 
 .table100.ver3 .ps__rail-y .ps__thumb-y::before {
-    background-color: #00ad5f;
+    background-color: #D62828;
 }
 
 

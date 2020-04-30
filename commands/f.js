@@ -20,7 +20,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("**F**")
             .setDescription(args.join(" "))
-            .setImage("https://media.giphy.com/media/j6ZlX8ghxNFRknObVk/giphy.gif").setTimestamp().setFooter("Catabot 2020 © All rights reserved");
+            .setImage("https://media.giphy.com/media/j6ZlX8ghxNFRknObVk/giphy.gif").setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);
     },

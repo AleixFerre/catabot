@@ -2,9 +2,9 @@ const fs = require('fs');
 const Discord = require('discord.js');
 
 module.exports = {
-	name: 'slotmachine',
-	description: 'Maquina tragaperras de toda la vida.\nNecessites que totes siguin iguals',
-	type: 'banc',
+    name: 'slotmachine',
+    description: 'Maquina tragaperras de toda la vida.\nNecessites que totes siguin iguals',
+    type: 'banc',
     usage: '< amount/all >',
     aliases: ['slot'],
     async execute(message, args, servers, userData) {
@@ -15,7 +15,7 @@ module.exports = {
         let content = "";
         let all = false;
         const money = userData[message.guild.id + message.author.id].money;
-        
+
         if (!args[0]) {
             message.reply("no se quant vols apostar!");
             return message.channel.send(server.prefix + "help slot");
@@ -45,7 +45,7 @@ module.exports = {
         let machine = [0, 0, 0];
         let emojis = ["💩", "⭐", "💎"];
         for (let i = 0; i < machine.length; i++) {
-            machine[i] = Math.round(Math.random()*2); // We round between 0-1-2
+            machine[i] = Math.round(Math.random() * 2); // We round between 0-1-2
         }
 
 
@@ -82,7 +82,7 @@ module.exports = {
         }
 
         // Actualitzem el fitxer
-        fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
+        fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => { if (err) console.error(err); });
 
 
         function getRandomColor() {
@@ -95,16 +95,16 @@ module.exports = {
         }
 
         let embed = new Discord.RichEmbed()
-        .setColor(getRandomColor())
-        .setTitle("**SLOT MACHINE**")
-        .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot');
-        
-        for(let i=0; i<3; i++) { // Adding the machine slots
-            embed.addField((i+1)+'.', emojis[machine[i]], true);
+            .setColor(getRandomColor())
+            .setTitle("**SLOT MACHINE**")
+            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot');
+
+        for (let i = 0; i < 3; i++) { // Adding the machine slots
+            embed.addField((i + 1) + '.', emojis[machine[i]], true);
         }
-        
-        embed.setTimestamp().setFooter("Catabot 2020 © All rights reserved");
+
+        embed.setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
         await message.channel.send(embed);
         await message.channel.send("```" + content + '```');
-	},
+    },
 };

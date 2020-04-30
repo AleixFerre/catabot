@@ -1,13 +1,13 @@
 const Discord = require("discord.js");
 
 module.exports = {
-	name: 'howgay',
-	description: 'Et diu lo gay que ets',
-	type: 'entreteniment',
+    name: 'howgay',
+    description: 'Et diu lo gay que ets',
+    type: 'entreteniment',
     aliases: ['gay'],
-	execute(message) {
+    execute(message) {
 
-        let gay = Math.round(Math.random()*99+1); // Clamped bewteen 1% : 100%
+        let gay = Math.round(Math.random() * 99 + 1); // Clamped bewteen 1% : 100%
 
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
@@ -19,13 +19,13 @@ module.exports = {
         }
 
         let msg = new Discord.RichEmbed()
-        .setColor(getRandomColor())
-        .setTitle("**HOW GAY ARE YOU?**")
-        .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
-        .setThumbnail('http://bit.ly/CataBot_Icon')
-        .addField('Resultat', 'You are ' + gay + '% gay', true)
-        .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
+            .setColor(getRandomColor())
+            .setTitle("**HOW GAY ARE YOU?**")
+            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
+            .setThumbnail('http://bit.ly/CataBot_Icon')
+            .addField('Resultat', 'You are ' + gay + '% gay', true)
+            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);
-	},
+    },
 };

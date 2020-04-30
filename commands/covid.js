@@ -82,7 +82,7 @@ module.exports = {
             covidEmbed.addField(finalResult, covidData[camp], true);
         });
 
-        covidEmbed.setTimestamp().setFooter("Catabot 2020 © All rights reserved");
+        covidEmbed.setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(covidEmbed);
 

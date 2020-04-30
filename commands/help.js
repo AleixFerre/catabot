@@ -60,7 +60,7 @@ module.exports = {
             const fullHelpEmbed = new Discord.RichEmbed()
                 .setColor(getRandomColor())
                 .setTitle('El **CataBOT** té ' + commands.size + ' comandes')
-                .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
+                .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
                 .setThumbnail('https://i.imgur.com/OMp4api.png');
 
             let aux = musica.map(c => c.name);
@@ -88,11 +88,12 @@ module.exports = {
             helpContent += aux.join(", ");
 
             data.push(helpContent + '`');
-            data.push('\nPots enviar ' + prefix + 'help [nom comanda] per obtenir informació més detallada de la comanda!');
+            data.push('\n* Pots enviar ' + prefix + 'help [nom comanda] per obtenir informació més detallada de la comanda!\n' +
+                "* Pots veure totes les comandes [aquí](https://catalahd.github.io/CataBot/commands.html).");
 
             fullHelpEmbed.setDescription(data);
 
-            fullHelpEmbed.setTimestamp().setFooter("Catabot 2020 © All rights reserved");
+            fullHelpEmbed.setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
             return message.author.send(fullHelpEmbed)
                 .then(() => {
@@ -127,7 +128,7 @@ module.exports = {
 
         const helpEmbed = new Discord.RichEmbed()
             .setColor(getRandomColor())
-            .setAuthor('CataBot', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
+            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
             .setTitle(command.name.toUpperCase())
             .setThumbnail('https://i.imgur.com/OMp4api.png');
 
@@ -145,7 +146,7 @@ module.exports = {
         if (command.usage)
             helpEmbed.addField('Ús', prefix + command.name + ' ' + command.usage);
 
-        helpEmbed.setTimestamp().setFooter("Catabot 2020 © All rights reserved");
+        helpEmbed.setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(helpEmbed);
 

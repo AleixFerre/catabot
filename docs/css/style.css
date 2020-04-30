@@ -37,7 +37,7 @@
 /* line 4, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_reset.scss */
 
 body {
-    font-family: "Roboto", sans-serif;
+    font-family: "Montserrat";
     font-weight: normal;
     font-style: normal;
 }
@@ -109,8 +109,8 @@ h2,
 h3,
 h4,
 h5 {
-    font-family: "Roboto", sans-serif;
-    color: #2E004B;
+    font-family: "Montserrat";
+    color: #003049;
 }
 
 
@@ -149,7 +149,7 @@ p {
     line-height: 28px;
     color: #919191;
     margin-bottom: 13px;
-    font-family: "Roboto", sans-serif;
+    font-family: "Montserrat";
 }
 
 
@@ -454,7 +454,7 @@ h3 {
     color: #2E004B;
     display: inline-block;
     padding: 18px 44px;
-    font-family: "Roboto", sans-serif;
+    font-family: "Montserrat";
     font-size: 14px;
     font-weight: 400;
     border: 0;
@@ -497,7 +497,7 @@ h3 {
     color: #fff;
     display: inline-block;
     padding: 12px 27px;
-    font-family: "Roboto", sans-serif;
+    font-family: "Montserrat";
     font-size: 16px;
     font-weight: 400;
     border: 0;
@@ -543,7 +543,7 @@ h3 {
     color: #fff;
     display: inline-block;
     padding: 18px 24px;
-    font-family: "Roboto", sans-serif;
+    font-family: "Montserrat";
     font-size: 14px;
     font-weight: 400;
     border: 0;
@@ -726,7 +726,7 @@ h3 {
 
 .section_title p {
     font-size: 16px;
-    font-family: "Roboto", sans-serif;
+    font-family: "Montserrat";
     font-weight: 400;
     line-height: 28px;
     color: #919191;
@@ -1109,7 +1109,7 @@ h3 {
     font-weight: 600;
     display: inline-block;
     padding: 0px 0px 10px 0px;
-    font-family: "Roboto", sans-serif;
+    font-family: "Montserrat";
     position: relative;
     text-transform: capitalize;
 }
@@ -4223,7 +4223,7 @@ h3 {
     cursor: pointer;
     display: block;
     float: left;
-    font-family: "Roboto", sans-serif;
+    font-family: "Montserrat";
     font-weight: normal;
     width: 100% !important;
     /* height: 42px; */
@@ -4974,7 +4974,7 @@ h6 {
 
 .genric-btn.info {
     color: #fff;
-    background: #38a4ff;
+    background: #E75414;
     border: 1px solid transparent;
 }
 
@@ -4982,17 +4982,17 @@ h6 {
 /* line 261, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_elements.scss */
 
 .genric-btn.info:hover {
-    color: #38a4ff;
-    border: 1px solid #38a4ff;
-    background: #fff;
+    color: #EF6A0A;
+    border: 1px solid #F77F00;
+    background: #003049;
 }
 
 
 /* line 267, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_elements.scss */
 
 .genric-btn.info-border {
-    color: #38a4ff;
-    border: 1px solid #38a4ff;
+    color: #F77F00;
+    border: 1px solid #F77F00;
     background: #fff;
 }
 
@@ -5001,7 +5001,7 @@ h6 {
 
 .genric-btn.info-border:hover {
     color: #fff;
-    background: #38a4ff;
+    background: #6B2C39;
     border: 1px solid transparent;
 }
 
@@ -5010,7 +5010,7 @@ h6 {
 
 .genric-btn.warning {
     color: #fff;
-    background: #f4e700;
+    background: #F98F13;
     border: 1px solid transparent;
 }
 
@@ -5018,26 +5018,26 @@ h6 {
 /* line 281, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_elements.scss */
 
 .genric-btn.warning:hover {
-    color: #f4e700;
-    border: 1px solid #f4e700;
-    background: #fff;
+    color: #FCBF49;
+    border: 1px solid #FCBF49;
+    background: #003049;
 }
 
 
 /* line 287, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_elements.scss */
 
 .genric-btn.warning-border {
-    color: #f4e700;
-    border: 1px solid #f4e700;
-    background: #fff;
+    color: #FCBF49;
+    border: 1px solid #FCBF49;
+    background: #003049;
 }
 
 
 /* line 291, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_elements.scss */
 
 .genric-btn.warning-border:hover {
-    color: #fff;
-    background: #f4e700;
+    color: #003049;
+    background: #FCBF49;
     border: 1px solid transparent;
 }
 
@@ -5045,8 +5045,8 @@ h6 {
 /* line 297, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_elements.scss */
 
 .genric-btn.danger {
-    color: #fff;
-    background: #f44a40;
+    color: #003049;
+    background: #FCBF49;
     border: 1px solid transparent;
 }
 
@@ -5054,8 +5054,8 @@ h6 {
 /* line 301, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_elements.scss */
 
 .genric-btn.danger:hover {
-    color: #f44a40;
-    border: 1px solid #f44a40;
+    color: #003049;
+    border: 1px solid #FCBF49;
     background: #fff;
 }
 
@@ -5063,8 +5063,8 @@ h6 {
 /* line 307, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_elements.scss */
 
 .genric-btn.danger-border {
-    color: #f44a40;
-    border: 1px solid #f44a40;
+    color: #003049;
+    border: 1px solid #FCBF49;
     background: #fff;
 }
 
@@ -5072,8 +5072,8 @@ h6 {
 /* line 311, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_elements.scss */
 
 .genric-btn.danger-border:hover {
-    color: #fff;
-    background: #f44a40;
+    color: #003049;
+    background: #FCBF49;
     border: 1px solid transparent;
 }
 

@@ -29,10 +29,10 @@ module.exports = {
         let msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
             .setTitle("**CHOICE**")
-            .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
+            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
             .setThumbnail('http://bit.ly/CataBot_Icon')
             .addField('Choice', choice, true)
-            .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
+            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);
     },

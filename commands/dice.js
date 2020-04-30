@@ -46,9 +46,9 @@ module.exports = {
         let msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
             .setTitle("**ROLL A DICE**")
-            .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
+            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
             .setThumbnail('http://bit.ly/CataBot_Dice')
-            .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
+            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         for (let i = 0; i < num; i++) {
             msg.addField("Resultat " + (i + 1), Math.round(Math.random() * (size - 1)) + 1, true); // Result 1:size

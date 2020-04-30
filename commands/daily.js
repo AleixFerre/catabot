@@ -3,10 +3,10 @@ const moment = require('moment');
 const fs = require('fs');
 
 module.exports = {
-	name: 'daily',
-	description: 'Recolleix la teva recompensa diaria!',
-	type: 'banc',
-	execute(message, args, servers, userData) {
+    name: 'daily',
+    description: 'Recolleix la teva recompensa diaria!',
+    type: 'banc',
+    execute(message, args, servers, userData) {
 
         let content = "";
         moment.locale("ca");
@@ -18,7 +18,7 @@ module.exports = {
         } else {
             content = "Ja has recollit la teva recompensa diaria!\nPots tornar-hi " + moment().endOf('day').fromNow();
         }
-        
+
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
             let color = '#';
@@ -27,15 +27,14 @@ module.exports = {
             }
             return color;
         }
-        
+
         let msg = new Discord.RichEmbed()
-        .setColor(getRandomColor())
-        .setTitle("💰 **DAILY** 💰")
-        .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
-        .setDescription(content)
-        .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
-        
-        fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => {if(err) console.error(err);});
+            .setColor(getRandomColor())
+            .setTitle("💰 **DAILY** 💰")
+            .setDescription(content)
+            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+
+        fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => { if (err) console.error(err); });
         message.channel.send(msg);
-	},
+    },
 };
