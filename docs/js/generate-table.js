@@ -1,7 +1,7 @@
 // Script que mostra la info de manera ordenada 
 
 let commands = [];
-fetch("../Storage/commands.json")
+fetch("https://raw.githubusercontent.com/CatalaHD/CataBot/master/docs/Storage/commands.json")
     .then(response => response.json())
     .then(json => {
         commands = json;
@@ -29,30 +29,30 @@ fetch("../Storage/commands.json")
 
             if (!command.alias) command.alias = "";
             /*
-                        switch (command.type) {
-                            case 'musica':
-                                musica.push(command);
-                                break;
-                            case 'mod':
-                                mod.push(command);
-                                break;
-                            case 'banc':
-                                banc.push(command);
-                                break;
-                            case 'entreteniment':
-                                entreteniment.push(command);
-                                break;
-                            case 'privat':
-                                privat.push(command);
-                                break;
-                            case 'altres':
-                                altres.push(command);
-                                break;
-                            default:
-                                altres.push(command);
-                                break;
-                        }
-                        */
+            switch (command.type) {
+                case 'musica':
+                    musica.push(command);
+                    break;
+                case 'mod':
+                    mod.push(command);
+                    break;
+                case 'banc':
+                    banc.push(command);
+                    break;
+                case 'entreteniment':
+                    entreteniment.push(command);
+                    break;
+                case 'privat':
+                    privat.push(command);
+                    break;
+                case 'altres':
+                    altres.push(command);
+                    break;
+                default:
+                    altres.push(command);
+                    break;
+            }
+            */
         }
 
         /*
@@ -63,8 +63,9 @@ fetch("../Storage/commands.json")
         console.table(altres);
         */
 
+        console.log(commands);
+
         let content = document.getElementById("table_content");
-        // delete musica.type;
         generateTable(content, commands);
     });
 
@@ -74,12 +75,13 @@ function generateTable(table, data) {
         row.className = "row100 body";
 
         let i = 1;
-        for (let key in element) {
+        let keys = Object.keys(element);
+        for (let i = 0; i < 5; i++) {
             let cell = row.insertCell();
-            cell.className = "cell100 column" + i;
-            let text = document.createTextNode(element[key]);
+            cell.className = "cell100 column" + (i + 1);
+            let text = document.createTextNode(element[keys[i]]);
             cell.appendChild(text);
-            i++;
         }
+
     }
 }

@@ -198,24 +198,24 @@ td {
 }
 
 .column1 {
-    width: 33%;
+    width: auto;
     padding-left: 40px;
 }
 
 .column2 {
-    width: 13%;
+    width: auto;
 }
 
 .column3 {
-    width: 22%;
+    width: auto;
 }
 
 .column4 {
-    width: 19%;
+    width: auto;
 }
 
 .column5 {
-    width: 13%;
+    width: auto;
 }
 
 .table100-head th {
