@@ -27,74 +27,59 @@ fetch("../Storage/commands.json")
         for (let i = 0; i < commands.length; i++) {
             let command = commands[i];
 
-            switch (command.type) {
-                case 'musica':
-                    musica.push(command);
-                    break;
-                case 'mod':
-                    mod.push(command);
-                    break;
-                case 'banc':
-                    banc.push(command);
-                    break;
-                case 'entreteniment':
-                    entreteniment.push(command);
-                    break;
-                case 'privat':
-                    privat.push(command);
-                    break;
-                case 'altres':
-                    altres.push(command);
-                    break;
-                default:
-                    altres.push(command);
-                    break;
-            }
+            if (!command.alias) command.alias = "";
+            /*
+                        switch (command.type) {
+                            case 'musica':
+                                musica.push(command);
+                                break;
+                            case 'mod':
+                                mod.push(command);
+                                break;
+                            case 'banc':
+                                banc.push(command);
+                                break;
+                            case 'entreteniment':
+                                entreteniment.push(command);
+                                break;
+                            case 'privat':
+                                privat.push(command);
+                                break;
+                            case 'altres':
+                                altres.push(command);
+                                break;
+                            default:
+                                altres.push(command);
+                                break;
+                        }
+                        */
         }
 
+        /*
         console.table(musica);
         console.table(mod);
         console.table(entreteniment);
         console.table(privat);
         console.table(altres);
+        */
 
-
-        let table = document.querySelector("table");
-        let data = headers;
-        generateTableHead(table, data);
-        generateTable(table, musica);
-
-        generateTableHead(table, data);
-        generateTable(table, mod);
-
-        generateTableHead(table, data);
-        generateTable(table, entreteniment);
-
-        generateTableHead(table, data);
-        generateTable(table, privat);
-
-        generateTableHead(table, data);
-        generateTable(table, altres);
+        let content = document.getElementById("table_content");
+        // delete musica.type;
+        generateTable(content, commands);
     });
-
-function generateTableHead(table, data) {
-    let thead = table.createTHead();
-    let row = thead.insertRow();
-    for (let key of data) {
-        let th = document.createElement("th");
-        let text = document.createTextNode(key);
-        th.appendChild(text);
-        row.appendChild(th);
-    }
-}
 
 function generateTable(table, data) {
     for (let element of data) {
         let row = table.insertRow();
+        row.className = "row100 body";
+
+        let i = 1;
         for (let key in element) {
             let cell = row.insertCell();
+            cell.className = "cell100 column" + i;
             let text = document.createTextNode(element[key]);
             cell.appendChild(text);
+            i++;
         }
     }
 }
