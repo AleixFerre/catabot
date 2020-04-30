@@ -383,7 +383,6 @@ client.on('message', async(message) => {
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const commandName = args.shift().toLowerCase();
 
-
     if (!message.content.startsWith(prefix))
         return;
 
@@ -413,10 +412,6 @@ client.on('message', async(message) => {
             'https://github.com/CatalaHD/DiscordBot/issues');
     }
 
-    // In order to keep all the history clean, we delete all the users' commands from the chat.
-    // message.delete();
-
 });
-
 
 client.login(config.token);

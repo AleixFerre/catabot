@@ -50,7 +50,7 @@ module.exports = {
         }
 
         if (amount % 1 !== 0) {
-            message.reply("només pots apostara nombres enters!");
+            message.reply("només pots apostar nombres enters!");
             return message.channel.send(server.prefix + "help gamble");
         }
 
