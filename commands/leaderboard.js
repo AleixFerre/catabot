@@ -1,12 +1,12 @@
 const Discord = require("discord.js");
 
 module.exports = {
-	name: 'leaderboard',
-	description: 'Mostra la classificació de monedes del servidor',
+    name: 'leaderboard',
+    description: 'Mostra la classificació de monedes del servidor',
     aliases: ['leader'],
-	type: 'banc',
-    usage: '[ n_gent_a_mostrar ]',
-	execute(message, args, servers, userData) {
+    type: 'banc',
+    usage: '[ amount ]',
+    execute(message, args, servers, userData) {
 
         let board = [];
         let size = 10;
@@ -26,22 +26,22 @@ module.exports = {
 
         // ALGORISME per Inserció Directa || O(N) Optimized algorithm [we can also multiply N with 10 but is a constant value, but with the O notation, we don't keep it]
         // Per cada usuari del servidor (en el que s'ha enviat el missatge)
-            // inserció ordenada per monedes // O(array_lenght(10)) but only with 10 elements max [max length fixed with the leaderboard]
-            // si la mida de la taula > 10
-                // pop_back (l'ultim)
-            // La taula s'ha de mantenir sempre amb 10 elements com a maxim
+        // inserció ordenada per monedes // O(array_lenght(10)) but only with 10 elements max [max length fixed with the leaderboard]
+        // si la mida de la taula > 10
+        // pop_back (l'ultim)
+        // La taula s'ha de mantenir sempre amb 10 elements com a maxim
         // Mostrar la info amb un embed corresponent
-        
+
         function insercioOrdenada(user, nom) {
             //Pre:	0<=board.length<MAX, board[0..board.length-1] ordenat creixentment
             //Post:	x inserit ordenadament a board
-            
+
             if (user.money === -1)
                 return;
 
             // Busquem la posicio on volem inserir
             let i = board.length;
-            while (i>0 && user.money>board[i-1].money) { 
+            while (i > 0 && user.money > board[i - 1].money) {
                 i--;
             }
 
@@ -59,7 +59,7 @@ module.exports = {
 
             let user = userData[message.guild.id + member.id];
             insercioOrdenada(user, member.user.username);
-            
+
             // Mantenim la taula sempre com a maxim amb size elements
             // This is really an IF statement but just in case
             while (board.length > size) {
@@ -77,16 +77,16 @@ module.exports = {
             }
             return color;
         }
-        
+
         let msg = new Discord.RichEmbed()
-        .setColor(getRandomColor())
-        .setTitle("🏆 Leaderboard for "+ message.guild.name +" 🏆")
-        .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
-        //.setDescription(desc)
-        .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
+            .setColor(getRandomColor())
+            .setTitle("🏆 Leaderboard for " + message.guild.name + " 🏆")
+            .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
+            //.setDescription(desc)
+            .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
 
         let i = 1;
-        
+
         // 🥇 🥈 🥉
 
         board.forEach((user) => {
@@ -103,5 +103,5 @@ module.exports = {
         });
 
         message.channel.send(msg);
-	},
+    },
 };

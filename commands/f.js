@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 module.exports = {
     name: 'f',
     description: 'F en el chat chavales',
-    usage: " [ description of the F ]",
+    usage: " [ description ]",
     type: 'entreteniment',
     execute(message, args) {
 

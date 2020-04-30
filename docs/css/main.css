@@ -157,12 +157,15 @@ iframe {
 
 .limiter {
     width: auto;
+    height: fill;
     margin: 0 auto;
+    background-color: #393939;
 }
 
 .container-table100 {
     width: 100%;
     min-height: 100vh;
+    height: 100vh;
     background: #fff;
     display: -webkit-box;
     display: -webkit-flex;
@@ -198,24 +201,24 @@ td {
 }
 
 .column1 {
-    width: auto;
+    width: 13%;
     padding-left: 40px;
 }
 
 .column2 {
-    width: auto;
+    width: 33%;
 }
 
 .column3 {
-    width: auto;
+    width: 22%;
 }
 
 .column4 {
-    width: auto;
+    width: 19%;
 }
 
 .column5 {
-    width: auto;
+    width: 13%;
 }
 
 .table100-head th {

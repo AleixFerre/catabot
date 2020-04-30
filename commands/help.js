@@ -5,7 +5,7 @@ module.exports = {
     description: 'Mostra informació de les comandes',
     type: "altres",
     usage: '[ nom de la comanda ]',
-    aliases: ['h', 'command', 'commands', 'list', 'c'],
+    aliases: ['h', 'commands'],
     execute(message, args, servers) {
 
         const data = [];

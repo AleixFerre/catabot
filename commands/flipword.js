@@ -4,7 +4,7 @@ module.exports = {
     name: 'flipword',
     description: 'Posa la paraula al revés',
     type: 'entreteniment',
-    usage: '< paraula >',
+    usage: '< word >',
     aliases: ['flip'],
     execute(message, args, servers) {
 
@@ -33,12 +33,12 @@ module.exports = {
         }
 
         let msg = new Discord.RichEmbed()
-        .setColor(getRandomColor())
-        .setTitle("**FLIP THE WORD**")
-        .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
-        .setThumbnail('http://bit.ly/CataBot_Icon')
-        .addField('Resultat', word, true)
-        .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
+            .setColor(getRandomColor())
+            .setTitle("**FLIP THE WORD**")
+            .setAuthor('CataBOT', 'https://i.imgur.com/UXoPSuU.jpg', 'https://github.com/CatalaHD/DiscordBot')
+            .setThumbnail('http://bit.ly/CataBot_Icon')
+            .addField('Resultat', word, true)
+            .setTimestamp().setFooter("Catabot 2020 © All rights reserved");
 
         message.channel.send(msg);
     },

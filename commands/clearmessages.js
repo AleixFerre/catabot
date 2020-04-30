@@ -1,11 +1,11 @@
 module.exports = {
-	name: 'clearmessages',
-	description: 'Borra n missatges del canal de text on s\'estigui executant la comanda',
-	type: 'mod',
-	usage: '< nMessages >',
+    name: 'clearmessages',
+    description: 'Borra n missatges del canal de text on s\'estigui executant la comanda',
+    type: 'mod',
+    usage: '< amount >',
     aliases: ['cls', 'clm'],
-	async execute (message, args, servers) {
-        
+    async execute(message, args, servers) {
+
         let amount = 1;
         let server = servers[message.guild.id];
 
@@ -27,12 +27,12 @@ module.exports = {
         let messages = await message.channel.fetchMessages({ limit: amount }).catch(console.error);
         let msg = await message.channel.send("🤔Borrant " + amount + " missatges...🤔");
 
-        
-        await Promise.all(messages.map(async (delMessage) => {
+
+        await Promise.all(messages.map(async(delMessage) => {
             await delMessage.delete();
         }));
 
         await msg.edit("☑️S'han borrat " + amount + " missatges correctament.☑️");
-    
-	},
+
+    },
 };

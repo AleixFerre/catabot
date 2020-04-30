@@ -1,9 +1,9 @@
 module.exports = {
-	name: 'kick',
-	description: 'Expulsa permanentment un usuari del servidor',
-	usage: '< @usuari > [ descripcio del kick ]',
-	type: 'mod',
-	execute(message, args, servers) {
+    name: 'kick',
+    description: 'Expulsa permanentment un usuari del servidor',
+    usage: '< @usuari > [ descripció ]',
+    type: 'mod',
+    execute(message, args, servers) {
 
         let prefix = servers[message.guild.id].prefix;
 
@@ -14,7 +14,7 @@ module.exports = {
             if (member) {
                 if (!member.kickable)
                     return message.reply('No es pot fer fora a l\'usuari.\nTinc un rol permisos d\'administrador?');
-                
+
                 let kickmsg = 'Motiu del kick desconegut';
                 if (args[0])
                     kickmsg = args[0];
@@ -36,10 +36,10 @@ module.exports = {
                 message.reply('Aquesta persona no pertany al servidor');
                 message.channel.send(prefix + 'help kick');
             }
-        // Otherwise, if no user was mentioned
+            // Otherwise, if no user was mentioned
         } else {
             message.reply('Menciona a la persona que vols fer fora!');
             message.channel.send(prefix + 'help kick');
         }
-	},
+    },
 };

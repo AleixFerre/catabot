@@ -5,7 +5,7 @@ module.exports = {
     name: 'prefix',
     description: 'Et mostra el prefix i et permet cambiar-lo amb un segon argument',
     type: "altres",
-    usage: '[ nou_prefix ]',
+    usage: '[ new ]',
     execute(message, args, servers) {
 
         let server = servers[message.guild.id];

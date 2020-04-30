@@ -5,65 +5,14 @@ fetch("https://raw.githubusercontent.com/CatalaHD/CataBot/master/docs/Storage/co
     .then(response => response.json())
     .then(json => {
         commands = json;
-        //console.table(commands);
-        let musica = [];
-        /*
-        for (let i = 0; i < commands.length; i++) {
-            let command = commands[i];
-            if (command.type === "musica") {
-                delete command.type;
-                musica.push(command);
-            }
-        }*/
-
-        let mod = [];
-        let banc = [];
-        let entreteniment = [];
-        let privat = [];
-        let altres = [];
-        let headers = ['Nom', 'Descripció', 'Tipus', 'Ús', 'Alias'];
 
         // Encuem cada comanda a la taula que toca
         for (let i = 0; i < commands.length; i++) {
             let command = commands[i];
-
             if (!command.alias) command.alias = "";
-            /*
-            switch (command.type) {
-                case 'musica':
-                    musica.push(command);
-                    break;
-                case 'mod':
-                    mod.push(command);
-                    break;
-                case 'banc':
-                    banc.push(command);
-                    break;
-                case 'entreteniment':
-                    entreteniment.push(command);
-                    break;
-                case 'privat':
-                    privat.push(command);
-                    break;
-                case 'altres':
-                    altres.push(command);
-                    break;
-                default:
-                    altres.push(command);
-                    break;
-            }
-            */
         }
 
-        /*
-        console.table(musica);
-        console.table(mod);
-        console.table(entreteniment);
-        console.table(privat);
-        console.table(altres);
-        */
-
-        console.log(commands);
+        sorting(commands, 'type');
 
         let content = document.getElementById("table_content");
         generateTable(content, commands);
@@ -84,4 +33,14 @@ function generateTable(table, data) {
         }
 
     }
+}
+
+function sorting(json_object, key_to_sort_by) {
+    function sortByKey(a, b) {
+        var x = a[key_to_sort_by];
+        var y = b[key_to_sort_by];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    }
+
+    json_object.sort(sortByKey);
 }
