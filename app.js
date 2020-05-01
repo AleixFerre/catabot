@@ -99,7 +99,7 @@ client.on("guildCreate", (guild) => {
 
     console.log("El bot ha entrat al servidor \"" + guild.name + "\"\n" +
         "Storing " + nMembers + " users");
-    fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => { if (err) console.error(err); });
+    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 
 });
 
@@ -138,7 +138,7 @@ client.on("guildDelete", (guild) => {
 
     console.log("El bot ha sigut expulsat del servidor \"" + guild.name + "\"\n" +
         "Storing " + nMembers + " users");
-    fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => { if (err) console.error(err); });
+    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 
 });
 
@@ -202,7 +202,7 @@ client.on("ready", () => {
     console.log("\nREADY :: Version " + config.version + "\nON " + client.guilds.size + " servers\n" +
         "Storing " + nMembers + " users\n" +
         "---------------------------------");
-    fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => { if (err) console.error(err); });
+    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 
 });
 
@@ -256,7 +256,7 @@ client.on('guildMemberAdd', async(member) => {
         }
     });
 
-    fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => { if (err) console.error(err); });
+    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 
     console.log("Nou membre \"" + member.user.username + "\" afegit a la guild " + member.guild.name + "\n" +
         "Storing " + nMembers + " users");

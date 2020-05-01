@@ -81,7 +81,7 @@ module.exports = {
             content = winner + " has guanyat😆\n" + looser + " has perdut😫\n💰" + amount + " monedes pagades de " + looser + " a " + winner + " correctament.💰";
 
             // Actualitzem el fitxer
-            fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => { if (err) console.error(err); });
+            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 
             message.channel.send("```" + content + "```");
         }
