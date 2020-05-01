@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-let { clientid } = require('../config.json');
+let { clientid } = require('../../config.json');
 
 module.exports = {
     name: 'invite',

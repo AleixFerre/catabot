@@ -20,28 +20,30 @@ let nMembers = 0; ///< The actual Number of Members in total (all guilds the bot
 
 let cmds = [];
 
-/// Load the commands from all the files
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    client.commands.set(command.name, command);
-    let usage = "";
-    if (command.usage) {
-        usage = command.usage;
+/// Load the commands from all the folders -> files
+const commandDirs = fs.readdirSync('./commands');
+for (const dir of commandDirs) {
+    const files = fs.readdirSync(`./commands/${dir}`).filter(file => file.endsWith('.js'));
+    for (const file of files) {
+        const command = require(`./commands/${dir}/${file}`);
+        client.commands.set(command.name, command);
+        let usage = "";
+        if (command.usage) {
+            usage = command.usage;
+        }
+        cmds.push({
+            name: command.name,
+            description: command.description,
+            type: command.type,
+            usage: "!" + command.name + " " + usage,
+            aliases: command.aliases
+        });
     }
-    cmds.push({
-        name: command.name,
-        description: command.description,
-        type: command.type,
-        usage: "!" + command.name + " " + usage,
-        aliases: command.aliases
-    });
 }
-
 
 fs.writeFile('docs/Storage/commands.json', JSON.stringify(cmds), (err) => { if (err) console.error(err); });
 
-var servers = {}; ///< The data structure that handles all the info for the servers
+let servers = {}; ///< The data structure that handles all the info for the servers
 
 client.on("guildCreate", (guild) => {
     if (guild.id === "264445053596991498") {

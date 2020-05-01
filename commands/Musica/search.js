@@ -1,4 +1,4 @@
-const { GOOGLE_API_KEY } = require("../config.json");
+const { GOOGLE_API_KEY } = require("../../config.json");
 const ytdl = require("ytdl-core");
 const YouTube = require('simple-youtube-api');
 const youtube = new YouTube(GOOGLE_API_KEY);

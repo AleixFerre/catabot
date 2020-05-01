@@ -1,5 +1,4 @@
-const configPath = '../config.json';
-const config = require(configPath);
+const config = require('../../config.json');
 
 module.exports = {
     name: 'prefix',
@@ -11,7 +10,7 @@ module.exports = {
         let server = servers[message.guild.id];
 
         if (!args[0]) {
-            message.channel.send("El prefix actual és: " + server.prefix);
+            message.channel.send("```El prefix actual és: " + server.prefix + "```");
         } else {
             // Si hi ha un segon argument, cambiem el prefix
             let server = servers[message.guild.id];
@@ -19,7 +18,7 @@ module.exports = {
 
             let newName = "[ " + server.prefix + " ] CataBOT";
             message.guild.members.get(config.clientid).setNickname(newName).then(() => {
-                message.channel.send("El prefix ha cambiat a: " + server.prefix);
+                message.channel.send("```El prefix ha cambiat a: " + server.prefix + "\n```");
             });
 
         }
