@@ -16,7 +16,6 @@ expressApp.listen(port);
 
 const config = require("./config.json");
 let userData = JSON.parse(fs.readFileSync("./Storage/userData.json", 'utf8'));
-let nMembers = 0; ///< The actual Number of Members in total (all guilds the bot is in)
 
 let cmds = [];
 
@@ -46,17 +45,18 @@ fs.writeFile('docs/Storage/commands.json', JSON.stringify(cmds), (err) => { if (
 let servers = {}; ///< The data structure that handles all the info for the servers
 
 client.on("guildCreate", (guild) => {
+
     if (guild.id === "264445053596991498") {
-        nMembers += guild.members.size;
-        client.user.setPresence({
-            status: "online",
-            game: {
-                name: client.guilds.size + " servers con " + nMembers + " miembros.",
-                type: "WATCHING"
-            }
-        });
         return;
     }
+
+    client.user.setPresence({
+        status: "online",
+        game: {
+            name: client.guilds.size + " servers.",
+            type: "WATCHING"
+        }
+    });
 
     guild.members.forEach(member => {
         if (!userData[guild.id + member.user.id]) {
@@ -71,7 +71,6 @@ client.on("guildCreate", (guild) => {
         if (!userData[guild.id + member.user.id].lastDaily) {
             userData[guild.id + member.user.id].lastDaily = "Not Collected";
         }
-        nMembers++;
     });
 
     if (!servers[guild.id]) {
@@ -94,13 +93,12 @@ client.on("guildCreate", (guild) => {
     client.user.setPresence({
         status: "online",
         game: {
-            name: client.guilds.size + " servers con " + nMembers + " miembros.",
+            name: client.guilds.size + " servers.",
             type: "WATCHING"
         }
     });
 
-    console.log("El bot ha entrat al servidor \"" + guild.name + "\"\n" +
-        "Storing " + nMembers + " users");
+    console.log("El bot ha entrat al servidor \"" + guild.name + "\"\n");
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 
 });
@@ -108,14 +106,6 @@ client.on("guildCreate", (guild) => {
 client.on("guildDelete", (guild) => {
 
     if (guild.id === "264445053596991498") {
-        nMembers -= guild.members.size;
-        client.user.setPresence({
-            status: "online",
-            game: {
-                name: client.guilds.size + " servers con " + nMembers + " miembros.",
-                type: "WATCHING"
-            }
-        });
         return;
     }
 
@@ -123,7 +113,6 @@ client.on("guildDelete", (guild) => {
         if (userData[guild.id + member.user.id]) {
             userData[guild.id + member.user.id] = {};
         }
-        nMembers--;
     });
 
     if (servers[guild.id]) {
@@ -133,25 +122,20 @@ client.on("guildDelete", (guild) => {
     client.user.setPresence({
         status: "online",
         game: {
-            name: client.guilds.size + " servers con " + nMembers + " miembros.",
+            name: client.guilds.size + " servers.",
             type: "WATCHING"
         }
     });
 
-    console.log("El bot ha sigut expulsat del servidor \"" + guild.name + "\"\n" +
-        "Storing " + nMembers + " users");
+    console.log("El bot ha sigut expulsat del servidor \"" + guild.name + "\"\n");
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 
 });
 
 client.on("ready", () => {
 
-    nMembers = 0;
-
     client.guilds.forEach(guild => {
-        if (guild.id === "264445053596991498") {
-            nMembers += guild.members.size;
-        } else {
+        if (guild.id !== "264445053596991498") {
             guild.members.forEach(member => {
                 if (!userData[guild.id + member.user.id])
                     userData[guild.id + member.user.id] = {};
@@ -168,8 +152,6 @@ client.on("ready", () => {
                 if (!userData[guild.id + member.user.id].lastDaily) {
                     userData[guild.id + member.user.id].lastDaily = "Not Collected";
                 }
-
-                nMembers++;
             });
 
             console.log(guild.name + ": " + guild.memberCount + " members");
@@ -196,13 +178,12 @@ client.on("ready", () => {
     client.user.setPresence({
         status: "online",
         game: {
-            name: client.guilds.size + " servers con " + nMembers + " miembros.",
+            name: client.guilds.size + " servers.",
             type: "WATCHING"
         }
     });
 
     console.log("\nREADY :: Version " + config.version + "\nON " + client.guilds.size + " servers\n" +
-        "Storing " + nMembers + " users\n" +
         "---------------------------------");
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 
@@ -221,16 +202,10 @@ const applyText = (canvas, text) => {
 
 client.on('guildMemberAdd', async(member) => {
 
+    console.log("Nou membre \"" + member.user.username + "\" afegit a la guild " + member.guild.name + "\n");
+
     if (member.guild.id === "264445053596991498") {
-        nMembers++;
-        client.user.setPresence({
-            status: "online",
-            game: {
-                name: client.guilds.size + " servers con " + nMembers + " miembros.",
-                type: "WATCHING"
-            }
-        });
-        return;
+        return; // Ignoring discord list server
     }
 
     if (!userData[member.guild.id + member.user.id]) {
@@ -248,20 +223,7 @@ client.on('guildMemberAdd', async(member) => {
         userData[member.guild.id + member.user.id].lastDaily = "Not Collected";
     }
 
-    nMembers++;
-
-    client.user.setPresence({
-        status: "online",
-        game: {
-            name: client.guilds.size + " servers con " + nMembers + " miembros.",
-            type: "WATCHING"
-        }
-    });
-
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
-
-    console.log("Nou membre \"" + member.user.username + "\" afegit a la guild " + member.guild.name + "\n" +
-        "Storing " + nMembers + " users");
 
     let channel = member.guild.systemChannel;
     if (!channel) channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);
@@ -304,35 +266,15 @@ client.on('guildMemberAdd', async(member) => {
 
 client.on('guildMemberRemove', async(member) => {
 
-    if (member.guild.id === "264445053596991498") {
-        nMembers--;
-
-        client.user.setPresence({
-            status: "online",
-            game: {
-                name: client.guilds.size + " servers con " + nMembers + " miembros.",
-                type: "WATCHING"
-            }
-        });
-        return;
-    }
-
     // Es guardarà la info de cada membre SEMPRE perque no pugui fer relogin
     // Per resetejar les seves monedes o recollir el daily altre cop
     // El que vulgui parlar-ho, que contacti amb l'admin corresponent
 
-    nMembers--;
+    console.log("El membre \"" + member.user.username + "\" ha sortit de la guild " + member.guild.name + "\n");
 
-    client.user.setPresence({
-        status: "online",
-        game: {
-            name: client.guilds.size + " servers con " + nMembers + " miembros.",
-            type: "WATCHING"
-        }
-    });
-
-    console.log("El membre \"" + member.user.username + "\" ha sortit de la guild " + member.guild.name + "\n" +
-        "Storing " + nMembers + " users");
+    if (message.guild.id === "264445053596991498") {
+        return; // Ignoring discord list server
+    }
 
     let channel = member.guild.systemChannel;
     if (!channel) channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);
@@ -408,31 +350,13 @@ client.on('message', async(message) => {
     }
 
     try {
-        command.execute(message, args, servers, userData, client, nMembers);
+        command.execute(message, args, servers, userData, client);
     } catch (error) {
         console.error(error);
         message.reply('alguna cosa ha anat malament, siusplau contacta amb ' + config.ownerDiscordUsername +
             '\nSi saps el que ha passat i vols reportar un bug pots fer-ho a\n' +
             'https://github.com/CatalaHD/CataBot/issues');
     }
-
-});
-
-client.on("reconnecting", () => {
-    nMembers = 0;
-    client.guilds.forEach(guild => {
-        nMembers += guild.memberCount;
-    });
-
-    client.user.setPresence({
-        status: "online",
-        game: {
-            name: client.guilds.size + " servers con " + nMembers + " miembros.",
-            type: "WATCHING"
-        }
-    });
-
-    console.log("Reconnecting...");
 
 });
 

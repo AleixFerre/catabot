@@ -6,13 +6,18 @@ module.exports = {
     description: 'Diu la informació del bot.',
     type: 'altres',
     aliases: ['stats'],
-    execute(message, args, servers, userData, client, nMembers) {
+    execute(message, args, servers, userData, client) {
 
         let description = "Soc un **BOT** de discord **en català**! Espero que sigui agradable la meva presencia en aquest servidor, " + message.author.username + ". Pots veure totes les meves comandes amb " + servers[message.guild.id].prefix + "help.";
 
         let info = `**Desenvolupador:** ${config.ownerDiscordUsername}
-                    **Pagina web: [catalahd.github.io/CataBot](${config.website})**
+        **Pagina web: [catalahd.github.io/CataBot](${config.website})**
                     **Servidor Oficial: [discord.gg/k75qvYM](${config.officialServerLink})**`;
+
+        let nMembers = 0;
+        client.guilds.forEach(guild => {
+            nMembers += guild.memberCount;
+        });
 
         let stats = "**Membres:** `" + nMembers + "`\n" +
             "**Servers:** `" + client.guilds.size + "`\n" +
