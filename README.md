@@ -21,6 +21,7 @@ npm install canvas
 npm install node-fetch
 npm install express
 npm install moment
+npm install @vitalets/google-translate-api
 ```
 
 If you are running this locally

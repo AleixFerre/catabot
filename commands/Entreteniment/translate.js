@@ -1,13 +1,23 @@
 const Discord = require("discord.js");
+const translate = require('@vitalets/google-translate-api');
 
 module.exports = {
-    name: 'howgay',
-    description: 'Et diu lo gay que ets',
+    name: 'translate',
+    description: 'Tradueix el que vulguis!',
+    usage: "< text >",
     type: 'entreteniment',
-    aliases: ['gay'],
-    execute(message) {
+    async execute(message, args, servers) {
 
-        let gay = Math.round(Math.random() * 99 + 1); // Clamped bewteen 1% : 100%
+        let server = servers[message.guild.id];
+        let txt = "";
+        let traducido = "";
+
+        if (args[0]) {
+            txt = args.join(" ");
+        } else {
+            message.reply("no has posat el text a traduir!");
+            return message.channel.send(server.prefix + "help translate");
+        }
 
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
@@ -18,12 +28,15 @@ module.exports = {
             return color;
         }
 
+        await translate(txt, { to: "es" }).then(res => {
+            traducido = res.text;
+        });
+
         let msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
-            .setTitle("**QUÉ TAN GAY ERES?**")
+            .setTitle("**TRANSLATE**")
+            .setDescription(traducido)
             .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
-            .setThumbnail('http://bit.ly/CataBot_Icon')
-            .addField('Resultat', 'Eres ' + gay + '% gay!', true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);

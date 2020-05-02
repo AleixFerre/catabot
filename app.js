@@ -272,7 +272,7 @@ client.on('guildMemberRemove', async(member) => {
 
     console.log("El membre \"" + member.user.username + "\" ha sortit de la guild " + member.guild.name + "\n");
 
-    if (message.guild.id === "264445053596991498") {
+    if (member.guild.id === "264445053596991498") {
         return; // Ignoring discord list server
     }
 
