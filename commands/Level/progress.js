@@ -3,9 +3,8 @@ const { IdOwner } = require("../../config.json");
 
 module.exports = {
     name: 'progress',
-    description: 'Et permet pujar de nivell. Comanda de prova',
+    description: 'Et permet pujar de nivell. Comanda interna del bot',
     type: 'level',
-    aliases: ['up'],
     async execute(message, args, servers, userData) {
 
         if (!message.author.bot && message.author.id !== IdOwner) {
