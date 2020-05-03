@@ -26,6 +26,7 @@ module.exports = {
             let mod = [];
             let banc = [];
             let entreteniment = [];
+            let level = [];
             let privat = [];
             let altres = [];
 
@@ -43,6 +44,9 @@ module.exports = {
                         break;
                     case 'entreteniment':
                         entreteniment.push(command);
+                        break;
+                    case 'level':
+                        level.push(command);
                         break;
                     case 'privat':
                         privat.push(command);
@@ -77,6 +81,10 @@ module.exports = {
 
             aux = entreteniment.map(c => c.name);
             helpContent += '`\n\n🥳 **COMANDES DE ENTRETENIMENT** 🥳 [' + aux.length + ']\n `';
+            helpContent += aux.join(", ");
+
+            aux = level.map(c => c.name);
+            helpContent += '`\n\n💠 **COMANDES DE NIVELL** 💠 [' + aux.length + ']\n `';
             helpContent += aux.join(", ");
 
             aux = privat.map(c => c.name);

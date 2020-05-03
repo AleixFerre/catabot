@@ -13,7 +13,7 @@ module.exports = {
         let covidUrl = "https://coronavirus-19-api.herokuapp.com/";
         let codeUrl = "https://api.printful.com/countries/";
         let covidData = {};
-        let flag = "https://bit.ly/35fnRmu";
+        let flag = "http://www.pngall.com/wp-content/uploads/1/World-High-Quality-PNG.png";
         let country = "";
         let server = servers[message.guild.id];
 

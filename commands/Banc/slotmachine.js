@@ -96,7 +96,7 @@ module.exports = {
 
         let embed = new Discord.RichEmbed()
             .setColor(getRandomColor())
-            .setTitle("**SLOT MACHINE**")
+            .setTitle("**🎰 SLOT MACHINE 🎰**")
             .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot');
 
         for (let i = 0; i < 3; i++) { // Adding the machine slots

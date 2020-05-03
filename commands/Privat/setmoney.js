@@ -25,9 +25,9 @@ module.exports = {
             // Si els diners no es un numero
             message.reply("els diners han de ser un numero!");
             return message.channel.send(server.prefix + "help setmoney");
-        } else if (args[0] <= 0) {
+        } else if (args[0] < 0) {
             // si el numero de diners es negatiu
-            message.reply("els diners han de ser més grans que 0!");
+            message.reply("els diners han de ser positius!");
             return message.channel.send(server.prefix + "help setmoney");
         }
 

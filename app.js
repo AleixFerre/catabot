@@ -150,7 +150,18 @@ client.on("ready", () => {
                 }
 
                 if (!userData[guild.id + member.user.id].lastDaily) {
-                    userData[guild.id + member.user.id].lastDaily = "Not Collected";
+                    if (!member.user.bot)
+                        userData[guild.id + member.user.id].lastDaily = "Not Collected";
+                }
+
+                if (!userData[guild.id + member.user.id].level) {
+                    if (!member.user.bot)
+                        userData[guild.id + member.user.id].level = 1;
+                }
+
+                if (!userData[guild.id + member.user.id].xp) {
+                    if (!member.user.bot)
+                        userData[guild.id + member.user.id].xp = 0;
                 }
             });
 
