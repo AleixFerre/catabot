@@ -104,7 +104,8 @@ module.exports = {
         }
 
         embed.setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+        message.channel.send(server.prefix + "progress <@" + message.author.id + ">");
         await message.channel.send(embed);
-        await message.channel.send("```" + content + '```');
+        message.channel.send("```" + content + '```');
     },
 };

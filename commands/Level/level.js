@@ -34,6 +34,20 @@ module.exports = {
         });
 
         let progress = userData[message.guild.id + mention.id].xp / 10;
+        let barra = "[";
+        let max = 10;
+
+        for (let i = 0; i < (progress / 10); i++) {
+            barra += "x";
+            max--;
+        }
+
+        while (max > 0) {
+            barra += "-";
+            max--;
+        }
+
+        barra += "]";
 
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
@@ -53,6 +67,7 @@ module.exports = {
             .addField('XP', xp, true)
             .addField('Rank', posicio, true)
             .addField('Progress', progress + "%", true)
+            .addField('Barra', barra, false)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);

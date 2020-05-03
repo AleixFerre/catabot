@@ -36,5 +36,6 @@ module.exports = {
 
         fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
         message.channel.send(msg);
+        message.channel.send(server.prefix + "progress <@" + message.author.id + ">");
     },
 };
