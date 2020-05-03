@@ -8,14 +8,19 @@ module.exports = {
     aliases: ['up'],
     async execute(message, args, servers, userData) {
 
-        let to = message.mentions.users.first();
-
         if (!message.author.bot && message.author.id !== IdOwner) {
             return message.reply("no tens permís per executar aquesta comanda!");
         }
 
+        let to = message.mentions.users.first();
+        let max = 500;
+
+        if (args[0] && !isNaN(args[0])) {
+            max = Number(args[0]);
+        }
+
         let lvlUp = false;
-        let add = Math.floor(Math.random() * 499 + 1); // Numero aleatori entre 1 i 500
+        let add = Math.floor(Math.random() * (max - 1) + 1); // Numero aleatori entre 1 i max
         let content = `Has guanyat ${add}xp`;
 
         userData[message.guild.id + to.id].xp += add; // Afegim la xp
