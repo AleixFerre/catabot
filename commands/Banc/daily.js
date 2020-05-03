@@ -11,10 +11,13 @@ module.exports = {
         let content = "";
         moment.locale("ca");
 
+        let server = servers[message.guild.id];
+
         if (userData[message.guild.id + message.member.id].lastDaily != moment().format('L')) {
             userData[message.guild.id + message.member.id].lastDaily = moment().format('L');
             userData[message.guild.id + message.member.id].money += 500;
             content = "💰500 monedes💰 han sigut afegides a la teva conta!\nGràcies per recollir la teva recompensa diaria!";
+            message.channel.send(server.prefix + "progress <@" + message.author.id + ">");
         } else {
             content = "Ja has recollit la teva recompensa diaria!\nPots tornar-hi " + moment().endOf('day').fromNow();
         }
@@ -36,6 +39,5 @@ module.exports = {
 
         fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
         message.channel.send(msg);
-        message.channel.send(server.prefix + "progress <@" + message.author.id + ">");
     },
 };
