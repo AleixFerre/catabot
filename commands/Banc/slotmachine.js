@@ -97,14 +97,14 @@ module.exports = {
         let embed = new Discord.RichEmbed()
             .setColor(getRandomColor())
             .setTitle("**🎰 SLOT MACHINE 🎰**")
-            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot');
+            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
+            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         for (let i = 0; i < 3; i++) { // Adding the machine slots
             embed.addField((i + 1) + '.', emojis[machine[i]], true);
         }
 
-        embed.setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
-        message.channel.send(server.prefix + "progress 1000 <@" + message.author.id + ">");
+        message.channel.send(server.prefix + "progress " + (amount * 50) + " <@" + message.author.id + ">");
         await message.channel.send(embed);
         message.channel.send("```" + content + '```');
     },

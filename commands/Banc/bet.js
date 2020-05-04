@@ -82,8 +82,8 @@ module.exports = {
 
             // Actualitzem el fitxer
             fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
-            message.channel.send(server.prefix + "progress 1000 <@" + winner.id + ">");
-            message.channel.send(server.prefix + "progress 500 <@" + looser.id + ">");
+            message.channel.send(server.prefix + "progress " + (amount * 10) + " <@" + winner.id + ">");
+            message.channel.send(server.prefix + "progress " + (amount * 5) + " <@" + looser.id + ">");
             message.channel.send("```" + content + "```");
         }
 

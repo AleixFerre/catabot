@@ -4,7 +4,7 @@ const { IdOwner } = require("../../config.json");
 module.exports = {
     name: 'progress',
     description: 'Et permet pujar de nivell. Comanda interna del bot',
-    type: 'level',
+    type: 'privat',
     async execute(message, args, servers, userData) {
 
         if (!message.author.bot && message.author.id !== IdOwner) {
@@ -12,8 +12,9 @@ module.exports = {
         }
 
         let to = message.mentions.users.first();
-        let max = 500;
+        let max = 500; // Per defecte 500xp de maxim
 
+        // Si ens passen un argument, llavors aquest
         if (args[0] && !isNaN(args[0])) {
             max = Number(args[0]);
         }
@@ -25,10 +26,10 @@ module.exports = {
         userData[message.guild.id + to.id].level += Math.floor((add + userData[message.guild.id + to.id].xp) / 1000); // Sumem els nivells que falten
 
         if (add > 1000) { // Si es puja de nivell, avisa'm
-            content += `\nHas arribat a nivell ${userData[message.guild.id + to.id].level}`;
+            content += `\nHas arribat al nivell ${userData[message.guild.id + to.id].level}`;
         }
 
-        fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => { if (err) console.error(err); });
+        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 
         await message.channel.send(content);
         message.delete();
