@@ -37,12 +37,12 @@ module.exports = {
             }
         } else { // Si sumem mes d'un nivell en valor d'xp
             sumLvl = Math.floor(add / 1000); // Sumem els nivells que puguem
-            let resta = add - (level * 1000); // Agafem el que ens sobra restant el que tenim menys el valor de tots els nivells calculats || podriem utilitzar el modul també
+            let resta = add % 1000; // Agafem el que ens sobra per sumar
             if (resta + xp > 1000) { // Si el que ens queda mes el que tenim, fa un nivell
                 sumLvl++; // Sumem un nivell
                 sumXp = resta - 1000; // Restem un nivell al que actualment tenim més el que ens queda
             } else { // Si no podem sumar cap nivell
-                sumXp = add; // Sumem la xp que podem
+                sumXp = resta; // Sumem la xp que podem
             }
         }
 
