@@ -104,7 +104,7 @@ module.exports = {
             embed.addField((i + 1) + '.', emojis[machine[i]], true);
         }
 
-        message.channel.send(server.prefix + "progress " + (amount * 50) + " <@" + message.author.id + ">");
+        message.channel.send(server.prefix + "progress " + (amount * 10) + " <@" + message.author.id + ">");
         await message.channel.send(embed);
         message.channel.send("```" + content + '```');
     },

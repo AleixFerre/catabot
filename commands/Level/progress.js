@@ -22,8 +22,8 @@ module.exports = {
         let add = Math.floor(Math.random() * (max - 1) + 1); // Numero aleatori entre 1 i max
         let content = `Has guanyat ${add}xp`;
 
-        userData[message.guild.id + to.id].xp += (add + userData[message.guild.id + to.id].xp) % 1000; // Afegim la xp
         userData[message.guild.id + to.id].level += Math.floor((add + userData[message.guild.id + to.id].xp) / 1000); // Sumem els nivells que falten
+        userData[message.guild.id + to.id].xp += (add + userData[message.guild.id + to.id].xp) % 1000; // Afegim la xp
 
         if (add > 1000) { // Si es puja de nivell, avisa'm
             content += `\nHas arribat al nivell ${userData[message.guild.id + to.id].level}`;
