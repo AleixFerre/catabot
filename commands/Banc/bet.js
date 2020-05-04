@@ -80,10 +80,15 @@ module.exports = {
 
             content = winner + " has guanyat😆\n" + looser + " has perdut😫\n💰" + amount + " monedes pagades de " + looser + " a " + winner + " correctament.💰";
 
+            let xpMax = amount * 10;
+            if (xpMax > 1000) {
+                xpMax = 1000;
+            }
+
             // Actualitzem el fitxer
             fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
-            message.channel.send(server.prefix + "progress " + (amount * 10) + " <@" + winner.id + ">");
-            message.channel.send(server.prefix + "progress " + (amount * 5) + " <@" + looser.id + ">");
+            message.channel.send(server.prefix + "progress " + (xpMax * 2) + " <@" + winner.id + ">");
+            message.channel.send(server.prefix + "progress " + xpMax + " <@" + looser.id + ">");
             message.channel.send("```" + content + "```");
         }
 

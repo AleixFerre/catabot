@@ -89,7 +89,12 @@ module.exports = {
         // Actualitzem el fitxer
         fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 
-        message.channel.send(server.prefix + "progress " + (amount * multiplyer * 3) + " <@" + message.author.id + ">");
+        let xpMax = amount * multiplyer * 3;
+        if (xpMax > 1000) {
+            xpMax = 1000;
+        }
+
+        message.channel.send(server.prefix + "progress " + xpMax + " <@" + message.author.id + ">");
         message.channel.send("```" + content + "```");
     },
 };

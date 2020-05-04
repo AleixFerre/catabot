@@ -104,8 +104,13 @@ module.exports = {
             embed.addField((i + 1) + '.', emojis[machine[i]], true);
         }
 
-        message.channel.send(server.prefix + "progress " + (amount * 10) + " <@" + message.author.id + ">");
+        let xpMax = amount * 10;
+        if (xpMax > 1000) {
+            xpMax = 1000;
+        }
+
         await message.channel.send(embed);
         message.channel.send("```" + content + '```');
+        message.channel.send(server.prefix + "progress " + xpMax + " <@" + message.author.id + ">");
     },
 };
