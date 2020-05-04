@@ -18,7 +18,7 @@ module.exports = {
 
         if (size > 10 || size <= 0) {
             message.reply("la mida ha de ser entre 1 i 10");
-            return message.channel.send(server.prefix + "help xptop");
+            return message.channel.send(server.prefix + "help xpl");
         }
 
         if (!message.guild.available) {

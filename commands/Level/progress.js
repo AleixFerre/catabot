@@ -18,22 +18,17 @@ module.exports = {
             max = Number(args[0]);
         }
 
-        let lvlUp = false;
         let add = Math.floor(Math.random() * (max - 1) + 1); // Numero aleatori entre 1 i max
         let content = `Has guanyat ${add}xp`;
 
-        userData[message.guild.id + to.id].xp += add; // Afegim la xp
-        while (userData[message.guild.id + to.id].xp > 1000) { // Si aquesta supera 1000
-            lvlUp = true;
-            userData[message.guild.id + to.id].level++; // Sumem un nivell
-            userData[message.guild.id + to.id].xp -= 1000; // Corregim la xp pel seguent nivell
-        }
+        userData[message.guild.id + to.id].xp += (add + userData[message.guild.id + to.id].xp) % 1000; // Afegim la xp
+        userData[message.guild.id + to.id].level += Math.floor((add + userData[message.guild.id + to.id].xp) / 1000); // Sumem els nivells que falten
 
-        if (lvlUp) { // Si es puja de nivell, avisa'm
+        if (add > 1000) { // Si es puja de nivell, avisa'm
             content += `\nHas arribat a nivell ${userData[message.guild.id + to.id].level}`;
         }
 
-        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+        fs.writeFile('Storage/userData.json', JSON.stringify(userData, null, 2), (err) => { if (err) console.error(err); });
 
         await message.channel.send(content);
         message.delete();
