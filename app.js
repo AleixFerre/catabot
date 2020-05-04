@@ -50,14 +50,6 @@ client.on("guildCreate", (guild) => {
         return;
     }
 
-    client.user.setPresence({
-        status: "online",
-        game: {
-            name: client.guilds.size + " servers.",
-            type: "WATCHING"
-        }
-    });
-
     guild.members.forEach(member => {
         if (!userData[guild.id + member.user.id]) {
             userData[guild.id + member.user.id] = {};
@@ -90,14 +82,6 @@ client.on("guildCreate", (guild) => {
         console.error(err);
     }
 
-    client.user.setPresence({
-        status: "online",
-        game: {
-            name: client.guilds.size + " servers.",
-            type: "WATCHING"
-        }
-    });
-
     console.log("El bot ha entrat al servidor \"" + guild.name + "\"\n");
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 
@@ -118,14 +102,6 @@ client.on("guildDelete", (guild) => {
     if (servers[guild.id]) {
         servers[guild.id] = {};
     }
-
-    client.user.setPresence({
-        status: "online",
-        game: {
-            name: client.guilds.size + " servers.",
-            type: "WATCHING"
-        }
-    });
 
     console.log("El bot ha sigut expulsat del servidor \"" + guild.name + "\"\n");
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
@@ -189,7 +165,7 @@ client.on("ready", () => {
     client.user.setPresence({
         status: "online",
         game: {
-            name: client.guilds.size + " servers.",
+            name: "catalahd.github.io/CataBot",
             type: "WATCHING"
         }
     });
