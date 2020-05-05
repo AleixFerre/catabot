@@ -61,6 +61,8 @@ module.exports = {
             // Comprovem si guanya A o B
             let coin = Math.round(Math.random()); // We round between 0-1 so we have randomly true or false
             let winner, looser = "";
+            let winnerID, looserID = "";
+
             if (coin === 1) {
                 // Guanya A
                 userData[message.guild.id + message.author.id].money += parseInt(amount);
@@ -69,6 +71,9 @@ module.exports = {
                 winner = message.author.username;
                 looser = other.username;
 
+                winnerID = message.author.id;
+                looserID = other.id;
+
             } else {
                 // Guanya B
                 userData[message.guild.id + other.id].money += parseInt(amount);
@@ -76,6 +81,9 @@ module.exports = {
 
                 winner = other.username;
                 looser = message.author.username;
+
+                winnerID = message.author.id;
+                looserID = other.id;
             }
 
             content = winner + " has guanyat😆\n" + looser + " has perdut😫\n💰" + amount + " monedes pagades de " + looser + " a " + winner + " correctament.💰";
@@ -87,8 +95,8 @@ module.exports = {
 
             // Actualitzem el fitxer
             fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
-            message.channel.send(server.prefix + "progress " + (xpMax * 2) + " <@" + winner.id + ">");
-            message.channel.send(server.prefix + "progress " + xpMax + " <@" + looser.id + ">");
+            message.channel.send(server.prefix + "progress " + (xpMax * 2) + " <@" + winnerID + ">");
+            message.channel.send(server.prefix + "progress " + xpMax + " <@" + looserID + ">");
             message.channel.send("```" + content + "```");
         }
 

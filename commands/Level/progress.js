@@ -20,10 +20,9 @@ module.exports = {
         }
 
         let add = Math.floor(Math.random() * (max - 1) + 1); // Numero aleatori entre 1 i max
-        let content = `Has guanyat ${add}xp`;
+        let content = `${to.username}, has guanyat ${add}xp`;
 
         let xp = userData[message.guild.id + to.id].xp;
-        let level = userData[message.guild.id + to.id].level;
         let sumLvl = 0;
         let sumXp = 0;
 
@@ -50,7 +49,7 @@ module.exports = {
         userData[message.guild.id + to.id].xp += sumXp; // Afegim la xp calculada
 
         if (sumLvl > 0) { // Si es puja de nivell, avisa'm
-            content += `\nHas arribat al nivell ${userData[message.guild.id + to.id].level}`;
+            content += `\n${to.username}, has arribat al nivell ${userData[message.guild.id + to.id].level}`;
         }
 
         fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
