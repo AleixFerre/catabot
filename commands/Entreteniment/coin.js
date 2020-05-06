@@ -33,7 +33,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("**COIN FLIP**")
             .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
-            .setThumbnail('http://bit.ly/CataBot_Icon')
+            .setThumbnail('https://bit.ly/CataBot_RawIcon')
             .addField('Resultat', result, true)
             .setImage('http://bit.ly/CataBot_' + img)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");

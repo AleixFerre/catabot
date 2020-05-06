@@ -22,7 +22,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("**QUÉ TAN GAY ERES?**")
             .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
-            .setThumbnail('http://bit.ly/CataBot_Icon')
+            .setThumbnail('https://bit.ly/CataBot_RawIcon')
             .addField('Resultat', 'Eres ' + gay + '% gay!', true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 

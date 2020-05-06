@@ -36,7 +36,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("**FLIP THE WORD**")
             .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
-            .setThumbnail('http://bit.ly/CataBot_Icon')
+            .setThumbnail('https://bit.ly/CataBot_RawIcon')
             .addField('Resultat', word, true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 

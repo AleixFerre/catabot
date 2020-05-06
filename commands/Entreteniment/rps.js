@@ -58,7 +58,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("**ROCK PAPER SCISSORS**")
             .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
-            .setThumbnail('http://bit.ly/CataBot_Icon')
+            .setThumbnail('https://bit.ly/CataBot_RawIcon')
             .addField('Player', player, true)
             .addField('IA', IA, true)
             .addField('Resultat', guanyador)

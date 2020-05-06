@@ -5,7 +5,7 @@ module.exports = {
     description: "Avisa a tots els servidors d'alguna cosa\nNomés l'owner del bot pot executar-ho",
     type: 'privat',
     usage: '< msg >',
-    execute(message, args, servers, userData, client) {
+    async execute(message, args, servers, userData, client) {
 
         let server = servers[message.guild.id];
 
@@ -19,14 +19,20 @@ module.exports = {
 
         msg = args.join(" ");
 
-        client.guilds.forEach(async guild => {
-            // Cerca el canal per defecte
-            let channel = guild.systemChannel;
-            // Si no existeix
-            if (channel === null)
-            // Cerca el de la primera posició de tipus text
-                channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);
-            await channel.send(msg);
+        await client.guilds.forEach(async guild => {
+
+            if (guild.id !== "264445053596991498") {
+                // Cerca el canal per defecte
+                let channel = guild.systemChannel;
+                // Si no existeix
+                if (channel === null)
+                    channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0); // Cerca el de la primera posició de tipus text
+                await channel.send(msg);
+            }
+
         });
+
+        message.reply("Missatges enviats correctament");
+
     },
 };

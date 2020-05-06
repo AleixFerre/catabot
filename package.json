@@ -24,6 +24,7 @@
         "node-fetch": "^2.6.0",
         "opusscript": "0.0.7",
         "simple-youtube-api": "^5.2.1",
+        "weather-js": "^2.0.0",
         "ytdl-core": "^1.0.7"
     },
     "bugs": {

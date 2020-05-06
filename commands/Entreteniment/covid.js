@@ -13,7 +13,7 @@ module.exports = {
         let covidUrl = "https://coronavirus-19-api.herokuapp.com/";
         let codeUrl = "https://api.printful.com/countries/";
         let covidData = {};
-        let flag = "http://www.pngall.com/wp-content/uploads/1/World-High-Quality-PNG.png";
+        let flag = "https://bit.ly/CataBot_World";
         let country = "";
         let server = servers[message.guild.id];
 
@@ -75,8 +75,7 @@ module.exports = {
 
         Object.keys(covidData).forEach(camp => {
             // Convertimos el campo en space case
-            let text = camp;
-            let result = text.replace(/([A-Z])/g, " $1");
+            let result = camp.replace(/([A-Z])/g, " $1");
             let finalResult = result.charAt(0).toUpperCase() + result.slice(1);
 
             covidEmbed.addField(finalResult, covidData[camp], true);

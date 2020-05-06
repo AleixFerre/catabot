@@ -27,7 +27,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("**PENIS LENGTH**")
             .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
-            .setThumbnail('http://bit.ly/CataBot_Icon')
+            .setThumbnail('https://bit.ly/CataBot_RawIcon')
             .addField('Mida del teu penis', penisString, true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
