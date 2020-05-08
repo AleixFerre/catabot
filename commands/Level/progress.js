@@ -12,14 +12,13 @@ module.exports = {
         }
 
         let to = message.mentions.users.first();
-        let max = 500; // Per defecte 500xp de maxim
+        let add = 500; // Per defecte 500xp
 
         // Si ens passen un argument, llavors aquest
         if (args[0] && !isNaN(args[0])) {
-            max = Number(args[0]);
+            add = Number(args[0]);
         }
 
-        let add = Math.floor(Math.random() * (max - 1) + 1); // Numero aleatori entre 1 i max
         let content = `${to.username}, has guanyat ${add}xp`;
 
         let xp = userData[message.guild.id + to.id].xp;

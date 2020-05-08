@@ -101,6 +101,8 @@ module.exports = {
             xpMax = 1000;
         }
 
+        xpMax = Math.floor(Math.random() * (xpMax - 1) + 1); // Numero aleatori entre 1 i max
+
         message.channel.send(server.prefix + "progress " + xpMax + " <@" + message.author.id + ">");
         message.channel.send("```" + content + "```");
     },

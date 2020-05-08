@@ -17,7 +17,10 @@ module.exports = {
             userData[message.guild.id + message.member.id].lastDaily = moment().format('L');
             userData[message.guild.id + message.member.id].money += 500;
             content = "💰500 monedes💰 han sigut afegides a la teva conta!\nGràcies per recollir la teva recompensa diaria!";
-            message.channel.send(server.prefix + "progress 500 <@" + message.author.id + ">");
+
+            xpMax = Math.floor(Math.random() * (500 - 1) + 1); // Numero aleatori entre 1 i 500
+
+            message.channel.send(server.prefix + "progress " + xpMax + " <@" + message.author.id + ">");
         } else {
             content = "Ja has recollit la teva recompensa diaria!\nPots tornar-hi " + moment().endOf('day').fromNow();
         }

@@ -18,7 +18,7 @@ module.exports = {
         let city = args.join(" ");
         let result = null;
 
-        await weather.find({ search: city, degreeType: 'C', lang: 'es' }, (err, _result) => {
+        await weather.find({ search: city, degreeType: 'C', lang: 'ca' }, (err, _result) => {
             if (err) {
                 console.log(err);
                 return message.channel.send("Hi ha hagut un error al buscar\n" + err);
