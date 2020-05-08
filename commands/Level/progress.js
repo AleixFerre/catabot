@@ -14,6 +14,10 @@ module.exports = {
         let to = message.mentions.users.first();
         let add = 500; // Per defecte 500xp
 
+        if (to.bot) {
+            return message.reply("no es pot donar xp a un bot!");
+        }
+
         // Si ens passen un argument, llavors aquest
         if (args[0] && !isNaN(args[0])) {
             add = Number(args[0]);
