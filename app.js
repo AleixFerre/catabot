@@ -50,20 +50,34 @@ client.on("guildCreate", (guild) => {
         return;
     }
 
-    guild.members.forEach(member => {
-        if (!userData[guild.id + member.user.id]) {
-            userData[guild.id + member.user.id] = {};
-        }
-        if (!userData[guild.id + member.user.id].money) {
-            if (member.user.bot)
-                userData[guild.id + member.user.id].money = -1;
-            else
-                userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
-        }
-        if (!userData[guild.id + member.user.id].lastDaily) {
-            userData[guild.id + member.user.id].lastDaily = "Not Collected";
-        }
-    });
+	guild.members.forEach(member => {
+		if (!userData[guild.id + member.user.id])
+			userData[guild.id + member.user.id] = {};
+
+		if (!userData[guild.id + member.user.id].money) {
+			if (userData[guild.id + member.user.id].money !== 0) {
+				if (member.user.bot)
+					userData[guild.id + member.user.id].money = -1;
+				else
+					userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
+			}
+		}
+
+		if (!userData[guild.id + member.user.id].lastDaily) {
+			if (!member.user.bot)
+				userData[guild.id + member.user.id].lastDaily = "Not Collected";
+		}
+
+		if (!userData[guild.id + member.user.id].level) {
+			if (!member.user.bot)
+				userData[guild.id + member.user.id].level = 1;
+		}
+
+		if (!userData[guild.id + member.user.id].xp) {
+			if (!member.user.bot)
+				userData[guild.id + member.user.id].xp = 0;
+		}
+	});
 
     if (!servers[guild.id]) {
         servers[guild.id] = {

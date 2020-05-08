@@ -89,7 +89,14 @@ module.exports = {
         // Actualitzem el fitxer
         fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 
-        let xpMax = amount * multiplyer * 3;
+        let xpMax = amount;
+
+        if (coin === 1) { // Si guanyes
+            xpMax *= multiplyer * 3;
+        } else { // Si perds
+            xpMax *= 2;
+        }
+
         if (xpMax > 1000) {
             xpMax = 1000;
         }
