@@ -34,6 +34,10 @@ module.exports = {
         });
 
         let progress = userData[message.guild.id + mention.id].xp / 10;
+        if (progress > 100) {
+            progress = 100;
+        }
+
         let barra = "[";
         let max = 10;
 

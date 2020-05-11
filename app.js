@@ -1,18 +1,11 @@
 const fs = require('fs');
 const Canvas = require('canvas');
 const Discord = require("discord.js");
-const express = require('express');
 const moment = require('moment');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
 moment().utcOffset('120');
-
-let port = process.env.PORT || 3000;
-
-const expressApp = express();
-expressApp.get("/", (req, res) => res.json("OK"));
-expressApp.listen(port);
 
 const config = require("./config.json");
 let userData = JSON.parse(fs.readFileSync("./Storage/userData.json", 'utf8'));
@@ -46,38 +39,34 @@ let servers = {}; ///< The data structure that handles all the info for the serv
 
 client.on("guildCreate", (guild) => {
 
-    if (guild.id === "264445053596991498") {
-        return;
-    }
+    guild.members.forEach(member => {
+        if (!userData[guild.id + member.user.id])
+            userData[guild.id + member.user.id] = {};
 
-	guild.members.forEach(member => {
-		if (!userData[guild.id + member.user.id])
-			userData[guild.id + member.user.id] = {};
+        if (!userData[guild.id + member.user.id].money) {
+            if (userData[guild.id + member.user.id].money !== 0) {
+                if (member.user.bot)
+                    userData[guild.id + member.user.id].money = -1;
+                else
+                    userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
+            }
+        }
 
-		if (!userData[guild.id + member.user.id].money) {
-			if (userData[guild.id + member.user.id].money !== 0) {
-				if (member.user.bot)
-					userData[guild.id + member.user.id].money = -1;
-				else
-					userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
-			}
-		}
+        if (!userData[guild.id + member.user.id].lastDaily) {
+            if (!member.user.bot)
+                userData[guild.id + member.user.id].lastDaily = "Not Collected";
+        }
 
-		if (!userData[guild.id + member.user.id].lastDaily) {
-			if (!member.user.bot)
-				userData[guild.id + member.user.id].lastDaily = "Not Collected";
-		}
+        if (!userData[guild.id + member.user.id].level) {
+            if (!member.user.bot)
+                userData[guild.id + member.user.id].level = 1;
+        }
 
-		if (!userData[guild.id + member.user.id].level) {
-			if (!member.user.bot)
-				userData[guild.id + member.user.id].level = 1;
-		}
-
-		if (!userData[guild.id + member.user.id].xp) {
-			if (!member.user.bot)
-				userData[guild.id + member.user.id].xp = 0;
-		}
-	});
+        if (!userData[guild.id + member.user.id].xp) {
+            if (!member.user.bot)
+                userData[guild.id + member.user.id].xp = 0;
+        }
+    });
 
     if (!servers[guild.id]) {
         servers[guild.id] = {
@@ -103,10 +92,6 @@ client.on("guildCreate", (guild) => {
 
 client.on("guildDelete", (guild) => {
 
-    if (guild.id === "264445053596991498") {
-        return;
-    }
-
     guild.members.forEach(member => {
         if (userData[guild.id + member.user.id]) {
             userData[guild.id + member.user.id] = {};
@@ -125,54 +110,52 @@ client.on("guildDelete", (guild) => {
 client.on("ready", () => {
 
     client.guilds.forEach(guild => {
-        if (guild.id !== "264445053596991498") {
-            guild.members.forEach(member => {
-                if (!userData[guild.id + member.user.id])
-                    userData[guild.id + member.user.id] = {};
+        guild.members.forEach(member => {
+            if (!userData[guild.id + member.user.id])
+                userData[guild.id + member.user.id] = {};
 
-                if (!userData[guild.id + member.user.id].money) {
-                    if (userData[guild.id + member.user.id].money !== 0) {
-                        if (member.user.bot)
-                            userData[guild.id + member.user.id].money = -1;
-                        else
-                            userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
-                    }
+            if (!userData[guild.id + member.user.id].money) {
+                if (userData[guild.id + member.user.id].money !== 0) {
+                    if (member.user.bot)
+                        userData[guild.id + member.user.id].money = -1;
+                    else
+                        userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
                 }
-
-                if (!userData[guild.id + member.user.id].lastDaily) {
-                    if (!member.user.bot)
-                        userData[guild.id + member.user.id].lastDaily = "Not Collected";
-                }
-
-                if (!userData[guild.id + member.user.id].level) {
-                    if (!member.user.bot)
-                        userData[guild.id + member.user.id].level = 1;
-                }
-
-                if (!userData[guild.id + member.user.id].xp) {
-                    if (!member.user.bot)
-                        userData[guild.id + member.user.id].xp = 0;
-                }
-            });
-
-            console.log(guild.name + ": " + guild.memberCount + " members");
-
-            if (!servers[guild.id]) {
-                servers[guild.id] = {
-                    queue: [],
-                    nowPlayingVideo: {},
-                    nowPlayingVideoInfo: {},
-                    prefix: config.prefix,
-                    loop: false
-                };
             }
 
-            try {
-                let newName = "[ " + config.prefix + " ] CataBOT";
-                guild.members.get(config.clientid).setNickname(newName);
-            } catch (err) {
-                console.error(err);
+            if (!userData[guild.id + member.user.id].lastDaily) {
+                if (!member.user.bot)
+                    userData[guild.id + member.user.id].lastDaily = "Not Collected";
             }
+
+            if (!userData[guild.id + member.user.id].level) {
+                if (!member.user.bot)
+                    userData[guild.id + member.user.id].level = 1;
+            }
+
+            if (!userData[guild.id + member.user.id].xp) {
+                if (!member.user.bot)
+                    userData[guild.id + member.user.id].xp = 0;
+            }
+        });
+
+        console.log(guild.name + ": " + guild.memberCount + " members");
+
+        if (!servers[guild.id]) {
+            servers[guild.id] = {
+                queue: [],
+                nowPlayingVideo: {},
+                nowPlayingVideoInfo: {},
+                prefix: config.prefix,
+                loop: false
+            };
+        }
+
+        try {
+            let newName = "[ " + config.prefix + " ] CataBOT";
+            guild.members.get(config.clientid).setNickname(newName);
+        } catch (err) {
+            console.error(err);
         }
     });
 
@@ -204,10 +187,6 @@ const applyText = (canvas, text) => {
 client.on('guildMemberAdd', async(member) => {
 
     console.log("Nou membre \"" + member.user.username + "\" afegit a la guild " + member.guild.name + "\n");
-
-    if (member.guild.id === "264445053596991498") {
-        return; // Ignoring discord list server
-    }
 
     if (!userData[member.guild.id + member.user.id]) {
         userData[member.guild.id + member.user.id] = {};
@@ -273,10 +252,6 @@ client.on('guildMemberRemove', async(member) => {
 
     console.log("El membre \"" + member.user.username + "\" ha sortit de la guild " + member.guild.name + "\n");
 
-    if (member.guild.id === "264445053596991498") {
-        return; // Ignoring discord list server
-    }
-
     let channel = member.guild.systemChannel;
     if (!channel) channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);
     if (!channel) return;
@@ -321,9 +296,6 @@ client.on('message', async(message) => {
 
     let prefix = "!";
     if (message.guild) {
-        if (message.guild.id === "264445053596991498") {
-            return; // Ignoring discord list server
-        }
         prefix = servers[message.guild.id].prefix;
     }
 
