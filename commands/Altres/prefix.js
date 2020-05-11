@@ -23,7 +23,7 @@ module.exports = {
             }
 
             prefixes[message.guild.id].prefix = newPrefix;
-            fs.writeFile('./Storage/servers.json', JSON.stringify(prefixes, null, 2), (err) => { if (err) console.error(err); });
+            fs.writeFile('./Storage/servers.json', JSON.stringify(prefixes), (err) => { if (err) console.error(err); });
 
             let newName = "[ " + server.prefix + " ] CataBOT";
             await message.guild.me.setNickname(newName);

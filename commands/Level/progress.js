@@ -28,7 +28,7 @@ module.exports = {
             add = Number(args[0]);
         }
 
-        let content = `${to.username}, has guanyat ${add}xp`;
+        let content = `${to.username}, has guanyat \`${add}xp\``;
 
         let xp = userData[message.guild.id + to.id].xp;
         let sumLvl = 0;
@@ -57,7 +57,7 @@ module.exports = {
         userData[message.guild.id + to.id].xp += sumXp; // Afegim la xp calculada
 
         if (sumLvl > 0) { // Si es puja de nivell, avisa'm
-            content += `\n${to.username}, has arribat al nivell ${userData[message.guild.id + to.id].level}`;
+            content += `\n${to.username}, has arribat al \`Nivell ${userData[message.guild.id + to.id].level}\``;
         }
 
         fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });

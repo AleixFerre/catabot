@@ -7,9 +7,23 @@ client.commands = new Discord.Collection();
 
 moment().utcOffset('120');
 
-const config = require("./config.json");
+const testing = true;
+
+let config = {};
+if (testing) {
+    config = require("./config_test.json");
+} else {
+    config = require("./config.json");
+}
+
 let userData = JSON.parse(fs.readFileSync("./Storage/userData.json", 'utf8'));
-let prefixes = JSON.parse(fs.readFileSync("./Storage/servers.json", "utf8"));
+
+let prefixes = {};
+if (testing) {
+    prefixes = JSON.parse(fs.readFileSync("./Storage/servers_test.json", "utf8"));
+} else {
+    prefixes = JSON.parse(fs.readFileSync("./Storage/servers.json", "utf8"));
+}
 
 let cmds = [];
 
@@ -174,6 +188,9 @@ client.on("ready", () => {
 
         try {
             let newName = "[ " + config.prefix + " ] CataBOT";
+            if (testing) {
+                newName += " TEST";
+            }
             guild.members.get(config.clientid).setNickname(newName);
         } catch (err) {
             console.error(err);
@@ -191,7 +208,7 @@ client.on("ready", () => {
     console.log("\nREADY :: Version " + config.version + "\nON " + client.guilds.size + " servers\n" +
         "---------------------------------");
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
-    fs.writeFile('Storage/servers.json', JSON.stringify(prefixes, null, 2), (err) => { if (err) console.error(err); });
+    fs.writeFile('Storage/servers.json', JSON.stringify(prefixes), (err) => { if (err) console.error(err); });
 
 });
 

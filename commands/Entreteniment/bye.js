@@ -13,10 +13,10 @@ const applyText = (canvas, text) => {
 };
 
 module.exports = {
-	name: 'bye',
-	description: 'Et despedeix del servidor',
-	type: 'entreteniment',
-	async execute(message, args) {
+    name: 'bye',
+    description: 'Et despedeix del servidor',
+    type: 'entreteniment',
+    async execute(message, args) {
 
         function getMemberFromMention(mention) {
             if (!mention) return;
@@ -26,7 +26,7 @@ module.exports = {
         let member = getMemberFromMention(args[0]);
         if (!member)
             member = message.member;
-        
+
         let channel = message.guild.systemChannel;
         if (!channel) channel = message.guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);
         if (!channel) channel = message.channel;
@@ -45,14 +45,14 @@ module.exports = {
         ctx.fillStyle = '#ffffff';
         ctx.strokeStyle = 'rgba(0,0,0,1)';
         let s = ctx.measureText('Adeu,');
-        ctx.strokeText('Adeu,', 351-(s.width/2), (90+90));
-        ctx.fillText('Adeu,', 351-(s.width/2), (90+90));
+        ctx.strokeText('Adeu,', 351 - (s.width / 2), 180);
+        ctx.fillText('Adeu,', 351 - (s.width / 2), 180);
 
         ctx.font = applyText(canvas, `${member.displayName}!`);
         ctx.fillStyle = '#ffffff';
         let s2 = ctx.measureText(`${member.displayName}!`);
-        ctx.strokeText(`${member.displayName}!`, 351-(s2.width/2), (90+125+20));
-        ctx.fillText(`${member.displayName}!`, 351-(s2.width/2), (90+125+20));
+        ctx.strokeText(`${member.displayName}!`, 351 - (s2.width / 2), 235);
+        ctx.fillText(`${member.displayName}!`, 351 - (s2.width / 2), 235);
 
         ctx.beginPath();
         ctx.arc(351, 90, 56, 0, Math.PI * 2, true);
@@ -62,8 +62,8 @@ module.exports = {
         const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
         ctx.drawImage(avatar, 289, 28, 125, 125);
 
-        const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
+        const attachment = new Discord.Attachment(canvas.toBuffer(), 'bye-image.png');
 
         channel.send(`Adéu, ${member}!`, attachment);
-	},
+    },
 };

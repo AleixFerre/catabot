@@ -3,6 +3,7 @@
 node_modules/
 DISCORD.pem
 config.json
+config_test.json
 package-lock.json
 Storage/userData.json
 *.psd
