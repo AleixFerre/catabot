@@ -9,6 +9,7 @@ moment().utcOffset('120');
 
 const config = require("./config.json");
 let userData = JSON.parse(fs.readFileSync("./Storage/userData.json", 'utf8'));
+let prefixes = JSON.parse(fs.readFileSync("./Storage/servers.json", "utf8"));
 
 let cmds = [];
 
@@ -68,12 +69,19 @@ client.on("guildCreate", (guild) => {
         }
     });
 
+    if (!prefixes[guild.id]) {
+        prefixes[guild.id] = {};
+    }
+    if (!prefixes[guild.id].prefix) {
+        prefixes[guild.id].prefix = config.prefix;
+    }
+
     if (!servers[guild.id]) {
         servers[guild.id] = {
             queue: [],
             nowPlayingVideo: {},
             nowPlayingVideoInfo: {},
-            prefix: config.prefix,
+            prefix: prefixes[guild.id].prefix,
             loop: false
         };
     }
@@ -87,6 +95,7 @@ client.on("guildCreate", (guild) => {
 
     console.log("El bot ha entrat al servidor \"" + guild.name + "\"\n");
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+    fs.writeFile('Storage/servers.json', JSON.stringify(prefixes), (err) => { if (err) console.error(err); });
 
 });
 
@@ -102,8 +111,13 @@ client.on("guildDelete", (guild) => {
         servers[guild.id] = {};
     }
 
+    if (prefixes[guild.id]) {
+        prefixes[guild.id] = {};
+    }
+
     console.log("El bot ha sigut expulsat del servidor \"" + guild.name + "\"\n");
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+    fs.writeFile('Storage/servers.json', JSON.stringify(prefixes), (err) => { if (err) console.error(err); });
 
 });
 
@@ -141,12 +155,19 @@ client.on("ready", () => {
 
         console.log(guild.name + ": " + guild.memberCount + " members");
 
+        if (!prefixes[guild.id]) {
+            prefixes[guild.id] = {};
+        }
+        if (!prefixes[guild.id].prefix) {
+            prefixes[guild.id].prefix = config.prefix;
+        }
+
         if (!servers[guild.id]) {
             servers[guild.id] = {
                 queue: [],
                 nowPlayingVideo: {},
                 nowPlayingVideoInfo: {},
-                prefix: config.prefix,
+                prefix: prefixes[guild.id].prefix,
                 loop: false
             };
         }
@@ -170,6 +191,7 @@ client.on("ready", () => {
     console.log("\nREADY :: Version " + config.version + "\nON " + client.guilds.size + " servers\n" +
         "---------------------------------");
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+    fs.writeFile('Storage/servers.json', JSON.stringify(prefixes, null, 2), (err) => { if (err) console.error(err); });
 
 });
 
@@ -323,7 +345,7 @@ client.on('message', async(message) => {
     }
 
     try {
-        command.execute(message, args, servers, userData, client);
+        command.execute(message, args, servers, userData, client, prefixes);
     } catch (error) {
         console.error(error);
         message.reply('alguna cosa ha anat malament, siusplau contacta amb ' + config.ownerDiscordUsername +
