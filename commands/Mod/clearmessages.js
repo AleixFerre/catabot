@@ -19,8 +19,8 @@ module.exports = {
                 amount = Number(args[0]);
         }
 
-        if (amount > 100) {
-            return message.reply("no pots borrar més de 100 missatges alhora!");
+        if (amount > 99) {
+            return message.reply("no pots borrar més de 99 missatges alhora!");
         } else if (amount < 1) {
             return message.reply("no pots borrar menys d'1 missatge!");
         }

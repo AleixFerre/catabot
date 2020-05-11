@@ -79,7 +79,7 @@ module.exports = {
         await message.channel.send(description, attachment);
 
         // Await messages that fit the code
-        const filter = m => m.content.startsWith(text);
+        const filter = m => m.content === text && m.author.id === message.author.id;
         // Errors: ['time'] treats ending because of the time limit as an error
         message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
             .then(collected => { // S'ha respos correctament el codi
