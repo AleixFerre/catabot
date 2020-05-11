@@ -12,6 +12,11 @@ module.exports = {
         }
 
         let to = message.mentions.users.first();
+
+        if (!to) {
+            return message.reply("no se a qui posar nivell!");
+        }
+
         let add = 500; // Per defecte 500xp
 
         if (to.bot) {
