@@ -43,9 +43,9 @@ module.exports = {
                     return s.charAt(0).toUpperCase() + s.slice(1);
                 }
 
-                let body = "Height: `" + data.height.substring(0, data.height.indexOf('(')).slice(0, -1) + "`\n" +
-                    "Weight: `" + data.weight.substring(0, data.weight.indexOf('(')).slice(0, -1) + "`\n" +
-                    "Base experience: `" + data.base_experience + " xp`";
+                let body = "• Height: `" + data.height.substring(0, data.height.indexOf('(')).slice(0, -1) + "`\n" +
+                    "• Weight: `" + data.weight.substring(0, data.weight.indexOf('(')).slice(0, -1) + "`\n" +
+                    "• Base experience: `" + data.base_experience + " xp`";
 
                 let gender = "";
                 if (data.gender === "Genderless") {
@@ -57,13 +57,13 @@ module.exports = {
                 // Si te un sol tipus, posem Type, sino posem Types
                 let type = data.type.length === 1 ? "Type" : "Types";
 
-                let stats = "HP: `" + data.stats.hp + '`\n' +
-                    "Attack: `" + data.stats.attack + '`\n' +
-                    "Defense: `" + data.stats.defense + '`\n' +
-                    "Special Attck: `" + data.stats.sp_atk + '`\n' +
-                    "Special Defense: `" + data.stats.sp_def + '`\n' +
-                    "Speed: `" + data.stats.speed + '`\n' +
-                    "Total: `" + data.stats.total + '`';
+                let stats = "• HP: `" + data.stats.hp + '`\n' +
+                    "• Attack: `" + data.stats.attack + '`\n' +
+                    "• Defense: `" + data.stats.defense + '`\n' +
+                    "• Special Attck: `" + data.stats.sp_atk + '`\n' +
+                    "• Special Defense: `" + data.stats.sp_def + '`\n' +
+                    "• Speed: `" + data.stats.speed + '`\n' +
+                    "• Total: `" + data.stats.total + '`';
 
 
                 const pokeEmbed = new Discord.RichEmbed()
@@ -72,18 +72,18 @@ module.exports = {
                     .setTitle("**#" + data.id + " | " + capitalize(realName) + " | " + data.generation + "º GEN**") // Capitalize the first letter
                     .setDescription(data.description)
                     .setThumbnail("http://i.some-random-api.ml/pokemon/" + APIname + ".gif")
-                    .addField(type + ':', data.type.join(", "), true)
-                    .addField('Abilities:', data.abilities.join(", "), true)
-                    .addField('Species:', data.species.join(", "), true)
-                    .addField("Stats: ", stats, true)
-                    .addField("Body:", body, true)
-                    .addField("Gender: ", gender, true)
-                    .addField("Egg groups:", data.egg_groups.join(", "), true);
+                    .addField("❯ " + type + ':', data.type.join(", "), true)
+                    .addField('❯ Abilities:', data.abilities.join(", "), true)
+                    .addField('❯ Species:', data.species.join(", "), true)
+                    .addField("❯ Stats: ", stats, true)
+                    .addField("❯ Body:", body, true)
+                    .addField("❯ Gender: ", gender, true)
+                    .addField("❯ Egg groups:", data.egg_groups.join(", "), true);
 
                 if (data.family.evolutionLine.length > 0) {
                     // Treu els repetits ja que està en un Set
                     let uniqueEvos = [...new Set(data.family.evolutionLine)];
-                    pokeEmbed.addField('Evolutions:', uniqueEvos.join(", "), true);
+                    pokeEmbed.addField('❯ Evolutions:', uniqueEvos.join(", "), true);
                 }
 
                 pokeEmbed.setTimestamp().setFooter("CataBOT 2020 © All rights reserved");

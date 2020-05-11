@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 module.exports = {
     name: 'leaderboard',
     description: 'Mostra la classificació de monedes del servidor',
-    aliases: ['leader'],
+    aliases: ['leader', 'top'],
     type: 'banc',
     usage: '[ amount ]',
     execute(message, args, servers, userData) {
@@ -80,9 +80,8 @@ module.exports = {
 
         let msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
-            .setTitle("🏆 Leaderboard for " + message.guild.name + " 🏆")
-            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
-            //.setDescription(desc)
+            .setTitle("🏆 Leaderboard de " + message.guild.name + " 🏆")
+            // .setThumbnail(message.guild.iconURL)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         let i = 1;

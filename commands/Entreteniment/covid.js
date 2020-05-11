@@ -13,7 +13,7 @@ module.exports = {
         let covidUrl = "https://coronavirus-19-api.herokuapp.com/";
         let codeUrl = "https://api.printful.com/countries/";
         let covidData = {};
-        let flag = "https://bit.ly/CataBot_World";
+        let flag = "https://i.imgur.com/oEmt2KA.png";
         let country = "";
         let server = servers[message.guild.id];
 
@@ -22,7 +22,7 @@ module.exports = {
             country = args[0];
         } else {
             covidUrl += "all";
-            country = "THE WORLD";
+            country = "EL MON";
         }
 
         async function getInfo() {
@@ -58,7 +58,7 @@ module.exports = {
 
         await getInfo().catch(console.error);
 
-        if (country !== "THE WORLD") {
+        if (country !== "EL MON") {
             await getFlag().catch(console.error);
         }
 
@@ -69,7 +69,7 @@ module.exports = {
 
         const covidEmbed = new Discord.RichEmbed()
             .setColor(getRandomColor())
-            .setTitle("**CORONAVIRUS in " + country.toUpperCase() + "**")
+            .setTitle("**CORONAVIRUS a " + country.toUpperCase() + "**")
             .setThumbnail(flag);
 
 
@@ -78,7 +78,7 @@ module.exports = {
             let result = camp.replace(/([A-Z])/g, " $1");
             let finalResult = result.charAt(0).toUpperCase() + result.slice(1);
 
-            covidEmbed.addField(finalResult, covidData[camp], true);
+            covidEmbed.addField("❯ " + finalResult, covidData[camp], true);
         });
 
         covidEmbed.setTimestamp().setFooter("CataBOT 2020 © All rights reserved");

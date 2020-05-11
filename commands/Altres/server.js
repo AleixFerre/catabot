@@ -39,13 +39,12 @@ module.exports = {
         let msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
             .setTitle(message.guild.name)
-            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
             .setThumbnail(message.guild.iconURL)
-            .addField('Propietari', message.guild.owner.user.username, true)
-            .addField('Num Membres', message.guild.memberCount, true)
-            .addField('Diners totals', totalMoney, false)
-            .addField('El mes ric', mesRicNom, true)
-            .addField('Diners del mes ric', mesRicDiners, true)
+            .addField('❯ Propietari', message.guild.owner.user.username, true)
+            .addField('❯ Num Membres', message.guild.memberCount, true)
+            .addField('❯ Diners totals', totalMoney, false)
+            .addField('❯ El mes ric', mesRicNom, true)
+            .addField('❯ Diners del mes ric', mesRicDiners, true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);

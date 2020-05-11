@@ -4,6 +4,7 @@ module.exports = {
     name: 'choice',
     description: 'Deix que el bot escolleixi per tu',
     type: 'entreteniment',
+    aliases: ['escolleix'],
     usage: '< choice1, choice2, ...>',
     execute(message, args, servers) {
 
@@ -28,10 +29,9 @@ module.exports = {
 
         let msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
-            .setTitle("**CHOICE**")
-            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
+            .setTitle("**ESCOLLEIX**")
             .setThumbnail('https://bit.ly/CataBot_RawIcon')
-            .addField('Choice', choice, true)
+            .addField('❯ Escollida', choice, true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);

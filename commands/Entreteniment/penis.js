@@ -26,9 +26,8 @@ module.exports = {
         let msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
             .setTitle("**PENIS LENGTH**")
-            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
             .setThumbnail('https://bit.ly/CataBot_RawIcon')
-            .addField('Mida del teu penis', penisString, true)
+            .addField('❯ Mida del teu penis', penisString, true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);

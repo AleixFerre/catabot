@@ -38,20 +38,19 @@ module.exports = {
             progress = 100;
         }
 
-        let barra = "[";
+        // ▰▰▰▰▰▱▱▱▱▱▱▱
+        let barra = "";
         let max = 10;
 
         for (let i = 0; i < (progress / 10); i++) {
-            barra += "x";
+            barra += "▰";
             max--;
         }
 
         while (max > 0) {
-            barra += "-";
+            barra += "▱";
             max--;
         }
-
-        barra += "]";
 
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
@@ -66,12 +65,12 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("💠 Nivell 💠")
             .setThumbnail(mention.avatarURL)
-            .addField('Conta', mention.username, true)
-            .addField('Nivell', level, true)
-            .addField('XP', xp, true)
-            .addField('Rank', posicio, true)
-            .addField('Progress', progress + "%", true)
-            .addField('Barra', barra, false)
+            .addField('❯ Conta', mention.username, true)
+            .addField('❯ Nivell', level, true)
+            .addField('❯ XP', xp, true)
+            .addField('❯ Rank', posicio, true)
+            .addField('❯ Progress', progress + "%", true)
+            .addField('❯ Barra', barra, false)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);

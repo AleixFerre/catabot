@@ -43,9 +43,9 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("💰 Banc 💰")
             .setThumbnail(mention.avatarURL)
-            .addField('Conta', mention.username, true)
-            .addField('Diners', money, true)
-            .addField('Rank', posicio, true)
+            .addField('❯ Conta', mention.username, true)
+            .addField('❯ Diners', money, true)
+            .addField('❯ Rank', posicio, true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);

@@ -41,7 +41,7 @@ module.exports = {
                 let majTxt = camp.replace(/([A-Z])/g, " $1");
                 let finalResult = majTxt.charAt(0).toUpperCase() + majTxt.slice(1);
 
-                msg.addField(finalResult, result.current[camp], true);
+                msg.addField("❯ " + finalResult, result.current[camp], true);
             });
 
             function getRandomColor() {

@@ -54,7 +54,6 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle(title)
             .setDescription(insult)
-            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);

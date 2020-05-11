@@ -20,10 +20,9 @@ module.exports = {
 
         let msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
-            .setTitle("**QUÉ TAN GAY ERES?**")
-            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
+            .setTitle("**QUAN GAY ETS?**")
             .setThumbnail('https://bit.ly/CataBot_RawIcon')
-            .addField('Resultat', 'Eres ' + gay + '% gay!', true)
+            .addField('❯ Resultat', 'Ets ' + gay + '% gay!', true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);

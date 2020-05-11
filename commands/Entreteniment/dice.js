@@ -45,13 +45,12 @@ module.exports = {
 
         let msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
-            .setTitle("**ROLL A DICE**")
-            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
-            .setThumbnail('http://bit.ly/CataBot_Dice')
+            .setTitle("**TIRA ELS DAUS**")
+            .setThumbnail('https://i.imgur.com/h2c4xWd.png')
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         for (let i = 0; i < num; i++) {
-            msg.addField("Resultat " + (i + 1), Math.round(Math.random() * (size - 1)) + 1, true); // Result 1:size
+            msg.addField("❯ Resultat " + (i + 1), Math.round(Math.random() * (size - 1)) + 1, true); // Result 1:size
         }
 
         message.channel.send(msg);

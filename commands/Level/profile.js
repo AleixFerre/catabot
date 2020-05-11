@@ -44,20 +44,19 @@ module.exports = {
             progress = 100;
         }
 
-        let barra = "[";
+        let barra = "";
         let max = 10;
 
+        // ▰▰▰▰▰▱▱▱▱▱▱▱
         for (let i = 0; i < (progress / 10); i++) {
-            barra += "x";
+            barra += "▰";
             max--;
         }
 
         while (max > 0) {
-            barra += "-";
+            barra += "▱";
             max--;
         }
-
-        barra += "]";
 
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
@@ -72,14 +71,14 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("💠 Perfil 💠")
             .setThumbnail(mention.avatarURL)
-            .addField('Conta', mention.username, true)
-            .addField('Nivell', level, true)
-            .addField('XP', xp, true)
-            .addField('RankXP', posicio, true)
-            .addField('ProgressXP', progress + "%", true)
-            .addField('BarraXP', barra, false)
-            .addField('Diners', money, true)
-            .addField('Rank Diners', posicioMoney, true)
+            .addField('❯ Conta', mention.username, true)
+            .addField('❯ Nivell', level, true)
+            .addField('❯ XP', xp, true)
+            .addField('❯ RankXP', posicio, true)
+            .addField('❯ ProgressXP', progress + "%", true)
+            .addField('❯ BarraXP', barra, false)
+            .addField('❯ Diners', money, true)
+            .addField('❯ Rank Diners', posicioMoney, true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);

@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 module.exports = {
     name: 'xpleader',
     description: 'Mostra la classificació de nivell del servidor',
-    aliases: ['xpl', 'lvltop'],
+    aliases: ['xpl', 'lvltop', 'xptop'],
     type: 'level',
     usage: '[ amount ]',
     execute(message, args, servers, userData) {
@@ -81,9 +81,8 @@ module.exports = {
 
         let msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
-            .setTitle("💠 XPLeaderboard for " + message.guild.name + " 💠")
-            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
-            //.setDescription(desc)
+            .setTitle("💠 XPLeaderboard de " + message.guild.name + " 💠")
+            // .setThumbnail(message.guild.iconURL)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         let i = 1;
@@ -99,7 +98,7 @@ module.exports = {
             } else if (i === 3) {
                 num = '🥉';
             }
-            msg.addField(num + '.- ' + user.name, 'Level: ' + user.level + ' - ' + user.xp + 'xp');
+            msg.addField(num + '.- ' + user.name, 'Nivell: ' + user.level + ' - ' + user.xp + 'xp');
             i++;
         });
 

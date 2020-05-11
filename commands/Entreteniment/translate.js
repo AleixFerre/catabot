@@ -3,7 +3,7 @@ const translate = require('@vitalets/google-translate-api');
 
 module.exports = {
     name: 'translate',
-    description: 'Tradueix el que vulguis!',
+    description: 'Tradueix el que vulguis al espanyol!',
     usage: "< text >",
     type: 'entreteniment',
     async execute(message, args, servers) {
@@ -34,9 +34,8 @@ module.exports = {
 
         let msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
-            .setTitle("**TRANSLATE**")
+            .setTitle("**TRAUDEIX**")
             .setDescription(traducido)
-            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);

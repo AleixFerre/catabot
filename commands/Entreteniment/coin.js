@@ -4,7 +4,7 @@ module.exports = {
     name: 'coin',
     description: 'Te la jugues al 50%',
     type: 'entreteniment',
-    aliases: ['cflip'],
+    aliases: ['cflip', 'caraocreu'],
     execute(message) {
 
         let coin = Math.round(Math.random()); // We round between 0-1 so we have randomly true or false
@@ -31,11 +31,9 @@ module.exports = {
 
         let msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
-            .setTitle("**COIN FLIP**")
-            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
-            .setThumbnail('https://bit.ly/CataBot_RawIcon')
-            .addField('Resultat', result, true)
-            .setImage('http://bit.ly/CataBot_' + img)
+            .setTitle("**CARA O CREU**")
+            .setThumbnail('http://bit.ly/CataBot_' + img)
+            .addField('❯ Resultat', result, true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);

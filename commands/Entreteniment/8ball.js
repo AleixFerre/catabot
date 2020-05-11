@@ -49,10 +49,9 @@ module.exports = {
         let msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
             .setTitle("**8BALL**")
-            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
             .setThumbnail('http://bit.ly/CataBot_' + type)
-            .addField('Question', question, true)
-            .addField('Response', answer, true)
+            .addField('❯ Pregunta', question, true)
+            .addField('❯ Resposta', answer, true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);
