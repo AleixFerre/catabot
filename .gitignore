@@ -6,4 +6,6 @@ config.json
 config_test.json
 package-lock.json
 Storage/userData.json
+Storage/servers.json
+Storage/servers_test.json
 *.psd
