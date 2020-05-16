@@ -35,8 +35,12 @@ module.exports = {
             await delMessage.delete();
         }));
 
-        // Quan s'ha acabat, editem el missatge de confirmació
-        await msg.edit("☑️S'han borrat " + amount + " missatges correctament.☑️");
+        // Quan s'ha acabat, editem el missatge de confirmació, esperant 5s l'esborrem
+        await msg.edit("☑️S'han borrat " + amount + " missatges correctament.☑️").then(async msg => {
+            const delay = ms => new Promise(res => setTimeout(res, ms));
+            await delay(5000);
+            msg.delete();
+        });
 
     },
 };

@@ -9,3 +9,5 @@ Storage/userData.json
 Storage/servers.json
 Storage/servers_test.json
 *.psd
+*.zip
+*.rar
