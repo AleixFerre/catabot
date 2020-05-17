@@ -31,8 +31,14 @@ module.exports = {
         let content = `${to.username}, has guanyat \`${add}xp\``;
 
         let xp = userData[message.guild.id + to.id].xp;
+        let level = userData[message.guild.id + to.id].level;
         let sumLvl = 0;
         let sumXp = 0;
+
+        // Si tens nivell maxim, no sumes més
+        if (level === 200) {
+            return message.delete();
+        }
 
         if (add < 1000) { // Si el que afegim es menor que el que val un nivell
             if (add + xp > 1000) { // Si la suma del que afegim i el que tenim, val un nivell
@@ -53,11 +59,20 @@ module.exports = {
             }
         }
 
-        userData[message.guild.id + to.id].level += sumLvl; // Sumem els nivells calculats
-        userData[message.guild.id + to.id].xp += sumXp; // Afegim la xp calculada
+        // Si arrives a nivell 200, manten-te a nivell 200 i 0xp
+        if (level + sumLvl >= 200) {
+            userData[message.guild.id + to.id].level = 200;
+            userData[message.guild.id + to.id].xp = 0;
+        } else {
+            userData[message.guild.id + to.id].level += sumLvl; // Sumem els nivells calculats
+            userData[message.guild.id + to.id].xp += sumXp; // Afegim la xp calculada
+        }
 
         if (sumLvl > 0) { // Si es puja de nivell, avisa'm
             content += `\n${to.username}, has arribat al \`Nivell ${userData[message.guild.id + to.id].level}\``;
+            if (level + sumLvl >= 200) { // Si just pujes a nivell 200, avisa
+                content += `\nHAS ARRIBAT AL NIVELL MÀXIM!`;
+            }
         }
 
         fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });

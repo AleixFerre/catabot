@@ -34,7 +34,12 @@ module.exports = {
 
         let xp = Number(args[1]);
 
-        let content = `${to.username}, ara tens nivell ${lvl} i ${xp}xp`;
+        if (lvl >= 200) {
+            lvl = 200;
+            xp = 0;
+        }
+
+        let content = `${to.username}, ara tens \`Nivell ${lvl}\` i \`${xp}xp\``;
 
         userData[message.guild.id + to.id].level = lvl;
         userData[message.guild.id + to.id].xp = xp;

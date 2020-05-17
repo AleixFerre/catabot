@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const { ranks } = require("../../Storage/ranks.json");
 
 module.exports = {
     name: 'profile',
@@ -58,6 +59,15 @@ module.exports = {
             max--;
         }
 
+        // Calculem el rank de l'usuari
+        let rankIndex = Math.floor(level / 10) + 1;
+        if (rankIndex > 19) { // Maxim rank -> 19
+            rankIndex = 19;
+        }
+
+        let rankLink = "https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/rank_icons/" + rankIndex + ".png";
+
+
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
             let color = '#';
@@ -70,15 +80,15 @@ module.exports = {
         let msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
             .setTitle("💠 Perfil 💠")
-            .setThumbnail(mention.avatarURL)
+            .setThumbnail(rankLink)
             .addField('❯ Conta', mention.username, true)
             .addField('❯ Nivell', level, true)
-            .addField('❯ XP', xp, true)
-            .addField('❯ RankXP', posicio, true)
-            .addField('❯ ProgressXP', progress + "%", true)
-            .addField('❯ BarraXP', barra, false)
+            .addField('❯ XP', xp + "/1000", true)
+            .addField('❯ Top XP', posicio, true)
+            .addField('❯ Rang', ranks[rankIndex - 1], true)
+            .addField('❯ BarraXP', barra + " *[" + progress + "%]*", false)
             .addField('❯ Diners', money, true)
-            .addField('❯ Rank Diners', posicioMoney, true)
+            .addField('❯ Top Diners', posicioMoney, true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);
