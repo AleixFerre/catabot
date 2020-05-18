@@ -80,7 +80,7 @@ module.exports = {
             .addField('❯ Nivell', level, true)
             .addField('❯ XP', xp + "/1000", true)
             .addField('❯ Top', posicio, true)
-            .addField('❯ Rang', ranks[rankIndex - 1], true)
+            .addField('❯ Rang', `${ranks[rankIndex - 1]} _[${rankIndex}/19]_`, true)
             .addField('❯ Barra', barra + " *[" + progress + "%]*", false)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 

@@ -85,7 +85,7 @@ module.exports = {
             .addField('❯ Nivell', level, true)
             .addField('❯ XP', xp + "/1000", true)
             .addField('❯ Top XP', posicio, true)
-            .addField('❯ Rang', ranks[rankIndex - 1], true)
+            .addField('❯ Rang', `${ranks[rankIndex - 1]} _[${rankIndex}/19]_`, true)
             .addField('❯ BarraXP', barra + " *[" + progress + "%]*", false)
             .addField('❯ Diners', money, true)
             .addField('❯ Top Diners', posicioMoney, true)
