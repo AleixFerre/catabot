@@ -21,18 +21,25 @@ module.exports = {
 
         await client.guilds.forEach(async guild => {
 
-            if (guild.id !== "264445053596991498") {
+            // Busquem si hi ha un canal de text que es digui 'bot'
+            let channel = guild.channels.filter(c => c.type === 'text').find(x => x.name.includes("bot"));
+
+            // Si aquest no existeix
+            if (!channel) {
                 // Cerca el canal per defecte
-                let channel = guild.systemChannel;
-                // Si no existeix
-                if (channel === null)
-                    channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0); // Cerca el de la primera posició de tipus text
-                await channel.send(msg);
+                channel = guild.systemChannel;
             }
 
+            // Si no hi ha canal per defecte
+            if (!channel)
+                channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0); // Cerca el de la primera posició de tipus text
+
+            // Només si hi ha algun canal de text en tot el servidor
+            if (channel)
+                await channel.send(msg); // Envia el missatge d'alerta
         });
 
-        message.reply("Missatges enviats correctament");
+        message.reply("missatges enviats correctament");
 
     },
 };
