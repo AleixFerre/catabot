@@ -1,5 +1,6 @@
 const fs = require('fs');
 const { IdOwner } = require("../../config.json");
+const { ranks } = require("../../Storage/ranks.json");
 
 module.exports = {
     name: 'progress',
@@ -59,6 +60,20 @@ module.exports = {
             }
         }
 
+        // Si just ens queda un sistema com aquest:
+        // XP final: 1000 i sumLvl: n
+        // Ho transformem a -> XP final: 0 i sumLvl: n+1
+        if (xp + sumXp === 1000) {
+            sumLvl++;
+            sumXp = -xp;
+        }
+
+        // Calculem el rank de l'usuari avans
+        let rankIndexPrev = Math.floor(level / 10) + 1;
+        if (rankIndexPrev > 19) { // Maxim rank -> 19
+            rankIndexPrev = 19;
+        }
+
         // Si arrives a nivell 200, manten-te a nivell 200 i 0xp
         if (level + sumLvl >= 200) {
             userData[message.guild.id + to.id].level = 200;
@@ -68,10 +83,19 @@ module.exports = {
             userData[message.guild.id + to.id].xp += sumXp; // Afegim la xp calculada
         }
 
+        // Calculem el rank de l'usuari ara
+        let rankIndexPost = Math.floor(userData[message.guild.id + to.id].level / 10) + 1;
+        if (rankIndexPost > 19) { // Maxim rank -> 19
+            rankIndexPost = 19;
+        }
+
         if (sumLvl > 0) { // Si es puja de nivell, avisa'm
             content += `\n${to.username}, has arribat al \`Nivell ${userData[message.guild.id + to.id].level}\``;
             if (level + sumLvl >= 200) { // Si just pujes a nivell 200, avisa
-                content += `\nHAS ARRIBAT AL NIVELL MÀXIM!`;
+                content += `\n${to.username}, HAS ARRIBAT AL NIVELL MÀXIM!`;
+            }
+            if (rankIndexPrev !== rankIndexPost) { // Si pujes de rank, avisa
+                content += `\n${to.username}, has arribat al rang de \`${ranks[rankIndexPost-1]}\`!`;
             }
         }
 

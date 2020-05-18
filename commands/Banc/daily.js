@@ -9,16 +9,25 @@ module.exports = {
     execute(message, args, servers, userData) {
 
         let content = "";
-        moment.locale("ca");
+        moment.locale("ca"); // Posem el contingut en català
 
         let server = servers[message.guild.id];
 
+        let recompensa = 500;
+        let level = userData[message.guild.id + message.author.id].level;
+        let rank = Math.floor(level / 10) + 1;
+        if (rank > 19) {
+            rank = 19;
+        }
+
+        recompensa += Math.floor(recompensa * (rank - 1) / 10);
+
         if (userData[message.guild.id + message.member.id].lastDaily != moment().format('L')) {
             userData[message.guild.id + message.member.id].lastDaily = moment().format('L');
-            userData[message.guild.id + message.member.id].money += 500;
-            content = "💰500 monedes💰 han sigut afegides a la teva conta!\nGràcies per recollir la teva recompensa diaria!";
+            userData[message.guild.id + message.member.id].money += recompensa;
+            content = "💰`" + recompensa + " monedes` han sigut afegides a la teva conta!\nGràcies per recollir la teva recompensa diaria!";
 
-            xpMax = Math.floor(Math.random() * (500 - 1) + 1); // Numero aleatori entre 1 i 500
+            xpMax = Math.floor(Math.random() * (recompensa - 1) + 1); // Numero aleatori entre 1 i recompensa
 
             message.channel.send(server.prefix + "progress " + xpMax + " <@" + message.author.id + ">");
         } else {
