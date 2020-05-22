@@ -18,11 +18,11 @@ if (testing) {
 
 let userData = JSON.parse(fs.readFileSync("./Storage/userData.json", 'utf8'));
 
-let prefixes = {};
+let serversInfo = {};
 if (testing) {
-    prefixes = JSON.parse(fs.readFileSync("./Storage/servers_test.json", "utf8"));
+    serversInfo = JSON.parse(fs.readFileSync("./Storage/servers_test.json", "utf8"));
 } else {
-    prefixes = JSON.parse(fs.readFileSync("./Storage/servers.json", "utf8"));
+    serversInfo = JSON.parse(fs.readFileSync("./Storage/servers.json", "utf8"));
 }
 
 let cmds = [];
@@ -83,11 +83,17 @@ client.on("guildCreate", (guild) => {
         }
     });
 
-    if (!prefixes[guild.id]) {
-        prefixes[guild.id] = {};
+    if (!serversInfo[guild.id]) {
+        serversInfo[guild.id] = {};
     }
-    if (!prefixes[guild.id].prefix) {
-        prefixes[guild.id].prefix = config.prefix;
+    if (!serversInfo[guild.id].prefix) {
+        serversInfo[guild.id].prefix = config.prefix;
+    }
+    if (!serversInfo[guild.id].alertChannel) {
+        serversInfo[guild.id].alertChannel = searchAlertChannel(guild);
+    }
+    if (!serversInfo[guild.id].botChannel) {
+        serversInfo[guild.id].botChannel = searchBotChannel(guild);
     }
 
     if (!servers[guild.id]) {
@@ -95,7 +101,9 @@ client.on("guildCreate", (guild) => {
             queue: [],
             nowPlayingVideo: {},
             nowPlayingVideoInfo: {},
-            prefix: prefixes[guild.id].prefix,
+            prefix: serversInfo[guild.id].prefix,
+            alertChannel: serversInfo[guild.id].alertChannel,
+            botChannel: serversInfo[guild.id].botChannel,
             loop: false
         };
     }
@@ -109,7 +117,7 @@ client.on("guildCreate", (guild) => {
 
     console.log("El bot ha entrat al servidor \"" + guild.name + "\"\n");
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
-    fs.writeFile('Storage/servers.json', JSON.stringify(prefixes), (err) => { if (err) console.error(err); });
+    fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => { if (err) console.error(err); });
 
 });
 
@@ -125,13 +133,13 @@ client.on("guildDelete", (guild) => {
         servers[guild.id] = {};
     }
 
-    if (prefixes[guild.id]) {
-        prefixes[guild.id] = {};
+    if (serversInfo[guild.id]) {
+        serversInfo[guild.id] = {};
     }
 
     console.log("El bot ha sigut expulsat del servidor \"" + guild.name + "\"\n");
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
-    fs.writeFile('Storage/servers.json', JSON.stringify(prefixes), (err) => { if (err) console.error(err); });
+    fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => { if (err) console.error(err); });
 
 });
 
@@ -169,11 +177,17 @@ client.on("ready", () => {
 
         console.log(guild.name + ": " + guild.memberCount + " members");
 
-        if (!prefixes[guild.id]) {
-            prefixes[guild.id] = {};
+        if (!serversInfo[guild.id]) {
+            serversInfo[guild.id] = {};
         }
-        if (!prefixes[guild.id].prefix) {
-            prefixes[guild.id].prefix = config.prefix;
+        if (!serversInfo[guild.id].prefix) {
+            serversInfo[guild.id].prefix = config.prefix;
+        }
+        if (!serversInfo[guild.id].alertChannel) {
+            serversInfo[guild.id].alertChannel = searchAlertChannel(guild);
+        }
+        if (!serversInfo[guild.id].botChannel) {
+            serversInfo[guild.id].botChannel = searchBotChannel(guild);
         }
 
         if (!servers[guild.id]) {
@@ -181,7 +195,9 @@ client.on("ready", () => {
                 queue: [],
                 nowPlayingVideo: {},
                 nowPlayingVideoInfo: {},
-                prefix: prefixes[guild.id].prefix,
+                prefix: serversInfo[guild.id].prefix,
+                alertChannel: serversInfo[guild.id].alertChannel,
+                botChannel: serversInfo[guild.id].botChannel,
                 loop: false
             };
         }
@@ -208,7 +224,13 @@ client.on("ready", () => {
     console.log("\nREADY :: Version " + config.version + "\nON " + client.guilds.size + " servers\n" +
         "---------------------------------");
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
-    fs.writeFile('Storage/servers.json', JSON.stringify(prefixes), (err) => { if (err) console.error(err); });
+
+    if (testing) {
+        fs.writeFile('Storage/servers_test.json', JSON.stringify(serversInfo), (err) => { if (err) console.error(err); });
+    } else {
+        fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => { if (err) console.error(err); });
+    }
+
 
 });
 
@@ -352,7 +374,8 @@ client.on('message', async(message) => {
 
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
-    if (!command) return;
+    if (!command)
+        return;
 
     if (command.type == 'mod') {
         if (!message.member.hasPermission("ADMINISTRATOR")) {
@@ -361,8 +384,14 @@ client.on('message', async(message) => {
         }
     }
 
+    if (!message.author.bot && message.channel.members && commandName !== "setbot" && commandName !== "setalert" && commandName !== "h" && commandName !== "help") {
+        if (message.channel.id !== servers[message.guild.id].botChannel) {
+            message.author.send("Siusplau, utilitza el bot al canal pertinent. En aquest cas és <#" + servers[message.guild.id].botChannel + ">");
+        }
+    }
+
     try {
-        command.execute(message, args, servers, userData, client, prefixes);
+        command.execute(message, args, servers, userData, client, serversInfo);
     } catch (error) {
         console.error(error);
         message.reply('alguna cosa ha anat malament, siusplau contacta amb ' + config.ownerDiscordUsername +
@@ -371,5 +400,31 @@ client.on('message', async(message) => {
     }
 
 });
+
+function searchAlertChannel(guild) {
+    let channel = guild.channels.filter(c => c.type === 'text').find(x => x.name.includes("alertas"));
+    // Si aquest no existeix
+    if (!channel) {
+        // Cerca el canal per defecte
+        channel = guild.systemChannel;
+    }
+    // Si no hi ha canal per defecte
+    if (!channel)
+        channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0); // Cerca el de la primera posició de tipus text
+    return channel.id;
+}
+
+function searchBotChannel(guild) {
+    let channel = guild.channels.filter(c => c.type === 'text').find(x => x.name.includes("bot"));
+    // Si aquest no existeix
+    if (!channel) {
+        // Cerca el canal per defecte
+        channel = guild.systemChannel;
+    }
+    // Si no hi ha canal per defecte
+    if (!channel)
+        channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0); // Cerca el de la primera posició de tipus text
+    return channel.id;
+}
 
 client.login(config.token);

@@ -17,7 +17,7 @@ module.exports = {
 
                 let kickmsg = 'Motiu del kick desconegut';
                 if (args[0])
-                    kickmsg = args[0];
+                    kickmsg = args.join(' ');
 
                 member.kick(kickmsg).then(() => {
                     // We let the message author know we were able to kick the person

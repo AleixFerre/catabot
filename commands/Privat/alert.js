@@ -21,18 +21,8 @@ module.exports = {
 
         await client.guilds.forEach(async guild => {
 
-            // Busquem si hi ha un canal de text que es digui 'bot'
-            let channel = guild.channels.filter(c => c.type === 'text').find(x => x.name.includes("bot"));
-
-            // Si aquest no existeix
-            if (!channel) {
-                // Cerca el canal per defecte
-                channel = guild.systemChannel;
-            }
-
-            // Si no hi ha canal per defecte
-            if (!channel)
-                channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0); // Cerca el de la primera posició de tipus text
+            let channelID = servers[guild.id].alertChannel;
+            let channel = client.channels.get(channelID);
 
             // Només si hi ha algun canal de text en tot el servidor
             if (channel)

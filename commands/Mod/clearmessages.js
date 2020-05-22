@@ -30,10 +30,10 @@ module.exports = {
         let msg = await message.channel.send("🤔Borrant " + amount + " missatges...🤔");
 
         // Per tots els missatges que agafem
-        await Promise.all(messages.map(async(delMessage) => {
-            // Ens esperem a esborrar-los en ordre
-            await delMessage.delete();
-        }));
+        await Promise.all(messages.map((delMessage) => {
+            // Ens esperem a esborrar-los (no cal que sigui en ordre)
+            delMessage.delete();
+        })).catch(() => message.reply('One of the messages failed to delete.'));
 
         // Quan s'ha acabat, editem el missatge de confirmació, esperant 5s l'esborrem
         await msg.edit("☑️S'han borrat " + amount + " missatges correctament.☑️").then(async msg => {
