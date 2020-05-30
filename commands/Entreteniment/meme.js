@@ -22,8 +22,11 @@ module.exports = {
 
                 const memeEmbed = new Discord.RichEmbed()
                     .setColor(getRandomColor())
-                    .setTitle(data.title)
-                    .setImage(data.url).setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+                    .setURL(data.postLink)
+                    .setTitle(data.subreddit.toUpperCase() + " MEME")
+                    .setDescription(data.title)
+                    .setImage(data.url)
+                    .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
                 message.channel.send(memeEmbed);
             });

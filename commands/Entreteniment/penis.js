@@ -5,7 +5,7 @@ module.exports = {
     description: 'Mostra la mida del teu penis',
     type: 'entreteniment',
     aliases: ['pene'],
-    execute(message) {
+    execute(message, args) {
 
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
@@ -17,7 +17,14 @@ module.exports = {
         }
 
         let penis = Math.round(Math.random() * 9 + 1); // Clamped bewteen 1 : 10
-        penisString = "8";
+
+        let mention = message.author;
+
+        if (args[0]) {
+            mention = message.mentions.users.first();
+        }
+
+        let penisString = "8";
         for (let i = 0; i < penis; i++) {
             penisString += "=";
         }
@@ -25,9 +32,9 @@ module.exports = {
 
         let msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
-            .setTitle("**PENIS LENGTH**")
-            .setThumbnail('https://bit.ly/CataBot_RawIcon')
-            .addField('❯ Mida del teu penis', penisString, true)
+            .setTitle("**MIDA DEL TEU PENIS**")
+            .setThumbnail('https://i.imgur.com/2ZK1MYk.png')
+            .addField(`❯ Mida del penis de ${mention.username}`, penisString, true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);

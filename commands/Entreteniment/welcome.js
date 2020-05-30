@@ -13,10 +13,10 @@ const applyText = (canvas, text) => {
 };
 
 module.exports = {
-	name: 'welcome',
-	description: 'Et dona la benvinguda',
-	type: 'entreteniment',
-	async execute(message, args, servers, userData, client) {
+    name: 'welcome',
+    description: 'Et dona la benvinguda',
+    type: 'entreteniment',
+    async execute(message, args, servers, userData, client) {
 
         function getMemberFromMention(mention) {
             if (!mention) return;
@@ -27,10 +27,9 @@ module.exports = {
         if (!member)
             member = message.member;
 
-        let channel = message.guild.systemChannel;
-        if (!channel) channel = message.guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);
-        if (!channel) channel = message.channel;
-        if (!channel) return message.reply("no se a on ho he d'enviar!");
+
+        let channelID = servers[message.guild.id].welcomeChannel;
+        let channel = client.channels.get(channelID);
 
         const canvas = Canvas.createCanvas(700, 250);
         const ctx = canvas.getContext('2d');
@@ -45,14 +44,14 @@ module.exports = {
         ctx.fillStyle = '#ffffff';
         ctx.strokeStyle = 'rgba(0,0,0,1)';
         let s = ctx.measureText('Benvingut al servidor,');
-        ctx.strokeText('Benvingut al servidor,', 351-(s.width/2), (90+90));
-        ctx.fillText('Benvingut al servidor,', 351-(s.width/2), (90+90));
+        ctx.strokeText('Benvingut al servidor,', 351 - (s.width / 2), (90 + 90));
+        ctx.fillText('Benvingut al servidor,', 351 - (s.width / 2), (90 + 90));
 
         ctx.font = applyText(canvas, `${member.displayName}!`);
         ctx.fillStyle = '#ffffff';
         let s2 = ctx.measureText(`${member.displayName}!`);
-        ctx.strokeText(`${member.displayName}!`, 351-(s2.width/2), (90+125+20));
-        ctx.fillText(`${member.displayName}!`, 351-(s2.width/2), (90+125+20));
+        ctx.strokeText(`${member.displayName}!`, 351 - (s2.width / 2), (90 + 125 + 20));
+        ctx.fillText(`${member.displayName}!`, 351 - (s2.width / 2), (90 + 125 + 20));
 
         ctx.beginPath();
         ctx.arc(351, 90, 56, 0, Math.PI * 2, true);
@@ -65,5 +64,5 @@ module.exports = {
         const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
 
         channel.send(`Benvingut al servidor, ${member}!`, attachment);
-	},
+    },
 };

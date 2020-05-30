@@ -10,6 +10,14 @@ module.exports = {
         let mesRicNom = "";
         let mesRicDiners = 0;
         let totalMoney = 0;
+        let mesNivellNom = "";
+        let mesNivellLevel = 0;
+        let mesNivellXP = 0;
+
+        let server = servers[message.guild.id];
+        let canalAvisos = server.alertChannel;
+        let canalBot = server.botChannel;
+        let canalBenvinguda = server.welcomeChannel;
 
         message.guild.members.forEach(member => {
 
@@ -22,10 +30,21 @@ module.exports = {
                 mesRicNom = member.user.username;
             }
 
+            if (userData[message.guild.id + member.id].level > mesNivellLevel) {
+                mesNivellLevel = userData[message.guild.id + member.id].level;
+                mesNivellXP = userData[message.guild.id + member.id].xp;
+                mesNivellNom = member.user.username;
+            } else if (userData[message.guild.id + member.id].level === mesNivellLevel) {
+                if (userData[message.guild.id + member.id].xp > mesNivellXP) {
+                    mesNivellLevel = userData[message.guild.id + member.id].level;
+                    mesNivellXP = userData[message.guild.id + member.id].xp;
+                    mesNivellNom = member.user.username;
+                }
+            }
+
             totalMoney += userData[message.guild.id + member.id].money;
 
         });
-
 
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
@@ -42,9 +61,15 @@ module.exports = {
             .setThumbnail(message.guild.iconURL)
             .addField('❯ Propietari', message.guild.owner.user.username, true)
             .addField('❯ Num Membres', message.guild.memberCount, true)
-            .addField('❯ Diners totals', totalMoney, false)
+            .addField('❯ Diners totals', totalMoney, true)
             .addField('❯ El mes ric', mesRicNom, true)
             .addField('❯ Diners del mes ric', mesRicDiners, true)
+            .addField('❯ Amb mes nivell', mesNivellNom, true)
+            .addField('❯ Nivell del MAX', mesNivellLevel, true)
+            .addField('❯ XP del MAX', mesNivellXP, true)
+            .addField('❯ Canal d\'avisos', `<#${canalAvisos}>`, true)
+            .addField('❯ Canal del bot', `<#${canalBot}>`, true)
+            .addField('❯ Canal de benvinguda', `<#${canalBenvinguda}>`, true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);

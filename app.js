@@ -95,6 +95,9 @@ client.on("guildCreate", (guild) => {
     if (!serversInfo[guild.id].botChannel) {
         serversInfo[guild.id].botChannel = searchBotChannel(guild);
     }
+    if (!serversInfo[guild.id].welcomeChannel) {
+        serversInfo[guild.id].welcomeChannel = searchWelcomeChannel(guild);
+    }
 
     if (!servers[guild.id]) {
         servers[guild.id] = {
@@ -104,6 +107,7 @@ client.on("guildCreate", (guild) => {
             prefix: serversInfo[guild.id].prefix,
             alertChannel: serversInfo[guild.id].alertChannel,
             botChannel: serversInfo[guild.id].botChannel,
+            welcomeChannel: serversInfo[guild.id].welcomeChannel,
             loop: false
         };
     }
@@ -189,6 +193,9 @@ client.on("ready", () => {
         if (!serversInfo[guild.id].botChannel) {
             serversInfo[guild.id].botChannel = searchBotChannel(guild);
         }
+        if (!serversInfo[guild.id].welcomeChannel) {
+            serversInfo[guild.id].welcomeChannel = searchWelcomeChannel(guild);
+        }
 
         if (!servers[guild.id]) {
             servers[guild.id] = {
@@ -198,6 +205,7 @@ client.on("ready", () => {
                 prefix: serversInfo[guild.id].prefix,
                 alertChannel: serversInfo[guild.id].alertChannel,
                 botChannel: serversInfo[guild.id].botChannel,
+                welcomeChannel: serversInfo[guild.id].welcomeChannel,
                 loop: false
             };
         }
@@ -266,9 +274,7 @@ client.on('guildMemberAdd', async(member) => {
 
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 
-    let channel = member.guild.systemChannel;
-    if (!channel) channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);
-    if (!channel) return;
+    let channel = servers[member.guild.id].welcomeChannel;
 
     const canvas = Canvas.createCanvas(700, 250);
     const ctx = canvas.getContext('2d');
@@ -313,9 +319,7 @@ client.on('guildMemberRemove', async(member) => {
 
     console.log("El membre \"" + member.user.username + "\" ha sortit de la guild " + member.guild.name + "\n");
 
-    let channel = member.guild.systemChannel;
-    if (!channel) channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);
-    if (!channel) return;
+    let channel = servers[member.guild.id].welcomeChannel;
 
     const canvas = Canvas.createCanvas(700, 250);
     const ctx = canvas.getContext('2d');
@@ -424,6 +428,13 @@ function searchBotChannel(guild) {
     // Si no hi ha canal per defecte
     if (!channel)
         channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0); // Cerca el de la primera posició de tipus text
+    return channel.id;
+}
+
+function searchWelcomeChannel(guild) {
+    let channel = guild.systemChannel;
+    if (!channel)
+        channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);
     return channel.id;
 }
 

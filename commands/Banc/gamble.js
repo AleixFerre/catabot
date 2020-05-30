@@ -2,7 +2,7 @@ const fs = require('fs');
 
 module.exports = {
     name: 'gamble',
-    description: '50% de guanyar, apostant monedes. Ara amb la possibilitat de multiplicar. Però recorda que tens menys probabilitats!!',
+    description: '50% de guanyar, apostant monedes.',
     type: 'banc',
     usage: '< amount/all > [ multiplyer ]',
     aliases: ['dobleonada'],

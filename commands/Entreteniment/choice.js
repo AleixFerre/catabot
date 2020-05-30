@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 
 module.exports = {
     name: 'choice',
-    description: 'Deix que el bot escolleixi per tu',
+    description: 'Deix que el bot escolleixi per tu.\nEs permeten espais mentre es repectin les comes',
     type: 'entreteniment',
     aliases: ['escolleix'],
     usage: '< choice1, choice2, ...>',

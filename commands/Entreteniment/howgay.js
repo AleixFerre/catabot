@@ -5,9 +5,15 @@ module.exports = {
     description: 'Et diu lo gay que ets',
     type: 'entreteniment',
     aliases: ['gay'],
-    execute(message) {
+    execute(message, args) {
 
         let gay = Math.round(Math.random() * 99 + 1); // Clamped bewteen 1% : 100%
+
+        let mention = message.author;
+
+        if (args[0]) {
+            mention = message.mentions.users.first();
+        }
 
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
@@ -20,9 +26,9 @@ module.exports = {
 
         let msg = new Discord.RichEmbed()
             .setColor(getRandomColor())
-            .setTitle("**QUAN GAY ETS?**")
-            .setThumbnail('https://bit.ly/CataBot_RawIcon')
-            .addField('❯ Resultat', 'Ets ' + gay + '% gay!', true)
+            .setTitle("**QUANT GAY ETS?**")
+            .setThumbnail('https://i.imgur.com/jr5elyc.png')
+            .addField('❯ Resultat', `${mention.username}, ets ` + gay + '% gay!', true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);
