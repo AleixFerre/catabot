@@ -4,7 +4,7 @@ module.exports = {
     name: 'setalertchannel',
     description: 'Adjudica el canal d\'alertes al canal que s\'executa la comanda',
     type: 'mod',
-    aliases: ['alerthere', 'alertshere', 'setalert', 'setalerts'],
+    aliases: ['alerthere', 'setalert'],
     execute(message, args, servers, userData) {
 
         servers[message.guild.id].alertChannel = message.channel.id;

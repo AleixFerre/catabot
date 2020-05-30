@@ -7,7 +7,7 @@ client.commands = new Discord.Collection();
 
 moment().utcOffset('120');
 
-const testing = false;
+const testing = true;
 
 let config = {};
 if (testing) {
@@ -372,7 +372,7 @@ client.on('message', async(message) => {
 
     if (!message.channel.members && commandName != 'help' && commandName != 'h') {
         // Estem a DM, només funciona el help
-        message.author.send("Aqui només funciona el !help");
+        message.author.send("Prova millor `" + prefix + "help`");
         return;
     }
 
@@ -388,7 +388,8 @@ client.on('message', async(message) => {
         }
     }
 
-    if (!message.author.bot && message.channel.members && commandName !== "setbot" && commandName !== "setalert" && commandName !== "h" && commandName !== "help") {
+    if (!message.author.bot && message.channel.members && !message.member.hasPermission("ADMINISTRATOR") &&
+        commandName !== "setbot" && commandName !== "setalert" && commandName !== "h" && commandName !== "help") {
         if (message.channel.id !== servers[message.guild.id].botChannel) {
             message.author.send("Siusplau, utilitza el bot al canal pertinent. En aquest cas és <#" + servers[message.guild.id].botChannel + ">");
         }
