@@ -248,7 +248,7 @@ td {
 }
 
 .table100-body {
-    max-height: 585px;
+    max-height: auto;
     overflow: auto;
 }
 
