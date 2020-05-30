@@ -31,7 +31,7 @@ module.exports = {
             let altres = [];
 
             // Encuem cada comanda a la taula que toca
-            commands.forEach((command) => {
+            commands.cache.forEach((command) => {
                 switch (command.type) {
                     case 'musica':
                         musica.push(command);

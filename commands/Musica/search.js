@@ -48,7 +48,7 @@ module.exports = {
                     }
 
                     let i = 1;
-                    results.forEach((res) => {
+                    results.cache.forEach((res) => {
                         content += i + '.- ' + res.title + '\n';
                         i++;
                     });

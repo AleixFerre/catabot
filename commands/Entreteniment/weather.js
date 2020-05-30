@@ -36,7 +36,7 @@ module.exports = {
                 .setThumbnail(result.current.imageUrl)
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
-            Object.keys(result.current).forEach(camp => {
+            Object.keys(result.current).cache.forEach(camp => {
                 // Convertimos el campo en space case
                 let majTxt = camp.replace(/([A-Z])/g, " $1");
                 let finalResult = majTxt.charAt(0).toUpperCase() + majTxt.slice(1);

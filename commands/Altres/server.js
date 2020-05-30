@@ -19,7 +19,7 @@ module.exports = {
         let canalBot = server.botChannel;
         let canalBenvinguda = server.welcomeChannel;
 
-        message.guild.members.forEach(member => {
+        message.guild.members.cache.forEach(member => {
 
             if (!userData[message.guild.id + member.id] || member.user.bot) {
                 return;

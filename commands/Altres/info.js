@@ -15,7 +15,7 @@ module.exports = {
                     • **Servidor Oficial: [discord.gg/k75qvYM](${config.officialServerLink})**`;
 
         let nMembers = 0;
-        client.guilds.forEach(guild => {
+        client.guilds.cache.forEach(guild => {
             nMembers += guild.memberCount;
         });
 

@@ -7,7 +7,7 @@ client.commands = new Discord.Collection();
 
 moment().utcOffset('120');
 
-const testing = false;
+const testing = true;
 
 let config = {};
 if (testing) {
@@ -54,7 +54,7 @@ let servers = {}; ///< The data structure that handles all the info for the serv
 
 client.on("guildCreate", (guild) => {
 
-    guild.members.forEach(member => {
+    guild.members.cache.forEach(member => {
         if (!userData[guild.id + member.user.id])
             userData[guild.id + member.user.id] = {};
 
@@ -127,7 +127,7 @@ client.on("guildCreate", (guild) => {
 
 client.on("guildDelete", (guild) => {
 
-    guild.members.forEach(member => {
+    guild.members.cache.forEach(member => {
         if (userData[guild.id + member.user.id]) {
             userData[guild.id + member.user.id] = {};
         }
@@ -147,10 +147,10 @@ client.on("guildDelete", (guild) => {
 
 });
 
-client.on("ready", () => {
+client.on("ready", async() => {
 
-    client.guilds.forEach(guild => {
-        guild.members.forEach(member => {
+    client.guilds.cache.forEach(guild => {
+        guild.members.cache.forEach(member => {
             if (!userData[guild.id + member.user.id])
                 userData[guild.id + member.user.id] = {};
 
@@ -215,7 +215,8 @@ client.on("ready", () => {
             if (testing) {
                 newName += " TEST";
             }
-            guild.members.get(config.clientid).setNickname(newName);
+            let m = guild.members.fetch(config.clientid);
+            m[0].setNickname(newName);
         } catch (err) {
             console.error(err);
         }
@@ -229,7 +230,7 @@ client.on("ready", () => {
         }
     });
 
-    console.log("\nREADY :: Version " + config.version + "\nON " + client.guilds.size + " servers\n" +
+    console.log("\nREADY :: Version " + config.version + "\nON " + client.guilds.cache.size + " servers\n" +
         "---------------------------------");
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 

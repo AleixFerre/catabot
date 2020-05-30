@@ -11,9 +11,9 @@ module.exports = {
             return message.reply("no tens permís per executar aquesta comanda!");
         }
 
-        client.guilds.forEach(guild => {
+        client.guilds.cache.forEach(guild => {
             if (guild.id !== "264445053596991498") {
-                guild.members.forEach(member => {
+                guild.members.cache.forEach(member => {
                     userData[guild.id + member.id].level = 1;
                     userData[guild.id + member.id].xp = 0;
                 });

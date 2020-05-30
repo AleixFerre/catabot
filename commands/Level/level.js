@@ -24,7 +24,7 @@ module.exports = {
         let level = userData[message.guild.id + mention.id].level;
         let xp = userData[message.guild.id + mention.id].xp;
 
-        message.guild.members.forEach(member => {
+        message.guild.members.cache.forEach(member => {
             if (userData[message.guild.id + member.id].level > level) {
                 posicio++;
             } else if (userData[message.guild.id + member.id].level === level) {

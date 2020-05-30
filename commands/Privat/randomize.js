@@ -25,7 +25,7 @@ module.exports = {
             }
         }
 
-        message.guild.members.forEach(member => {
+        message.guild.members.cache.forEach(member => {
             if (userData[message.guild.id + member.user.id]) {
                 if (userData[message.guild.id + member.user.id].money) {
                     if (member.user.bot)

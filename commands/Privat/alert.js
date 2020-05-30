@@ -19,7 +19,7 @@ module.exports = {
 
         msg = args.join(" ");
 
-        await client.guilds.forEach(async guild => {
+        await client.guilds.cache.forEach(async guild => {
 
             let channelID = servers[guild.id].alertChannel;
             let channel = client.channels.get(channelID);

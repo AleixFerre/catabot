@@ -54,7 +54,7 @@ module.exports = {
         }
 
 
-        message.guild.members.forEach((member) => {
+        message.guild.members.cache.forEach((member) => {
             // Per cada membre del servidor, apliquem aquesta funció
 
             let user = userData[message.guild.id + member.id];
@@ -88,7 +88,7 @@ module.exports = {
 
         // 🥇 🥈 🥉
 
-        board.forEach((user) => {
+        board.cache.forEach((user) => {
             let num = i;
             if (i === 1) {
                 num = '🥇';

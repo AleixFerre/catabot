@@ -38,7 +38,7 @@ module.exports = {
                 .then(res => res.json())
                 .then((data) => {
                     let code = "";
-                    data.result.forEach(element => {
+                    data.result.cache.forEach(element => {
                         if (element.name.toLowerCase() === args[0].toLowerCase()) {
                             code = element.code;
                         }
@@ -73,7 +73,7 @@ module.exports = {
             .setThumbnail(flag);
 
 
-        Object.keys(covidData).forEach(camp => {
+        Object.keys(covidData).cache.forEach(camp => {
             // Convertimos el campo en space case
             let result = camp.replace(/([A-Z])/g, " $1");
             let finalResult = result.charAt(0).toUpperCase() + result.slice(1);
