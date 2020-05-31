@@ -77,7 +77,7 @@ module.exports = {
             return color;
         }
 
-        let msg = new Discord.RichEmbed()
+        let msg = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle("💠 Perfil 💠")
             .setThumbnail(rankLink)

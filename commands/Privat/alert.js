@@ -22,7 +22,7 @@ module.exports = {
         await client.guilds.cache.forEach(async guild => {
 
             let channelID = servers[guild.id].alertChannel;
-            let channel = client.channels.get(channelID);
+            let channel = client.channels.cache.get(channelID);
 
             // Només si hi ha algun canal de text en tot el servidor
             if (channel)

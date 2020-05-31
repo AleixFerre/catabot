@@ -7,7 +7,7 @@ client.commands = new Discord.Collection();
 
 moment().utcOffset('120');
 
-const testing = true;
+const testing = false;
 
 let config = {};
 if (testing) {
@@ -215,8 +215,9 @@ client.on("ready", async() => {
             if (testing) {
                 newName += " TEST";
             }
-            let m = guild.members.fetch(config.clientid);
-            m[0].setNickname(newName);
+            guild.members.fetch(config.clientid).then((member) => {
+                member.setNickname(newName);
+            });
         } catch (err) {
             console.error(err);
         }
@@ -275,7 +276,8 @@ client.on('guildMemberAdd', async(member) => {
 
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 
-    let channel = servers[member.guild.id].welcomeChannel;
+    let channelID = servers[member.guild.id].welcomeChannel;
+    let channel = client.channels.cache.get(channelID);
 
     const canvas = Canvas.createCanvas(700, 250);
     const ctx = canvas.getContext('2d');
@@ -304,10 +306,10 @@ client.on('guildMemberAdd', async(member) => {
     ctx.closePath();
     ctx.clip();
 
-    const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
+    const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'png' }));
     ctx.drawImage(avatar, 289, 28, 125, 125);
 
-    const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
+    const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
 
     channel.send(`Benvingut al servidor, ${member}!`, attachment);
 });
@@ -320,7 +322,8 @@ client.on('guildMemberRemove', async(member) => {
 
     console.log("El membre \"" + member.user.username + "\" ha sortit de la guild " + member.guild.name + "\n");
 
-    let channel = servers[member.guild.id].welcomeChannel;
+    let channelID = servers[member.guild.id].welcomeChannel;
+    let channel = client.channels.cache.get(channelID);
 
     const canvas = Canvas.createCanvas(700, 250);
     const ctx = canvas.getContext('2d');
@@ -349,13 +352,12 @@ client.on('guildMemberRemove', async(member) => {
     ctx.closePath();
     ctx.clip();
 
-    const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
+    const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: "png" }));
     ctx.drawImage(avatar, 289, 28, 125, 125);
 
-    const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
+    const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'bye-image.png');
 
     channel.send(`Adeu, ${member}!`, attachment);
-
 });
 
 client.on('message', async(message) => {
@@ -408,7 +410,7 @@ client.on('message', async(message) => {
 });
 
 function searchAlertChannel(guild) {
-    let channel = guild.channels.filter(c => c.type === 'text').find(x => x.name.includes("alertas"));
+    let channel = guild.channels.cache.filter(c => c.type === 'text').find(x => x.name.includes("alertas"));
     // Si aquest no existeix
     if (!channel) {
         // Cerca el canal per defecte
@@ -416,12 +418,12 @@ function searchAlertChannel(guild) {
     }
     // Si no hi ha canal per defecte
     if (!channel)
-        channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0); // Cerca el de la primera posició de tipus text
+        channel = guild.channels.cache.filter(c => c.type === 'text').find(x => x.position == 0); // Cerca el de la primera posició de tipus text
     return channel.id;
 }
 
 function searchBotChannel(guild) {
-    let channel = guild.channels.filter(c => c.type === 'text').find(x => x.name.includes("bot"));
+    let channel = guild.channels.cache.filter(c => c.type === 'text').find(x => x.name.includes("bot"));
     // Si aquest no existeix
     if (!channel) {
         // Cerca el canal per defecte
@@ -429,14 +431,14 @@ function searchBotChannel(guild) {
     }
     // Si no hi ha canal per defecte
     if (!channel)
-        channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0); // Cerca el de la primera posició de tipus text
+        channel = guild.channels.cache.filter(c => c.type === 'text').find(x => x.position == 0); // Cerca el de la primera posició de tipus text
     return channel.id;
 }
 
 function searchWelcomeChannel(guild) {
     let channel = guild.systemChannel;
     if (!channel)
-        channel = guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);
+        channel = guild.channels.cache.filter(c => c.type === 'text').find(x => x.position == 0);
     return channel.id;
 }
 

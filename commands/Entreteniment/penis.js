@@ -30,7 +30,7 @@ module.exports = {
         }
         penisString += 'D';
 
-        let msg = new Discord.RichEmbed()
+        let msg = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle("**MIDA DEL TEU PENIS**")
             .setThumbnail('https://i.imgur.com/2ZK1MYk.png')

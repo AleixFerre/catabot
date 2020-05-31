@@ -29,7 +29,7 @@ module.exports = {
             return color;
         }
 
-        let msg = new Discord.RichEmbed()
+        let msg = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle("**CARA O CREU**")
             .setThumbnail('http://bit.ly/CataBot_' + img)

@@ -74,7 +74,7 @@ module.exports = {
         ctx.fillStyle = invertColor(bgColor);
         ctx.fillText(text, canvas.width / 2 - s.width / 2, canvas.height / 2);
 
-        const attachment = new Discord.Attachment(canvas.toBuffer(), 'captcha.png');
+        const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'captcha.png');
 
         await message.channel.send(description, attachment);
 
@@ -83,9 +83,9 @@ module.exports = {
         // Errors: ['time'] treats ending because of the time limit as an error
         message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
             .then(collected => { // S'ha respos correctament el codi
-                message.channel.send("Has respòs correctament");
+                message.channel.send("✅ Has respòs correctament! ✅");
             }).catch(collected => { // Ha pasat el temps
-                message.channel.send("S'ha acabat el temps!");
+                message.channel.send("⏰ S'ha acabat el temps! ⏰");
             });
 
     },

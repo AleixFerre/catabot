@@ -94,7 +94,7 @@ module.exports = {
             return color;
         }
 
-        let embed = new Discord.RichEmbed()
+        let embed = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle("**🎰 SLOT MACHINE 🎰**")
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");

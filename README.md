@@ -13,7 +13,7 @@ First install [Node.js](https://nodejs.org/en/) LTS Version if you don't have it
 Clone it and download dependencies with
 
 ```txt
-npm install discord.js@^11.5.1
+npm install discord.js
 npm install opusscript
 npm install ytdl-core
 npm install simple-youtube-api

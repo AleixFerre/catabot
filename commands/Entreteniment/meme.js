@@ -20,7 +20,7 @@ module.exports = {
                     return color;
                 }
 
-                const memeEmbed = new Discord.RichEmbed()
+                const memeEmbed = new Discord.MessageEmbed()
                     .setColor(getRandomColor())
                     .setURL(data.postLink)
                     .setTitle(data.subreddit.toUpperCase() + " MEME")

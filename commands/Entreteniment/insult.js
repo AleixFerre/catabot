@@ -50,7 +50,7 @@ module.exports = {
 
         await getData();
 
-        let msg = new Discord.RichEmbed()
+        let msg = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle(title)
             .setDescription(insult)

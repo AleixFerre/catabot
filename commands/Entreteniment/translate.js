@@ -32,7 +32,7 @@ module.exports = {
             traducido = res.text;
         });
 
-        let msg = new Discord.RichEmbed()
+        let msg = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle("**TRAUDEIX**")
             .setDescription(traducido)

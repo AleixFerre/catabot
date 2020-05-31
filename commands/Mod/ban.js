@@ -14,11 +14,13 @@ module.exports = {
             const member = message.guild.member(user);
             // If the member is in the guild
             if (member) {
-                member.ban({
-                    reason: args[0] + ' no seas malo... :/',
-                }).then(() => {
+                let banmsg = 'Motiu del kick desconegut';
+                if (args[0])
+                    banmsg = args.join(' ');
+
+                member.ban(banmsg).then(() => {
                     // We let the message author know we were able to ban the person
-                    message.reply("S'ha banejat a " + user + " amb èxit.");
+                    message.reply("S'ha banejat a " + user.username + " amb èxit.");
                 }).catch((err) => {
                     // An error happened
                     // This is generally due to the bot not being able to ban the member,

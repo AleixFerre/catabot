@@ -20,9 +20,8 @@ module.exports = {
         });
 
         let stats = "• **Membres:** `" + nMembers + "`\n" +
-            "• **Servers:** `" + client.guilds.size + "`\n" +
+            "• **Servers:** `" + client.guilds.cache.size + "`\n" +
             "• **Comandes:** `" + client.commands.size + "`";
-
 
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
@@ -33,7 +32,7 @@ module.exports = {
             return color;
         }
 
-        let msg = new Discord.RichEmbed()
+        let msg = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setAuthor(`CataBOT by Català HD`, 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
             .setDescription(description)

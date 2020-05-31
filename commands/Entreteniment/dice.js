@@ -43,7 +43,7 @@ module.exports = {
             return color;
         }
 
-        let msg = new Discord.RichEmbed()
+        let msg = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle("**TIRA ELS DAUS**")
             .setThumbnail('https://i.imgur.com/h2c4xWd.png')

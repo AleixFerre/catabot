@@ -66,7 +66,7 @@ module.exports = {
                     "• Total: `" + data.stats.total + '`';
 
 
-                const pokeEmbed = new Discord.RichEmbed()
+                const pokeEmbed = new Discord.MessageEmbed()
                     .setColor(getRandomColor())
                     .setAuthor('POKEDEX', 'https://pngimage.net/wp-content/uploads/2018/06/pokemon-go-icon-png-3.png', 'https://pokemon.fandom.com/es/wiki/' + args.join("_"))
                     .setTitle("**#" + data.id + " | " + capitalize(realName) + " | " + data.generation + "º GEN**") // Capitalize the first letter

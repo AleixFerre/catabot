@@ -30,13 +30,13 @@ module.exports = {
                 return message.reply("la ciutat " + city + " no existeix");
             }
 
-            let msg = new Discord.RichEmbed()
+            let msg = new Discord.MessageEmbed()
                 .setColor(getRandomColor())
                 .setTitle("**TEMPS a " + result.location.name + "**")
                 .setThumbnail(result.current.imageUrl)
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
-            Object.keys(result.current).cache.forEach(camp => {
+            Object.keys(result.current).forEach(camp => {
                 // Convertimos el campo en space case
                 let majTxt = camp.replace(/([A-Z])/g, " $1");
                 let finalResult = majTxt.charAt(0).toUpperCase() + majTxt.slice(1);

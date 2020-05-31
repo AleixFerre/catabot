@@ -16,7 +16,7 @@ module.exports = {
     name: 'bye',
     description: 'Et despedeix del servidor',
     type: 'entreteniment',
-    async execute(message, args) {
+    async execute(message, args, servers, userData, client) {
 
         function getMemberFromMention(mention) {
             if (!mention) return;
@@ -27,14 +27,11 @@ module.exports = {
         if (!member)
             member = message.member;
 
-        let channel = message.guild.systemChannel;
-        if (!channel) channel = message.guild.channels.filter(c => c.type === 'text').find(x => x.position == 0);
-        if (!channel) channel = message.channel;
-        if (!channel) return message.reply("no se a on ho he d'enviar!");
+        let channelID = servers[message.guild.id].welcomeChannel;
+        let channel = client.channels.cache.get(channelID);
 
         const canvas = Canvas.createCanvas(700, 250);
         const ctx = canvas.getContext('2d');
-
         const background = await Canvas.loadImage('./imgs/wallpaper.png');
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
@@ -59,11 +56,12 @@ module.exports = {
         ctx.closePath();
         ctx.clip();
 
-        const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
+        const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: "png" }));
+
         ctx.drawImage(avatar, 289, 28, 125, 125);
 
-        const attachment = new Discord.Attachment(canvas.toBuffer(), 'bye-image.png');
+        const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'bye-image.png');
 
-        channel.send(`Adéu, ${member}!`, attachment);
+        await channel.send(`Adéu, ${member}!`, attachment).catch(console.error);
     },
 };

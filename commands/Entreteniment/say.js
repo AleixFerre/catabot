@@ -1,3 +1,5 @@
+const config = require('../../config.json');
+
 module.exports = {
     name: 'say',
     description: 'Fes que el bot digui el que vulguis',
@@ -5,7 +7,7 @@ module.exports = {
     type: 'entreteniment',
     async execute(message, args, servers) {
         if (args[0]) {
-            if (args[0][0] === '!')
+            if (args[0][0] === config.prefix)
                 return message.reply("recorda que les comandes les has d'executar tu 😅");
             await message.channel.send(args.join(" "));
             message.delete().catch(console.error);

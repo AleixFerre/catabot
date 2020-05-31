@@ -31,7 +31,7 @@ module.exports = {
             let altres = [];
 
             // Encuem cada comanda a la taula que toca
-            commands.cache.forEach((command) => {
+            commands.forEach((command) => {
                 switch (command.type) {
                     case 'musica':
                         musica.push(command);
@@ -61,7 +61,7 @@ module.exports = {
             });
 
             // Creem l'embed i l'anem omplint
-            const fullHelpEmbed = new Discord.RichEmbed()
+            const fullHelpEmbed = new Discord.MessageEmbed()
                 .setColor(getRandomColor())
                 .setTitle('El **CataBOT** té ' + commands.size + ' comandes')
                 .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
@@ -134,7 +134,7 @@ module.exports = {
             return color;
         }
 
-        const helpEmbed = new Discord.RichEmbed()
+        const helpEmbed = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
             .setTitle(command.name.toUpperCase())

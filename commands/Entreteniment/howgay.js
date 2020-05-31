@@ -24,7 +24,7 @@ module.exports = {
             return color;
         }
 
-        let msg = new Discord.RichEmbed()
+        let msg = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle("**QUANT GAY ETS?**")
             .setThumbnail('https://i.imgur.com/jr5elyc.png')

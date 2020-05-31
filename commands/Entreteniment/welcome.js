@@ -29,7 +29,7 @@ module.exports = {
 
 
         let channelID = servers[message.guild.id].welcomeChannel;
-        let channel = client.channels.get(channelID);
+        let channel = client.channels.cache.get(channelID);
 
         const canvas = Canvas.createCanvas(700, 250);
         const ctx = canvas.getContext('2d');
@@ -58,10 +58,10 @@ module.exports = {
         ctx.closePath();
         ctx.clip();
 
-        const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
+        const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: "png" }));
         ctx.drawImage(avatar, 289, 28, 125, 125);
 
-        const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
+        const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
 
         channel.send(`Benvingut al servidor, ${member}!`, attachment);
     },

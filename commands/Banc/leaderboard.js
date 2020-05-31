@@ -78,17 +78,17 @@ module.exports = {
             return color;
         }
 
-        let msg = new Discord.RichEmbed()
+        let msg = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle("🏆 Leaderboard de " + message.guild.name + " 🏆")
-            // .setThumbnail(message.guild.iconURL)
+            // .setThumbnail(message.guild.iconURL())
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         let i = 1;
 
         // 🥇 🥈 🥉
 
-        board.cache.forEach((user) => {
+        board.forEach((user) => {
             let num = i;
             if (i === 1) {
                 num = '🥇';

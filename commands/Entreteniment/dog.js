@@ -43,7 +43,7 @@ module.exports = {
             return color;
         }
 
-        const catEmbed = new Discord.RichEmbed()
+        const catEmbed = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle("Fun fact about dogs!")
             .setDescription(desc)

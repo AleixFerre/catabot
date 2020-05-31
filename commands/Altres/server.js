@@ -55,10 +55,10 @@ module.exports = {
             return color;
         }
 
-        let msg = new Discord.RichEmbed()
+        let msg = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle(message.guild.name)
-            .setThumbnail(message.guild.iconURL)
+            .setThumbnail(message.guild.iconURL())
             .addField('❯ Propietari', message.guild.owner.user.username, true)
             .addField('❯ Num Membres', message.guild.memberCount, true)
             .addField('❯ Diners totals', totalMoney, true)

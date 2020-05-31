@@ -26,14 +26,14 @@ module.exports = {
         }
 
 
-        let messages = await message.channel.fetchMessages({ limit: amount + 1 }).catch(console.error);
+        let messages = await message.channel.messages.fetch({ limit: amount + 1 }).catch(console.error);
         let msg = await message.channel.send("🤔Borrant " + amount + " missatges...🤔");
 
         // Per tots els missatges que agafem
         await Promise.all(messages.map((delMessage) => {
             // Ens esperem a esborrar-los (no cal que sigui en ordre)
             delMessage.delete();
-        })).catch(() => message.reply('One of the messages failed to delete.'));
+        })).catch(() => message.reply('Un dels missatges ha fallat a la hora d\'esborrar-se.'));
 
         // Quan s'ha acabat, editem el missatge de confirmació, esperant 5s l'esborrem
         await msg.edit("☑️S'han borrat " + amount + " missatges correctament.☑️").then(async msg => {

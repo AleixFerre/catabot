@@ -16,11 +16,12 @@ module.exports = {
             return color;
         }
 
-        const msg = new Discord.RichEmbed()
+        const msg = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle("**F**")
             .setDescription(args.join(" "))
-            .setImage("https://media.giphy.com/media/j6ZlX8ghxNFRknObVk/giphy.gif").setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+            .setImage("https://media.giphy.com/media/j6ZlX8ghxNFRknObVk/giphy.gif")
+            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);
     },
