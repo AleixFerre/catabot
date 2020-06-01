@@ -20,7 +20,6 @@ module.exports = {
         const pingEmbed = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle('**PING**')
-            .setDescription('Aqui tens el link')
             .addField("❯ 🛰️ Ping DiscordAPI", `${ping} ms`, true)
             .addField("❯ 🌐 Ping Servidor", `${guildPing} ms`, true)
             .setTimestamp().setFooter('CataBOT 2020 © All rights reserved');

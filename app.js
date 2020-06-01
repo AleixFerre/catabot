@@ -225,7 +225,7 @@ client.on("ready", async() => {
 
     client.user.setPresence({
         status: "online",
-        game: {
+        activity: {
             name: "catalahd.github.io/CataBot",
             type: "WATCHING"
         }
