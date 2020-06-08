@@ -52,101 +52,6 @@ fs.writeFile('docs/Storage/commands.json', JSON.stringify(cmds), (err) => { if (
 
 let servers = {}; ///< The data structure that handles all the info for the servers
 
-client.on("guildCreate", (guild) => {
-
-    guild.members.cache.forEach(member => {
-        if (!userData[guild.id + member.user.id])
-            userData[guild.id + member.user.id] = {};
-
-        if (!userData[guild.id + member.user.id].money) {
-            if (userData[guild.id + member.user.id].money !== 0) {
-                if (member.user.bot)
-                    userData[guild.id + member.user.id].money = -1;
-                else
-                    userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
-            }
-        }
-
-        if (!userData[guild.id + member.user.id].lastDaily) {
-            if (!member.user.bot)
-                userData[guild.id + member.user.id].lastDaily = "Not Collected";
-        }
-
-        if (!userData[guild.id + member.user.id].level) {
-            if (!member.user.bot)
-                userData[guild.id + member.user.id].level = 1;
-        }
-
-        if (!userData[guild.id + member.user.id].xp) {
-            if (!member.user.bot)
-                userData[guild.id + member.user.id].xp = 0;
-        }
-    });
-
-    if (!serversInfo[guild.id]) {
-        serversInfo[guild.id] = {};
-    }
-    if (!serversInfo[guild.id].prefix) {
-        serversInfo[guild.id].prefix = config.prefix;
-    }
-    if (!serversInfo[guild.id].alertChannel) {
-        serversInfo[guild.id].alertChannel = searchAlertChannel(guild);
-    }
-    if (!serversInfo[guild.id].botChannel) {
-        serversInfo[guild.id].botChannel = searchBotChannel(guild);
-    }
-    if (!serversInfo[guild.id].welcomeChannel) {
-        serversInfo[guild.id].welcomeChannel = searchWelcomeChannel(guild);
-    }
-
-    if (!servers[guild.id]) {
-        servers[guild.id] = {
-            queue: [],
-            nowPlayingVideo: {},
-            nowPlayingVideoInfo: {},
-            prefix: serversInfo[guild.id].prefix,
-            alertChannel: serversInfo[guild.id].alertChannel,
-            botChannel: serversInfo[guild.id].botChannel,
-            welcomeChannel: serversInfo[guild.id].welcomeChannel,
-            loop: false
-        };
-    }
-
-    try {
-        let newName = "[ " + config.prefix + " ] CataBOT";
-        guild.members.get(config.clientid).setNickname(newName);
-    } catch (err) {
-        console.error(err);
-    }
-
-    console.log("El bot ha entrat al servidor \"" + guild.name + "\"\n");
-    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
-    fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => { if (err) console.error(err); });
-
-});
-
-client.on("guildDelete", (guild) => {
-
-    guild.members.cache.forEach(member => {
-        if (userData[guild.id + member.user.id]) {
-            userData[guild.id + member.user.id] = {};
-        }
-    });
-
-    if (servers[guild.id]) {
-        servers[guild.id] = {};
-    }
-
-    if (serversInfo[guild.id]) {
-        serversInfo[guild.id] = {};
-    }
-
-    console.log("El bot ha sigut expulsat del servidor \"" + guild.name + "\"\n");
-    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
-    fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => { if (err) console.error(err); });
-
-});
-
 client.on("ready", async() => {
 
     client.guilds.cache.forEach(guild => {
@@ -241,6 +146,101 @@ client.on("ready", async() => {
         fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => { if (err) console.error(err); });
     }
 
+
+});
+
+client.on("guildCreate", (guild) => {
+
+    guild.members.cache.forEach(member => {
+        if (!userData[guild.id + member.user.id])
+            userData[guild.id + member.user.id] = {};
+
+        if (!userData[guild.id + member.user.id].money) {
+            if (userData[guild.id + member.user.id].money !== 0) {
+                if (member.user.bot)
+                    userData[guild.id + member.user.id].money = -1;
+                else
+                    userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
+            }
+        }
+
+        if (!userData[guild.id + member.user.id].lastDaily) {
+            if (!member.user.bot)
+                userData[guild.id + member.user.id].lastDaily = "Not Collected";
+        }
+
+        if (!userData[guild.id + member.user.id].level) {
+            if (!member.user.bot)
+                userData[guild.id + member.user.id].level = 1;
+        }
+
+        if (!userData[guild.id + member.user.id].xp) {
+            if (!member.user.bot)
+                userData[guild.id + member.user.id].xp = 0;
+        }
+    });
+
+    if (!serversInfo[guild.id]) {
+        serversInfo[guild.id] = {};
+    }
+    if (!serversInfo[guild.id].prefix) {
+        serversInfo[guild.id].prefix = config.prefix;
+    }
+    if (!serversInfo[guild.id].alertChannel) {
+        serversInfo[guild.id].alertChannel = searchAlertChannel(guild);
+    }
+    if (!serversInfo[guild.id].botChannel) {
+        serversInfo[guild.id].botChannel = searchBotChannel(guild);
+    }
+    if (!serversInfo[guild.id].welcomeChannel) {
+        serversInfo[guild.id].welcomeChannel = searchWelcomeChannel(guild);
+    }
+
+    if (!servers[guild.id]) {
+        servers[guild.id] = {
+            queue: [],
+            nowPlayingVideo: {},
+            nowPlayingVideoInfo: {},
+            prefix: serversInfo[guild.id].prefix,
+            alertChannel: serversInfo[guild.id].alertChannel,
+            botChannel: serversInfo[guild.id].botChannel,
+            welcomeChannel: serversInfo[guild.id].welcomeChannel,
+            loop: false
+        };
+    }
+
+    try {
+        let newName = "[ " + config.prefix + " ] CataBOT";
+        guild.members.get(config.clientid).setNickname(newName);
+    } catch (err) {
+        console.error(err);
+    }
+
+    console.log("El bot ha entrat al servidor \"" + guild.name + "\"\n");
+    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+    fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => { if (err) console.error(err); });
+
+});
+
+client.on("guildDelete", (guild) => {
+
+    guild.members.cache.forEach(member => {
+        if (userData[guild.id + member.user.id]) {
+            userData[guild.id + member.user.id] = {};
+        }
+    });
+
+    if (servers[guild.id]) {
+        servers[guild.id] = {};
+    }
+
+    if (serversInfo[guild.id]) {
+        serversInfo[guild.id] = {};
+    }
+
+    console.log("El bot ha sigut expulsat del servidor \"" + guild.name + "\"\n");
+    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+    fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => { if (err) console.error(err); });
 
 });
 

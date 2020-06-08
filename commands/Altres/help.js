@@ -25,6 +25,7 @@ module.exports = {
             let musica = [];
             let mod = [];
             let banc = [];
+            let games = [];
             let entreteniment = [];
             let level = [];
             let privat = [];
@@ -41,6 +42,9 @@ module.exports = {
                         break;
                     case 'banc':
                         banc.push(command);
+                        break;
+                    case 'games':
+                        games.push(command);
                         break;
                     case 'entreteniment':
                         entreteniment.push(command);
@@ -77,6 +81,10 @@ module.exports = {
 
             aux = banc.map(c => c.name);
             helpContent += '`\n\n💰 **COMANDES DE BANC** 💰 [' + aux.length + ']\n `';
+            helpContent += aux.join(", ");
+
+            aux = games.map(c => c.name);
+            helpContent += '`\n\n🎮 **JOCS** 🎮 [' + aux.length + ']\n `';
             helpContent += aux.join(", ");
 
             aux = entreteniment.map(c => c.name);
