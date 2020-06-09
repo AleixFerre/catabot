@@ -56,7 +56,7 @@ module.exports = {
                 .setColor(getRandomColor())
                 .setTitle("**TRES EN RATLLA**")
                 .addField('❯ Tauler', tauler_string, true)
-                .setDescription("Escriu la posició a la que vols jugar")
+                .setDescription("Escriu la lletra de la posició a la que vols jugar")
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
             msg_tauler = await message.channel.send(msg);
@@ -73,7 +73,7 @@ module.exports = {
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
             if (acabat === -1) {
-                msg.setDescription("Escriu la posició a la que vols jugar");
+                msg.setDescription("Escriu la lletra de la posició a la que vols jugar");
             } else {
                 msg.setDescription("La partida s'ha acabat");
             }
