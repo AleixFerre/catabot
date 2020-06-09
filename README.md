@@ -23,6 +23,7 @@ npm install express
 npm install moment
 npm install @vitalets/google-translate-api
 npm install weather-js
+npm install chalk
 ```
 
 If you are running this locally

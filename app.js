@@ -1,7 +1,13 @@
 const fs = require('fs');
 const Canvas = require('canvas');
-const Discord = require("discord.js");
 const moment = require('moment');
+
+const chalk = require('chalk');
+const log = chalk.bold.green;
+const remove = chalk.bold.red;
+const bot = chalk.bold.blue;
+
+const Discord = require("discord.js");
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
@@ -84,7 +90,7 @@ client.on("ready", async() => {
             }
         });
 
-        console.log(guild.name + ": " + guild.memberCount + " members");
+        console.log(log(guild.name + ": " + guild.memberCount + " members"));
 
         if (!serversInfo[guild.id]) {
             serversInfo[guild.id] = {};
@@ -136,8 +142,8 @@ client.on("ready", async() => {
         }
     });
 
-    console.log("\nREADY :: Version " + config.version + "\nON " + client.guilds.cache.size + " servers\n" +
-        "---------------------------------");
+    console.log(log("\nREADY :: Version " + config.version + "\nON " + client.guilds.cache.size + " servers\n" +
+        "---------------------------------"));
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 
     if (testing) {
@@ -216,7 +222,7 @@ client.on("guildCreate", (guild) => {
         console.error(err);
     }
 
-    console.log("El bot ha entrat al servidor \"" + guild.name + "\"\n");
+    console.log(bot("El bot ha entrat al servidor \"" + guild.name + "\"\n"));
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
     fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => { if (err) console.error(err); });
 
@@ -238,7 +244,7 @@ client.on("guildDelete", (guild) => {
         serversInfo[guild.id] = {};
     }
 
-    console.log("El bot ha sigut expulsat del servidor \"" + guild.name + "\"\n");
+    console.log(remove("El bot ha sigut expulsat del servidor \"" + guild.name + "\"\n"));
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
     fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => { if (err) console.error(err); });
 
@@ -257,7 +263,11 @@ const applyText = (canvas, text) => {
 
 client.on('guildMemberAdd', async(member) => {
 
-    console.log("Nou membre \"" + member.user.username + "\" afegit a la guild " + member.guild.name + "\n");
+    if (member.user.bot) {
+        console.log(bot("Nou bot \"" + member.user.username + "\" afegit a la guild " + member.guild.name + "\n"));
+    } else {
+        console.log(log("Nou membre \"" + member.user.username + "\" afegit a la guild " + member.guild.name + "\n"));
+    }
 
     if (!userData[member.guild.id + member.user.id]) {
         userData[member.guild.id + member.user.id] = {};
@@ -320,7 +330,7 @@ client.on('guildMemberRemove', async(member) => {
     // Per resetejar les seves monedes o recollir el daily altre cop
     // El que vulgui parlar-ho, que contacti amb l'admin corresponent
 
-    console.log("El membre \"" + member.user.username + "\" ha sortit de la guild " + member.guild.name + "\n");
+    console.log(remove("El membre \"" + member.user.username + "\" ha sortit de la guild " + member.guild.name + "\n"));
 
     let channelID = servers[member.guild.id].welcomeChannel;
     let channel = client.channels.cache.get(channelID);
