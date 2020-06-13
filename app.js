@@ -282,12 +282,13 @@ client.on('guildMemberAdd', async(member) => {
 	
 	// Sino tens xp, tampoc tens nivell, no te sentit
 	if (!userData[member.guild.id + member.user.id].xp) {
-        if (member.user.bot)
+        if (member.user.bot) {
             userData[member.guild.id + member.user.id].xp = -1;
             userData[member.guild.id + member.user.id].level = -1;
-        else
+		} else {
             userData[member.guild.id + member.user.id].xp = 0;
             userData[member.guild.id + member.user.id].level = 1;
+		}
     }
 
     if (!userData[member.guild.id + member.user.id].lastDaily) {
