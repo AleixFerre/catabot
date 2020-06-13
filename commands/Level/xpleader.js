@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 module.exports = {
     name: 'xpleader',
     description: 'Mostra la classificació de nivell del servidor',
-    aliases: ['xpl', 'lvltop', 'xptop'],
+    aliases: ['xpl', 'lvltop', 'xptop', 'topxp', 'toplvl', 'toplevel'],
     type: 'level',
     usage: '[ amount ]',
     execute(message, args, servers, userData) {
