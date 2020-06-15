@@ -2,7 +2,7 @@
 
 ## This is our new BETA Discord Bot called CataBot
 
-![icon](imgs/icon_cat.png)
+![icon_gif](https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif)
 
 ## Contribuiting
 
