@@ -43,7 +43,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("💰 Banc 💰")
             .setThumbnail(mention.avatarURL)
-            .addField('❯ Conta', mention.username, true)
+            .addField('❯ Compte', mention.username, true)
             .addField('❯ Diners', money, true)
             .addField('❯ Top', posicio, true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");

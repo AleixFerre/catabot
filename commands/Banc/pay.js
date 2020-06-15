@@ -54,7 +54,7 @@ module.exports = {
         }
 
         if (otherUser.id === message.author.id) {
-            // si el mencionat es un bot
+            // si el mencionat es un mateix
             return message.reply("no et pots pagar a tu mateix!");
         }
 

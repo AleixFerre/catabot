@@ -76,7 +76,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("💠 Nivell 💠")
             .setThumbnail(rankLink)
-            .addField('❯ Conta', mention.username, true)
+            .addField('❯ Compte', mention.username, true)
             .addField('❯ Nivell', level, true)
             .addField('❯ XP', xp + "/1000", true)
             .addField('❯ Top', posicio, true)
