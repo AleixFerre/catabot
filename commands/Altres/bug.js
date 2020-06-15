@@ -13,9 +13,9 @@ module.exports = {
         let assumpte = "";
         let cos = "";
         let tipus = "altres";
-        const emojis = ['⚠️', '❤️', '🔗'];
+        const emojis = ['⚠️', '❤️', '❓', '❌'];
 
-        seleccionar_tipus_msg = await titol.channel.send("Selecciona una opció: Bug [⚠️], Millora [❤️] o Altres [🔗]");
+        seleccionar_tipus_msg = await titol.channel.send("Selecciona una opció: Bug [⚠️], Millora [❤️], Altres [❓] o Cancel·lar [❌]");
 
         emojis.forEach(async(emoji) => {
             await seleccionar_tipus_msg.react(emoji);
@@ -40,6 +40,9 @@ module.exports = {
                 c = " DE LA MILLORA";
                 titol.edit("**------------- INFORMANT D'UNA MILLORA -------------**");
                 break;
+            case '❌':
+                message.author.send("Operació cancel·lada correctament");
+                return;
             default:
                 tipus = "altres";
                 titol.edit("**------------- INFORMANT D'UNA ALTRA COSA -------------**");
@@ -47,7 +50,7 @@ module.exports = {
         }
 
         await seleccionar_tipus_msg.delete();
-        let msg = await titol.channel.send("** ASSUMPTE " + c + "**");
+        let msg = await titol.channel.send("**1.- ASSUMPTE " + c + "**");
 
         // Esperem resposta
         const filter = _m => true;
@@ -58,7 +61,7 @@ module.exports = {
             return message.author.send("S'ha acabat el temps! La pròxima vegada vés més ràpid!");
         });
 
-        await message.author.send("**COS " + c + "**");
+        await message.author.send("**2.- COS " + c + "**");
         // Esperem resposta
         await msg.channel.awaitMessages(filter, { max: 1, time: 600000, errors: ['time'] }).then(collected => {
             cos = collected.first().content;

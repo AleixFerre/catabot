@@ -25,11 +25,12 @@ module.exports = {
 
         message.reply("has rebut tota la info necessaria per DM");
 
-        message.author.send("**------------- REPORT a " + reported.user.username + " -------------**");
+        message.author.send("**------------- REPORT a " + reported.user.username + " -------------**\n" +
+            "Omple els camps per enviar l'informe.");
         let assumpte = "";
         let cos = "";
 
-        let msg = await message.author.send("**ASSUMPTE DEL REPORT**");
+        let msg = await message.author.send("**1.- ASSUMPTE DEL REPORT** _Posa la paraula `\"Cancel\"` per cancel·lar la operació_");
         // Esperem resposta
         const filter = _m => true;
         await msg.channel.awaitMessages(filter, { max: 1, time: 600000, errors: ['time'] }).then(collected => {
@@ -39,7 +40,11 @@ module.exports = {
             return message.author.send("S'ha acabat el temps! La pròxima vegada vés més ràpid!");
         });
 
-        await message.author.send("**COS DEL REPORT**");
+        if (assumpte === "Cancel") {
+            return message.author.send("Operació cancel·lada correctament");
+        }
+
+        await message.author.send("**2.- COS DEL REPORT** _Posa la paraula `\"Cancel\"` per cancel·lar la operació_");
         // Esperem resposta
         await msg.channel.awaitMessages(filter, { max: 1, time: 600000, errors: ['time'] }).then(collected => {
             cos = collected.first().content;
@@ -47,6 +52,10 @@ module.exports = {
             console.error(error);
             return message.author.send("S'ha acabat el temps! La pròxima vegada vés més ràpid!");
         });
+
+        if (cos === "Cancel") {
+            return message.author.send("Operació cancel·lada correctament");
+        }
 
         // Enviem el missatge a l'owner del servidor
         function getRandomColor() {
