@@ -114,7 +114,7 @@ module.exports = {
             return message.author.send(fullHelpEmbed)
                 .then(() => {
                     if (message.channel.type === 'dm') return;
-                    message.reply('T\'he enviat un DM amb tota la info').then(async(msg) => {
+                    message.reply('t\'he enviat un DM amb tota la info').then(async(msg) => {
                         const delay = ms => new Promise(res => setTimeout(res, ms));
                         await delay(5000);
                         msg.delete();
