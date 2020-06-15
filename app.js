@@ -279,16 +279,16 @@ client.on('guildMemberAdd', async(member) => {
         else
             userData[member.guild.id + member.user.id].money = Math.round(Math.random() * 1000);
     }
-	
-	// Sino tens xp, tampoc tens nivell, no te sentit
-	if (!userData[member.guild.id + member.user.id].xp) {
+
+    // Sino tens xp, tampoc tens nivell, no te sentit
+    if (!userData[member.guild.id + member.user.id].xp) {
         if (member.user.bot) {
             userData[member.guild.id + member.user.id].xp = -1;
             userData[member.guild.id + member.user.id].level = -1;
-		} else {
+        } else {
             userData[member.guild.id + member.user.id].xp = 0;
             userData[member.guild.id + member.user.id].level = 1;
-		}
+        }
     }
 
     if (!userData[member.guild.id + member.user.id].lastDaily) {
@@ -420,7 +420,7 @@ client.on('message', async(message) => {
     }
 
     try {
-        command.execute(message, args, servers, userData, client, serversInfo);
+        command.execute(message, args, servers, userData, client);
     } catch (error) {
         console.error(error);
         message.reply('alguna cosa ha anat malament, siusplau contacta amb ' + config.ownerDiscordUsername +

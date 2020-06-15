@@ -5,7 +5,7 @@ module.exports = {
     description: 'Mostra informació de les comandes',
     type: "altres",
     usage: '[ nom de la comanda ]',
-    aliases: ['h', 'commands'],
+    aliases: ['h', 'commands', 'info'],
     execute(message, args, servers) {
 
         const data = [];
@@ -121,7 +121,7 @@ module.exports = {
                     });
                 })
                 .catch(error => {
-                    console.error(`No puc enviar un DM a ${message.author.tag}.\n`, error);
+                    console.error(`No puc enviar un DM a ${message.author.username}.\n`, error);
                     message.reply('sembla que no et puc enviar un DM!');
                 });
         }
