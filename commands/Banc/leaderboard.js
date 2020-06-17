@@ -31,7 +31,6 @@ module.exports = {
         // pop_back (l'ultim)
         // La taula s'ha de mantenir sempre amb 10 elements com a maxim
         // Mostrar la info amb un embed corresponent
-
         function insercioOrdenada(user, nom) {
             //Pre:	0<=board.length<MAX, board[0..board.length-1] ordenat creixentment
             //Post:	x inserit ordenadament a board
@@ -81,7 +80,7 @@ module.exports = {
         let msg = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle("🏆 Leaderboard de " + message.guild.name + " 🏆")
-            // .setThumbnail(message.guild.iconURL())
+            .setThumbnail(message.guild.iconURL())
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         let i = 1;

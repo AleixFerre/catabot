@@ -42,6 +42,8 @@ You can now visit our page [here](https://catalahd.github.io/CataBot/) and see a
 
 [Rank Icons](https://www.flaticon.com/packs/rank-badge) made by [Dimitry Miroliubov](https://www.flaticon.com/authors/dimitry-miroliubov) from [Flaticon](https://www.flaticon.com/)
 
+[Trivia API](https://opentdb.com/) used for the trivia command
+
 Copyright 2020 © All rights reserved
 
 Under MIT License, see [here](LICENSE)
