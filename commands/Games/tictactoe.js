@@ -1,23 +1,29 @@
 const Discord = require("discord.js");
+const fs = require('fs');
 
 module.exports = {
     name: 'tictactoe',
     description: 'BETA: Juga al tres en ratlla! Escriu pel xat NOMÉS LA LLETRA de la posició on vols jugar.',
     aliases: ['tresenratlla', '3enratlla', 'playt'],
     type: 'games',
-    async execute(message, args, servers) {
+    async execute(message, _args, servers, userData) {
 
         const emojis = ["🇦", "🇧", "🇨", "🇩", "🇪", "🇫", "🇬", "🇭", "🇮"];
         const lletres = ["a", "b", "c", "d", "e", "f", "g", "h", "i"];
         const creu = "❌";
         const rodona = "⭕";
+        const recompensa = 1000;
 
+        let server = servers[message.guild.id];
         let msg_tauler; // variable que guarda el missatge del tauler
-        let player = message.author.id;
+        let player = message.author;
+        let player2 = null;
+        let torn = 1; // 1 per p1; 2 per p2 (sigui IA o no)
+        let IA = false; // diu si estas jugant contra la IA o no
 
         let tauler = []; // 0: ningu | 1: jugador1 | 2: jugador2
 
-        await jugar_contra_IA_random();
+        await fase_sala();
 
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
@@ -55,8 +61,8 @@ module.exports = {
             let msg = new Discord.MessageEmbed()
                 .setColor(getRandomColor())
                 .setTitle("**TRES EN RATLLA**")
+                .setDescription(`Torn de <@${player.id}>` + "\nEscriu la lletra de la posició a la que vols jugar")
                 .addField('❯ Tauler', tauler_string, true)
-                .setDescription("Escriu la lletra de la posició a la que vols jugar")
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
             msg_tauler = await message.channel.send(msg);
@@ -73,9 +79,15 @@ module.exports = {
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
             if (acabat === -1) {
-                msg.setDescription("Escriu la lletra de la posició a la que vols jugar");
+                let c = "";
+                if (torn === 1) { // torn del p1
+                    c = `Torn de <@${player.id}>`;
+                } else {
+                    c = `Torn de <@${player2.id}>`;
+                }
+                msg.setDescription(c + "\nEscriu la lletra de la posició a la que vols jugar");
             } else {
-                msg.setDescription("La partida s'ha acabat");
+                msg.setDescription("La partida s'ha acabat!");
             }
 
             await msg_tauler.edit(msg);
@@ -94,9 +106,11 @@ module.exports = {
         }
 
         async function torn_jugador() {
-            const filter = (message, user) => ((lletres.includes(message.content.toLowerCase())) &&
-                user.id === player.id &&
-                posicio_valida(message.content.toLowerCase()));
+
+            const filter = message => lletres.includes(message.content.toLowerCase()) &&
+                message.author.id === player.id && torn === 1 &&
+                posicio_valida(message.content.toLowerCase());
+
             return await message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
                 .then(collected => {
                     let lletra = lletres.indexOf(collected.first().content.toLowerCase());
@@ -104,6 +118,27 @@ module.exports = {
                 }).catch(() => {
                     return tauler.indexOf(0);
                 });
+        }
+
+        async function torn_jugador2() {
+
+            const filter = message => lletres.includes(message.content.toLowerCase()) &&
+                message.author.id === player2.id && torn === 2 &&
+                posicio_valida(message.content.toLowerCase());
+
+            return await message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
+                .then(collected => {
+                    let lletra = lletres.indexOf(collected.first().content.toLowerCase());
+                    return lletra;
+                }).catch(() => {
+                    return tauler.indexOf(0);
+                });
+        }
+
+        function torn_IA() {
+            // retorna una posició aleatòria lliure del tauler
+            let items = getAllIndexes(tauler, 0);
+            return items[Math.floor(Math.random() * items.length)];
         }
 
         function actualitzar_tauler(pos, jugador) {
@@ -197,7 +232,7 @@ module.exports = {
         }
 
         function getAllIndexes(arr, val) {
-            var indexes = [],
+            let indexes = [],
                 i = -1;
             for (i = 0; i < arr.length; i++)
                 if (arr[i] === val)
@@ -205,31 +240,72 @@ module.exports = {
             return indexes;
         }
 
-        function torn_IA() {
-            var items = getAllIndexes(tauler, 0);
-            return items[Math.floor(Math.random() * items.length)]; // retorna una posició aleatòria lliure del tauler
-        }
-
         function acabar_partida(guanyador) { // 0 si empat, 1 si jugador 1, 2 si jugador 2
-            let guanyador_string = "**GUANYADOR**\n";
+            let guanyador_string = "**GUANYADOR/A**\n";
             switch (guanyador) {
                 case 0:
-                    guanyador_string += "Hi ha hagut un empat!";
+                    guanyador_string += "LA PARTIDA HA ACABAT EN EMPAT, ES REPARTEIX EL POT!";
                     break;
                 case 1:
-                    guanyador_string += "<@" + message.author.id + ">, has guanyat!";
+                    guanyador_string += `${player.username}, HAS GUANYAT LA PARTIDA!`;
                     break;
                 case 2:
-                    guanyador_string += "Ha guanyat la IA!";
+                    if (IA) {
+                        guanyador_string += "LA IA HA GUANYAT LA PARTIDA!";
+                    } else {
+                        guanyador_string += `${player2.username}, HAS GUANYAT LA PARTIDA!`;
+                    }
                     break;
                 default:
-                    guanyador_string += "Alguna cosa ha anat malament...";
+                    guanyador_string += "Alguna cosa ha anat malament... :(";
                     break;
             }
-            message.channel.send(guanyador_string);
+            message.channel.send(guanyador_string); // Enviem el missatge del guanyador
+            afegir_recompenses(guanyador); // Afegim les recompenses adients
         }
 
-        // Programa principal
+        function afegir_recompenses(guanyador) {
+            const xp = Math.floor(Math.random() * 500 + 500); // Entre 500 i 1000
+            const mitat = Math.floor(recompensa / 2);
+            let recompensa_str = "**RECOMPENSES**\n";
+
+            if (IA) { // Si juguem contra la IA
+                if (guanyador === 1) { // Si guanyem nosaltres, tot el pot per nosaltres
+                    recompensa_str += `${player.username}, has guanyat 💰\`${recompensa}\` monedes💰!`;
+                    userData[message.guild.id + player.id].money += recompensa;
+                } else if (guanyador === 0) { // Empat, es reparteix el pot, però la maquina no juga
+                    recompensa_str += `${player.username}, has guanyat 💰\`${mitat}\` monedes💰!`;
+                    userData[message.guild.id + player.id].money += mitat;
+                }
+
+                // Sumem xp al jugador perque la maquina no en té
+                message.channel.send(`${server.prefix} progress ${xp} ${player}`);
+
+            } else { // Si estem jugant contra una altra persona
+                if (guanyador === 1) { // Guanya p1, tot el pot per ell
+                    recompensa_str += `${player.username}, has guanyat 💰\`${recompensa}\` monedes💰!`;
+                    userData[message.guild.id + player.id].money += recompensa;
+                } else if (guanyador === 2) { // Guanya p2, tot el pot per ell
+                    recompensa_str += `${player2.username}, has guanyat 💰\`${recompensa}\`monedes💰!`;
+                    userData[message.guild.id + player2.id].money += recompensa;
+                } else if (guanyador === 0) { // Empat, es reparteix el pot
+                    recompensa_str += `${player.username}, has guanyat 💰\`${mitat}\` monedes💰!`;
+                    recompensa_str += `${player2.username}, has guanyat 💰\`${mitat}\` monedes💰!`;
+                    userData[message.guild.id + player.id].money += mitat;
+                    userData[message.guild.id + player2.id].money += mitat;
+                }
+
+                // Sumem xp als dos
+                message.channel.send(`${server.prefix} progress ${xp} ${player}`);
+                message.channel.send(`${server.prefix} progress ${xp} ${player2}`);
+            }
+
+            message.channel.send(recompensa_str);
+
+            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+        }
+
+        // Programa principal IA
         async function jugar_contra_IA_random() {
             generar_tauler();
             await mostrar_tauler();
@@ -247,5 +323,63 @@ module.exports = {
             acabar_partida(acabat);
         }
 
+        // Programa principal PVP
+        async function jugar_contra_jugador() {
+            generar_tauler();
+            await mostrar_tauler();
+            let acabat = -1; // -1 si encara no ha acabat, 0 si empat, 1 si ha guanyat 1, 2 si 2
+            while (acabat === -1) {
+                let pos = await torn_jugador();
+                acabat = actualitzar_tauler(pos, torn);
+                torn = 2;
+                await editar_msg_tauler(acabat);
+                if (acabat === -1) {
+                    pos = await torn_jugador2();
+                    acabat = actualitzar_tauler(pos, torn);
+                    torn = 1;
+                    await editar_msg_tauler(acabat);
+                }
+            }
+            acabar_partida(acabat);
+        }
+
+        // Fase anterior al joc on s'escolleix quin mode volem jugar
+        async function fase_sala() {
+            let embed_sala = new Discord.MessageEmbed()
+                .setColor(getRandomColor())
+                .setTitle("**TRES EN RATLLA**")
+                .setDescription("Clica al [🚪] si vols unir-te a la sala o bé clica al [🤖] si vols jugar contra la IA.")
+                .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+
+            let msg_sala = await message.channel.send(embed_sala);
+
+            await msg_sala.react("🤖");
+            await msg_sala.react("🚪");
+
+            // Esperem a una reacció
+            const filter = (reaction, user) =>
+                ((reaction.emoji.name === '🤖' && message.author.id === user.id) || (reaction.emoji.name === '🚪' && message.author.id !== user.id)) && !user.bot;
+            msg_sala.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
+                .then(collected => {
+                    msg_sala.delete();
+                    // Si la reacció es del bot i es de la mateixa persona que ha escrit el missatge
+                    const reaction = collected.first();
+                    if (reaction.emoji.name === "🤖") {
+                        // Comencem la partida contra la IA
+                        IA = true;
+                        jugar_contra_IA_random();
+                    } else if (reaction.emoji.name === "🚪") {
+                        // Sino si la reacció és de la porta i no es el mateix que ha escrit el missatge
+                        // Comencem la partida contra l'altre jugador (ell es el player 2)
+                        IA = false;
+                        player2 = reaction.users.cache.last();
+                        jugar_contra_jugador();
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    return message.channel.send("S'ha acabat el temps! La pròxima vegada vés més ràpid!");
+                });
+        }
     },
 };
