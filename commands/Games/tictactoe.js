@@ -3,10 +3,10 @@ const fs = require('fs');
 
 module.exports = {
     name: 'tictactoe',
-    description: 'BETA: Juga al tres en ratlla! Escriu pel xat NOMÉS LA LLETRA de la posició on vols jugar.',
+    description: 'Joc 1: [BETA] Juga al tres en ratlla! Escriu pel xat NOMÉS LA LLETRA de la posició on vols jugar.',
     aliases: ['tresenratlla', '3enratlla', 'playt'],
     type: 'games',
-    async execute(message, _args, servers, userData) {
+    execute(message, _args, servers, userData) {
 
         const emojis = ["🇦", "🇧", "🇨", "🇩", "🇪", "🇫", "🇬", "🇭", "🇮"];
         const lletres = ["a", "b", "c", "d", "e", "f", "g", "h", "i"];
@@ -23,7 +23,7 @@ module.exports = {
 
         let tauler = []; // 0: ningu | 1: jugador1 | 2: jugador2
 
-        await fase_sala();
+        fase_sala(); // comença la festa!
 
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
