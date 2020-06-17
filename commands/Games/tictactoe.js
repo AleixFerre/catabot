@@ -279,7 +279,7 @@ module.exports = {
                 }
 
                 // Sumem xp al jugador perque la maquina no en té
-                message.channel.send(`${server.prefix} progress ${xp} ${player}`);
+                message.channel.send(`${server.prefix}progress ${xp} ${player}`);
 
             } else { // Si estem jugant contra una altra persona
                 if (guanyador === 1) { // Guanya p1, tot el pot per ell
@@ -296,8 +296,8 @@ module.exports = {
                 }
 
                 // Sumem xp als dos
-                message.channel.send(`${server.prefix} progress ${xp} ${player}`);
-                message.channel.send(`${server.prefix} progress ${xp} ${player2}`);
+                message.channel.send(`${server.prefix}progress ${xp} ${player}`);
+                message.channel.send(`${server.prefix}progress ${xp} ${player2}`);
             }
 
             message.channel.send(recompensa_str);
