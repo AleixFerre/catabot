@@ -348,38 +348,44 @@ module.exports = {
             let embed_sala = new Discord.MessageEmbed()
                 .setColor(getRandomColor())
                 .setTitle("**TRES EN RATLLA**")
-                .setDescription("Clica al [🚪] si vols unir-te a la sala o bé clica al [🤖] si vols jugar contra la IA.")
+                .setDescription("Clica al [🚪] si vols unir-te a la sala o bé clica al [🤖] si vols jugar contra la IA.\n" +
+                    "També pots cancel·lar partida amb [❌]")
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
             let msg_sala = await message.channel.send(embed_sala);
 
             await msg_sala.react("🤖");
             await msg_sala.react("🚪");
+            await msg_sala.react("❌");
 
             // Esperem a una reacció
             const filter = (reaction, user) =>
-                ((reaction.emoji.name === '🤖' && message.author.id === user.id) || (reaction.emoji.name === '🚪' && message.author.id !== user.id)) && !user.bot;
-            msg_sala.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
-                .then(collected => {
-                    msg_sala.delete();
-                    // Si la reacció es del bot i es de la mateixa persona que ha escrit el missatge
-                    const reaction = collected.first();
-                    if (reaction.emoji.name === "🤖") {
-                        // Comencem la partida contra la IA
-                        IA = true;
-                        jugar_contra_IA_random();
-                    } else if (reaction.emoji.name === "🚪") {
-                        // Sino si la reacció és de la porta i no es el mateix que ha escrit el missatge
-                        // Comencem la partida contra l'altre jugador (ell es el player 2)
-                        IA = false;
-                        player2 = reaction.users.cache.last();
-                        jugar_contra_jugador();
-                    }
-                })
-                .catch(error => {
+                ((reaction.emoji.name === '🤖' && message.author.id === user.id) ||
+                    (reaction.emoji.name === '🚪' && message.author.id !== user.id) ||
+                    (reaction.emoji.name === '❌' && message.author.id === user.id)) && !user.bot;
+
+            let collected = await msg_sala.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
+                .catch(async error => {
                     console.error(error);
-                    return message.channel.send("S'ha acabat el temps! La pròxima vegada vés més ràpid!");
+                    return await message.channel.send("S'ha acabat el temps! La pròxima vegada vés més ràpid!");
                 });
+
+            msg_sala.delete();
+            // Si la reacció es del bot i es de la mateixa persona que ha escrit el missatge
+            const reaction = collected.first();
+            if (reaction.emoji.name === "🤖") {
+                // Comencem la partida contra la IA
+                IA = true;
+                jugar_contra_IA_random();
+            } else if (reaction.emoji.name === "🚪") {
+                // Sino si la reacció és de la porta i no es el mateix que ha escrit el missatge
+                // Comencem la partida contra l'altre jugador (ell es el player 2)
+                IA = false;
+                player2 = reaction.users.cache.last();
+                jugar_contra_jugador();
+            } else if (reaction.emoji.name === "❌") {
+                return await message.channel.send("**PARTIDA CANCEL·LADA**");
+            }
         }
     },
 };

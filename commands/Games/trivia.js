@@ -42,7 +42,10 @@ module.exports = {
             });
 
         // Sala d'espera per registrar les persones que es volen unir a la partida
-        await fase_sala();
+        let index = await fase_sala();
+        if (index === -1) {
+            return message.channel.send("**PARTIDA CANCEL·LADA**");
+        }
         // Quan ja tenim totes les persones a la sala, comencem a jugar!
         await comenca_joc();
         // Quan s'han respos les 10 preguntes, mostrem la classificacio
@@ -63,7 +66,9 @@ module.exports = {
             let embed_sala = new Discord.MessageEmbed()
                 .setColor(getRandomColor())
                 .setTitle("**TRIVIA AMB " + n_preguntes + " PREGUNTES**")
-                .setDescription("Clica al [🚪] si vols unir-te/sortir de la sala o bé clica al [✅] començar la partida.\n**[ Màxim 5 persones per sala! ]**")
+                .setDescription("Clica al [🚪] si vols unir-te/sortir de la sala o bé clica al [✅] començar la partida.\n" +
+                    "També pots cancel·lar partida amb [❌]\n" +
+                    "**[ Màxim 5 persones per sala! ]**")
                 .addField('❯ Participant 1: ', message.author.tag, false)
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
@@ -71,10 +76,13 @@ module.exports = {
 
             await msg_sala.react("🚪");
             await msg_sala.react("✅");
+            await msg_sala.react("❌");
 
             // Esperem a una reacció
-            const filter = (reaction, user) => ((reaction.emoji.name === '✅' && message.author.id === user.id) ||
-                (reaction.emoji.name === '🚪' && message.author.id !== user.id)) && !user.bot;
+            const filter = (reaction, user) =>
+                ((reaction.emoji.name === '✅' && message.author.id === user.id) ||
+                    (reaction.emoji.name === '🚪' && message.author.id !== user.id) ||
+                    (reaction.emoji.name === '❌' && message.author.id === user.id)) && !user.bot;
 
             let entra_joc = false;
 
@@ -105,6 +113,9 @@ module.exports = {
                         classificacio.pop();
                     }
                     await actualitzar_msg_sala(msg_sala);
+                } else if (reaction.emoji.name === "❌") {
+                    msg_sala.delete();
+                    return -1;
                 }
             }
             msg_sala.delete();
@@ -126,7 +137,7 @@ module.exports = {
 
         // Anem mostrant els missatges i registrar els missatges dels participants
         async function comenca_joc() {
-            for (let i = 0; i < n_preguntes; i++) { // TODO: AIXO HA DE SER 10
+            for (let i = 0; i < n_preguntes; i++) {
                 let [msg, respostes, q_index] = await envia_missatge_pregunta(i);
                 let guanyador = await esperem_reaccions(msg, respostes, q_index); // retorna index del guanyador (-1 si ningu)
                 if (guanyador !== -1) {

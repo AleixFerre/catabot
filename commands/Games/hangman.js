@@ -1,33 +1,33 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 
-// TODO: POSAR LES THUMBNAILS A CADA OPORTUNITAT
-// TODO: POSAR LA QUANTITAT D'INTENTS RESTANTS
-// TODO: FER LES CLASSIFICACIONS FINALS I DONAR RECOMPENSES ADIENTS ALS PARTICIPANTS
-// TODO: treure el punt dels aliases ..............
-
 module.exports = {
     name: 'hangman',
     description: 'Joc 3: [BETA] Juga amb els teus amics al joc del penjat!',
-    aliases: ['ahoracado', 'penjat', 'playh', '.'],
+    aliases: ['ahorcado', 'penjat', 'playh'],
     type: 'games',
-    async execute(message, _args, _servers, userData) {
+    async execute(message, _args, servers, userData) {
 
         const lletres = 'abcdefghijklmnopqrstuvwxyz'.split(''); // totes les lletres que pot tenir una paraula
-        const recompensa = 50; // Punts que guanyes per cada lletra correcta
-        const xp_recompensa = 50; // Recompensa que se li dona als participants al final en xp
+        const recompensa = 500; // Punts que guanyes al final
+        const xp_recompensa = 500; // Recompensa que se li dona als participants al final en xp
         const caracter_no_descobert = "⬜";
 
+        let server = servers[message.guild.id];
         let dites = [];
         let paraula = "";
         let participants = [message.author];
-        let classificacio = [0];
-        let errades = 0;
-        let max_errades = 6; // Tens 6 errades max
+        let errades = 0; // Quantitat d'errades que s'han fet a la partida
+        let max_errades = 6; // Tens 6 errades maxim
+        let torn = 1;
 
 
         // Sala d'espera per registrar les persones que es volen unir a la partida
-        await fase_sala();
+        let index = await fase_sala();
+        if (index === -1) {
+            return;
+        }
+
         // Quan ja tenim totes les persones a la sala, comencem a jugar!
         let acabat = await comenca_joc();
         // Quan s'han resolt totes les lletres de la paraula, mostrem la classificacio
@@ -49,6 +49,7 @@ module.exports = {
                 .setColor(getRandomColor())
                 .setTitle("**EL JOC DEL PENJAT**")
                 .setDescription("Clica al [🚪] si vols unir-te/sortir de la sala o bé clica al [✅] començar la partida.\n" +
+                    "Per cancel·lar la partida, clica al [❌]\n" +
                     "**[ Màxim 5 persones per sala! ]**")
                 .addField('❯ Participant 1: ', message.author.tag, false)
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
@@ -57,10 +58,13 @@ module.exports = {
 
             await msg_sala.react("🚪");
             await msg_sala.react("✅");
+            await msg_sala.react("❌");
 
             // Esperem a una reacció
-            const filter = (reaction, user) => ((reaction.emoji.name === '✅' && message.author.id === user.id) ||
-                (reaction.emoji.name === '🚪' && message.author.id !== user.id)) && !user.bot;
+            const filter = (reaction, user) =>
+                ((reaction.emoji.name === '✅' && message.author.id === user.id) ||
+                    (reaction.emoji.name === '🚪' && message.author.id !== user.id) ||
+                    (reaction.emoji.name === '❌' && message.author.id === user.id)) && !user.bot;
 
             let entra_joc = false;
 
@@ -72,7 +76,7 @@ module.exports = {
                 if (collected === -1) {
                     message.channel.send("S'ha acabat el temps! La pròxima vegada vés més ràpid!");
                     msg_sala.delete();
-                    return;
+                    return -1;
                 }
 
                 // Si la reacció es ✅, entrem al joc
@@ -91,6 +95,10 @@ module.exports = {
                         classificacio.pop();
                     }
                     await actualitzar_msg_sala(msg_sala);
+                } else if (reaction.emoji.name === "❌") {
+                    await msg_sala.delete();
+                    await message.channel.send("**PARTIDA CANCEL·LADA**");
+                    return -1;
                 }
             }
             msg_sala.delete();
@@ -162,17 +170,32 @@ module.exports = {
 
             let embed_paraula = new Discord.MessageEmbed()
                 .setColor(getRandomColor())
-                .setTitle("**EL JOC DEL PENJAT**")
+                .setTitle("**EL JOC DEL PENJAT -- TORN " + torn + "**")
                 .setDescription("**PARAULA => **" + generar_paraula() + "\n" +
-                    "Lletres dites => [ " + dites.join(" ").toUpperCase() + " ]")
+                    "Lletres dites => [ " + dites.join(" ").toUpperCase() + " ]\n" +
+                    "Errades => " + errades + "/" + max_errades)
+                .setThumbnail("https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/hangman/white_" + errades + ".png")
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
             return await message.channel.send(embed_paraula);
 
         }
 
-        async function es_bona(lletra) { // Retorna si la lletra es pot fer servir
-            // Si la paraula té la lletra
+        async function actualitzar_msg_paraula(missatge) { // Actualitzem el missatge de la paraula
+            let embed_paraula = new Discord.MessageEmbed()
+                .setColor(getRandomColor())
+                .setTitle("**EL JOC DEL PENJAT -- TORN " + torn + "**")
+                .setDescription("**PARAULA => **" + generar_paraula() + "\n" +
+                    "Lletres dites => [ " + dites.join(" ").toUpperCase() + " ]\n" +
+                    "Errades => " + errades + "/" + max_errades)
+                .setThumbnail("https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/hangman/white_" + errades + ".png")
+                .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+
+            await missatge.edit(embed_paraula);
+        }
+
+        function es_bona(lletra) { // Retorna si la lletra es pot fer servir
+            // Si la paraula no té la lletra
             if (!paraula.includes(lletra)) {
                 return false;
             }
@@ -188,7 +211,7 @@ module.exports = {
         }
 
         async function esperar_lletra(msg) { // Retorna la lletra del missatge
-            const filter = msg => lletra_valida(msg.content[0].toLowerCase()) && !msg.author.bot;
+            const filter = msg => lletra_valida(msg.content[0].toLowerCase()) && participants.includes(message.author) && !msg.author.bot;
             let collected = await msg.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
                 .catch(() => -1);
 
@@ -201,7 +224,9 @@ module.exports = {
         }
 
         function descobrir_lletra(lletra) { // Retorna si has descobert tota la paraula
+            // Si la lletra es correcta, mai s'haura dit abans així que sempre fem el push
             dites.push(lletra);
+
             for (i = 0; i < paraula.length; i++) {
                 if (!dites.includes(paraula[i])) {
                     // Si la lletra no està dita
@@ -215,7 +240,11 @@ module.exports = {
         }
 
         function fallar(lletra) { // Retorna si s'ha acabat la partida per errades
-            dites.push(lletra);
+            // Si la lletra encara no s'ha dit, fem el push    
+            if (!dites.includes(lletra)) {
+                dites.push(lletra);
+            }
+
             errades++;
             if (errades >= max_errades) {
                 return 0;
@@ -224,22 +253,12 @@ module.exports = {
             }
         }
 
-        async function actualitzar_msg_paraula(missatge) { // Actualitzem el missatge de la paraula
-            let embed_paraula = new Discord.MessageEmbed()
-                .setColor(getRandomColor())
-                .setTitle("**EL JOC DEL PENJAT**")
-                .setDescription("**PARAULA => **" + generar_paraula() + "\n" +
-                    "Lletres dites => [ " + dites.join(" ").toUpperCase() + " ]")
-                .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
-
-            await missatge.edit(embed_paraula);
-        }
-
         async function comenca_joc() {
             await demanar_paraula();
             let missatge_paraula = await escriure_missatge();
             let acabat = -1; // -1 si ha de continuar la partida, 0 si perdut, 1 si guanyat
             while (acabat === -1) {
+                torn++;
                 let lletra = await esperar_lletra(missatge_paraula);
                 if (lletra === -1) {
                     return -1;
@@ -262,7 +281,30 @@ module.exports = {
                 return await message.channel.send("**AVÍS D'INACTIVITAT**\nLa partida s'ha acabat de forma soptada degut a la inactivitat. Si es vol començar alguna altra partida, torneu a executar la comanda.");
             }
 
-            await message.channel.send("La partida s'ha acabat!");
+            let emoji = "🏆",
+                desc = "";
+
+
+            if (acabat === 1) {
+                desc = "Hem guanyat! Tots els integrants guanyen 💰`" + recompensa + " monedes`💰!\n";
+                participants.forEach(participant => {
+                    message.channel.send(`${server.prefix}progress ${xp_recompensa} ${participant}`);
+                    userData[message.guild.id + participant.id].money += recompensa;
+                });
+            } else {
+                emoji = "😦";
+                desc = "Hem perdut, no hi ha premi...";
+            }
+
+            let embed_final = new Discord.MessageEmbed()
+                .setColor(getRandomColor())
+                .setTitle("**" + emoji + " FINAL DE LA PARTIDA " + emoji + "**")
+                .setDescription(desc)
+                .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+
+
+            await message.channel.send(embed_final);
+            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
 
         }
     },
