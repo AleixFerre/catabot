@@ -1,9 +1,10 @@
 # CataBot
 
-## Say hi to CataBOT! Welcome the best Catalan Discord Bot ever! And it is open source!
-![](https://img.shields.io/david/dev/catalahd/catabot)
-![](https://img.shields.io/github/repo-size/Catalahd/catabot)
-![](https://img.shields.io/github/issues/catalahd/catabot)
+## Say hi to CataBOT! Welcome the best open source Catalan Discord Bot
+
+![ ](https://img.shields.io/david/dev/catalahd/catabot)
+![ ](https://img.shields.io/github/repo-size/Catalahd/catabot)
+![ ](https://img.shields.io/github/issues/catalahd/catabot)
 
 ![icon_gif](https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif)
 

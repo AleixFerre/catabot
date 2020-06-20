@@ -14,6 +14,7 @@ module.exports = {
         const emojis = ["🇦", "🇧", "🇨", "🇩", "🇪", "🇫"];
         const lletres = ["a", "b", "c", "d", "e", "f"];
         const recompensa = 50; // Punts que guanyes per cada resposta correcta
+        const max_persones = 5; // Maxim de persones que hi pot haber jugat en una sala
 
         let server = servers[message.guild.id];
         let preguntes = [];
@@ -27,6 +28,8 @@ module.exports = {
             let n = Number(args[0]);
             if (n <= 50 && n >= 1) {
                 n_preguntes = n;
+            } else {
+                return message.reply("la quantitat de preguntes ha de ser entre 1 i 50");
             }
         }
 
@@ -59,8 +62,8 @@ module.exports = {
 
             let embed_sala = new Discord.MessageEmbed()
                 .setColor(getRandomColor())
-                .setTitle("**TRIVIA**")
-                .setDescription("Clica al [🚪] si vols unir-te/sortir de la sala o bé clica al [✅] començar la partida.")
+                .setTitle("**TRIVIA AMB " + n_preguntes + " PREGUNTES**")
+                .setDescription("Clica al [🚪] si vols unir-te/sortir de la sala o bé clica al [✅] començar la partida.\n**[ Màxim 5 persones per sala! ]**")
                 .addField('❯ Participant 1: ', message.author.tag, false)
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
@@ -75,7 +78,7 @@ module.exports = {
 
             let entra_joc = false;
 
-            while (!entra_joc) {
+            while (!entra_joc && participants.length < 5) {
                 let collected = await msg_sala.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
                     .catch(() => -1);
 
