@@ -12,14 +12,16 @@ module.exports = {
         const lletres = ["a", "b", "c", "d", "e", "f", "g", "h", "i"];
         const creu = "❌";
         const rodona = "⭕";
-        const recompensa = 1000;
+        const recompensa = 500; // El doble si es en dificil
 
         let server = servers[message.guild.id];
         let msg_tauler; // variable que guarda el missatge del tauler
-        let player = message.author;
-        let player2 = null;
+        let player = message.author; // Mai cambia
+        let player2 = null; // null si juguem contra la IA
         let torn = 1; // 1 per p1; 2 per p2 (sigui IA o no)
         let IA = false; // diu si estas jugant contra la IA o no
+        let dificil = true; // diu si estas jugant contra la IA en dificil o no
+        // en el cas de que no estiguis contra la IA, és igual però es posa en false per defecte
 
         let tauler = []; // 0: ningu | 1: jugador1 | 2: jugador2
 
@@ -135,15 +137,105 @@ module.exports = {
                 });
         }
 
+        let scores = {
+            "0": 0, // Empat
+            "1": -10, // Guanya jugador
+            "2": 10 // Guanya IA
+        };
+
+        // Minimax algorithm based on:
+        // https://github.com/CodingTrain/website/blob/master/CodingChallenges/CC_154_Tic_Tac_Toe_Minimax/P5/minimax.js
+        function minimax(t, depth, isMaximizing) {
+            let ratlla = comprovar_ratlla(t); // Retorna -1 si no hi ha cap ratlla, 1 si 1, 2 si 2
+            let caselles_lliures = t.indexOf(0); // Retorna -1 si no hi ha cap casella lliure
+            let resultat;
+
+            // creem les contants de mapeig per cada torn 
+            const buit = 0;
+            const human = 1;
+            const ai = 2;
+
+            // El resultat pot ser -1 si encara no hem acabat, 0 si empat, 1 si guanya 1 i 2 si 2
+            if (ratlla !== -1) {
+                resultat = ratlla;
+            } else if (caselles_lliures !== -1) {
+                resultat = -1;
+            } else {
+                resultat = 0;
+            }
+
+            // si estem en un estat terminal, retornem el resultat
+            if (resultat !== -1) {
+                return scores[resultat];
+            }
+
+            // En el cas de que no estem en cap estat terminal, mirem els possibles moviments
+            if (isMaximizing) {
+                let bestScore = -Infinity;
+                for (let i = 0; i < 3; i++) {
+                    for (let j = 0; j < 3; j++) {
+                        // Es pot posar fitxa?
+                        if (t[i * 3 + j] === buit) {
+                            t[i * 3 + j] = ai;
+                            let score = minimax(t, depth + 1, false);
+                            t[i * 3 + j] = buit;
+                            bestScore = Math.max(score, bestScore);
+                        }
+                    }
+                }
+                return bestScore;
+            } else {
+                let bestScore = Infinity;
+                for (let i = 0; i < 3; i++) {
+                    for (let j = 0; j < 3; j++) {
+                        // Es pot posar fitxa?
+                        if (t[i * 3 + j] === buit) {
+                            t[i * 3 + j] = human;
+                            let score = minimax(t, depth + 1, true);
+                            t[i * 3 + j] = buit;
+                            bestScore = Math.min(score, bestScore);
+                        }
+                    }
+                }
+                return bestScore;
+            }
+        }
+
         function torn_IA() {
-            // retorna una posició aleatòria lliure del tauler
-            let items = getAllIndexes(tauler, 0);
-            return items[Math.floor(Math.random() * items.length)];
+            if (dificil) {
+                // MINIMAX algorithm
+                const buit = 0;
+                const ai = 2;
+
+                let bestScore = -Infinity;
+                let bestMove;
+                for (let i = 0; i < 3; i++) {
+                    for (let j = 0; j < 3; j++) {
+                        // Si la posicio esta disponible
+                        if (tauler[i * 3 + j] === buit) {
+                            // Adjudiquem la posicio a la IA per comprovar via minimax
+                            // Quin tauler es millor
+                            tauler[i * 3 + j] = ai; // Fem el moviment
+                            let score = minimax(tauler, 0, false); // Mirem l'score d'aquest moviment
+                            tauler[i * 3 + j] = buit; // Desfem el moviment
+                            if (score > bestScore) { // Si es mes gran que el maxim
+                                bestScore = score; // Adjudiquem aquest moviment al millor
+                                bestMove = { i, j };
+                            }
+                        }
+                    }
+                }
+                return (bestMove.i * 3 + bestMove.j);
+            } else {
+                // retorna una posició aleatòria lliure del tauler
+                let items = getAllIndexes(tauler, 0);
+                return items[Math.floor(Math.random() * items.length)];
+            }
         }
 
         function actualitzar_tauler(pos, jugador) {
             tauler[pos] = jugador;
-            let ratlla = comprovar_ratlla();
+            let ratlla = comprovar_ratlla(tauler);
             let caselles_lliures = tauler.indexOf(0); // retorna la posicio del primer 0 que troba (casella buida), sino -1
             if (ratlla !== -1) { // si hem trobat una ratlla
                 // ha guanyat el jugador de ratlla
@@ -157,7 +249,7 @@ module.exports = {
             }
         }
 
-        function comprovar_ratlla() { // retorna -1 si no hi ha cap ratlla, 1 si guanya 1, 2 si 2
+        function comprovar_ratlla(tauler) { // retorna -1 si no hi ha cap ratlla, 1 si guanya 1, 2 si 2
             // Comprovar files
             for (let i = 0; i < 3; i++) {
                 // Comprovar fila
@@ -232,8 +324,7 @@ module.exports = {
         }
 
         function getAllIndexes(arr, val) {
-            let indexes = [],
-                i = -1;
+            let indexes = [];
             for (i = 0; i < arr.length; i++)
                 if (arr[i] === val)
                     indexes.push(i);
@@ -270,12 +361,22 @@ module.exports = {
             let recompensa_str = "**RECOMPENSES**\n";
 
             if (IA) { // Si juguem contra la IA
-                if (guanyador === 1) { // Si guanyem nosaltres, tot el pot per nosaltres
-                    recompensa_str += `${player.username}, has guanyat 💰\`${recompensa}\` monedes💰!`;
-                    userData[message.guild.id + player.id].money += recompensa;
-                } else if (guanyador === 0) { // Empat, es reparteix el pot, però la maquina no juga
-                    recompensa_str += `${player.username}, has guanyat 💰\`${mitat}\` monedes💰!`;
-                    userData[message.guild.id + player.id].money += mitat;
+                if (dificil) {
+                    if (guanyador === 1) { // Si guanyem nosaltres, tot el pot per nosaltres
+                        recompensa_str += `${player.username}, has guanyat 💰\`${recompensa}\` monedes💰!`;
+                        userData[message.guild.id + player.id].money += recompensa;
+                    } else if (guanyador === 0) { // Empat, es reparteix el pot, però la maquina no juga
+                        recompensa_str += `${player.username}, has guanyat 💰\`${mitat}\` monedes💰!`;
+                        userData[message.guild.id + player.id].money += mitat;
+                    }
+                } else { // Si estem jugant en facil
+                    if (guanyador === 1) { // Si guanyem nosaltres, tot el pot per nosaltres
+                        recompensa_str += `${player.username}, has guanyat 💰\`${mitat}\` monedes💰!`;
+                        userData[message.guild.id + player.id].money += mitat;
+                    } else if (guanyador === 0) { // Empat, es reparteix el pot, però la maquina no juga
+                        recompensa_str += `${player.username}, has guanyat 💰\`${mitat/2}\` monedes💰!`;
+                        userData[message.guild.id + player.id].money += mitat / 2;
+                    }
                 }
 
                 // Sumem xp al jugador perque la maquina no en té
@@ -348,19 +449,23 @@ module.exports = {
             let embed_sala = new Discord.MessageEmbed()
                 .setColor(getRandomColor())
                 .setTitle("**TRES EN RATLLA**")
-                .setDescription("Clica al [🚪] si vols unir-te a la sala o bé clica al [🤖] si vols jugar contra la IA.\n" +
-                    "També pots cancel·lar partida amb [❌]")
+                .setDescription("=> [🚪] UNIR-SE A LA SALA\n=> [🤖] IA FÀCIL\n=> [👾] IA DIFÍCIL\n" +
+                    "=> [❌] CANCEL·LAR")
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
             let msg_sala = await message.channel.send(embed_sala);
 
-            await msg_sala.react("🤖");
-            await msg_sala.react("🚪");
-            await msg_sala.react("❌");
+            Promise.all([
+                msg_sala.react("🚪"),
+                msg_sala.react("🤖"),
+                msg_sala.react("👾"),
+                msg_sala.react("❌")
+            ]);
 
             // Esperem a una reacció
             const filter = (reaction, user) =>
                 ((reaction.emoji.name === '🤖' && message.author.id === user.id) ||
+                    (reaction.emoji.name === '👾' && message.author.id === user.id) ||
                     (reaction.emoji.name === '🚪' && message.author.id !== user.id) ||
                     (reaction.emoji.name === '❌' && message.author.id === user.id)) && !user.bot;
 
@@ -374,8 +479,14 @@ module.exports = {
             // Si la reacció es del bot i es de la mateixa persona que ha escrit el missatge
             const reaction = collected.first();
             if (reaction.emoji.name === "🤖") {
-                // Comencem la partida contra la IA
+                // Comencem la partida contra la IA en facil
                 IA = true;
+                dificil = false;
+                jugar_contra_IA_random();
+            } else if (reaction.emoji.name === "👾") {
+                // juguem contra la IA en dificl
+                IA = true;
+                dificil = true;
                 jugar_contra_IA_random();
             } else if (reaction.emoji.name === "🚪") {
                 // Sino si la reacció és de la porta i no es el mateix que ha escrit el missatge

@@ -88,11 +88,9 @@ module.exports = {
                     if (index === -1) {
                         // No hi es, el posem
                         participants.push(reaction.users.cache.last());
-                        classificacio.push(0);
                     } else {
                         // Ja hi era, el treiem
                         participants.splice(index, 1);
-                        classificacio.pop();
                     }
                     await actualitzar_msg_sala(msg_sala);
                 } else if (reaction.emoji.name === "❌") {
@@ -293,7 +291,7 @@ module.exports = {
                 });
             } else {
                 emoji = "😦";
-                desc = "Hem perdut, no hi ha premi...";
+                desc = "Hem perdut, no hi ha premi...\nLa paraula era: " + paraula;
             }
 
             let embed_final = new Discord.MessageEmbed()

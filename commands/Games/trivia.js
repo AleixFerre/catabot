@@ -86,7 +86,7 @@ module.exports = {
 
             let entra_joc = false;
 
-            while (!entra_joc && participants.length < 5) {
+            while (!entra_joc && participants.length < max_persones) {
                 let collected = await msg_sala.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
                     .catch(() => -1);
 
@@ -94,7 +94,7 @@ module.exports = {
                 if (collected === -1) {
                     message.channel.send("S'ha acabat el temps! La pròxima vegada vés més ràpid!");
                     msg_sala.delete();
-                    return;
+                    return -1;
                 }
 
                 // Si la reacció es ✅, entrem al joc
