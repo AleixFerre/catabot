@@ -13,7 +13,7 @@ client.commands = new Discord.Collection();
 
 moment().utcOffset('120');
 
-const testing = false;
+const testing = true;
 
 let config = {};
 if (testing) {

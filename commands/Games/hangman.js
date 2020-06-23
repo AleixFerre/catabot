@@ -48,8 +48,8 @@ module.exports = {
             let embed_sala = new Discord.MessageEmbed()
                 .setColor(getRandomColor())
                 .setTitle("**EL JOC DEL PENJAT**")
-                .setDescription("Clica al [🚪] si vols unir-te/sortir de la sala o bé clica al [✅] començar la partida.\n" +
-                    "Per cancel·lar la partida, clica al [❌]\n" +
+                .setDescription("=> [🚪] UNIR-SE / SORTIR DE LA SALA\n=> [✅] COMENÇAR PARTIDA\n" +
+                    "=> [❌] CANCEL·LAR" +
                     "**[ Màxim 5 persones per sala! ]**")
                 .addField('❯ Participant 1: ', message.author.tag, false)
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");

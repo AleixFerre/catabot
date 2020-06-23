@@ -65,7 +65,7 @@ module.exports = {
         }
 
         async function mostrar_tauler() {
-            let tauler_str = "**TORN " + n_torn +
+            let tauler_str = "**TORN " + n_torn + " -- " + player.username +
                 "**\n_ESCRIU EL NUMERO DE LA COLUMNA QUE VOLS JUGAR_\n" +
                 generar_str_tauler();
             msg_tauler = await message.channel.send(tauler_str);
@@ -139,6 +139,7 @@ module.exports = {
         function actualitzar_tauler(columna, jugador) {
             let i = 0;
             let trobat = false;
+
             // Anem baixant fins que toquem el fons, 
             while (!trobat && i < tauler.length) {
                 if (tauler[i][columna] !== 0) {
@@ -158,10 +159,22 @@ module.exports = {
         }
 
         async function editar_msg_tauler(acabat) {
-            let tauler_str = "**TORN " + n_torn + "**\n";
+            let jugador_actual = "";
+            if (torn % 2 === 0) {
+                if (IA) {
+                    jugador_actual = "IA";
+                } else {
+                    jugador_actual = player2.username;
+                }
+            } else {
+                jugador_actual = player.username;
+            }
+
+            let tauler_str = "";
 
             if (acabat === -1) {
-                tauler_str += "_ESCRIU EL NUMERO DE LA COLUMNA QUE VOLS JUGAR_\n";
+                tauler_str += "**TORN " + n_torn + " -- " + jugador_actual +
+                    "**\n_ESCRIU EL NUMERO DE LA COLUMNA QUE VOLS JUGAR_\n";
             } else if (acabat === 1) {
                 tauler_str += `**${player.username}, HAS GUANYAT**\n`;
             } else if (acabat === 2) {
@@ -216,7 +229,36 @@ module.exports = {
                 });
         }
 
-        async function jugar_contra_IA_random() {
+        async function torn_jugador2() {
+
+            const filter = message => {
+                if (isNaN(message.content) || message.author.id !== player2.id || torn !== 2) {
+                    // Si no es un numero o no es el jugador actual o no es el seu torn
+                    return false;
+                }
+
+                let n = Number(message.content) - 1;
+                if (n > tauler[0].length || n < 0) { // Si està fora del tauler
+                    return false;
+                }
+
+                if (columna_plena(n)) { // Si aquella fila està plena, no hi podem posar cap més fitxa
+                    return false;
+                }
+
+                return true;
+
+            };
+
+            return await message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
+                .then(collected => {
+                    return Number(collected.first().content - 1); // Ajustem a la notacio començant per 0
+                }).catch(() => {
+                    return primera_columna_valida();
+                });
+        }
+
+        async function jugar_contra_IA() {
             await mostrar_tauler();
             let acabat = -1; // -1 si encara no ha acabat, 0 si empat, 1 si ha guanyat 1, 2 si 2
             while (acabat === -1) {
@@ -236,8 +278,22 @@ module.exports = {
             // TODO: RECOMPENSES I XP
         }
 
-        function jugar_contra_jugador() {
-            // TODO: PVP
+        async function jugar_contra_jugador() {
+            await mostrar_tauler();
+            let acabat = -1; // -1 si encara no ha acabat, 0 si empat, 1 si ha guanyat 1, 2 si 2
+            while (acabat === -1) {
+                let pos = await torn_jugador();
+                acabat = actualitzar_tauler(pos, 1);
+                torn = 2;
+                await editar_msg_tauler(acabat);
+                if (acabat === -1) {
+                    pos = await torn_jugador2();
+                    acabat = actualitzar_tauler(pos, 2);
+                    torn = 1;
+                    await editar_msg_tauler(acabat);
+                }
+            }
+            acabar_partida(acabat);
         }
 
         // Fase anterior al joc on s'escolleix quin mode volem jugar
@@ -276,7 +332,7 @@ module.exports = {
             if (reaction.emoji.name === "🤖") {
                 // Comencem la partida contra la IA en facil
                 IA = true;
-                await jugar_contra_IA_random();
+                await jugar_contra_IA();
             } else if (reaction.emoji.name === "🚪") {
                 // Sino si la reacció és de la porta i no es el mateix que ha escrit el missatge
                 // Comencem la partida contra l'altre jugador (ell es el player 2)
