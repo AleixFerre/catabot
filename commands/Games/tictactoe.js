@@ -12,7 +12,7 @@ module.exports = {
         const lletres = ["a", "b", "c", "d", "e", "f", "g", "h", "i"];
         const creu = "❌";
         const rodona = "⭕";
-        const recompensa = 500; // El doble si es en dificil
+        const recompensa = 500; // La meitat si no es en dificil
 
         let server = servers[message.guild.id];
         let msg_tauler; // variable que guarda el missatge del tauler

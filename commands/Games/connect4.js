@@ -1,12 +1,11 @@
 const Discord = require("discord.js");
-const { red } = require("chalk");
 
 module.exports = {
     name: 'connect4',
     description: 'Joc 4: [BETA] Juga al 4 en ratlla amb els teus amics o contra la IA!',
     type: 'games',
     aliases: ['4enratlla', 'play4', '_'], //! TREURE EL _ DE ALIASES [només placeholder per fer proves]
-    async execute(message, _args, servers) {
+    async execute(message, _args, servers, userData) {
 
         // let server = servers[message.guild.id];
 
@@ -17,6 +16,7 @@ module.exports = {
         let msg_tauler; // missatge on el tauler es va actualitzant
         let torns_per_actualitzar = 6; // Torns que han de passar per tornar a enviar un nou missatge
         let n_torn = 1; // Numero de torn actual
+        let recompensa = 500; // Monedes que se li sumaran al guanyador
 
         const emojis = ["0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣"];
         const res = "⬜"; // Quan no hi ha res
@@ -81,6 +81,16 @@ module.exports = {
             return -1; // Retornem -1 quan el tauler està ple
         }
 
+        // Retorna si el tauler està ple, per tant hi ha empat
+        function comprovar_empat() {
+            for (i = 0; i < tauler.length; i++) {
+                if (!columna_plena(i)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         // Retorna un index de columna no-plena
         function columna_valida_aleatoria() {
             let valids = [];
@@ -128,7 +138,9 @@ module.exports = {
                         return tauler[r][c];
             }
 
-            return -1;
+            if (tauler_ple())
+
+                return -1;
         }
 
         // Retorna si aquesta columna està plena o no
@@ -152,6 +164,11 @@ module.exports = {
             if (!trobat) {
                 // Hem tocat el fons
                 tauler[i - 1][columna] = jugador;
+            }
+
+            // si hi ha empat, retornem 0
+            if (comprovar_empat()) {
+                return 0;
             }
 
             return comprovar_guanyador(); // Retorna -1 si no hi ha res; 1 si guanya 1, 2 si 2
@@ -274,8 +291,81 @@ module.exports = {
             acabar_partida(acabat);
         }
 
-        function acabar_partida(acabat) {
-            // TODO: RECOMPENSES I XP
+        function acabar_partida(guanyador) {
+            // guanyador pot ser 0 si empat, 1 si ha guanyat 1, 2 si 2
+            let guanyador_string = "**GUANYADOR/A**\n";
+            switch (guanyador) {
+                case 0:
+                    guanyador_string += "LA PARTIDA HA ACABAT EN EMPAT, ES REPARTEIX EL POT!";
+                    break;
+                case 1:
+                    guanyador_string += `${player.username}, HAS GUANYAT LA PARTIDA!`;
+                    break;
+                case 2:
+                    if (IA) {
+                        guanyador_string += "LA IA HA GUANYAT LA PARTIDA!";
+                    } else {
+                        guanyador_string += `${player2.username}, HAS GUANYAT LA PARTIDA!`;
+                    }
+                    break;
+                default:
+                    guanyador_string += "Alguna cosa ha anat malament... :(";
+                    break;
+            }
+            message.channel.send(guanyador_string); // Enviem el missatge del guanyador
+            afegir_recompenses(guanyador); // Afegim les recompenses adients
+        }
+
+        // Funciona exactament igual que el 3 en ratlla
+        function afegir_recompenses(guanyador) {
+            const xp = Math.floor(Math.random() * 500 + 500); // Entre 500 i 1000
+            const mitat = Math.floor(recompensa / 2);
+            let recompensa_str = "**RECOMPENSES**\n";
+
+            if (IA) { // Si juguem contra la IA
+                if (dificil) {
+                    if (guanyador === 1) { // Si guanyem nosaltres, tot el pot per nosaltres
+                        recompensa_str += `${player.username}, has guanyat 💰\`${recompensa}\` monedes💰!`;
+                        userData[message.guild.id + player.id].money += recompensa;
+                    } else if (guanyador === 0) { // Empat, es reparteix el pot, però la maquina no juga
+                        recompensa_str += `${player.username}, has guanyat 💰\`${mitat}\` monedes💰!`;
+                        userData[message.guild.id + player.id].money += mitat;
+                    }
+                } else { // Si estem jugant en facil
+                    if (guanyador === 1) { // Si guanyem nosaltres, tot el pot per nosaltres
+                        recompensa_str += `${player.username}, has guanyat 💰\`${mitat}\` monedes💰!`;
+                        userData[message.guild.id + player.id].money += mitat;
+                    } else if (guanyador === 0) { // Empat, es reparteix el pot, però la maquina no juga
+                        recompensa_str += `${player.username}, has guanyat 💰\`${mitat/2}\` monedes💰!`;
+                        userData[message.guild.id + player.id].money += mitat / 2;
+                    }
+                }
+
+                // Sumem xp al jugador perque la maquina no en té
+                message.channel.send(`${server.prefix}progress ${xp} ${player}`);
+
+            } else { // Si estem jugant contra una altra persona
+                if (guanyador === 1) { // Guanya p1, tot el pot per ell
+                    recompensa_str += `${player.username}, has guanyat 💰\`${recompensa}\` monedes💰!`;
+                    userData[message.guild.id + player.id].money += recompensa;
+                } else if (guanyador === 2) { // Guanya p2, tot el pot per ell
+                    recompensa_str += `${player2.username}, has guanyat 💰\`${recompensa}\`monedes💰!`;
+                    userData[message.guild.id + player2.id].money += recompensa;
+                } else if (guanyador === 0) { // Empat, es reparteix el pot
+                    recompensa_str += `${player.username}, has guanyat 💰\`${mitat}\` monedes💰!`;
+                    recompensa_str += `${player2.username}, has guanyat 💰\`${mitat}\` monedes💰!`;
+                    userData[message.guild.id + player.id].money += mitat;
+                    userData[message.guild.id + player2.id].money += mitat;
+                }
+
+                // Sumem xp als dos
+                message.channel.send(`${server.prefix}progress ${xp} ${player}`);
+                message.channel.send(`${server.prefix}progress ${xp} ${player2}`);
+            }
+
+            message.channel.send(recompensa_str);
+
+            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
         }
 
         async function jugar_contra_jugador() {
