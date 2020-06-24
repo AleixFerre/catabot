@@ -29,6 +29,7 @@ npm install moment
 npm install @vitalets/google-translate-api
 npm install weather-js
 npm install chalk
+npm install mathjs
 ```
 
 If you are running this locally
