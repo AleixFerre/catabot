@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const fs = require('fs');
 
 module.exports = {
     name: 'connect4',
@@ -7,11 +8,12 @@ module.exports = {
     aliases: ['4enratlla', 'play4', '_'], //! TREURE EL _ DE ALIASES [només placeholder per fer proves]
     async execute(message, _args, servers, userData) {
 
-        // let server = servers[message.guild.id];
+        let server = servers[message.guild.id];
 
         let player = message.author;
         let player2 = null;
         let IA = false;
+        let dificil = false; // Diu si s'està jugant contra la IA en dificil o no
         let torn = 1; // 1 per torn del jugador 1; 2 pel 2
         let msg_tauler; // missatge on el tauler es va actualitzant
         let torns_per_actualitzar = 6; // Torns que han de passar per tornar a enviar un nou missatge
@@ -138,9 +140,7 @@ module.exports = {
                         return tauler[r][c];
             }
 
-            if (tauler_ple())
-
-                return -1;
+            return -1;
         }
 
         // Retorna si aquesta columna està plena o no

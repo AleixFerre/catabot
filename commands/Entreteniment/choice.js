@@ -2,10 +2,10 @@ const Discord = require("discord.js");
 
 module.exports = {
     name: 'choice',
-    description: 'Deix que el bot escolleixi per tu.\nEs permeten espais mentre es repectin les comes',
+    description: 'Deix que el bot escolleixi per tu.\n**SI QUE ES PERMETEN ESPAIS** mentre es repectin les comes',
     type: 'entreteniment',
     aliases: ['escolleix'],
-    usage: '< choice1, choice2, ...>',
+    usage: '< choice 1, choice2, ...>',
     execute(message, args, servers) {
 
         let server = servers[message.guild.id];
