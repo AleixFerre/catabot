@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs');
+const { paraules } = require("../../Storage/paraules.json");
 
 module.exports = {
     name: 'hangman',
@@ -13,6 +14,7 @@ module.exports = {
         const xp_recompensa = 500; // Recompensa que se li dona als participants al final en xp
         const caracter_no_descobert = "⬜";
 
+        let jugant_sol = false; // Diu si estas jugant sol o no
         let server = servers[message.guild.id];
         let dites = [];
         let paraula = "";
@@ -49,8 +51,7 @@ module.exports = {
                 .setColor(getRandomColor())
                 .setTitle("**EL JOC DEL PENJAT**")
                 .setDescription("=> [🚪] UNIR-SE / SORTIR DE LA SALA\n=> [✅] COMENÇAR PARTIDA\n" +
-                    "=> [❌] CANCEL·LAR" +
-                    "**[ Màxim 5 persones per sala! ]**")
+                    "=> [❌] CANCEL·LAR\n" + "**[ Màxim 5 persones per sala! ]**")
                 .addField('❯ Participant 1: ', message.author.tag, false)
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
@@ -106,8 +107,8 @@ module.exports = {
             let embed = new Discord.MessageEmbed()
                 .setColor(getRandomColor())
                 .setTitle("**EL JOC DEL PENJAT**")
-                .setDescription("Clica al [🚪] si vols unir-te/sortir de la sala o bé clica al [✅] començar la partida.\n" +
-                    "**[ Màxim 5 persones per sala! ]**")
+                .setDescription("=> [🚪] UNIR-SE / SORTIR DE LA SALA\n=> [✅] COMENÇAR PARTIDA\n" +
+                    "=> [❌] CANCEL·LAR\n" + "**[ Màxim 5 persones per sala! ]**")
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
             for (let i = 0; i < participants.length; i++) {
@@ -128,7 +129,6 @@ module.exports = {
         }
 
         async function demanar_paraula() {
-
             const contingut = "**EL JOC DEL PENJAT**\n" +
                 "Com a host de la partida, has d'escollir la paraula\n" +
                 "**RECORDA QUE HAS DE SUBTITUIR TOTS ELS ACCENTS PER LA SEVA RESPECTIVA LLETRA SENSE**" +
@@ -208,8 +208,23 @@ module.exports = {
             return lletres.includes(lletra);
         }
 
+        function comprovar_host(msg) {
+            if (jugant_sol) {
+                // Si jugo sol, només puc contestar jo
+                return msg.author.id === message.author.id;
+            } else {
+                // Si juguem amb amics
+                // Poden contestar tots menys jo
+                if (msg.author.id === message.author.id) {
+                    return false;
+                }
+                // Si no he sigut jo, comprovo que sigui un dels participants
+                return participants.includes(message.author);
+            }
+        }
+
         async function esperar_lletra(msg) { // Retorna la lletra del missatge
-            const filter = msg => lletra_valida(msg.content[0].toLowerCase()) && participants.includes(message.author) && !msg.author.bot;
+            const filter = msg => lletra_valida(msg.content[0].toLowerCase()) && comprovar_host(msg) && !msg.author.bot;
             let collected = await msg.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
                 .catch(() => -1);
 
@@ -234,7 +249,6 @@ module.exports = {
             }
             // Ja s'han comprovat totes les lletres, s'ha acabat el joc
             return 1;
-
         }
 
         function fallar(lletra) { // Retorna si s'ha acabat la partida per errades
@@ -242,7 +256,6 @@ module.exports = {
             if (!dites.includes(lletra)) {
                 dites.push(lletra);
             }
-
             errades++;
             if (errades >= max_errades) {
                 return 0;
@@ -252,7 +265,16 @@ module.exports = {
         }
 
         async function comenca_joc() {
-            await demanar_paraula();
+            if (participants.length === 1) {
+                // Si juguem amb una sola persona
+                paraula = paraules[Math.floor(Math.random() * paraules.length)];
+                jugant_sol = true;
+            } else {
+                // Si juguem amb multiples persones
+                jugant_sol = false;
+                await demanar_paraula();
+            }
+
             let missatge_paraula = await escriure_missatge();
             let acabat = -1; // -1 si ha de continuar la partida, 0 si perdut, 1 si guanyat
             while (acabat === -1) {
@@ -279,9 +301,10 @@ module.exports = {
                 return await message.channel.send("**AVÍS D'INACTIVITAT**\nLa partida s'ha acabat de forma soptada degut a la inactivitat. Si es vol començar alguna altra partida, torneu a executar la comanda.");
             }
 
-            let emoji = "🏆",
-                desc = "";
-
+            let emoji = "🏆";
+            let desc = "";
+            let link = "https://dlc.iec.cat/Results?DecEntradaText=" + paraula;
+            let questionLink = "https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/hangman/question.png";
 
             if (acabat === 1) {
                 desc = "Hem guanyat! Tots els integrants guanyen 💰`" + recompensa + " monedes`💰!\n";
@@ -291,13 +314,14 @@ module.exports = {
                 });
             } else {
                 emoji = "😦";
-                desc = "Hem perdut, no hi ha premi...\nLa paraula era: " + paraula;
+                desc = "Hem perdut, no hi ha premi...";
             }
 
             let embed_final = new Discord.MessageEmbed()
                 .setColor(getRandomColor())
                 .setTitle("**" + emoji + " FINAL DE LA PARTIDA " + emoji + "**")
                 .setDescription(desc)
+                .setAuthor(paraula.toUpperCase(), questionLink, link)
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
 

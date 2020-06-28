@@ -67,8 +67,7 @@ module.exports = {
                 .setColor(getRandomColor())
                 .setTitle("**TRIVIA AMB " + n_preguntes + " PREGUNTES**")
                 .setDescription("=> [🚪] UNIR-SE / SORTIR DE LA SALA\n=> [✅] COMENÇAR PARTIDA\n" +
-                    "=> [❌] CANCEL·LAR" +
-                    "**[ Màxim 5 persones per sala! ]**")
+                    "=> [❌] CANCEL·LAR" + "**[ Màxim 5 persones per sala! ]**")
                 .addField('❯ Participant 1: ', message.author.tag, false)
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
@@ -125,7 +124,8 @@ module.exports = {
             let embed = new Discord.MessageEmbed()
                 .setColor(getRandomColor())
                 .setTitle("**TRIVIA**")
-                .setDescription("Clica al [🚪] si vols unir-te/sortir de la sala o bé clica al [✅] començar la partida.")
+                .setDescription("=> [🚪] UNIR-SE / SORTIR DE LA SALA\n=> [✅] COMENÇAR PARTIDA\n" +
+                    "=> [❌] CANCEL·LAR" + "**[ Màxim 5 persones per sala! ]**")
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
             for (let i = 0; i < participants.length; i++) {
