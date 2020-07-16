@@ -9,7 +9,9 @@ module.exports = {
     execute(message, args, servers) {
 
         const data = [];
-        const { commands } = message.client;
+        const {
+            commands
+        } = message.client;
 
         let prefix = "!";
         if (message.guild) {
@@ -69,7 +71,8 @@ module.exports = {
                 .setColor(getRandomColor())
                 .setTitle('El **CataBOT** té ' + commands.size + ' comandes')
                 .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
-                .setThumbnail('https://i.imgur.com/OMp4api.png');
+                .setThumbnail('https://i.imgur.com/OMp4api.png')
+                .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
             let aux = musica.map(c => c.name);
             helpContent += '🎵 **COMANDES DE MUSICA** 🎵 [' + aux.length + ']\n `';
@@ -108,8 +111,6 @@ module.exports = {
                 "* Pots veure totes les comandes [aquí](https://catalahd.github.io/CataBot/commands.html).");
 
             fullHelpEmbed.setDescription(data);
-
-            fullHelpEmbed.setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
             return message.author.send(fullHelpEmbed)
                 .then(() => {

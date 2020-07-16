@@ -14,6 +14,12 @@ module.exports = {
         let player2 = null;
         let IA = false;
         let dificil = false; // Diu si s'està jugant contra la IA en dificil o no
+        let depth = 5; // Torns que la IA prediu
+        let scores = { // Objecte per predir el valor de cada jugada
+            1: -Infinity,
+            2: Infinity
+        };
+
         let torn = 1; // 1 per torn del jugador 1; 2 pel 2
         let msg_tauler; // missatge on el tauler es va actualitzant
         let torns_per_actualitzar = 6; // Torns que han de passar per tornar a enviar un nou missatge
@@ -110,6 +116,7 @@ module.exports = {
             return ((a != 0) && (a == b) && (a == c) && (a == d));
         }
 
+        // Retorna 1 o 2 si ha guanyat algu, -1 si no (per comprovar empat, cridar la funció comprovar_empat())        
         function comprovar_guanyador() {
             // Check down
             for (r = 0; r < 3; r++) {
@@ -144,27 +151,34 @@ module.exports = {
         }
 
         // Retorna si aquesta columna està plena o no
-        function columna_plena(i) {
-            return tauler[0][i] !== 0;
+        function columna_plena(j) {
+            return tauler[0][j] !== 0;
         }
 
-        function actualitzar_tauler(columna, jugador) {
+        // Retorna la i posició on posar la fitxa a la columna j
+        function fons_columna(j) {
             let i = 0;
             let trobat = false;
 
             // Anem baixant fins que toquem el fons, 
             while (!trobat && i < tauler.length) {
-                if (tauler[i][columna] !== 0) {
+                if (tauler[i][j] !== 0) {
                     trobat = true;
-                    tauler[i - 1][columna] = jugador;
+                    return i - 1;
                 }
                 i++;
             }
 
             if (!trobat) {
                 // Hem tocat el fons
-                tauler[i - 1][columna] = jugador;
+                return i - 1;
             }
+        }
+
+        function actualitzar_tauler(columna, jugador) {
+
+            let i = fons_columna(columna);
+            tauler[i][columna] = jugador;
 
             // si hi ha empat, retornem 0
             if (comprovar_empat()) {
@@ -213,8 +227,202 @@ module.exports = {
             n_torn++;
         }
 
-        function torn_IA() { // TODO: FER L'ALGORISME MINIMAX APLICAT AL CONNECT4 (alpha beta prunning & depth cut)
-            return columna_valida_aleatoria();
+        function countPieces(i, j, i2, j2, player) {
+            let pieces = 0;
+
+            for (i; i < i2; i++) {
+                for (j; j < j2; j++) {
+                    if (board[i][j] == player) {
+                        pieces += 1;
+                    }
+
+                }
+
+            }
+            return pieces;
+        }
+
+        function countDiagonal(i, j, direction, player) {
+
+            let pieces = 0;
+
+            for (x = 0; x < 4; x++) {
+                if (direction == 1) {
+                    if (i + x < h && j + x < w) {
+
+                        if (board[i + x][j + x] == player) {
+                            pieces += 1;
+                        }
+                    }
+
+                } else {
+                    if (i + x < h && j - x < w && j - x > 0) {
+
+                        if (board[i + x][j - x] == player) {
+                            pieces += 1;
+                        }
+
+                    }
+
+                }
+
+            }
+            return pieces;
+        }
+
+        function score_position(player, player2) {
+            // Aproximació heurística
+            let score = 0;
+
+            for (i = 1; i < h; i++) {
+                for (j = 1; j < w; j++) {
+                    if ((countPieces(i, j, i + 4, j, player) == 3 && countPieces(i, j, i + 4, j, 0) == 1) || (countPieces(i, j, i, j + 4, player) == 3 && countPieces(i, j, i, j + 4, 0) == 1) ||
+                        (countDiagonal(i, j, 0, player) == 3 && countDiagonal(i, j, 0, 0) == 1) ||
+                        (countDiagonal(i, j, 1, player) == 3 && countDiagonal(i, j, 1, 0) == 1)) {
+                        score += 1000;
+                    }
+
+                    if ((countPieces(i, j, i + 4, j, player) == 2 && countPieces(i, j, i + 4, j, 0) == 2) || (countPieces(i, j, i, j + 4, player) == 2 && countPieces(i, j, i, j + 4, 0) == 2) ||
+                        (countDiagonal(i, j, 0, player) == 2 && countDiagonal(i, j, 0, 0) == 2) ||
+                        (countDiagonal(i, j, 1, player) == 2 && countDiagonal(i, j, 1, 0) == 2)) {
+                        score += 10;
+                    }
+
+                    if ((countPieces(i, j, i + 4, j, player) == 1 && countPieces(i, j, i + 4, j, 0) == 3) || (countPieces(i, j, i, j + 4, player) == 1 && countPieces(i, j, i, j + 4, 0) == 3) ||
+                        (countDiagonal(i, j, 0, player) == 1 && countDiagonal(i, j, 0, 0) == 3) ||
+                        (countDiagonal(i, j, 1, player) == 1 && countDiagonal(i, j, 1, 0) == 3)) {
+                        score += 1;
+
+                    }
+
+                    if ((countPieces(i, j, i + 4, j, player2) == 3 && countPieces(i, j, i + 4, j, 0) == 1) || (countPieces(i, j, i, j + 4, player2) == 3 && countPieces(i, j, i, j + 4, 0) == 1) ||
+                        (countDiagonal(i, j, 0, player2) == 3 && countDiagonal(i, j, 0, 0) == 1) ||
+                        (countDiagonal(i, j, 1, player2) == 3 && countDiagonal(i, j, 1, 0) == 1)) {
+                        score -= 1000;
+
+                    }
+
+                    if ((countPieces(i, j, i + 4, j, player2) == 2 && countPieces(i, j, i + 4, j, 0) == 2) || (countPieces(i, j, i, j + 4, player2) == 2 && countPieces(i, j, i, j + 4, 0) == 2) ||
+                        (countDiagonal(i, j, 0, player2) == 2 && countDiagonal(i, j, 0, 0) == 2) ||
+                        (countDiagonal(i, j, 1, player2) == 2 && countDiagonal(i, j, 1, 0) == 2)) {
+                        score -= 10;
+                    }
+
+                    if ((countPieces(i, j, i + 4, j, player2) == 1 && countPieces(i, j, i + 4, j, 0) == 3) || (countPieces(i, j, i, j + 4, player2) == 1 && countPieces(i, j, i, j + 4, 0) == 3) ||
+                        (countDiagonal(i, j, 0, player2) == 1 && countDiagonal(i, j, 0, 0) == 3) ||
+                        (countDiagonal(i, j, 1, player2) == 1 && countDiagonal(i, j, 1, 0) == 3)) {
+                        score -= 1;
+
+                    }
+                }
+            }
+            return score;
+        }
+
+        function minimax(board, depth, isMaximizing, nr_moves, alpha, beta) {
+            let result = comprovar_empat() ? 0 : comprovar_guanyador(); // Si empat, llavors 0; sino, comprovem guanyador
+
+            if (result > 0) {
+                return scores[result] - 20 * nr_moves;
+            }
+
+            if (result === -1) {
+                return 0 - 50 * nr_moves;
+            }
+
+            if (depth === 0) {
+                return score_position(1, 2, nr_moves);
+            }
+
+            if (isMaximizing) {
+
+                let bestScore = -Infinity;
+
+                for (j = 0; j < tauler[0].length; j++) {
+                    if (!columna_plena(j)) {
+
+                        // Trobem el fons d'aquella columna
+                        let i = fons_columna(j);
+
+                        board[i][j] = 1;
+
+                        let score = minimax(board, depth - 1, false, nr_moves + 1, alpha, beta);
+
+                        board[i][j] = 0;
+
+                        bestScore = Math.max(score, bestScore);
+
+                        alpha = Math.max(bestScore, alpha);
+                        if (alpha >= beta) {
+                            break;
+                        }
+                    }
+                }
+                return bestScore;
+
+            } else {
+                let bestScore = Infinity;
+                for (j = 0; j < tauler[0].length; j++) {
+                    if (!columna_plena(j)) {
+
+                        // Trobem el fons d'aquella columna
+                        let i = fons_columna(j);
+
+                        board[i][j] = 2;
+
+                        let score = minimax(board, depth - 1, true, nr_moves + 1, alpha, beta);
+
+                        board[i][j] = 0;
+
+                        bestScore = Math.min(score, bestScore);
+
+                        beta = Math.min(bestScore, beta);
+                        if (alpha >= beta) {
+                            break;
+                        }
+                    }
+                }
+                return bestScore;
+            }
+        }
+
+        function torn_IA() {
+            if (dificil) {
+                // Algorisme Minimax
+                // CREDIT: Connect 4 miniMax with depth/heuristic and alpha/beta pruning by KobeL
+                // Find it in: https://editor.p5js.org/KobeL/sketches/_F_AdrK9t
+
+                let bestScore = -Infinity;
+                let move;
+
+                for (j = 0; j < tauler[0].length; j++) {
+                    if (!columna_plena(j)) {
+
+                        // Trobem el fons d'aquella columna
+                        let i = fons_columna(j);
+
+                        // Fem el moviment
+                        tauler[i][j] = 2;
+
+                        // Calculem el valor d'aquella jugada
+                        let score = minimax(tauler, depth, false, 1, -Infinity, Infinity);
+                        console.log(score);
+                        // Desfem el moviment
+                        tauler[i][j] = 0;
+
+                        // Comprovem el maxim
+                        if (score > bestScore) {
+                            bestScore = score;
+                            move = j;
+                        }
+                    }
+                }
+                console.log(move);
+                return move;
+
+            } else {
+                return columna_valida_aleatoria();
+            }
         }
 
         async function torn_jugador() {
@@ -391,7 +599,7 @@ module.exports = {
             let embed_sala = new Discord.MessageEmbed()
                 .setColor(getRandomColor())
                 .setTitle("**QUATRE EN RATLLA**")
-                .setDescription("=> [🚪] UNIR-SE A LA SALA\n=> [🤖] VS IA\n" +
+                .setDescription("=> [🚪] UNIR-SE A LA SALA\n=> [🤖] VS IA\n=> [👾] VS IA DIFÍCIL\n" +
                     "=> [❌] CANCEL·LAR")
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
@@ -401,12 +609,14 @@ module.exports = {
             Promise.all([
                 msg_sala.react("🚪"),
                 msg_sala.react("🤖"),
+                msg_sala.react("👾"),
                 msg_sala.react("❌")
             ]);
 
             // Esperem a una reacció
             const filter = (reaction, user) =>
                 ((reaction.emoji.name === '🤖' && message.author.id === user.id) ||
+                    (reaction.emoji.name === '👾' && message.author.id === user.id) ||
                     (reaction.emoji.name === '🚪' && message.author.id !== user.id) ||
                     (reaction.emoji.name === '❌' && message.author.id === user.id)) && !user.bot;
 
@@ -422,6 +632,12 @@ module.exports = {
             if (reaction.emoji.name === "🤖") {
                 // Comencem la partida contra la IA en facil
                 IA = true;
+                dificil = false;
+                await jugar_contra_IA();
+            } else if (reaction.emoji.name === "👾") {
+                // Comencem la partida contra la IA en dificil
+                IA = true;
+                dificil = true;
                 await jugar_contra_IA();
             } else if (reaction.emoji.name === "🚪") {
                 // Sino si la reacció és de la porta i no es el mateix que ha escrit el missatge

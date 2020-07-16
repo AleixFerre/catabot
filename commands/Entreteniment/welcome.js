@@ -27,8 +27,12 @@ module.exports = {
         if (!member)
             member = message.member;
 
-
         let channelID = servers[message.guild.id].welcomeChannel;
+        if (!channelID) {
+            // Si el canal no està configurats
+            channelID = message.channel.id;
+        }
+
         let channel = client.channels.cache.get(channelID);
 
         const canvas = Canvas.createCanvas(700, 250);
@@ -58,7 +62,9 @@ module.exports = {
         ctx.closePath();
         ctx.clip();
 
-        const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: "png" }));
+        const avatar = await Canvas.loadImage(member.user.displayAvatarURL({
+            format: "png"
+        }));
         ctx.drawImage(avatar, 289, 28, 125, 125);
 
         const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');

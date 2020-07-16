@@ -124,7 +124,7 @@ client.on("ready", async() => {
         }
 
         try {
-            let newName = "[ " + config.prefix + " ] CataBOT";
+            let newName = "[ " + servers[guild.id].prefix + " ] CataBOT";
             if (testing) {
                 newName += " TEST";
             }
@@ -224,13 +224,29 @@ client.on("guildCreate", (guild) => {
     }
 
     try {
-        let newName = "[ " + config.prefix + " ] CataBOT";
+        let newName = "[ " + serversInfo[guild.id].prefix + " ] CataBOT";
         guild.members.cache.get(config.clientid).setNickname(newName);
     } catch (err) {
         console.error(err);
     }
 
+    // Enviem el missatge al owner de la guild
+    let introMessage = "**DONA LA BENVINGUDA AL CATABOT!**\n" +
+        "El primer bot de Discord en català!\n\n" +
+        "**CONFIGURACIÓ GENERAL**\n" +
+        "El bot permet executar una serie de comandes automàtiques sempre que un ADMINISTRADOR ho decideixi. També cal saber que totes les comandes de tipus MOD requereixen un rol d'ADMINISTRADOR per ser executades.\n" +
+        "- El bot permet cambiar el prefix per defecte amb la comanda `" + serversInfo[guild.id].prefix + "prefix [prefix nou]` amb un màxim de 5 caràcters.\n" +
+        "- També es pot configurar un canal de benvinguda perque digui Hola i Adeu a tots els integrants nous i passats del servidor amb `" + serversInfo[guild.id].prefix + "setwelcome`. També pots provar amb `" + serversInfo[guild.id].prefix + "welcome` i `" + serversInfo[guild.id].prefix + "bye`\n" +
+        "- Es pot configurar un canal d'avisos amb `" + serversInfo[guild.id].prefix + "setalert`. En aquest canal s'avisarà de totes les novetats del bot.\n" +
+        "- Finalment, es pot configurar un canal del bot amb `" + serversInfo[guild.id].prefix + "setbot`. Això el que farà serà avisar a tothom qui estigui usant el bot fora d'aquest canal.\n" +
+        "Aquestes tres comandes es poden desactivar en qualsevol moment amb el paràmetre `null`. P.E. `" + serversInfo[guild.id].prefix + "setwelcome null`\n" +
+        "Per veure tota la informació dels canals, fes servir la comanda `" + serversInfo[guild.id].prefix + "server`.\n\n" +
+        "Més informació de les comandes amb `" + serversInfo[guild.id].prefix + "help` o `" + serversInfo[guild.id].prefix + "help [nom de la comanda]`.";
+
+    guild.owner.send(introMessage);
+
     console.log(bot("El bot ha entrat al servidor \"" + guild.name + "\"\n"));
+
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
         if (err) console.error(err);
     });
@@ -316,6 +332,11 @@ client.on('guildMemberAdd', async(member) => {
     });
 
     let channelID = servers[member.guild.id].welcomeChannel;
+    if (!channelID) {
+        // Si no hi ha el canal configurat, no enviem res
+        return;
+    }
+
     let channel = client.channels.cache.get(channelID);
 
     const canvas = Canvas.createCanvas(700, 250);
@@ -364,6 +385,11 @@ client.on('guildMemberRemove', async(member) => {
     console.log(remove("El membre \"" + member.user.username + "\" ha sortit de la guild " + member.guild.name + "\n"));
 
     let channelID = servers[member.guild.id].welcomeChannel;
+    if (!channelID) {
+        // Si no hi ha el canal configurat, no enviem res
+        return;
+    }
+
     let channel = client.channels.cache.get(channelID);
 
     const canvas = Canvas.createCanvas(700, 250);
@@ -405,7 +431,7 @@ client.on('guildMemberRemove', async(member) => {
 
 client.on('message', async(message) => {
 
-    let prefix = "!";
+    let prefix = config.prefix;
     if (message.guild) {
         prefix = servers[message.guild.id].prefix;
     }
