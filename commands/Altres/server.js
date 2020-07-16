@@ -5,7 +5,7 @@ module.exports = {
     type: 'altres',
     description: 'Diu la informació del servidor.',
     aliases: ['serverinfo', 'guild'],
-    execute(message, args, servers, userData) {
+    execute(message, _args, servers, userData) {
 
         let mesRicNom = "";
         let mesRicDiners = 0;
@@ -15,9 +15,20 @@ module.exports = {
         let mesNivellXP = 0;
 
         let server = servers[message.guild.id];
-        let canalAvisos = server.alertChannel;
-        let canalBot = server.botChannel;
-        let canalBenvinguda = server.welcomeChannel;
+        let canalAvisos = `<#${server.alertChannel}>`;
+        if (!server.alertChannel) {
+            canalAvisos = "null";
+        }
+
+        let canalBot = `<#${server.botChannel}>`;
+        if (!server.botChannel) {
+            canalBot = "null";
+        }
+
+        let canalBenvinguda = `<#${server.welcomeChannel}>`;
+        if (!server.welcomeChannel) {
+            canalBenvinguda = "null";
+        }
 
         message.guild.members.cache.forEach(member => {
 
@@ -67,9 +78,9 @@ module.exports = {
             .addField('❯ Amb mes nivell', mesNivellNom, true)
             .addField('❯ Nivell del MAX', mesNivellLevel, true)
             .addField('❯ XP del MAX', mesNivellXP, true)
-            .addField('❯ Canal d\'avisos', `<#${canalAvisos}>`, true)
-            .addField('❯ Canal del bot', `<#${canalBot}>`, true)
-            .addField('❯ Canal de benvinguda', `<#${canalBenvinguda}>`, true)
+            .addField('❯ Canal d\'avisos', canalAvisos, true)
+            .addField('❯ Canal del bot', canalBot, true)
+            .addField('❯ Canal de benvinguda', canalBenvinguda, true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
         message.channel.send(msg);

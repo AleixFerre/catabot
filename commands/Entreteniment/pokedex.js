@@ -85,6 +85,11 @@ module.exports = {
                 if (data.family.evolutionLine.length > 0) {
                     // Treu els repetits ja que està en un Set
                     let uniqueEvos = [...new Set(data.family.evolutionLine)];
+                    for (i = 0; i < uniqueEvos.length; i++) {
+                        if (uniqueEvos[i].toUpperCase() === realName.toUpperCase()) {
+                            uniqueEvos[i] = "**" + uniqueEvos[i] + "**";
+                        }
+                    }
                     pokeEmbed.addField('❯ Evolutions:', uniqueEvos.join(", "), true);
                 }
 

@@ -7,6 +7,7 @@ module.exports = {
     name: 'cat',
     description: 'Mostra una imatge d\'un gat aleatori',
     type: 'entreteniment',
+    aliases: ['gat'],
     async execute(message) {
 
         let desc = "";
@@ -25,7 +26,9 @@ module.exports = {
                 .then(res => res.json())
                 .then(async(data) => {
                     desc += data.fact;
-                    await translate(desc, { to: "es" }).then(res => {
+                    await translate(desc, {
+                        to: "es"
+                    }).then(res => {
                         desc = res.text;
                     });
                 });
@@ -45,7 +48,7 @@ module.exports = {
 
         const catEmbed = new Discord.MessageEmbed()
             .setColor(getRandomColor())
-            .setTitle("Fun fact about cats!")
+            .setTitle("🐱 GATETS!! 🐱")
             .setDescription(desc)
             .setImage(catUrl).setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 

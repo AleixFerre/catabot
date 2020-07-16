@@ -13,7 +13,7 @@ client.commands = new Discord.Collection();
 
 moment().utcOffset('120');
 
-const testing = true;
+const testing = false;
 
 let config = {};
 if (testing) {
@@ -54,7 +54,9 @@ for (const dir of commandDirs) {
     }
 }
 
-fs.writeFile('docs/Storage/commands.json', JSON.stringify(cmds), (err) => { if (err) console.error(err); });
+fs.writeFile('docs/Storage/commands.json', JSON.stringify(cmds), (err) => {
+    if (err) console.error(err);
+});
 
 let servers = {}; ///< The data structure that handles all the info for the servers
 
@@ -99,13 +101,13 @@ client.on("ready", async() => {
             serversInfo[guild.id].prefix = config.prefix;
         }
         if (!serversInfo[guild.id].alertChannel) {
-            serversInfo[guild.id].alertChannel = searchAlertChannel(guild);
+            serversInfo[guild.id].alertChannel = null;
         }
         if (!serversInfo[guild.id].botChannel) {
-            serversInfo[guild.id].botChannel = searchBotChannel(guild);
+            serversInfo[guild.id].botChannel = null;
         }
         if (!serversInfo[guild.id].welcomeChannel) {
-            serversInfo[guild.id].welcomeChannel = searchWelcomeChannel(guild);
+            serversInfo[guild.id].welcomeChannel = null;
         }
 
         if (!servers[guild.id]) {
@@ -144,12 +146,18 @@ client.on("ready", async() => {
 
     console.log(log("\nREADY :: Version " + config.version + "\nON " + client.guilds.cache.size + " servers\n" +
         "---------------------------------"));
-    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+        if (err) console.error(err);
+    });
 
     if (testing) {
-        fs.writeFile('Storage/servers_test.json', JSON.stringify(serversInfo), (err) => { if (err) console.error(err); });
+        fs.writeFile('Storage/servers_test.json', JSON.stringify(serversInfo), (err) => {
+            if (err) console.error(err);
+        });
     } else {
-        fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => { if (err) console.error(err); });
+        fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => {
+            if (err) console.error(err);
+        });
     }
 
 
@@ -193,13 +201,13 @@ client.on("guildCreate", (guild) => {
         serversInfo[guild.id].prefix = config.prefix;
     }
     if (!serversInfo[guild.id].alertChannel) {
-        serversInfo[guild.id].alertChannel = searchAlertChannel(guild);
+        serversInfo[guild.id].alertChannel = null;
     }
     if (!serversInfo[guild.id].botChannel) {
-        serversInfo[guild.id].botChannel = searchBotChannel(guild);
+        serversInfo[guild.id].botChannel = null;
     }
     if (!serversInfo[guild.id].welcomeChannel) {
-        serversInfo[guild.id].welcomeChannel = searchWelcomeChannel(guild);
+        serversInfo[guild.id].welcomeChannel = null;
     }
 
     if (!servers[guild.id]) {
@@ -217,14 +225,18 @@ client.on("guildCreate", (guild) => {
 
     try {
         let newName = "[ " + config.prefix + " ] CataBOT";
-        guild.members.get(config.clientid).setNickname(newName);
+        guild.members.cache.get(config.clientid).setNickname(newName);
     } catch (err) {
         console.error(err);
     }
 
     console.log(bot("El bot ha entrat al servidor \"" + guild.name + "\"\n"));
-    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
-    fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => { if (err) console.error(err); });
+    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+        if (err) console.error(err);
+    });
+    fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => {
+        if (err) console.error(err);
+    });
 
 });
 
@@ -245,8 +257,12 @@ client.on("guildDelete", (guild) => {
     }
 
     console.log(remove("El bot ha sigut expulsat del servidor \"" + guild.name + "\"\n"));
-    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
-    fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => { if (err) console.error(err); });
+    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+        if (err) console.error(err);
+    });
+    fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => {
+        if (err) console.error(err);
+    });
 
 });
 
@@ -295,7 +311,9 @@ client.on('guildMemberAdd', async(member) => {
         userData[member.guild.id + member.user.id].lastDaily = "Not Collected";
     }
 
-    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+        if (err) console.error(err);
+    });
 
     let channelID = servers[member.guild.id].welcomeChannel;
     let channel = client.channels.cache.get(channelID);
@@ -327,7 +345,9 @@ client.on('guildMemberAdd', async(member) => {
     ctx.closePath();
     ctx.clip();
 
-    const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'png' }));
+    const avatar = await Canvas.loadImage(member.user.displayAvatarURL({
+        format: 'png'
+    }));
     ctx.drawImage(avatar, 289, 28, 125, 125);
 
     const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
@@ -373,7 +393,9 @@ client.on('guildMemberRemove', async(member) => {
     ctx.closePath();
     ctx.clip();
 
-    const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: "png" }));
+    const avatar = await Canvas.loadImage(member.user.displayAvatarURL({
+        format: "png"
+    }));
     ctx.drawImage(avatar, 289, 28, 125, 125);
 
     const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'bye-image.png');
@@ -420,7 +442,7 @@ client.on('message', async(message) => {
     }
 
     try {
-        command.execute(message, args, servers, userData, client);
+        command.execute(message, args, servers, userData, client, testing);
     } catch (error) {
         console.error(error);
         message.reply('alguna cosa ha anat malament, siusplau contacta amb ' + config.ownerDiscordUsername +
@@ -429,38 +451,5 @@ client.on('message', async(message) => {
     }
 
 });
-
-function searchAlertChannel(guild) {
-    let channel = guild.channels.cache.filter(c => c.type === 'text').find(x => x.name.includes("alertas"));
-    // Si aquest no existeix
-    if (!channel) {
-        // Cerca el canal per defecte
-        channel = guild.systemChannel;
-    }
-    // Si no hi ha canal per defecte
-    if (!channel)
-        channel = guild.channels.cache.filter(c => c.type === 'text').find(x => x.position == 0); // Cerca el de la primera posició de tipus text
-    return channel.id;
-}
-
-function searchBotChannel(guild) {
-    let channel = guild.channels.cache.filter(c => c.type === 'text').find(x => x.name.includes("bot"));
-    // Si aquest no existeix
-    if (!channel) {
-        // Cerca el canal per defecte
-        channel = guild.systemChannel;
-    }
-    // Si no hi ha canal per defecte
-    if (!channel)
-        channel = guild.channels.cache.filter(c => c.type === 'text').find(x => x.position == 0); // Cerca el de la primera posició de tipus text
-    return channel.id;
-}
-
-function searchWelcomeChannel(guild) {
-    let channel = guild.systemChannel;
-    if (!channel)
-        channel = guild.channels.cache.filter(c => c.type === 'text').find(x => x.position == 0);
-    return channel.id;
-}
 
 client.login(config.token);
