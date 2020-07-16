@@ -10,9 +10,9 @@ module.exports = {
 
         let description = "Soc un **BOT** de discord **en català**! Espero que sigui agradable la meva presencia en aquest servidor, " + message.author.username + ". Pots veure totes les meves comandes amb " + servers[message.guild.id].prefix + "help.";
 
-        let info = `• **Desenvolupador:** ${config.ownerDiscordUsername}
-                    • **Pagina web: [catalahd.github.io/CataBot](${config.website})**
-                    • **Servidor Oficial: [discord.gg/k75qvYM](${config.officialServerLink})**`;
+        let info = `• **Desenvolupador:** ${config.ownerDiscordUsername}\n` +
+            `• **Pagina web: [catalahd.github.io/CataBot](${config.website})**\n` +
+            `• **Servidor Oficial: [discord.gg/k75qvYM](${config.officialServerLink})**`;
 
         let nMembers = 0;
         client.guilds.cache.forEach(guild => {
