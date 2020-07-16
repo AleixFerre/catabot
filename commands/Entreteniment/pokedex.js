@@ -24,11 +24,13 @@ module.exports = {
             .then(res => res.json())
             .then((data) => {
 
-                if (data.error) {
+                if (data.length === 0) {
                     message.channel.send("```No hi ha cap pokemon que es digui " + realName + "```");
                     message.channel.send(server.prefix + "help pokedex");
                     return;
                 }
+
+                data = data[0];
 
                 function getRandomColor() {
                     let letters = '0123456789ABCDEF';
