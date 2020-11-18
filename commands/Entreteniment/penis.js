@@ -33,7 +33,6 @@ module.exports = {
         let msg = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle("**MIDA DEL TEU PENIS**")
-            .setThumbnail('https://i.imgur.com/2ZK1MYk.png')
             .addField(`❯ Mida del penis de ${mention.username}`, penisString, true)
             .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
