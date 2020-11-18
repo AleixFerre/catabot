@@ -24,13 +24,11 @@ module.exports = {
             .then(res => res.json())
             .then((data) => {
 
-                if (data.length === 0) {
+                if (data.error) {
                     message.channel.send("```No hi ha cap pokemon que es digui " + realName + "```");
                     message.channel.send(server.prefix + "help pokedex");
                     return;
                 }
-
-                data = data[0];
 
                 function getRandomColor() {
                     let letters = '0123456789ABCDEF';
@@ -71,7 +69,7 @@ module.exports = {
                 const pokeEmbed = new Discord.MessageEmbed()
                     .setColor(getRandomColor())
                     .setAuthor('POKEDEX', 'https://pngimage.net/wp-content/uploads/2018/06/pokemon-go-icon-png-3.png', 'https://pokemon.fandom.com/es/wiki/' + args.join("_"))
-                    .setTitle("**#" + data.id + " | " + capitalize(realName) + " | " + data.generation + "º GEN**") // Capitalize the first letter
+                    .setTitle("**#" + data.id + " | " + capitalize(data.name) + " | " + data.generation + "º GEN**") // Capitalize the first letter
                     .setDescription(data.description)
                     .setThumbnail("http://i.some-random-api.ml/pokemon/" + APIname + ".gif")
                     .addField("❯ " + type + ':', data.type.join(", "), true)
