@@ -3,7 +3,7 @@
 \[v1.2\]
 
 - Ara l'esborrat de missatges és més ràpid i pot arribar a esborrar fins a 100 missatges alhora contant el missatge enviat amb la comanda.
-- Ara la comanda `penis` no té cap imatge d'un penis, ja que es considera contingut NFSW 
+- Ara la comanda `penis` no té cap imatge d'un penis, ja que es considera contingut NFSW.
 
 \[v1.1\]
 Aqui va una llista de tots els cambis de la ultima versió del bot:
