@@ -19,7 +19,7 @@ module.exports = {
         let isWorld = false;
 
         if (args[0]) {
-            covidUrl += "countries/" + args[0].toUpperCase();
+            covidUrl += "countries/" + args[0].toLowerCase();
             country = args[0];
             if (country.toLowerCase() === "world") {
                 isWorld = true;
@@ -60,20 +60,20 @@ module.exports = {
             return color;
         }
 
-        await getInfo().catch(console.error);
-
-        if (!isWorld) {
-            await getFlag().catch(console.error);
-        }
-
-        if (!covidData.cases) {
+        try {
+            await getInfo();
+        } catch(err) {
             message.reply("el país no existeix! Recorda que ho has de posar en anglès!");
             return message.channel.send(server.prefix + "help covid");
         }
 
+        if (!isWorld) {
+            await getFlag().catch(console.error);
+        }
+        
         const covidEmbed = new Discord.MessageEmbed()
             .setColor(getRandomColor())
-            .setTitle(isWorld ? "**CORONAVIRUS AL MON**" : "**CORONAVIRUS A " + country + "**")
+            .setTitle(isWorld ? "**CORONAVIRUS AL MON**" : "**CORONAVIRUS A " + country.toUpperCase() + "**")
             .setThumbnail(flag);
 
 
@@ -81,7 +81,6 @@ module.exports = {
             // Convertimos el campo en space case
             let result = camp.replace(/([A-Z])/g, " $1");
             let finalResult = result.charAt(0).toUpperCase() + result.slice(1);
-
             if (covidData[camp])
                 covidEmbed.addField("❯ " + finalResult, covidData[camp], true);
         });
