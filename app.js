@@ -242,9 +242,13 @@ client.on("guildCreate", (guild) => {
         "Aquestes tres comandes es poden desactivar en qualsevol moment amb el paràmetre `null`. P.E. `" + serversInfo[guild.id].prefix + "setwelcome null`\n" +
         "Per veure tota la informació dels canals, fes servir la comanda `" + serversInfo[guild.id].prefix + "server`.\n\n" +
         "Més informació de les comandes amb `" + serversInfo[guild.id].prefix + "help` o `" + serversInfo[guild.id].prefix + "help [nom de la comanda]`.";
-
-    guild.owner.send(introMessage);
-
+	
+	try {
+		guild.owner.send(introMessage);
+	} catch (err) {
+        console.error(err);
+    }
+   
     console.log(bot("El bot ha entrat al servidor \"" + guild.name + "\"\n"));
 
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
