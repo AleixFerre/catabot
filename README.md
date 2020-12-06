@@ -2,8 +2,6 @@
 
 ## Say hi to CataBOT! Welcome the best open source Catalan Discord Bot
 
-[![alt](https://discordapp.com/api/guilds/672991564351537154/embed.png)](https://invite.gg/catabot)
-![ ](https://img.shields.io/david/dev/catalahd/catabot)
 ![ ](https://img.shields.io/github/repo-size/Catalahd/catabot)
 ![ ](https://img.shields.io/github/issues/catalahd/catabot)
 
