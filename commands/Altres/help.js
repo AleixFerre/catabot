@@ -24,7 +24,7 @@ module.exports = {
             let helpContent = "\n";
 
             // Creem les taules auxiliars per guardar les comandes de cada tipus
-            let musica = [];
+            // let musica = [];
             let mod = [];
             let banc = [];
             let games = [];
@@ -36,9 +36,9 @@ module.exports = {
             // Encuem cada comanda a la taula que toca
             commands.forEach((command) => {
                 switch (command.type) {
-                    case 'musica':
+                    /*case 'musica':
                         musica.push(command);
-                        break;
+                        break;*/
                     case 'mod':
                         mod.push(command);
                         break;
@@ -74,12 +74,12 @@ module.exports = {
                 .setThumbnail('https://i.imgur.com/OMp4api.png')
                 .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
 
-            let aux = musica.map(c => c.name);
-            helpContent += '🎵 **COMANDES DE MUSICA** 🎵 [' + aux.length + ']\n `';
-            helpContent += aux.join(", ");
+            // let aux = musica.map(c => c.name);
+            // helpContent += '🎵 **COMANDES DE MUSICA** 🎵 [' + aux.length + ']\n `';
+            // helpContent += aux.join(", ");
 
             aux = mod.map(c => c.name);
-            helpContent += '`\n\n👮 **COMANDES DE MODERACIÓ** 👮 [' + aux.length + ']\n `';
+            helpContent += '👮 **COMANDES DE MODERACIÓ** 👮 [' + aux.length + ']\n `';
             helpContent += aux.join(", ");
 
             aux = banc.map(c => c.name);

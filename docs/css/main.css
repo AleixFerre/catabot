@@ -1,18 +1,4 @@
 /*//////////////////////////////////////////////////////////////////
-[ FONT ]*/
-
-@font-face {
-    font-family: Lato-Regular;
-    src: url('../fonts/Lato/Lato-Regular.ttf');
-}
-
-@font-face {
-    font-family: Lato-Bold;
-    src: url('../fonts/Lato/Lato-Bold.ttf');
-}
-
-
-/*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 
 * {
@@ -24,7 +10,7 @@
 body,
 html {
     height: 100%;
-    font-family: sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 
@@ -259,7 +245,7 @@ td {
 
 .table100.ver3 th {
     padding: 0.5rem;
-    font-family: Lato-Bold;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 15px;
     color: #EAE2B7;
     line-height: 1.4;
@@ -269,7 +255,7 @@ td {
 
 .table100.ver3 td {
     padding: 0.5rem;
-    font-family: Lato-Regular;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 15px;
     color: #003049;
     line-height: 1.4;
