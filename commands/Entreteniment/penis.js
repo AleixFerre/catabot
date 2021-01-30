@@ -34,7 +34,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("**MIDA DEL TEU PENIS**")
             .addField(`❯ Mida del penis de ${mention.username}`, penisString, true)
-            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         message.channel.send(msg);
     },

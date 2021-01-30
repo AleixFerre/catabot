@@ -34,7 +34,7 @@ module.exports = {
             .setTitle("**CARA O CREU**")
             .setThumbnail('http://bit.ly/CataBot_' + img)
             .addField('❯ Resultat', result, true)
-            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         message.channel.send(msg);
     },

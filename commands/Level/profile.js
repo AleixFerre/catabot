@@ -89,7 +89,7 @@ module.exports = {
             .addField('❯ BarraXP', barra + " *[" + progress + "%]*", false)
             .addField('❯ Diners', money, true)
             .addField('❯ Top Diners', posicioMoney, true)
-            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         message.channel.send(msg);
 

@@ -25,7 +25,7 @@ module.exports = {
             .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
             .setDescription('Aqui tens el link')
             .setThumbnail('https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png')
-            .setTimestamp().setFooter('CataBOT 2020 © All rights reserved');
+            .setTimestamp().setFooter('CataBOT " + new Date().getFullYear() + " © All rights reserved');
 
         message.author.send(embedMessage).catch(console.error);
     },

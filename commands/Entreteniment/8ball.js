@@ -52,7 +52,7 @@ module.exports = {
             .setThumbnail('http://bit.ly/CataBot_' + type)
             .addField('❯ Pregunta', question, true)
             .addField('❯ Resposta', answer, true)
-            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         message.channel.send(msg);
 

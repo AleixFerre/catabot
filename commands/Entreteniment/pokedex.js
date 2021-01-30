@@ -91,7 +91,7 @@ module.exports = {
                     pokeEmbed.addField('❯ Evolutions:', uniqueEvos.join(", "), true);
                 }
 
-                pokeEmbed.setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+                pokeEmbed.setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
                 message.channel.send(pokeEmbed).catch(console.error);
             });

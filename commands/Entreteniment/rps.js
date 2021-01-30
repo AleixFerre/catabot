@@ -61,7 +61,7 @@ module.exports = {
             .addField('❯ Player', player, true)
             .addField('❯ IA', IA, true)
             .addField('❯ Resultat', guanyador)
-            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         message.channel.send(msg);
     },

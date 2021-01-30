@@ -72,7 +72,7 @@ module.exports = {
                 .setTitle('El **CataBOT** té ' + commands.size + ' comandes')
                 .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
                 .setThumbnail('https://i.imgur.com/OMp4api.png')
-                .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+                .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
             // let aux = musica.map(c => c.name);
             // helpContent += '🎵 **COMANDES DE MUSICA** 🎵 [' + aux.length + ']\n `';
@@ -163,7 +163,7 @@ module.exports = {
         if (command.usage)
             helpEmbed.addField('Ús', prefix + command.name + ' ' + command.usage);
 
-        helpEmbed.setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+        helpEmbed.setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         message.channel.send(helpEmbed);
 

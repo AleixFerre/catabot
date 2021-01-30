@@ -50,7 +50,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("🐶 GOSSETS!! 🐶")
             .setDescription(desc)
-            .setImage(catUrl).setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+            .setImage(catUrl).setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         message.channel.send(catEmbed);
 

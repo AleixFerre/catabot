@@ -85,7 +85,7 @@ module.exports = {
                 covidEmbed.addField("❯ " + finalResult, covidData[camp], true);
         });
 
-        covidEmbed.setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+        covidEmbed.setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         message.channel.send(covidEmbed);
 

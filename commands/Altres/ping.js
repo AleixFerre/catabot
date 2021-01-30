@@ -6,7 +6,6 @@ module.exports = {
     type: 'altres',
     execute(message) {
         let ping = Math.floor(message.client.ws.ping);
-        let guildPing = Math.floor(message.guild.shard.ping);
 
         function getRandomColor() {
             let letters = '0123456789ABCDEF';
@@ -20,9 +19,8 @@ module.exports = {
         const pingEmbed = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle('**PING**')
-            .addField("❯ 🛰️ Ping DiscordAPI", `${ping} ms`, true)
-            .addField("❯ 🌐 Ping Servidor", `${guildPing} ms`, true)
-            .setTimestamp().setFooter('CataBOT 2020 © All rights reserved');
+            .addField("❯ 🛰️ Ping Discord WS", `${ping} ms`, true)
+            .setTimestamp().setFooter('CataBOT " + new Date().getFullYear() + " © All rights reserved');
 
         message.channel.send(":ping_pong: Pong!").then((m) => {
             pingEmbed.addField("❯ 📨 Ping Missatges", `${Math.floor(m.createdTimestamp - message.createdTimestamp)} ms`, true);

@@ -47,7 +47,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("💰 **DAILY** 💰")
             .setDescription(content)
-            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
         message.channel.send(msg);

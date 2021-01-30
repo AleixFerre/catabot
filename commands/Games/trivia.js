@@ -69,7 +69,7 @@ module.exports = {
                 .setDescription("=> [🚪] UNIR-SE / SORTIR DE LA SALA\n=> [✅] COMENÇAR PARTIDA\n" +
                     "=> [❌] CANCEL·LAR" + "**[ Màxim 5 persones per sala! ]**")
                 .addField('❯ Participant 1: ', message.author.tag, false)
-                .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+                .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
             let msg_sala = await message.channel.send(embed_sala);
 
@@ -126,7 +126,7 @@ module.exports = {
                 .setTitle("**TRIVIA**")
                 .setDescription("=> [🚪] UNIR-SE / SORTIR DE LA SALA\n=> [✅] COMENÇAR PARTIDA\n" +
                     "=> [❌] CANCEL·LAR" + "**[ Màxim 5 persones per sala! ]**")
-                .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+                .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
             for (let i = 0; i < participants.length; i++) {
                 embed.addField('❯ Participant ' + (i + 1) + ': ', participants[i].tag, false);
@@ -156,7 +156,7 @@ module.exports = {
                 .setColor(getRandomColor())
                 .setTitle("**TRIVIA - PREGUNTA " + (q_index + 1) + "/" + n_preguntes + "**")
                 .setDescription(pregunta_decoded)
-                .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+                .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
             let respostes = [];
 
@@ -258,7 +258,7 @@ module.exports = {
                 .setColor(getRandomColor())
                 .setTitle("🏆 Resultat de la partida 🏆")
                 .setDescription("Només el primer recolleix el premi!")
-                .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+                .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
             let i = 1;
             let recompenses_txt = "**RECOMPENSES**\n";

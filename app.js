@@ -443,7 +443,7 @@ client.on('message', async (message) => {
     if (!command)
         return;
 
-    if (command.type == 'mod') {
+    if (command.type === 'mod') {
         if (!message.member.hasPermission("ADMINISTRATOR")) {
             message.reply("no tens permisos d'administrador per executar aquesta comanda!");
             return;

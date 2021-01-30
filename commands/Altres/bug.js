@@ -92,7 +92,7 @@ module.exports = {
             .addField('❯ Servidor', message.guild.name, true)
             .addField('❯ Assumpte', assumpte, false)
             .addField('❯ Cos', cos, false)
-            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         // Envia el missatge al owner del bot
         let owner = await message.client.users.fetch(config.IdOwner);

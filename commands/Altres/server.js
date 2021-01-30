@@ -81,7 +81,7 @@ module.exports = {
             .addField('❯ Canal d\'avisos', canalAvisos, true)
             .addField('❯ Canal del bot', canalBot, true)
             .addField('❯ Canal de benvinguda', canalBenvinguda, true)
-            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         message.channel.send(msg);
     },

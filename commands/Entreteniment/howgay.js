@@ -29,7 +29,7 @@ module.exports = {
             .setTitle("**QUANT GAY ETS?**")
             .setThumbnail('https://i.imgur.com/jr5elyc.png')
             .addField('❯ Resultat', `${mention.username}, ets ` + gay + '% gay!', true)
-            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         message.channel.send(msg);
     },

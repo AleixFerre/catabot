@@ -12,3 +12,4 @@ Storage/servers_test.json
 *.psd
 *.zip
 *.rar
+Storage/champion*

@@ -34,7 +34,7 @@ module.exports = {
                 .setColor(getRandomColor())
                 .setTitle("**TEMPS a " + result.location.name + "**")
                 .setThumbnail(result.current.imageUrl)
-                .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+                .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
             Object.keys(result.current).forEach(camp => {
                 // Convertimos el campo en space case

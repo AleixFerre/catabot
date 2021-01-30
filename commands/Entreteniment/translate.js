@@ -36,7 +36,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("**TRAUDEIX**")
             .setDescription(traducido)
-            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         message.channel.send(msg);
     },

@@ -97,7 +97,7 @@ module.exports = {
         let embed = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle("**🎰 SLOT MACHINE 🎰**")
-            .setTimestamp().setFooter("CataBOT 2020 © All rights reserved");
+            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         for (let i = 0; i < 3; i++) { // Adding the machine slots
             embed.addField((i + 1) + '.', emojis[machine[i]], true);

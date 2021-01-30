@@ -23,7 +23,7 @@ module.exports = {
         let prefixEmbed = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle('**PREFIX**')
-            .setTimestamp().setFooter('CataBOT 2020 © All rights reserved');
+            .setTimestamp().setFooter('CataBOT " + new Date().getFullYear() + " © All rights reserved');
 
         if (!args[0]) {
             prefixEmbed.addField("❯ Prefix actual", server.prefix, true);
