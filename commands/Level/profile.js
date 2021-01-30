@@ -6,7 +6,7 @@ module.exports = {
     description: 'Mostra el teu perfil',
     type: 'level',
     aliases: ['perfil'],
-    execute(message, args, servers, userData) {
+    execute(message, _args, _servers, userData) {
 
         let mention = {};
         let posicio = 1;
@@ -48,14 +48,14 @@ module.exports = {
         let barra = "";
         let max = 10;
 
-        // ▰▰▰▰▰▱▱▱▱▱▱▱
+        // ⬛⬛⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜
         for (let i = 0; i < (progress / 10); i++) {
-            barra += "▰";
+            barra += "🟦";
             max--;
         }
 
         while (max > 0) {
-            barra += "▱";
+            barra += "⬜";
             max--;
         }
 

@@ -9,7 +9,7 @@ module.exports = {
     type: 'mod',
     usage: '[ null ]',
     aliases: ['alerthere', 'setalert'],
-    execute(message, args, servers, _userData, _client, testing) {
+    execute(message, args, servers, _userData, _client) {
 
         let paraula = "adjudicat";
 
@@ -22,9 +22,6 @@ module.exports = {
 
         // Actualitzem el fitxer de disc
         let file = "Storage/servers.json";
-        if (testing) {
-            file = "Storage/servers_test.json";
-        }
 
         fs.writeFile(file, JSON.stringify(servers), (err) => {
             if (err) console.error(err);

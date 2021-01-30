@@ -13,21 +13,10 @@
 
 First install [Node.js](https://nodejs.org/en/) LTS Version if you don't have it installed yet.
 
-Clone it and download dependencies with
+Clone it and install dependencies with
 
 ```txt
-npm install discord.js
-npm install opusscript
-npm install ytdl-core
-npm install simple-youtube-api
-npm install canvas
-npm install node-fetch
-npm install express
-npm install moment
-npm install @vitalets/google-translate-api
-npm install weather-js
-npm install chalk
-npm install mathjs
+npm install discord.js opusscript ytdl-core simple-youtube-api canvas node-fetch express moment @vitalets/google-translate-api weather-js chalk mathjs
 ```
 
 If you are running this locally
