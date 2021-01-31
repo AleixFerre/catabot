@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
-const champs = Object.keys(require('../../Storage/champion.json').data);
+const champs = Object.keys(require('../../Storage/lol/champion.json').data);
+const spells = require('../../Storage/lol/summoner.json');
+const items = require('../../Storage/lol/item.json').data;
 
 function getRandomColor() {
     let letters = '0123456789ABCDEF';
@@ -63,15 +65,7 @@ async function showChampStats(champName) {
 }
 
 async function showSpellStats(spellName) {
-    
-    try {
-        var spells = await fetch("http://ddragon.leagueoflegends.com/cdn/11.2.1/data/en_US/summoner.json");
-        spells = await spells.json();
-    } catch (err) {
-        return "No s'ha pogut rebre la informació del servidor.";
-    }
-    
-    // const spellCapitalized = spellName.charAt(0).toUpperCase() + spellName.slice(1);
+      
     let spell = spells.data["Summoner" + spellName];
     let names = Object.keys(spells.data);
 
@@ -95,11 +89,46 @@ async function showSpellStats(spellName) {
 }
 
 async function showItemStats(itemName) {
+
+    const filteredItems = Object.values(items).filter(i => i.name === itemName);
+
+    if (filteredItems.length === 0) {
+        let names = [];
+        for (let item of Object.keys(items)) {
+            names.push(items[item].name);
+        }
+        return "No s'ha trobat cap item amb nom **" + itemName + "**\nProva un d'aquests:\n" + names.join(", ").substring(0, 1900) + "...";
+    }
+
+    const item = filteredItems[0];
+
     let embed = new Discord.MessageEmbed()
         .setColor(getRandomColor())
-        .setTitle("**Item**")
-        .addField('❯ Name', itemName, true)
+        .setThumbnail("http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/" + item.image.full)
+        .setTitle("**" + item.name + "**")
+        .setDescription(item.plaintext)
         .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+
+    let tags = item.tags;
+    if (tags.length !== 0) {
+        tags = tags.map(s => s.replace(/([A-Z])/g, ' $1').trim());
+        tags = tags.join(", ");
+        embed.addField('❯ Tags', tags, true);
+    }
+
+    embed.addField('❯ Gold', item.gold.total, true);
+
+    let from = item.from;
+    if (from) {
+        from = from.map(i => items[i].name);
+        embed.addField("❯ From", from.join(", "), false);
+    }
+
+    let into = item.into;
+    if (into) {
+        into = into.map(i => items[i].name);
+        embed.addField("❯ Into", into.join(", "), true);
+    }
 
     return embed;
 }
@@ -113,19 +142,23 @@ module.exports = {
 
         let commandType = args.shift().toLowerCase();
         let messageToReply;
-        let champName = "";
-
-        for (let i = 0; i < args.length; i++) {
-            const nameCapitalized = args[i].charAt(0).toUpperCase() + args[i].slice(1)
-            champName += nameCapitalized;
-        }
+        let theName = "";
 
         if (commandType === "champ" || commandType === "champion" || commandType === "champs") {
-            messageToReply = await showChampStats(champName, message);
+            for (let i = 0; i < args.length; i++) {
+                const nameCapitalized = args[i].charAt(0).toUpperCase() + args[i].slice(1)
+                theName += nameCapitalized;
+            }
+            messageToReply = await showChampStats(theName, message);
         } else if (commandType === "spell" || commandType === "summoner" || commandType === "summ") {
-            messageToReply = await showSpellStats(champName, message);
+            for (let i = 0; i < args.length; i++) {
+                const nameCapitalized = args[i].charAt(0).toUpperCase() + args[i].slice(1)
+                theName += nameCapitalized;
+            }
+            messageToReply = await showSpellStats(theName, message);
         } else if (commandType === "item") {
-            messageToReply = await showItemStats(champName, message);
+            args[0] = args[0].charAt(0).toUpperCase() + args[0].slice(1);
+            messageToReply = await showItemStats(args.join(" "), message);
         } else {
             // Cap de les que toca, avisar amb un missatge
             message.reply("no has escollit cap de les opcions!");
