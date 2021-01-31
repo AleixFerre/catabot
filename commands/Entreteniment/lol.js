@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
+const champs = Object.keys(require('../../Storage/champion.json').data);
 
 function getRandomColor() {
     let letters = '0123456789ABCDEF';
@@ -20,7 +21,7 @@ async function showChampStats(champName) {
         var champ = await fetch("http://ddragon.leagueoflegends.com/cdn/11.2.1/data/en_US/champion/" + champName + ".json");
         champ = await champ.json();
     } catch (err) {
-        return "No existeix cap campió de nom **" + champName + "**";
+        return "No existeix cap campió de nom **" + champName + "** \nProva millor amb algun d'aquests:\n" + champs.join(", ");
     }
 
     champ = champ.data[champName];
@@ -38,7 +39,6 @@ async function showChampStats(champName) {
         "• Attack Damage: `" + champ.stats.attackdamage + '`\n' +
         "• Attack Range: `" + champ.stats.attackrange + '`\n' +
         "• Attack Speed: `" + champ.stats.attackspeed + '`';
-
 
     let embed = new Discord.MessageEmbed()
         .setColor(getRandomColor())
@@ -63,10 +63,32 @@ async function showChampStats(champName) {
 }
 
 async function showSpellStats(spellName) {
+    
+    try {
+        var spells = await fetch("http://ddragon.leagueoflegends.com/cdn/11.2.1/data/en_US/summoner.json");
+        spells = await spells.json();
+    } catch (err) {
+        return "No s'ha pogut rebre la informació del servidor.";
+    }
+    
+    // const spellCapitalized = spellName.charAt(0).toUpperCase() + spellName.slice(1);
+    let spell = spells.data["Summoner" + spellName];
+    let names = Object.keys(spells.data);
+
+    names = names.map(n => n.substring(8));
+
+    if (!spell) {
+        return "No s'ha trobat cap spell de nom **" + spellName + "**\nPots provar amb algun d'aquests:\n" + names.join(", ");
+    }
+    
     let embed = new Discord.MessageEmbed()
         .setColor(getRandomColor())
-        .setTitle("**Summoner Spell**")
-        .addField('❯ Name', spellName, true)
+        .setTitle("**" + spell.name + "**")
+        .setThumbnail("http://ddragon.leagueoflegends.com/cdn/11.2.1/img/spell/Summoner" + spellName + ".png")
+        .setDescription(spell.description)
+        .addField('❯ Cooldown', spell.cooldownBurn, true)
+        .addField('❯ Summoner Level', spell.summonerLevel, true)
+        .addField('❯ Range', spell.rangeBurn, true)
         .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
     return embed;
