@@ -90,7 +90,7 @@ async function showSpellStats(spellName) {
 
 async function showItemStats(itemName) {
 
-    const filteredItems = Object.values(items).filter(i => i.name === itemName);
+    const filteredItems = Object.values(items).filter(i => i.name.toLowerCase() === itemName.toLowerCase());
 
     if (filteredItems.length === 0) {
         let names = [];
@@ -157,7 +157,6 @@ module.exports = {
             }
             messageToReply = await showSpellStats(theName, message);
         } else if (commandType === "item") {
-            args[0] = args[0].charAt(0).toUpperCase() + args[0].slice(1);
             messageToReply = await showItemStats(args.join(" "), message);
         } else {
             // Cap de les que toca, avisar amb un missatge
