@@ -12,6 +12,7 @@
 - Ara la comanda `penis` no té cap imatge d'un penis, ja que es considera contingut NFSW.
 
 \[v1.1\]
+
 Aqui va una llista de tots els cambis de la ultima versió del bot:
 
 - Ara, per fi, el bot es **PÚBLIC**, per tant se'l pot convidar a qualsevol servidor.

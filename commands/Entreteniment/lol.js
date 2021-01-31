@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const champs = Object.keys(require('../../Storage/lol/champion.json').data);
-const spells = require('../../Storage/lol/summoner.json');
+const spells = require('../../Storage/lol/summoner.json').data;
 const items = require('../../Storage/lol/item.json').data;
 
 function getRandomColor() {
@@ -68,12 +68,28 @@ function predictChamp(champName) {
         }
     }
 
-    return champName;
+    return "-1";
+}
+
+function predictSpell(spellName, spellNames) {
+    
+    // Si existeix un nom igual, retornar-lo
+    if (spellNames.includes(spellName)) {
+        return spellName;
+    }
+
+    // SI existeix un nom semblant, retornar-lo
+    for (let spell of spellNames) {
+        if (distanciaEdicio(spell.toLowerCase(), spellName.toLowerCase()) < 2) {
+            return spell;
+        }
+    }
+
+    // SI no existeix cap nom semblant, retorna "-1"
+    return "-1";
 }
 
 async function showChampStats(champName) {
-
-    predictChamp(champName);
 
     try {
         var champ = await fetch("http://ddragon.leagueoflegends.com/cdn/11.2.1/data/en_US/champion/" + champName + ".json");
@@ -122,19 +138,23 @@ async function showChampStats(champName) {
 
 async function showSpellStats(spellName) {
 
-    let spell = spells.data["Summoner" + spellName];
-    let names = Object.keys(spells.data);
+    let spell = spells["Summoner" + spellName];
+    let names = Object.keys(spells);
 
     names = names.map(n => n.substring(8));
 
-    if (!spell) {
+    let predictedSpell = predictSpell(spellName, names);
+
+    if (predictedSpell === "-1") {
         return "No s'ha trobat cap spell de nom **" + spellName + "**\nPots provar amb algun d'aquests:\n" + names.join(", ");
+    } else {
+        spell = spells["Summoner" + predictedSpell];
     }
 
     let embed = new Discord.MessageEmbed()
         .setColor(getRandomColor())
         .setTitle("**" + spell.name + "**")
-        .setThumbnail("http://ddragon.leagueoflegends.com/cdn/11.2.1/img/spell/Summoner" + spellName + ".png")
+        .setThumbnail("http://ddragon.leagueoflegends.com/cdn/11.2.1/img/spell/Summoner" + predictedSpell + ".png")
         .setDescription(spell.description)
         .addField('❯ Cooldown', spell.cooldownBurn, true)
         .addField('❯ Summoner Level', spell.summonerLevel, true)
@@ -207,7 +227,11 @@ module.exports = {
             }
 
             let predictedName = predictChamp(theName);
-            messageToReply = await showChampStats(predictedName, message);
+            if (predictedName === "-1") {
+                messageToReply = "Ho sentim, però no existeix cap campió de nom **" + args.join(" ") + "** 😦";
+            } else {
+                messageToReply = await showChampStats(predictedName, message);
+            }
 
         } else if (commandType === "spell" || commandType === "summoner" || commandType === "summ") {
             for (let i = 0; i < args.length; i++) {
