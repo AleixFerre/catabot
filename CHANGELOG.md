@@ -1,5 +1,11 @@
 # CHANGELOG
 
+\[v1.3\]
+
+- Nova comanda `lol` amb la que pots buscar tota la informació del lol.
+- Aquesta comanda té diferents subcomandes: champ, spell i item. Més info amb la comanda `help lol`.
+- S'ha implementat un sistema de predicció on si es posa una lletra malament, s'avisa i es corregeix ràpidament.
+
 \[v1.2\]
 
 - Ara l'esborrat de missatges és més ràpid i pot arribar a esborrar fins a 100 missatges alhora contant el missatge enviat amb la comanda.

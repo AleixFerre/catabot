@@ -13,17 +13,73 @@ function getRandomColor() {
     return color;
 }
 
+// Thanks to https://gist.github.com/andrei-m/982927#gistcomment-1931258
+function distanciaEdicio(a, b) {
+    if (a.length === 0) return b.length;
+    if (b.length === 0) return a.length;
+    let tmp, i, j, prev, val, row;
+    // swap to save some memory O(min(a,b)) instead of O(a)
+    if (a.length > b.length) {
+        tmp = a;
+        a = b;
+        b = tmp;
+    }
+
+    row = Array(a.length + 1)
+    // init the row
+    for (i = 0; i <= a.length; i++) {
+        row[i] = i;
+    }
+
+    // fill in the rest
+    for (i = 1; i <= b.length; i++) {
+        prev = i;
+        for (j = 1; j <= a.length; j++) {
+            if (b[i - 1] === a[j - 1]) {
+                val = row[j - 1]; // match
+            } else {
+                val = Math.min(row[j - 1] + 1, // substitution
+                    Math.min(prev + 1, // insertion
+                        row[j] + 1)); // deletion
+            }
+            row[j - 1] = prev;
+            prev = val;
+        }
+        row[a.length] = prev;
+    }
+
+    return row[a.length];
+}
+
+function predictChamp(champName) {
+    
+    if (champName.toLowerCase() === "wukong") {
+        return "MonkeyKing";
+    }
+    
+    // Si existeix un nom igual, retornar-lo
+    if (champs.includes(champName)) {
+        return champName;
+    }
+
+    for (let champ of champs) {
+        if (distanciaEdicio(champ.toLowerCase(), champName.toLowerCase()) < 2) {
+            return champ;
+        }
+    }
+
+    return champName;
+}
+
 async function showChampStats(champName) {
 
-    if (champName.toLowerCase() === "wukong") {
-        champName = "MonkeyKing";
-    }
+    predictChamp(champName);
 
     try {
         var champ = await fetch("http://ddragon.leagueoflegends.com/cdn/11.2.1/data/en_US/champion/" + champName + ".json");
         champ = await champ.json();
     } catch (err) {
-        return "No existeix cap campió de nom **" + champName + "** \nProva millor amb algun d'aquests:\n" + champs.join(", ");
+        return "Ho sentim, però no existeix cap campió de nom **" + champName + "** 😦";
     }
 
     champ = champ.data[champName];
@@ -45,7 +101,7 @@ async function showChampStats(champName) {
     let embed = new Discord.MessageEmbed()
         .setColor(getRandomColor())
         .setTitle("**" + champ.name + ", " + champ.title + "**")
-        // .setDescription(champ.blurb); // Mucho texto
+    // .setDescription(champ.blurb); // Mucho texto
 
     if (champ.allytips.length !== 0) {
         embed.addField('❯ Ally tips', " 🔘 " + champ.allytips.join("\n 🔘 "), false)
@@ -65,7 +121,7 @@ async function showChampStats(champName) {
 }
 
 async function showSpellStats(spellName) {
-      
+
     let spell = spells.data["Summoner" + spellName];
     let names = Object.keys(spells.data);
 
@@ -74,7 +130,7 @@ async function showSpellStats(spellName) {
     if (!spell) {
         return "No s'ha trobat cap spell de nom **" + spellName + "**\nPots provar amb algun d'aquests:\n" + names.join(", ");
     }
-    
+
     let embed = new Discord.MessageEmbed()
         .setColor(getRandomColor())
         .setTitle("**" + spell.name + "**")
@@ -136,7 +192,7 @@ async function showItemStats(itemName) {
 module.exports = {
     name: 'lol',
     description: 'Busca la info del LoL que vulguis',
-    usage: "champ < champName >\n.......spell < spellName >\n.......item < itemName >",
+    usage: "champ < champName >\n [ or ] spell < spellName >\n [ or ] item < itemName >",
     type: 'entreteniment',
     async execute(message, args, servers) {
 
@@ -149,7 +205,10 @@ module.exports = {
                 const nameCapitalized = args[i].charAt(0).toUpperCase() + args[i].slice(1)
                 theName += nameCapitalized;
             }
-            messageToReply = await showChampStats(theName, message);
+
+            let predictedName = predictChamp(theName);
+            messageToReply = await showChampStats(predictedName, message);
+
         } else if (commandType === "spell" || commandType === "summoner" || commandType === "summ") {
             for (let i = 0; i < args.length; i++) {
                 const nameCapitalized = args[i].charAt(0).toUpperCase() + args[i].slice(1)

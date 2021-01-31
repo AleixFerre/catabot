@@ -11,13 +11,13 @@ module.exports = {
     async execute(message) {
 
         let desc = "";
-        let catUrl = "https://stockpictures.io/wp-content/uploads/2020/01/image-not-found-big.png";
+        let dogUrl = "https://stockpictures.io/wp-content/uploads/2020/01/image-not-found-big.png";
 
         async function getCat() {
             await fetch("https://api.thedogapi.com/v1/images/search?api_key='" + config.catAPIKey + "'?mime_types=gif")
                 .then(res => res.json())
                 .then((data) => {
-                    catUrl = data[0].url;
+                    dogUrl = data[0].url;
                 });
         }
 
@@ -50,7 +50,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("🐶 GOSSETS!! 🐶")
             .setDescription(desc)
-            .setImage(catUrl).setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+            .setImage(dogUrl).setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         message.channel.send(catEmbed);
 
