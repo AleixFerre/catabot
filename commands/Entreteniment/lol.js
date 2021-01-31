@@ -71,16 +71,16 @@ function predictChamp(champName) {
     return "-1";
 }
 
-function predictSpell(spellName, spellNames) {
+function predict(nameToPredict, namesArray) {
     
     // Si existeix un nom igual, retornar-lo
-    if (spellNames.includes(spellName)) {
-        return spellName;
+    if (namesArray.includes(nameToPredict)) {
+        return nameToPredict;
     }
 
     // SI existeix un nom semblant, retornar-lo
-    for (let spell of spellNames) {
-        if (distanciaEdicio(spell.toLowerCase(), spellName.toLowerCase()) < 2) {
+    for (let spell of namesArray) {
+        if (distanciaEdicio(spell.toLowerCase(), nameToPredict.toLowerCase()) < 2) {
             return spell;
         }
     }
@@ -143,7 +143,7 @@ async function showSpellStats(spellName) {
 
     names = names.map(n => n.substring(8));
 
-    let predictedSpell = predictSpell(spellName, names);
+    let predictedSpell = predict(spellName, names);
 
     if (predictedSpell === "-1") {
         return "No s'ha trobat cap spell de nom **" + spellName + "**\nPots provar amb algun d'aquests:\n" + names.join(", ");
@@ -166,14 +166,10 @@ async function showSpellStats(spellName) {
 
 async function showItemStats(itemName) {
 
-    const filteredItems = Object.values(items).filter(i => i.name.toLowerCase() === itemName.toLowerCase());
+    const filteredItems = Object.values(items).filter(i => distanciaEdicio(i.name.toLowerCase(), itemName.toLowerCase()) < 3);
 
     if (filteredItems.length === 0) {
-        let names = [];
-        for (let item of Object.keys(items)) {
-            names.push(items[item].name);
-        }
-        return "No s'ha trobat cap item amb nom **" + itemName + "**\nProva un d'aquests:\n" + names.join(", ").substring(0, 1900) + "...";
+        return "No s'ha trobat cap item amb nom **" + itemName + "**";
     }
 
     const item = filteredItems[0];
