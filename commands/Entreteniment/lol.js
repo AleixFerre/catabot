@@ -199,7 +199,7 @@ async function showItemStats(itemName) {
     let into = item.into;
     if (into) {
         into = into.map(i => items[i].name);
-        embed.addField("❯ Into", into.join(", "), true);
+        embed.addField("❯ Into", into.join(", "), false);
     }
 
     return embed;
