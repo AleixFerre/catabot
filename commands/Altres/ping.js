@@ -20,7 +20,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle('**PING**')
             .addField("❯ 🛰️ Ping Discord WS", `${ping} ms`, true)
-            .setTimestamp().setFooter('CataBOT " + new Date().getFullYear() + " © All rights reserved');
+            .setTimestamp().setFooter('CataBOT ' + new Date().getFullYear() + ' © All rights reserved');
 
         message.channel.send(":ping_pong: Pong!").then((m) => {
             pingEmbed.addField("❯ 📨 Ping Missatges", `${Math.floor(m.createdTimestamp - message.createdTimestamp)} ms`, true);
