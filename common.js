@@ -1,5 +1,3 @@
-let servers = require("./Storage/servers.json");
-
 module.exports = {
     getRandomColor: function() {
         let letters = '0123456789ABCDEF';
@@ -10,7 +8,7 @@ module.exports = {
         return color;
     },
 
-    getServerPrefix: function(serverID) {
-        return servers[serverID].prefix;
+    getServerPrefix: function(message, servers) {
+        return servers[message.guild.id].prefix;
     }
 };

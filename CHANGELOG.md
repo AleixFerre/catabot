@@ -7,6 +7,9 @@
 - S'ha implementat un sistema de predicció on si es posa una lletra malament, s'avisa i es corregeix ràpidament.
 - Nova comamanda `advice` que dona consells de la vida. Més info amb la comanda `help advice`.
 - Nova comanda `exchange` que permet fer la conversió de monedes de forma ràpida i fàcil. Més info amb la comanda `help exchange`.
+- Nou sistema de Mod per administrar els Rols. Si ets Administrador pots:
+    - Afegir un Rol a un Usuari amb `addrole < @user > < @rol >`. Més info amb la comanda `help addrole`.
+    - Esborrar un Rol d'un Usuari amb `removerole < @user > < @rol >`. Més info amb la comanda `help removerole`.
 
 \[v1.2\]
 
