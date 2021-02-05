@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const translate = require('@vitalets/google-translate-api');
+const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'translate',
@@ -17,15 +18,6 @@ module.exports = {
         } else {
             message.reply("no has posat el text a traduir!");
             return message.channel.send(server.prefix + "help translate");
-        }
-
-        function getRandomColor() {
-            let letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
         }
 
         await translate(txt, { to: "es" }).then(res => {

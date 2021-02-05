@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const { paraules } = require("../../Storage/paraules.json");
+const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'hangman',
@@ -34,16 +35,6 @@ module.exports = {
         let acabat = await comenca_joc();
         // Quan s'han resolt totes les lletres de la paraula, mostrem la classificacio
         await acabar_joc(acabat);
-
-
-        function getRandomColor() {
-            let letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
 
         async function fase_sala() {
 

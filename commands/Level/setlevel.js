@@ -6,7 +6,7 @@ module.exports = {
     description: "Adjudica el nivell d'algú. Comanda interna del bot",
     type: 'privat',
     usage: '<lvl, xp, @user>',
-    async execute(message, args, servers, userData) {
+    async execute(message, args, _servers, userData) {
 
         if (message.author.id !== IdOwner) {
             return message.reply("no tens permís per executar aquesta comanda!");

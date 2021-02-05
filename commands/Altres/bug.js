@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const config = require("../../config.json");
+const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'bug',
@@ -71,15 +72,6 @@ module.exports = {
         });
 
         // Enviem el missatge a l'owner del servidor
-        function getRandomColor() {
-            let letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
-
         function firstCapital(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
         }

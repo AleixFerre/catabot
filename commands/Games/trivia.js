@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const Discord = require('discord.js');
 const fs = require('fs');
+const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'trivia',
@@ -50,16 +51,6 @@ module.exports = {
         await comenca_joc();
         // Quan s'han respos les 10 preguntes, mostrem la classificacio
         await acabar_joc();
-
-
-        function getRandomColor() {
-            let letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
 
         async function fase_sala() {
 

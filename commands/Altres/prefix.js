@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const { measureMemory } = require('vm');
+const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'prefix',
@@ -10,15 +10,6 @@ module.exports = {
     async execute(message, args, servers, userData, client) {
 
         let server = servers[message.guild.id];
-
-        function getRandomColor() {
-            let letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
 
         let prefixEmbed = new Discord.MessageEmbed()
             .setColor(getRandomColor())

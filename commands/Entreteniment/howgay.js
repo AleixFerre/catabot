@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'howgay',
@@ -13,15 +14,6 @@ module.exports = {
 
         if (args[0]) {
             mention = message.mentions.users.first();
-        }
-
-        function getRandomColor() {
-            let letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
         }
 
         let msg = new Discord.MessageEmbed()

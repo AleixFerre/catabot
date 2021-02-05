@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'penis',
@@ -6,15 +7,6 @@ module.exports = {
     type: 'entreteniment',
     aliases: ['pene'],
     execute(message, args) {
-
-        function getRandomColor() {
-            let letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
 
         let penis = Math.round(Math.random() * 9 + 1); // Clamped bewteen 1 : 10
 

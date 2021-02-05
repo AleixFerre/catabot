@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 let conversions = require('../../Storage/conversions.json');
+const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'exchange',
@@ -9,15 +10,6 @@ module.exports = {
     aliases: ['canvi'],
     example: "10 EUR USD",
     async execute(message, args, servers) {
-
-        function getRandomColor() {
-            let letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
 
         let server = servers[message.guild.id];
         if (args.length < 3) {

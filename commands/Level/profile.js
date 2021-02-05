@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const { ranks } = require("../../Storage/ranks.json");
+const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'profile',
@@ -66,16 +67,6 @@ module.exports = {
         }
 
         let rankLink = "https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/rank_icons/" + rankIndex + ".png";
-
-
-        function getRandomColor() {
-            let letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
 
         let msg = new Discord.MessageEmbed()
             .setColor(getRandomColor())

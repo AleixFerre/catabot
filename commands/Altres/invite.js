@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 let { clientid } = require('../../config.json');
+const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'invite',
@@ -8,15 +9,6 @@ module.exports = {
     execute(message) {
         // Get the invite link With admin permissions
         let link = 'https://discordapp.com/oauth2/authorize?client_id=' + clientid + '&permissions=8&scope=bot';
-
-        function getRandomColor() {
-            let letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
 
         const embedMessage = new Discord.MessageEmbed()
             .setColor(getRandomColor())

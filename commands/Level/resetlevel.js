@@ -5,7 +5,7 @@ module.exports = {
     name: 'resetlevel',
     description: 'Es resetejen tots els nivells de la gent. Comanda interna del bot',
     type: 'privat',
-    async execute(message, args, servers, userData, client) {
+    async execute(message, _args, _servers, userData, client) {
 
         if (message.author.id !== IdOwner) {
             return message.reply("no tens permís per executar aquesta comanda!");

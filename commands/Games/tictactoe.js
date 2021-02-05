@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const fs = require('fs');
+const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'tictactoe',
@@ -26,15 +27,6 @@ module.exports = {
         let tauler = []; // 0: ningu | 1: jugador1 | 2: jugador2
 
         fase_sala(); // comença la festa!
-
-        function getRandomColor() {
-            let letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
 
         function montar_tauler_string() {
 

@@ -6,7 +6,7 @@ module.exports = {
     name: 'progress',
     description: 'Et permet pujar de nivell. Comanda interna del bot',
     type: 'privat',
-    async execute(message, args, servers, userData) {
+    async execute(message, args, _servers, userData) {
 
         if (!message.author.bot && message.author.id !== IdOwner) {
             return message.reply("no tens permís per executar aquesta comanda!");

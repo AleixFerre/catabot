@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
+const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'meme',
@@ -10,16 +11,6 @@ module.exports = {
         fetch("https://meme-api.herokuapp.com/gimme")
             .then(res => res.json())
             .then((data) => {
-
-                function getRandomColor() {
-                    let letters = '0123456789ABCDEF';
-                    let color = '#';
-                    for (let i = 0; i < 6; i++) {
-                        color += letters[Math.floor(Math.random() * 16)];
-                    }
-                    return color;
-                }
-
                 const memeEmbed = new Discord.MessageEmbed()
                     .setColor(getRandomColor())
                     .setURL(data.postLink)

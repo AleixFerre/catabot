@@ -1,5 +1,6 @@
 const Canvas = require('canvas');
 const Discord = require("discord.js");
+const { getRandomColor } = require('../../common.js');
 
 function generateText(length) {
     let result = '';
@@ -34,15 +35,6 @@ function padZero(str, len) {
     len = len || 2;
     var zeros = new Array(len).join('0');
     return (zeros + str).slice(-len);
-}
-
-function getRandomColor() {
-    let letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
 }
 
 function getRandomTransform() {

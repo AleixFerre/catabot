@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const moment = require('moment');
 const fs = require('fs');
+const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'daily',
@@ -32,15 +33,6 @@ module.exports = {
             message.channel.send(server.prefix + "progress " + xpMax + " <@" + message.author.id + ">");
         } else {
             content = "Ja has recollit la teva recompensa diaria!\nPots tornar-hi " + moment().endOf('day').fromNow();
-        }
-
-        function getRandomColor() {
-            let letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
         }
 
         let msg = new Discord.MessageEmbed()

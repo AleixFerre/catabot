@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
+const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'pokedex',
@@ -28,15 +29,6 @@ module.exports = {
                     message.channel.send("```No hi ha cap pokemon que es digui " + realName + "```");
                     message.channel.send(server.prefix + "help pokedex");
                     return;
-                }
-
-                function getRandomColor() {
-                    let letters = '0123456789ABCDEF';
-                    let color = '#';
-                    for (let i = 0; i < 6; i++) {
-                        color += letters[Math.floor(Math.random() * 16)];
-                    }
-                    return color;
                 }
 
                 function capitalize(s) {

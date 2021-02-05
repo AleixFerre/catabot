@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const weather = require('weather-js');
+const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'weather',
@@ -43,15 +44,6 @@ module.exports = {
 
                 msg.addField("❯ " + finalResult, result.current[camp], true);
             });
-
-            function getRandomColor() {
-                let letters = '0123456789ABCDEF';
-                let color = '#';
-                for (let i = 0; i < 6; i++) {
-                    color += letters[Math.floor(Math.random() * 16)];
-                }
-                return color;
-            }
 
             message.channel.send(msg);
 

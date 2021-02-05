@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'dice',
@@ -32,15 +33,6 @@ module.exports = {
             return message.reply("el numero de tirades ha de ser major que 1!");
         } else if (num > 25) {
             return message.reply("el numero de tirades no pot ser major que 25!");
-        }
-
-        function getRandomColor() {
-            let letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
         }
 
         let msg = new Discord.MessageEmbed()
