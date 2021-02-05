@@ -5,6 +5,8 @@
 - Nova comanda `lol` amb la que pots buscar tota la informació del lol.
 - Aquesta comanda té diferents subcomandes: champ, spell i item. Més info amb la comanda `help lol`.
 - S'ha implementat un sistema de predicció on si es posa una lletra malament, s'avisa i es corregeix ràpidament.
+- Nova comamanda `advice` que dona consells de la vida. Més info amb la comanda `help advice`.
+- Nova comanda `exchange` que permet fer la conversió de monedes de forma ràpida i fàcil. Més info amb la comanda `help exchange`.
 
 \[v1.2\]
 

@@ -8,5 +8,7 @@
     "ownerDiscordUsername": "",
     "catAPIKey": "",
     "website": "",
-    "officialServerLink": ""
+    "officialServerLink": "",
+    "exchangerateAPIKey": "",
+    "spoonacularAPIKey": ""
 }

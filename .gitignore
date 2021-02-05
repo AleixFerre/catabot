@@ -13,3 +13,4 @@ Storage/servers_test.json
 *.zip
 *.rar
 Storage/lol/
+Storage/conversions.json

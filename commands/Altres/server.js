@@ -17,17 +17,17 @@ module.exports = {
         let server = servers[message.guild.id];
         let canalAvisos = `<#${server.alertChannel}>`;
         if (!server.alertChannel) {
-            canalAvisos = "null";
+            canalAvisos = "No adjudicat";
         }
 
         let canalBot = `<#${server.botChannel}>`;
         if (!server.botChannel) {
-            canalBot = "null";
+            canalBot = "No adjudicat";
         }
 
         let canalBenvinguda = `<#${server.welcomeChannel}>`;
         if (!server.welcomeChannel) {
-            canalBenvinguda = "null";
+            canalBenvinguda = "No adjudicat";
         }
 
         message.guild.members.cache.forEach(member => {

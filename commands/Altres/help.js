@@ -163,6 +163,9 @@ module.exports = {
         if (command.usage)
             helpEmbed.addField('Ús', prefix + command.name + ' ' + command.usage);
 
+        if (command.example)
+            helpEmbed.addField('Exemple', prefix + command.name + ' ' + command.example);
+
         helpEmbed.setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         message.channel.send(helpEmbed);
