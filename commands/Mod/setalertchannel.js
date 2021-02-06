@@ -1,7 +1,4 @@
 const fs = require('fs');
-const {
-    PartialGroupDMChannel
-} = require('discord.js');
 
 module.exports = {
     name: 'setalertchannel',

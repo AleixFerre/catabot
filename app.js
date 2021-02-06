@@ -48,80 +48,91 @@ fs.writeFile('docs/Storage/commands.json', JSON.stringify(cmds), (err) => {
 
 let servers = {}; ///< The data structure that handles all the info for the servers
 
-client.on("ready", () => {
+client.on("ready", async () => {
 
-    client.guilds.cache.forEach(guild => {
-        guild.members.fetch().then((members) => {
-            members.forEach(member => {
-                if (!userData[guild.id + member.user.id])
-                    userData[guild.id + member.user.id] = {};
+    for (let guild of client.guilds.cache) {
+        guild = guild[1];
+        let members = await guild.members.fetch();
+        members.forEach(member => {
+            if (!userData[guild.id + member.user.id])
+                userData[guild.id + member.user.id] = {};
 
-                if (!userData[guild.id + member.user.id].money) {
-                    if (userData[guild.id + member.user.id].money !== 0) {
-                        if (member.user.bot)
-                            userData[guild.id + member.user.id].money = -1;
-                        else
-                            userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
-                    }
+            if (!userData[guild.id + member.user.id].money) {
+                if (userData[guild.id + member.user.id].money !== 0) {
+                    if (member.user.bot)
+                        userData[guild.id + member.user.id].money = -1;
+                    else
+                        userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
                 }
-
-                if (!userData[guild.id + member.user.id].lastDaily) {
-                    if (!member.user.bot)
-                        userData[guild.id + member.user.id].lastDaily = "Not Collected";
-                }
-
-                if (!userData[guild.id + member.user.id].level) {
-                    if (!member.user.bot)
-                        userData[guild.id + member.user.id].level = 1;
-                }
-
-                if (!userData[guild.id + member.user.id].xp) {
-                    if (!member.user.bot)
-                        userData[guild.id + member.user.id].xp = 0;
-                }
-            });
-
-            console.log(log(guild.name + ": " + guild.memberCount + " members"));
-
-            if (!serversInfo[guild.id]) {
-                serversInfo[guild.id] = {};
-            }
-            if (!serversInfo[guild.id].prefix) {
-                serversInfo[guild.id].prefix = config.prefix;
-            }
-            if (!serversInfo[guild.id].alertChannel) {
-                serversInfo[guild.id].alertChannel = null;
-            }
-            if (!serversInfo[guild.id].botChannel) {
-                serversInfo[guild.id].botChannel = null;
-            }
-            if (!serversInfo[guild.id].welcomeChannel) {
-                serversInfo[guild.id].welcomeChannel = null;
             }
 
-            if (!servers[guild.id]) {
-                servers[guild.id] = {
-                    queue: [],
-                    nowPlayingVideo: {},
-                    nowPlayingVideoInfo: {},
-                    prefix: serversInfo[guild.id].prefix,
-                    alertChannel: serversInfo[guild.id].alertChannel,
-                    botChannel: serversInfo[guild.id].botChannel,
-                    welcomeChannel: serversInfo[guild.id].welcomeChannel,
-                    loop: false
-                };
+            if (!userData[guild.id + member.user.id].lastDaily) {
+                if (!member.user.bot)
+                    userData[guild.id + member.user.id].lastDaily = "Not Collected";
             }
 
-            try {
-                let newName = "[ " + servers[guild.id].prefix + " ] CataBOT";
-                guild.members.fetch(config.clientid).then((member) => {
-                    member.setNickname(newName);
-                });
-            } catch (err) {
-                console.error(err);
+            if (!userData[guild.id + member.user.id].level) {
+                if (!member.user.bot)
+                    userData[guild.id + member.user.id].level = 1;
+            }
+
+            if (!userData[guild.id + member.user.id].xp) {
+                if (!member.user.bot)
+                    userData[guild.id + member.user.id].xp = 0;
             }
         });
-    });
+
+        console.log(log(guild.name + ": " + guild.memberCount + " members"));
+
+        if (!serversInfo[guild.id]) {
+            serversInfo[guild.id] = {};
+        }
+        if (!serversInfo[guild.id].prefix) {
+            serversInfo[guild.id].prefix = config.prefix;
+        }
+        if (!serversInfo[guild.id].alertChannel) {
+            serversInfo[guild.id].alertChannel = null;
+        }
+        if (!serversInfo[guild.id].botChannel) {
+            serversInfo[guild.id].botChannel = null;
+        }
+        if (!serversInfo[guild.id].counterChannel) {
+            serversInfo[guild.id].counterChannel = null;
+        }
+        if (!serversInfo[guild.id].counterChannelName) {
+            serversInfo[guild.id].counterChannelName = null;
+        }
+        if (!serversInfo[guild.id].welcomeChannel) {
+            serversInfo[guild.id].welcomeChannel = null;
+        }
+
+        if (!servers[guild.id]) {
+            servers[guild.id] = {
+                prefix: serversInfo[guild.id].prefix,
+                alertChannel: serversInfo[guild.id].alertChannel,
+                botChannel: serversInfo[guild.id].botChannel,
+                counterChannel: serversInfo[guild.id].counterChannel,
+                counterChannelName: serversInfo[guild.id].counterChannelName,
+                welcomeChannel: serversInfo[guild.id].welcomeChannel,
+            };
+        }
+
+        try {
+            let newName = "[ " + servers[guild.id].prefix + " ] CataBOT";
+            guild.members.fetch(config.clientid).then((member) => {
+                member.setNickname(newName);
+            });
+        } catch (err) {
+            console.error(err);
+        }
+
+        if (servers[guild.id].counterChannel) {
+            // Existeix un canal de contador, afegim un setInterval cada 12h
+            setInterval(() => {
+                guild.channels.resolve(servers[guild.id].counterChannel).setName("members " + guild.memberCount);
+            }, 12*3600000);
+        }
+    }
 
     client.user.setPresence({
         status: "online",
@@ -131,8 +142,9 @@ client.on("ready", () => {
         }
     });
 
-    console.log(log("\nREADY :: Version " + config.version + "\nON " + client.guilds.cache.size + " servers\n" +
+    console.log(log("\nREADY :: Version " + config.version + "\nON " + client.guilds.cache.size + " servers with " + cmds.length + " commands\n" +
         "---------------------------------"));
+    
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
         if (err) console.error(err);
     });
@@ -141,6 +153,7 @@ client.on("ready", () => {
         if (err) console.error(err);
     });
 
+    
 });
 
 client.on("guildCreate", (guild) => {
@@ -188,20 +201,24 @@ client.on("guildCreate", (guild) => {
     if (!serversInfo[guild.id].botChannel) {
         serversInfo[guild.id].botChannel = null;
     }
+    if (!serversInfo[guild.id].counterChannel) {
+        serversInfo[guild.id].counterChannel = null;
+    }
+    if (!serversInfo[guild.id].counterChannelName) {
+        serversInfo[guild.id].counterChannelName = null;
+    }
     if (!serversInfo[guild.id].welcomeChannel) {
         serversInfo[guild.id].welcomeChannel = null;
     }
 
     if (!servers[guild.id]) {
         servers[guild.id] = {
-            queue: [],
-            nowPlayingVideo: {},
-            nowPlayingVideoInfo: {},
             prefix: serversInfo[guild.id].prefix,
             alertChannel: serversInfo[guild.id].alertChannel,
             botChannel: serversInfo[guild.id].botChannel,
+            counterChannel: serversInfo[guild.id].counterChannel,
+            counterChannelName: serversInfo[guild.id].counterChannelName,
             welcomeChannel: serversInfo[guild.id].welcomeChannel,
-            loop: false
         };
     }
 

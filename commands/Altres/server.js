@@ -31,6 +31,11 @@ module.exports = {
             canalBenvinguda = "No adjudicat";
         }
 
+        let canalCounter = `<#${server.counterChannel}>`;
+        if (!server.counterChannel) {
+            canalCounter = "No adjudicat";
+        }
+
         message.guild.members.cache.forEach(member => {
 
             if (!userData[message.guild.id + member.id] || member.user.bot) {
@@ -73,6 +78,7 @@ module.exports = {
             .addField('❯ Canal d\'avisos', canalAvisos, true)
             .addField('❯ Canal del bot', canalBot, true)
             .addField('❯ Canal de benvinguda', canalBenvinguda, true)
+            .addField('❯ Canal contador', canalCounter, true)
             .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         message.channel.send(msg);

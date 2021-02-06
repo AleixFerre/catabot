@@ -7,7 +7,7 @@ module.exports = {
     description: 'Et mostra el prefix i et permet cambiar-lo amb un segon argument',
     type: "altres",
     usage: '[ new ]',
-    async execute(message, args, servers, userData, client) {
+    async execute(message, args, servers) {
 
         let server = servers[message.guild.id];
 
