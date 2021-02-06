@@ -10,6 +10,8 @@
 - Nou sistema de Mod per administrar els Rols. Si ets Administrador pots:
     - Afegir un Rol a un Usuari amb `addrole < @user > < @rol >`. Més info amb la comanda `help addrole`.
     - Esborrar un Rol d'un Usuari amb `removerole < @user > < @rol >`. Més info amb la comanda `help removerole`.
+- Afegida nova comanda `setcounter` que adjudica el canal de text com a contador de membres.
+    - El comptador s'actualitza cada 12h o manualment amb la comanda `refresh` que només poden executar els Administradors.
 
 \[v1.2\]
 
