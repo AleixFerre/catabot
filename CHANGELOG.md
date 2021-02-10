@@ -13,6 +13,7 @@
 - Afegida nova comanda `setcounter` que adjudica el canal de text com a contador de membres.
     - El comptador s'actualitza cada 12h o manualment amb la comanda `refresh` que només poden executar els Administradors.
 - Nova comanda `morsify` / `demorsify` que tradueix un text a Morse i al revés.
+- S'ha afegit un Cooldown entre cada comanda. Pots veure la informació del cooldown de cada comanda amb `help < nom de la comanda>`.
 
 \[v1.2\]
 
