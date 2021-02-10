@@ -4,6 +4,7 @@ module.exports = {
     name: 'bet',
     description: 'Aposta en un 50% de guanyar monedes amb un amic, si en tens...',
     type: 'banc',
+    cooldown: 1,
     usage: '< amount/all > < @user >',
     execute(message, args, servers, userData) {
 

@@ -5,6 +5,7 @@ module.exports = {
     name: 'randomize',
     description: 'Posa un valor aleatori de monedes a tots els usuaris del servidor',
     usage: '[ max ]',
+    cooldown: 30,
     type: 'privat',
     execute(message, args, servers, userData) {
 

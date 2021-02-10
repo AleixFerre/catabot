@@ -7,6 +7,7 @@ module.exports = {
     description: 'Tradueix el que vulguis al espanyol!',
     usage: "< text >",
     type: 'entreteniment',
+    cooldown: 10,
     async execute(message, args, servers) {
 
         let server = servers[message.guild.id];

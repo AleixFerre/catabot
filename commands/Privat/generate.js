@@ -5,6 +5,7 @@ module.exports = {
     name: 'generate',
     description: 'Ingresa una quantitat a una persona',
     type: 'privat',
+    cooldown: 5,
     usage: '< amount > < @user >',
     execute(message, args, servers, userData) {
 

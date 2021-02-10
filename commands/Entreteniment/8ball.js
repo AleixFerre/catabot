@@ -9,6 +9,7 @@ module.exports = {
     type: 'entreteniment',
     usage: '< question >',
     aliases: ['8', 'ball'],
+    cooldown: 5,
     async execute(message, args, servers) {
 
         let server = servers[message.guild.id];

@@ -6,6 +6,7 @@ module.exports = {
     name: 'weather',
     description: 'Mostra el temps que fa.',
     type: 'entreteniment',
+    cooldown: 10,
     aliases: ['temps', 'tiempo'],
     async execute(message, args, servers) {
 

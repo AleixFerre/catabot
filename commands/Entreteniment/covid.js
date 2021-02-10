@@ -7,6 +7,7 @@ module.exports = {
     description: 'Mostra la info del Coronavirus actualment',
     type: 'entreteniment',
     usage: '[ country ]',
+    cooldown: 10,
     aliases: ['coronavirus'],
     async execute(message, args, servers) {
 

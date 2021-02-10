@@ -16,7 +16,8 @@ module.exports = {
     name: 'welcome',
     description: 'Et dona la benvinguda',
     type: 'entreteniment',
-    async execute(message, args, servers, userData, client) {
+    cooldown: 60,
+    async execute(message, args, servers, _userData, client) {
 
         function getMemberFromMention(mention) {
             if (!mention) return;

@@ -9,6 +9,7 @@ module.exports = {
     description: 'Mostra una imatge d\'un gat aleatori',
     type: 'entreteniment',
     aliases: ['gat'],
+    cooldown: 10,
     async execute(message) {
 
         let desc = "";

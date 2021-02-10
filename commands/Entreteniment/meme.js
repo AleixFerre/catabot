@@ -4,6 +4,7 @@ const { getRandomColor } = require('../../common.js');
 
 module.exports = {
     name: 'meme',
+    cooldown: 10,
     description: 'Mostra un meme aleatori de reddit',
     type: 'entreteniment',
     execute(message) {

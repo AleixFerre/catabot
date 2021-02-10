@@ -5,6 +5,7 @@ module.exports = {
     name: 'resetlevel',
     description: 'Es resetejen tots els nivells de la gent. Comanda interna del bot',
     type: 'privat',
+    cooldown: 60,
     async execute(message, _args, _servers, userData, client) {
 
         if (message.author.id !== IdOwner) {

@@ -6,6 +6,7 @@ module.exports = {
     name: 'progress',
     description: 'Et permet pujar de nivell. Comanda interna del bot',
     type: 'privat',
+    cooldown: 0,
     async execute(message, args, _servers, userData) {
 
         if (!message.author.bot && message.author.id !== IdOwner) {

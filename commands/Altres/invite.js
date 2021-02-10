@@ -5,6 +5,7 @@ const { getRandomColor } = require('../../common.js');
 module.exports = {
     name: 'invite',
     type: 'altres',
+    cooldown: 1,
     description: 'T\'envia un missatge amb el link del bot.',
     execute(message) {
         // Get the invite link With admin permissions

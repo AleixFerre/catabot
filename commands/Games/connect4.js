@@ -6,7 +6,8 @@ module.exports = {
     name: 'connect4',
     description: 'Joc 4: [BETA] Juga al 4 en ratlla amb els teus amics o contra la IA!',
     type: 'games',
-    aliases: ['4enratlla', 'play4', '_'], //! TREURE EL _ DE ALIASES [només placeholder per fer proves]
+    cooldown: 30,
+    aliases: ['4enratlla', 'play4'],
     async execute(message, _args, servers, userData) {
 
         let server = servers[message.guild.id];

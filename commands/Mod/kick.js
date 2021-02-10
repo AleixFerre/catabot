@@ -3,6 +3,7 @@ module.exports = {
     description: 'Expulsa permanentment un usuari del servidor',
     usage: '< @usuari > [ descripció ]',
     type: 'mod',
+    cooldown: 30,
     execute(message, args, servers) {
 
         let prefix = servers[message.guild.id].prefix;

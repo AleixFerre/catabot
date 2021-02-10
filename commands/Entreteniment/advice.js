@@ -8,6 +8,7 @@ module.exports = {
     usage: '[ search ]',
     type: 'entreteniment',
     aliases: ['consell'],
+    cooldown: 5,
     async execute(message, args) {
 
         let adviceLink = "https://api.adviceslip.com/advice";

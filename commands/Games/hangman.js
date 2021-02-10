@@ -8,6 +8,7 @@ module.exports = {
     description: 'Joc 3: [BETA] Juga amb els teus amics al joc del penjat!',
     aliases: ['ahorcado', 'penjat', 'playh'],
     type: 'games',
+    cooldown: 30,
     async execute(message, _args, servers, userData) {
 
         const lletres = 'abcdefghijklmnopqrstuvwxyz'.split(''); // totes les lletres que pot tenir una paraula

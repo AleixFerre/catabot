@@ -5,6 +5,7 @@ module.exports = {
     name: 'help',
     description: 'Mostra informació de les comandes',
     type: "altres",
+    cooldown: 1,
     usage: '[ nom de la comanda ]',
     aliases: ['h', 'commands', 'info'],
     execute(message, args, servers) {
@@ -157,6 +158,9 @@ module.exports = {
 
         if (command.example)
             helpEmbed.addField('Exemple', prefix + command.name + ' ' + command.example);
+
+        if (command.cooldown)
+            helpEmbed.addField('Cooldown', command.cooldown + (command.cooldown === 1 ? ' segon' : ' segons'));
 
         helpEmbed.setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 

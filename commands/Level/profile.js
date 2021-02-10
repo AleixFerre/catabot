@@ -7,6 +7,7 @@ module.exports = {
     description: 'Mostra el teu perfil',
     type: 'level',
     aliases: ['perfil'],
+    cooldown: 1,
     execute(message, _args, _servers, userData) {
 
         let mention = {};

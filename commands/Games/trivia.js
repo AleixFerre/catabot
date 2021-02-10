@@ -9,6 +9,7 @@ module.exports = {
     aliases: ['quiz', 'playq'],
     usage: '[ quantitat_preguntes ]',
     type: 'games',
+    cooldown: 30,
     async execute(message, args, servers, userData) {
 
         // Només cal ABCD, però per si un cas

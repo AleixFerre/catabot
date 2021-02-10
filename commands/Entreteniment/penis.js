@@ -5,6 +5,7 @@ module.exports = {
     name: 'penis',
     description: 'Mostra la mida del teu penis',
     type: 'entreteniment',
+    cooldown: 1,
     aliases: ['pene'],
     execute(message, args) {
 

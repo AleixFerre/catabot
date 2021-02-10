@@ -7,7 +7,8 @@ module.exports = {
     description: 'Et mostra el nivell que ets',
     type: 'level',
     aliases: ['xp', 'lvl'],
-    execute(message, args, servers, userData) {
+    cooldown: 1,
+    execute(message, _args, _servers, userData) {
 
         let mention = {};
         let posicio = 1;

@@ -89,6 +89,7 @@ module.exports = {
     type: 'entreteniment',
     aliases: ['morse', 'demorsify'],
     usage: '< morse/ASCII >',
+    cooldown: 1,
     execute(message, args) {
 
         if (!args[0])

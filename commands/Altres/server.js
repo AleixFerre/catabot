@@ -4,6 +4,7 @@ const { getRandomColor } = require('../../common.js');
 module.exports = {
     name: 'server',
     type: 'altres',
+    cooldown: 1,
     description: 'Diu la informació del servidor.',
     aliases: ['serverinfo', 'guild'],
     execute(message, _args, servers, userData) {

@@ -7,7 +7,8 @@ module.exports = {
     name: 'daily',
     description: 'Recolleix la teva recompensa diaria!',
     type: 'banc',
-    execute(message, args, servers, userData) {
+    cooldown: 60,
+    execute(message, _args, servers, userData) {
 
         let content = "";
         moment.locale("ca"); // Posem el contingut en català

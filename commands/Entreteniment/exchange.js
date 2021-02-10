@@ -9,6 +9,7 @@ module.exports = {
     type: 'entreteniment',
     aliases: ['canvi'],
     example: "10 EUR USD",
+    cooldown: 5,
     async execute(message, args, servers) {
 
         let server = servers[message.guild.id];

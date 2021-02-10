@@ -202,6 +202,7 @@ module.exports = {
     description: 'Busca la info del LoL que vulguis',
     usage: "champ < champName >\n [ or ] spell < spellName >\n [ or ] item < itemName >",
     type: 'entreteniment',
+    cooldown: 10,
     async execute(message, args, servers) {
 
         let commandType = args.shift().toLowerCase();

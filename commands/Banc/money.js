@@ -6,6 +6,7 @@ module.exports = {
     description: 'Et mostra els diners que tens',
     usage: '[ @user ]',
     aliases: ['diners'],
+    cooldown: 10,
     type: 'banc',
     execute(message, _args, _servers, userData) {
 

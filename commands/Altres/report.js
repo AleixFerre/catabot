@@ -5,6 +5,7 @@ module.exports = {
     name: 'report',
     description: 'Avisa al propietari del servidor d\'algun usuari amb mal comportament.',
     type: 'altres',
+    cooldown: 10,
     usage: '< @userToReport >',
     async execute(message, _args, servers) {
 

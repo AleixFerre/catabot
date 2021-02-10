@@ -7,6 +7,7 @@ module.exports = {
     type: 'mod',
     example: '@CatalaHD Admin',
     aliases: ['afegirrol', 'giverole', 'adjudicarrol'],
+    cooldown: 5,
     execute(message, args, servers) {
 
         const targetUser = message.mentions.users.first();

@@ -8,6 +8,7 @@ module.exports = {
     usage: '< pokemon >',
     aliases: ['poke', 'pokemon'],
     type: 'entreteniment',
+    cooldown: 10,
     execute(message, args, servers) {
 
         let server = servers[message.guild.id];

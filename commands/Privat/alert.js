@@ -5,7 +5,8 @@ module.exports = {
     description: "Avisa a tots els servidors d'alguna cosa\nNomés l'owner del bot pot executar-ho",
     type: 'privat',
     usage: '< msg >',
-    async execute(message, args, servers, userData, client) {
+    cooldown: 60,
+    async execute(message, args, servers, _userData, client) {
 
         let server = servers[message.guild.id];
 

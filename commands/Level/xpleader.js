@@ -7,6 +7,7 @@ module.exports = {
     aliases: ['xpl', 'lvltop', 'xptop', 'topxp', 'toplvl', 'toplevel'],
     type: 'level',
     usage: '[ amount ]',
+    cooldown: 10,
     execute(message, args, servers, userData) {
 
         let board = [];

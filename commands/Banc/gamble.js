@@ -4,6 +4,7 @@ module.exports = {
     name: 'gamble',
     description: '50% de guanyar, apostant monedes.',
     type: 'banc',
+    cooldown: 1,
     usage: '< amount/all > [ multiplyer ]',
     aliases: ['dobleonada'],
     execute(message, args, servers, userData) {

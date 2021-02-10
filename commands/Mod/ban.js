@@ -3,6 +3,7 @@ module.exports = {
     description: 'Beta un usuari del servidor',
     usage: '< @usuari > [ descripcio ]',
     type: 'mod',
+    cooldown: 30,
     execute(message, args, servers) {
 
         let prefix = servers[message.guild.id].prefix;

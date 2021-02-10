@@ -4,6 +4,7 @@ module.exports = {
     name: 'pay',
     description: 'Paga una quantitat a una persona',
     type: 'banc',
+    cooldown: 60,
     usage: '< amount/all > < @user >',
     execute(message, args, servers, userData) {
 

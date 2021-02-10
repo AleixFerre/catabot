@@ -46,6 +46,7 @@ module.exports = {
     name: 'captcha',
     description: 'Et genera un nou parell imatge-text de Captcha',
     type: 'entreteniment',
+    cooldown: 60,
     async execute(message) {
 
         let text = generateText(5);
@@ -74,9 +75,9 @@ module.exports = {
         const filter = m => m.content === text && m.author.id === message.author.id;
         // Errors: ['time'] treats ending because of the time limit as an error
         message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
-            .then(collected => { // S'ha respos correctament el codi
+            .then(() => { // S'ha respos correctament el codi
                 message.channel.send("✅ Has respòs correctament! ✅");
-            }).catch(collected => { // Ha pasat el temps
+            }).catch(() => { // Ha pasat el temps
                 message.channel.send("⏰ S'ha acabat el temps! ⏰");
             });
 

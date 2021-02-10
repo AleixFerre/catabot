@@ -5,6 +5,7 @@ module.exports = {
     name: 'howgay',
     description: 'Et diu lo gay que ets',
     type: 'entreteniment',
+    cooldown: 1,
     aliases: ['gay'],
     execute(message, args) {
 

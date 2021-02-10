@@ -7,6 +7,7 @@ module.exports = {
     description: 'Joc 1: [BETA] Juga al tres en ratlla! Escriu pel xat NOMÉS LA LLETRA de la posició on vols jugar.',
     aliases: ['tresenratlla', '3enratlla', 'playt'],
     type: 'games',
+    cooldown: 30,
     execute(message, _args, servers, userData) {
 
         const emojis = ["🇦", "🇧", "🇨", "🇩", "🇪", "🇫", "🇬", "🇭", "🇮"];

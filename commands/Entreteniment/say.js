@@ -2,6 +2,7 @@ module.exports = {
     name: 'say',
     description: 'Fes que el bot digui el que vulguis',
     usage: '< text >',
+    cooldown: 10,
     type: 'entreteniment',
     async execute(message, args, servers) {
         let prefix = servers[message.guild.id].prefix;

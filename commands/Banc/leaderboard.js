@@ -6,8 +6,9 @@ module.exports = {
     description: 'Mostra la classificació de monedes del servidor',
     aliases: ['leader', 'top'],
     type: 'banc',
+    cooldown: 10,
     usage: '[ amount ]',
-    execute(message, args, servers, userData) {
+    execute(message, args, _servers, userData) {
 
         let board = [];
         let size = 10;

@@ -5,6 +5,7 @@ module.exports = {
     description: 'Adjudica el canal de benvinguda al canal que s\'executa la comanda\nEs pot desadjudicar el canal passant **null** com a argument',
     type: 'mod',
     usage: '[ null ]',
+    cooldown: 60,
     aliases: ['welcomehere', 'setwelcome'],
     execute(message, args, servers, _userData, _client) {
 

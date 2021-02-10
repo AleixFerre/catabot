@@ -6,6 +6,7 @@ module.exports = {
     name: 'info',
     description: 'Diu la informació del bot.',
     type: 'altres',
+    cooldown: 1,
     aliases: ['stats'],
     execute(message, _args, servers, _userData, client) {
 

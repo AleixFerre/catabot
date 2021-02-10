@@ -4,6 +4,7 @@ module.exports = {
     type: 'mod',
     usage: '< amount >',
     aliases: ['cls', 'clm'],
+    cooldown: 10,
     async execute(message, args, servers) {
 
         let amount = 1;
