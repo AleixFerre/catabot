@@ -15,7 +15,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle('Invite link')
             .setURL(link)
-            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
+            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif', 'https://github.com/CatalaHD/CataBot')
             .setDescription('Aqui tens el link')
             .setThumbnail('https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png')
             .setTimestamp().setFooter('CataBOT ' + new Date().getFullYear() + ' © All rights reserved');

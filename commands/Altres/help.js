@@ -72,7 +72,7 @@ module.exports = {
             const fullHelpEmbed = new Discord.MessageEmbed()
                 .setColor(getRandomColor())
                 .setTitle('El **CataBOT** té ' + commands.size + ' comandes')
-                .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
+                .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif', 'https://github.com/CatalaHD/CataBot')
                 .setThumbnail('https://i.imgur.com/OMp4api.png')
                 .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
@@ -138,7 +138,7 @@ module.exports = {
 
         const helpEmbed = new Discord.MessageEmbed()
             .setColor(getRandomColor())
-            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
+            .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif', 'https://github.com/CatalaHD/CataBot')
             .setTitle(command.name.toUpperCase())
             .setThumbnail('https://i.imgur.com/OMp4api.png');
 

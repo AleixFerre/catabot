@@ -27,7 +27,7 @@ module.exports = {
 
         let msg = new Discord.MessageEmbed()
             .setColor(getRandomColor())
-            .setAuthor(`CataBOT [${config.version}] by Català HD`, 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/icon_cat.png', 'https://github.com/CatalaHD/CataBot')
+            .setAuthor(`CataBOT [${config.version}] by Català HD`, 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif', 'https://github.com/CatalaHD/CataBot')
             .setDescription(description)
             .addField('❯ Informació:', info, true)
             .addField('❯ Estadistiques:', stats, true)

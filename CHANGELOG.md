@@ -8,12 +8,13 @@
 - Nova comamanda `advice` que dona consells de la vida. Més info amb la comanda `help advice`.
 - Nova comanda `exchange` que permet fer la conversió de monedes de forma ràpida i fàcil. Més info amb la comanda `help exchange`.
 - Nou sistema de Mod per administrar els Rols. Si ets Administrador pots:
-    - Afegir un Rol a un Usuari amb `addrole < @user > < @rol >`. Més info amb la comanda `help addrole`.
-    - Esborrar un Rol d'un Usuari amb `removerole < @user > < @rol >`. Més info amb la comanda `help removerole`.
+  - Afegir un Rol a un Usuari amb `addrole < @user > < @rol >`. Més info amb la comanda `help addrole`.
+  - Esborrar un Rol d'un Usuari amb `removerole < @user > < @rol >`. Més info amb la comanda `help removerole`.
 - Afegida nova comanda `setcounter` que adjudica el canal de text com a contador de membres.
-    - El comptador s'actualitza cada 12h o manualment amb la comanda `refresh` que només poden executar els Administradors.
+  - El comptador s'actualitza cada 12h o manualment amb la comanda `refresh` que només poden executar els Administradors.
 - Nova comanda `morsify` / `demorsify` que tradueix un text a Morse i al revés.
 - S'ha afegit un Cooldown entre cada comanda. Pots veure la informació del cooldown de cada comanda amb `help < nom de la comanda>`.
+- Nova comanda `lastupdate` que et permet veure les notes de l'ultima actualització del bot.
 
 \[v1.2\]
 
