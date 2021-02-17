@@ -1,8 +1,8 @@
 module.exports = {
     name: 'refresh',
-    description: 'Refresca el contador de membres. S\'actualitza automàticament cada 12h.',
+    description: 'Refresca el contador de membres manualment. Aquest contador s\'actualitza automàticament cada 12h.',
     type: 'mod',
-    cooldown: 120,
+    cooldown: 300,
     aliases: ['refreshcounter'],
     execute(message, _args, servers) {
         let server = servers[message.guild.id];

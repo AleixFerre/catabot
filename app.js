@@ -37,7 +37,7 @@ for (const dir of commandDirs) {
             name: command.name,
             description: command.description,
             type: command.type,
-            usage: "!" + command.name + " " + usage,
+            usage: "!" + command.name + (usage.length !== 0 ? " " + usage : ""),
             aliases: command.aliases
         });
     }

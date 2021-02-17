@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
-const { getRandomColor } = require('../../common.js');
+const {
+    getRandomColor
+} = require('../../common.js');
 
 module.exports = {
     name: 'help',
@@ -26,7 +28,7 @@ module.exports = {
             let helpContent = "\n";
 
             // Creem les taules auxiliars per guardar les comandes de cada tipus
-            // let musica = [];
+            let musica = [];
             let mod = [];
             let banc = [];
             let games = [];
@@ -38,9 +40,9 @@ module.exports = {
             // Encuem cada comanda a la taula que toca
             commands.forEach((command) => {
                 switch (command.type) {
-                    /*case 'musica':
+                    case 'musica':
                         musica.push(command);
-                        break;*/
+                        break;
                     case 'mod':
                         mod.push(command);
                         break;
@@ -76,39 +78,39 @@ module.exports = {
                 .setThumbnail('https://i.imgur.com/OMp4api.png')
                 .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
-            // let aux = musica.map(c => c.name);
-            // helpContent += '🎵 **COMANDES DE MUSICA** 🎵 [' + aux.length + ']\n `';
-            // helpContent += aux.join(", ");
-
-            aux = mod.map(c => c.name);
-            helpContent += '👮 **COMANDES DE MODERACIÓ** 👮 [' + aux.length + ']\n `';
-            helpContent += aux.join(", ");
-
-            aux = banc.map(c => c.name);
-            helpContent += '`\n\n💰 **COMANDES DE BANC** 💰 [' + aux.length + ']\n `';
-            helpContent += aux.join(", ");
-
-            aux = games.map(c => c.name);
-            helpContent += '`\n\n🎮 **JOCS** 🎮 [' + aux.length + ']\n `';
-            helpContent += aux.join(", ");
+            let aux = mod.map(c => c.name);
+            helpContent += '👮 **COMANDES DE MODERACIÓ** 👮 [' + aux.length + ']\n';
+            helpContent += "`" + aux.join(", ") + "`";
 
             aux = entreteniment.map(c => c.name);
-            helpContent += '`\n\n🥳 **COMANDES DE ENTRETENIMENT** 🥳 [' + aux.length + ']\n `';
-            helpContent += aux.join(", ");
+            helpContent += '\n\n🥳 **COMANDES DE ENTRETENIMENT** 🥳 [' + aux.length + ']\n';
+            helpContent += "`" + aux.join(", ") + "`";
+
+            aux = musica.map(c => c.name);
+            helpContent += '\n\n🎵 **COMANDES DE MUSICA** 🎵 [' + aux.length + ']\n';
+            helpContent += "`" + aux.join(", ") + "`";
+
+            aux = banc.map(c => c.name);
+            helpContent += '\n\n💰 **COMANDES DE BANC** 💰 [' + aux.length + ']\n';
+            helpContent += "`" + aux.join(", ") + "`";
 
             aux = level.map(c => c.name);
-            helpContent += '`\n\n💠 **COMANDES DE NIVELL** 💠 [' + aux.length + ']\n `';
-            helpContent += aux.join(", ");
+            helpContent += '\n\n💠 **COMANDES DE NIVELL** 💠 [' + aux.length + ']\n';
+            helpContent += "`" + aux.join(", ") + "`";
+
+            aux = games.map(c => c.name);
+            helpContent += '\n\n🎮 **JOCS** 🎮 [' + aux.length + ']\n';
+            helpContent += "`" + aux.join(", ") + "`";
 
             aux = privat.map(c => c.name);
-            helpContent += '`\n\n🔒 **COMANDES PRIVADES** 🔒 [' + aux.length + ']\n `';
-            helpContent += aux.join(", ");
+            helpContent += '\n\n🔒 **COMANDES PRIVADES** 🔒 [' + aux.length + ']\n';
+            helpContent += "`" + aux.join(", ") + "`";
 
             aux = altres.map(c => c.name);
-            helpContent += '`\n\n🌈 **ALTRES COMANDES** 🌈 [' + aux.length + ']\n `';
-            helpContent += aux.join(", ");
+            helpContent += '\n\n🌈 **ALTRES COMANDES** 🌈 [' + aux.length + ']\n';
+            helpContent += "`" + aux.join(", ") + "`";
 
-            data.push(helpContent + '`');
+            data.push(helpContent);
             data.push('\n • Pots enviar ' + prefix + 'help [nom comanda] per obtenir informació més detallada de la comanda!\n' +
                 " • Pots veure totes les comandes [aquí](https://catalahd.github.io/CataBot/commands.html).");
 
@@ -117,11 +119,12 @@ module.exports = {
             return message.author.send(fullHelpEmbed)
                 .then(() => {
                     if (message.channel.type === 'dm') return;
-                    message.reply('t\'he enviat un DM amb tota la info').then(async(msg) => {
-                        const delay = ms => new Promise(res => setTimeout(res, ms));
-                        await delay(5000);
-                        msg.delete();
-                    });
+                    message.reply('t\'he enviat un DM amb tota la info')
+                        .then(async (msg) => {
+                            const delay = ms => new Promise(res => setTimeout(res, ms));
+                            await delay(5000);
+                            msg.delete();
+                        });
                 })
                 .catch(error => {
                     console.error(`No puc enviar un DM a ${message.author.username}.\n`, error);
@@ -159,8 +162,22 @@ module.exports = {
         if (command.example)
             helpEmbed.addField('Exemple', prefix + command.name + ' ' + command.example);
 
-        if (command.cooldown)
-            helpEmbed.addField('Cooldown', command.cooldown + (command.cooldown === 1 ? ' segon' : ' segons'));
+        if (command.cooldown) {
+            let segons = command.cooldown;
+            let field = segons + (segons === 1 ? ' segon' : ' segons');
+
+            if (segons >= 60) {
+                let minuts = Math.floor(command.cooldown / 60);
+                let segonsRestants = command.cooldown % 60;
+                field += " (" + minuts + (minuts === 1 ? " minut" : " minuts");
+                if (segonsRestants !== 0) {
+                    field += " i " + segonsRestants + (segonsRestants === 1 ? " segon" : " segons");
+                }
+                field += ")";
+            }
+
+            helpEmbed.addField('Cooldown', field);
+        }
 
         helpEmbed.setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
