@@ -5,7 +5,7 @@ module.exports = {
     description: 'Mostra les notes de la ultima actualització del bot',
     type: 'altres',
     cooldown: 10,
-    aliases: ['notas', 'parche', 'notes', 'update'],
+    aliases: ['parche', 'notes', 'changes', 'changelog', 'canvis'],
     execute(message) {
         let changes = fs.readFileSync("CHANGELOG.md")
             .toString().split("[")[1].split("]");

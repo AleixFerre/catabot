@@ -15,6 +15,11 @@
 - Nova comanda `morsify` / `demorsify` que tradueix un text a Morse i al revés.
 - S'ha afegit un Cooldown entre cada comanda. Pots veure la informació del cooldown de cada comanda amb `help < nom de la comanda>`.
 - Nova comanda `lastupdate` que et permet veure les notes de l'ultima actualització del bot.
+- Nou mòdul de comandes `music`. Ara el bot pot entrar als canals de veu i reproduir la musica que vulguis!. Més info amb `!music`.
+  - Comanda `play`: Pots cercar videos a youtube o entrar directament la URL.
+  - Comanda `skip`: Pots passar a la següent de la llista.
+  - Comanda `stop`: Pots parar el bot i aquest es desconecta del canal i esborra totes les cançons de la llista.
+  - (S'estan preparant properes comandes com `list/queue`, `nowPlaying/np`, `pause`, `shuffle`, `clearList`, `skipTo` i `loop`).
 
 \[v1.2\]
 

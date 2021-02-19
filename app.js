@@ -54,7 +54,7 @@ client.on("ready", async () => {
     for (let guild of client.guilds.cache) {
         guild = guild[1];
         let members = await guild.members.fetch();
-        members.forEach(member => {
+        members.forEach((member) => {
             if (!userData[guild.id + member.user.id])
                 userData[guild.id + member.user.id] = {};
 
@@ -494,7 +494,7 @@ client.on('message', async (message) => {
     timeStamps.set(message.author.id, currentTime);
 
     try {
-        command.execute(message, args, servers, userData, client);
+        command.execute(message, args, servers, userData, client, commandName);
     } catch (error) {
         console.error(error);
         message.reply('alguna cosa ha anat malament, siusplau contacta amb ' + config.ownerDiscordUsername +
