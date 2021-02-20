@@ -1,25 +1,33 @@
 # CHANGELOG
 
+_All **ÇÇ** strings are representations of the server prefix_
+
 \[v1.3\]
 
-- Nova comanda `lol` amb la que pots buscar tota la informació del lol.
-- Aquesta comanda té diferents subcomandes: champ, spell i item. Més info amb la comanda `help lol`.
+- Nova comanda `lol` amb la que pots buscar tota la informació del League of Legends.
+  - Aquesta comanda té diferents subcomandes: `champ`, `spell` i `item`.
+  - Més info amb la comanda `ÇÇhelp lol`.
 - S'ha implementat un sistema de predicció on si es posa una lletra malament, s'avisa i es corregeix ràpidament.
-- Nova comamanda `advice` que dona consells de la vida. Més info amb la comanda `help advice`.
-- Nova comanda `exchange` que permet fer la conversió de monedes de forma ràpida i fàcil. Més info amb la comanda `help exchange`.
+- Nova comamanda `advice` que dona consells de la vida.
+  - Més info amb la comanda `ÇÇhelp advice`.
+- Nova comanda `exchange` que permet fer la conversió de monedes de forma ràpida i fàcil.
+  - Més info amb la comanda `ÇÇhelp exchange`.
 - Nou sistema de Mod per administrar els Rols. Si ets Administrador pots:
-  - Afegir un Rol a un Usuari amb `addrole < @user > < @rol >`. Més info amb la comanda `help addrole`.
-  - Esborrar un Rol d'un Usuari amb `removerole < @user > < @rol >`. Més info amb la comanda `help removerole`.
+  - Afegir un Rol a un Usuari amb `ÇÇaddrole < @user > < @rol >`. Més info amb la comanda `ÇÇhelp addrole`.
+  - Esborrar un Rol d'un Usuari amb `ÇÇremoverole < @user > < @rol >`. Més info amb la comanda `ÇÇhelp removerole`.
 - Afegida nova comanda `setcounter` que adjudica el canal de text com a contador de membres.
   - El comptador s'actualitza cada 12h o manualment amb la comanda `refresh` que només poden executar els Administradors.
 - Nova comanda `morsify` / `demorsify` que tradueix un text a Morse i al revés.
-- S'ha afegit un Cooldown entre cada comanda. Pots veure la informació del cooldown de cada comanda amb `help < nom de la comanda>`.
+  - Més info amb la comanda `ÇÇhelp morsify`.
+- S'ha afegit un Cooldown entre cada comanda.
+  - Pots veure la informació del cooldown de cada comanda amb `ÇÇhelp < nom de la comanda>`.
 - Nova comanda `lastupdate` que et permet veure les notes de l'ultima actualització del bot.
-- Nou mòdul de comandes `music`. Ara el bot pot entrar als canals de veu i reproduir la musica que vulguis!. Més info amb `!music`.
-  - `play`: Pots cercar videos a youtube o entrar directament la URL.
-  - `skip`: Pots passar a la següent de la llista.
-  - `stop`: Pots parar el bot desconnectant-se del canal i esborrant totes les cançons de la llista.
-  - (S'estan preparant properes comandes com `list/queue`, `nowPlaying/np`, `pause`, `shuffle`, `clearList`, `skipTo` i `loop`).
+  - Més info amb la comanda `ÇÇhelp lastupdate`.
+- Nou mòdul de comandes `music`. Ara el bot pot entrar als canals de veu i reproduir la musica que vulguis!. Més info amb la comanda `ÇÇmusic`.
+  - `ÇÇplay`: Pots cercar videos a youtube o entrar directament la URL.
+  - `ÇÇskip`: Pots passar a la següent de la llista.
+  - `ÇÇstop`: Pots parar el bot desconnectant-se del canal i esborrant totes les cançons de la llista.
+  - (S'estan preparant properes comandes com `ÇÇlist/queue`, `ÇÇnowPlaying/np`, `ÇÇpause`, `ÇÇshuffle`, `ÇÇclearList`, `ÇÇskipTo` i `ÇÇloop`).
 
 \[v1.2\]
 
