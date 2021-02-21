@@ -19,22 +19,22 @@ module.exports = {
         let server = servers[message.guild.id];
         let canalAvisos = `<#${server.alertChannel}>`;
         if (!server.alertChannel) {
-            canalAvisos = "No adjudicat";
+            canalAvisos = "*No adjudicat*";
         }
 
         let canalBot = `<#${server.botChannel}>`;
         if (!server.botChannel) {
-            canalBot = "No adjudicat";
+            canalBot = "*No adjudicat*";
         }
 
         let canalBenvinguda = `<#${server.welcomeChannel}>`;
         if (!server.welcomeChannel) {
-            canalBenvinguda = "No adjudicat";
+            canalBenvinguda = "*No adjudicat*";
         }
 
         let canalCounter = `<#${server.counterChannel}>`;
         if (!server.counterChannel) {
-            canalCounter = "No adjudicat";
+            canalCounter = "*No adjudicat*";
         }
 
         message.guild.members.cache.forEach(member => {
