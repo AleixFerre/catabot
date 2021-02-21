@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { IdOwner } = require("../../config.json");
 
 module.exports = {
     name: 'setlevel',
@@ -9,7 +8,7 @@ module.exports = {
     cooldown: 5,
     async execute(message, args, _servers, userData) {
 
-        if (message.author.id !== IdOwner) {
+        if (message.author.id !== process.env.IdOwner) {
             return message.reply("no tens permís per executar aquesta comanda!");
         }
 

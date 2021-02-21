@@ -1,6 +1,8 @@
 const fs = require('fs');
 const Canvas = require('canvas');
 const moment = require('moment');
+const mongoose = require('mongoose');
+require('dotenv').config();
 
 const chalk = require('chalk');
 const log = chalk.bold.green;
@@ -13,7 +15,6 @@ client.commands = new Discord.Collection();
 
 moment().utcOffset('120');
 
-let config = require("./config.json");
 const cooldowns = new Map();
 
 let userData = JSON.parse(fs.readFileSync("./Storage/userData.json", 'utf8'));
@@ -89,7 +90,7 @@ client.on("ready", async () => {
             serversInfo[guild.id] = {};
         }
         if (!serversInfo[guild.id].prefix) {
-            serversInfo[guild.id].prefix = config.prefix;
+            serversInfo[guild.id].prefix = process.env.prefix;
         }
         if (!serversInfo[guild.id].alertChannel) {
             serversInfo[guild.id].alertChannel = null;
@@ -120,7 +121,7 @@ client.on("ready", async () => {
 
         try {
             let newName = "[ " + servers[guild.id].prefix + " ] CataBOT";
-            guild.members.fetch(config.clientid).then((member) => {
+            guild.members.fetch(process.env.clientid).then((member) => {
                 member.setNickname(newName);
             });
         } catch (err) {
@@ -131,7 +132,7 @@ client.on("ready", async () => {
             // Existeix un canal de contador, afegim un setInterval cada 12h
             setInterval(() => {
                 guild.channels.resolve(servers[guild.id].counterChannel).setName("members " + guild.memberCount);
-            }, 12*3600000);
+            }, 12 * 3600000);
         }
     }
 
@@ -143,9 +144,9 @@ client.on("ready", async () => {
         }
     });
 
-    console.log(log("\nREADY :: Version " + config.version + "\nON " + client.guilds.cache.size + " servers with " + cmds.length + " commands\n" +
+    console.log(log("\nREADY :: Version " + process.env.version + "\nON " + client.guilds.cache.size + " servers with " + cmds.length + " commands\n" +
         "---------------------------------"));
-    
+
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
         if (err) console.error(err);
     });
@@ -154,7 +155,6 @@ client.on("ready", async () => {
         if (err) console.error(err);
     });
 
-    
 });
 
 client.on("guildCreate", (guild) => {
@@ -194,7 +194,7 @@ client.on("guildCreate", (guild) => {
         serversInfo[guild.id] = {};
     }
     if (!serversInfo[guild.id].prefix) {
-        serversInfo[guild.id].prefix = config.prefix;
+        serversInfo[guild.id].prefix = process.env.prefix;
     }
     if (!serversInfo[guild.id].alertChannel) {
         serversInfo[guild.id].alertChannel = null;
@@ -225,7 +225,7 @@ client.on("guildCreate", (guild) => {
 
     try {
         let newName = "[ " + serversInfo[guild.id].prefix + " ] CataBOT";
-        guild.members.cache.get(config.clientid).setNickname(newName);
+        guild.members.cache.get(process.env.clientid).setNickname(newName);
     } catch (err) {
         console.error(err);
     }
@@ -233,12 +233,12 @@ client.on("guildCreate", (guild) => {
     // Enviem el missatge al owner de la guild
     let introMessage = "**DONA LA BENVINGUDA AL CATABOT!**\n" +
         "El primer bot de Discord en català!\n\n" +
-        "**CONFIGURACIÓ GENERAL**\n" +
+        "**process.envURACIÓ GENERAL**\n" +
         "El bot permet executar una serie de comandes automàtiques sempre que un ADMINISTRADOR ho decideixi. També cal saber que totes les comandes de tipus MOD requereixen un rol d'ADMINISTRADOR per ser executades.\n" +
         "- El bot permet cambiar el prefix per defecte amb la comanda `" + serversInfo[guild.id].prefix + "prefix [prefix nou]` amb un màxim de 5 caràcters.\n" +
-        "- També es pot configurar un canal de benvinguda perque digui Hola i Adeu a tots els integrants nous i passats del servidor amb `" + serversInfo[guild.id].prefix + "setwelcome`. També pots provar amb `" + serversInfo[guild.id].prefix + "welcome` i `" + serversInfo[guild.id].prefix + "bye`\n" +
-        "- Es pot configurar un canal d'avisos amb `" + serversInfo[guild.id].prefix + "setalert`. En aquest canal s'avisarà de totes les novetats del bot.\n" +
-        "- Finalment, es pot configurar un canal del bot amb `" + serversInfo[guild.id].prefix + "setbot`. Això el que farà serà avisar a tothom qui estigui usant el bot fora d'aquest canal.\n" +
+        "- També es pot process.envurar un canal de benvinguda perque digui Hola i Adeu a tots els integrants nous i passats del servidor amb `" + serversInfo[guild.id].prefix + "setwelcome`. També pots provar amb `" + serversInfo[guild.id].prefix + "welcome` i `" + serversInfo[guild.id].prefix + "bye`\n" +
+        "- Es pot process.envurar un canal d'avisos amb `" + serversInfo[guild.id].prefix + "setalert`. En aquest canal s'avisarà de totes les novetats del bot.\n" +
+        "- Finalment, es pot process.envurar un canal del bot amb `" + serversInfo[guild.id].prefix + "setbot`. Això el que farà serà avisar a tothom qui estigui usant el bot fora d'aquest canal.\n" +
         "Aquestes tres comandes es poden desactivar en qualsevol moment amb el paràmetre `null`. P.E. `" + serversInfo[guild.id].prefix + "setwelcome null`\n" +
         "Per veure tota la informació dels canals, fes servir la comanda `" + serversInfo[guild.id].prefix + "server`.\n\n" +
         "Més informació de les comandes amb `" + serversInfo[guild.id].prefix + "help` o `" + serversInfo[guild.id].prefix + "help [nom de la comanda]`.";
@@ -341,7 +341,7 @@ client.on('guildMemberAdd', async (member) => {
 
     let channelID = servers[member.guild.id].welcomeChannel;
     if (!channelID) {
-        // Si no hi ha el canal configurat, no enviem res
+        // Si no hi ha el canal process.envurat, no enviem res
         return;
     }
 
@@ -394,7 +394,7 @@ client.on('guildMemberRemove', async (member) => {
 
     let channelID = servers[member.guild.id].welcomeChannel;
     if (!channelID) {
-        // Si no hi ha el canal configurat, no enviem res
+        // Si no hi ha el canal process.envurat, no enviem res
         return;
     }
 
@@ -439,7 +439,7 @@ client.on('guildMemberRemove', async (member) => {
 
 client.on('message', async (message) => {
 
-    let prefix = config.prefix;
+    let prefix = process.env.prefix;
     if (message.guild) {
         prefix = servers[message.guild.id].prefix;
     }
@@ -487,7 +487,7 @@ client.on('message', async (message) => {
         const expirationTime = timeStamps.get(message.author.id) + cooldownAmount;
         if (currentTime < expirationTime) {
             const timeLeft = (expirationTime - currentTime) / 1000;
-            return message.reply(`siusplau espera ${timeLeft.toFixed(1)} segons abans d'utilitzar la comanda \`${commandName}\``); 
+            return message.reply(`siusplau espera ${timeLeft.toFixed(1)} segons abans d'utilitzar la comanda \`${commandName}\``);
         }
     }
 
@@ -497,11 +497,21 @@ client.on('message', async (message) => {
         command.execute(message, args, servers, userData, client, commandName);
     } catch (error) {
         console.error(error);
-        message.reply('alguna cosa ha anat malament, siusplau contacta amb ' + config.ownerDiscordUsername +
+        message.reply('alguna cosa ha anat malament, siusplau contacta amb ' + process.env.ownerDiscordUsername +
             '\nSi saps el que ha passat i vols reportar un bug pots fer-ho a\n' +
             'https://github.com/CatalaHD/CataBot/issues');
     }
 
 });
 
-client.login(config.token);
+
+// MONGO DB CONNECTION
+mongoose.connect(process.env.MONGODBSRV, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+}).then(() => {
+    console.log(bot("CONNECTED TO THE DATABASE!"));
+}).catch(console.error);
+
+client.login(process.env.token);

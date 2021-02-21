@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { IdOwner } = require("../../config.json");
 
 module.exports = {
     name: 'randomize',
@@ -11,7 +10,7 @@ module.exports = {
 
         let server = servers[message.guild.id];
 
-        if (message.author.id != IdOwner) {
+        if (message.author.id != process.env.IdOwner) {
             message.reply("aquesta comanda només pot ser executada per administradors del bot!");
             return message.channel.send(server.prefix + "help randomize");
         }

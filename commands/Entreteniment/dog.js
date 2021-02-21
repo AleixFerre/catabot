@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const config = require('../../config.json');
 const fetch = require('node-fetch');
 const translate = require('@vitalets/google-translate-api');
 const { getRandomColor } = require('../../common.js');
@@ -16,7 +15,7 @@ module.exports = {
         let dogUrl = "https://stockpictures.io/wp-content/uploads/2020/01/image-not-found-big.png";
 
         async function getCat() {
-            await fetch("https://api.thedogapi.com/v1/images/search?api_key='" + config.catAPIKey + "'?mime_types=gif")
+            await fetch("https://api.thedogapi.com/v1/images/search?api_key='" + process.env.catAPIKey + "'?mime_types=gif")
                 .then(res => res.json())
                 .then((data) => {
                     dogUrl = data[0].url;

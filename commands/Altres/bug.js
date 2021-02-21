@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const config = require("../../config.json");
 const { getRandomColor } = require('../../common.js');
 
 module.exports = {
@@ -88,7 +87,7 @@ module.exports = {
             .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         // Envia el missatge al owner del bot
-        let owner = await message.client.users.fetch(config.IdOwner);
+        let owner = await message.client.users.fetch(process.env.IdOwner);
         await owner.send(embed);
 
         // Confirmem l'enviament

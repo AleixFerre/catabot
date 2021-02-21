@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-let { clientid } = require('../../config.json');
 const { getRandomColor } = require('../../common.js');
 
 module.exports = {
@@ -9,7 +8,7 @@ module.exports = {
     description: 'T\'envia un missatge amb el link del bot.',
     execute(message) {
         // Get the invite link With admin permissions
-        let link = 'https://discordapp.com/oauth2/authorize?client_id=' + clientid + '&permissions=8&scope=bot';
+        let link = 'https://discordapp.com/oauth2/authorize?client_id=' + process.env.clientid + '&permissions=8&scope=bot';
 
         const embedMessage = new Discord.MessageEmbed()
             .setColor(getRandomColor())

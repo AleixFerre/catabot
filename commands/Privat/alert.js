@@ -1,5 +1,3 @@
-const { IdOwner } = require("../../config.json");
-
 module.exports = {
     name: 'alert',
     description: "Avisa a tots els servidors d'alguna cosa\nNomés l'owner del bot pot executar-ho",
@@ -13,7 +11,7 @@ module.exports = {
         if (!args[0]) {
             message.reply("no se de què avisar!");
             return message.channel.send(server.prefix + "help alert");
-        } else if (message.author.id != IdOwner) {
+        } else if (message.author.id != process.env.IdOwner) {
             message.reply("aquesta comanda només pot ser executada per administradors del bot!");
             return message.channel.send(server.prefix + "help alert");
         }
