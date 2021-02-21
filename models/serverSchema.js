@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const serversSchema = mongoose.Schema({
+const serverSchema = mongoose.Schema({
     serverID: { type: String, require: true, unique: true },
     prefix: { type: String, default: process.env.prefix },
     alertChannel: { type: String },
@@ -10,6 +10,6 @@ const serversSchema = mongoose.Schema({
     welcomeChannel: { type: String },
 });
 
-const model = mongoose.model('servers', serversSchema);
+const model = mongoose.model('servers', serverSchema);
 
 module.exports = model;

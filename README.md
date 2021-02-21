@@ -1,4 +1,4 @@
-# CataBot
+# CataBOT
 
 ## Say hi to CataBOT! Welcome the best open source Catalan Discord Bot
 
@@ -19,7 +19,8 @@ Clone it and install dependencies with
 npm install discord.js ytdl-core yt-search canvas node-fetch express moment @vitalets/google-translate-api weather-js chalk mathjs mongoose dotenv
 ```
 
-If you are running this locally
+#### If you are running this locally
+
 You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 
 ```txt
