@@ -60,9 +60,7 @@ client.on("ready", async () => {
     for (let guild of client.guilds.cache) {
         guild = guild[1];
 
-        updateServer({
-            serverID: guild.id
-        }, {
+        updateServer(guild.id, {
             serverID: guild.id,
             prefix: process.env.prefix,
         }).then(() => {
@@ -71,6 +69,12 @@ client.on("ready", async () => {
 
         let members = await guild.members.fetch();
         members.forEach((member) => {
+
+            updateUser([member.id, guild.id], {
+                "ID.userID": member.id,
+                "ID.serverID": guild.id
+            }).then(console.log(db(`* DB: Actualitzat usuari ${member.user.username} correctament!`)));
+
             if (!userData[guild.id + member.user.id])
                 userData[guild.id + member.user.id] = {};
 
@@ -168,7 +172,7 @@ client.on("ready", async () => {
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
         if (err) console.error(err);
     });
-    
+
     //! TODO: TREURE AIXÒ
     fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => {
         if (err) console.error(err);
