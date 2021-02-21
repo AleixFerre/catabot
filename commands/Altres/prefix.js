@@ -18,8 +18,10 @@ module.exports = {
             .setTimestamp().setFooter('CataBOT ' + new Date().getFullYear() + ' © All rights reserved');
 
         if (!args[0]) {
-            prefixEmbed.addField("❯ Prefix actual", server.prefix, true);
-            prefixEmbed.setDescription("Per cambiar el prefix afegeix un segon paràmetre [max. 5 caràcters]!");
+            prefixEmbed.setDescription("Pots canviar el prefix del CataBOT");
+            prefixEmbed.addField("❯ Prefix actual", "`" + server.prefix + "`");
+            prefixEmbed.addField("❯ Per cambiar el prefix", "`" + server.prefix + "prefix [ new ]`");
+            prefixEmbed.addField("❯ Validació", "`Qualsevol string com a màxim 5 caràcters`");
             message.channel.send(prefixEmbed);
         } else {
             // Si hi ha un segon argument, intentem cambiar el prefix
