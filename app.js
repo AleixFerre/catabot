@@ -78,10 +78,12 @@ client.on("ready", async () => {
 
         let members = await guild.members.fetch();
         members.forEach((member) => {
-            updateUser([member.id, guild.id], {
-                "ID.userID": member.id,
-                "ID.serverID": guild.id
-            });
+            if (!member.user.bot) { // Si es un bot, no el guardo que no farà res!
+                updateUser([member.id, guild.id], {
+                    "ID.userID": member.id,
+                    "ID.serverID": guild.id
+                });
+            }
         });
 
         console.log(log(guild.name + ": " + guild.memberCount + " members"));
@@ -126,7 +128,7 @@ client.on("guildCreate", (guild) => {
                 updateUser([member.id, guild.id], {
                     "ID.userID": member.id,
                     "ID.serverID": guild.id
-                }).then(console.log(db(`S'ha guardat l'usuari ${member.user.username} correctament!`)));
+                }).then(console.log(db(`S'ha guardat el nou usuari ${member.user.username} correctament!`)));
             }
         });
     });
@@ -139,7 +141,7 @@ client.on("guildCreate", (guild) => {
     ).then(console.log(db(`S'ha guardat la nova guild ${guild.name} correctament!`)));
 
     try {
-        let newName = "[ " + serversInfo[guild.id].prefix + " ] CataBOT";
+        let newName = "[ " + process.env.prefix + " ] CataBOT";
         guild.members.cache.get(process.env.clientid).setNickname(newName);
     } catch (err) {
         console.error(err);
@@ -148,15 +150,15 @@ client.on("guildCreate", (guild) => {
     // Enviem el missatge al owner de la guild
     let introMessage = "**DONA LA BENVINGUDA AL CATABOT!**\n" +
         "El primer bot de Discord en català!\n\n" +
-        "**process.envURACIÓ GENERAL**\n" +
+        "**CONFIGURACIÓ GENERAL**\n" +
         "El bot permet executar una serie de comandes automàtiques sempre que un ADMINISTRADOR ho decideixi. També cal saber que totes les comandes de tipus MOD requereixen un rol d'ADMINISTRADOR per ser executades.\n" +
-        "- El bot permet cambiar el prefix per defecte amb la comanda `" + serversInfo[guild.id].prefix + "prefix [prefix nou]` amb un màxim de 5 caràcters.\n" +
-        "- També es pot process.envurar un canal de benvinguda perque digui Hola i Adeu a tots els integrants nous i passats del servidor amb `" + serversInfo[guild.id].prefix + "setwelcome`. També pots provar amb `" + serversInfo[guild.id].prefix + "welcome` i `" + serversInfo[guild.id].prefix + "bye`\n" +
-        "- Es pot process.envurar un canal d'avisos amb `" + serversInfo[guild.id].prefix + "setalert`. En aquest canal s'avisarà de totes les novetats del bot.\n" +
-        "- Finalment, es pot process.envurar un canal del bot amb `" + serversInfo[guild.id].prefix + "setbot`. Això el que farà serà avisar a tothom qui estigui usant el bot fora d'aquest canal.\n" +
-        "Aquestes tres comandes es poden desactivar en qualsevol moment amb el paràmetre `null`. P.E. `" + serversInfo[guild.id].prefix + "setwelcome null`\n" +
-        "Per veure tota la informació dels canals, fes servir la comanda `" + serversInfo[guild.id].prefix + "server`.\n\n" +
-        "Més informació de les comandes amb `" + serversInfo[guild.id].prefix + "help` o `" + serversInfo[guild.id].prefix + "help [nom de la comanda]`.";
+        "- El bot permet cambiar el prefix per defecte amb la comanda `" + process.env.prefix + "prefix [prefix nou]` amb un màxim de 5 caràcters.\n" +
+        "- També es pot configurar un canal de benvinguda perque digui Hola i Adeu a tots els integrants nous i passats del servidor amb `" + process.env.prefix + "setwelcome`. També pots provar amb `" + process.env.prefix + "welcome` i `" + process.env.prefix + "bye`\n" +
+        "- Es pot configurar un canal d'avisos amb `" + process.env.prefix + "setalert`. En aquest canal s'avisarà de totes les novetats del bot.\n" +
+        "- Finalment, es pot configurar un canal del bot amb `" + process.env.prefix + "setbot`. Això el que farà serà avisar a tothom qui estigui usant el bot fora d'aquest canal.\n" +
+        "Aquestes tres comandes es poden desactivar en qualsevol moment amb el paràmetre `null`. P.E. `" + process.env.prefix + "setwelcome null`\n" +
+        "Per veure tota la informació dels canals, fes servir la comanda `" + process.env.prefix + "server`.\n\n" +
+        "Més informació de les comandes amb `" + process.env.prefix + "help` o `" + process.env.prefix + "help [nom de la comanda]`.";
 
     try {
         guild.members.fetch(guild.ownerID).then((owner) => {
@@ -167,13 +169,6 @@ client.on("guildCreate", (guild) => {
     }
 
     console.log(bot("El bot ha entrat al servidor \"" + guild.name + "\"\n"));
-
-    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
-        if (err) console.error(err);
-    });
-    fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => {
-        if (err) console.error(err);
-    });
 
 });
 
