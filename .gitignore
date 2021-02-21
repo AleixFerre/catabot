@@ -8,10 +8,7 @@ config_test.json
 package-lock.json
 Storage/userData.json
 Storage/servers.json
-Storage/servers_test.json
 *.psd
 *.zip
 *.rar
-Storage/lol/
-Storage/conversions.json
 .env
