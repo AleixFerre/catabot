@@ -8,11 +8,12 @@ const chalk = require('chalk');
 const log = chalk.bold.green;
 const remove = chalk.bold.red;
 const bot = chalk.bold.blue;
+const db = chalk.bold.cyan;
 
 // Database facade functions
 const {
-    addUser,
-    addServer
+    updateUser,
+    updateServer
 } = require('./lib/database.js');
 
 const Discord = require("discord.js");
@@ -58,6 +59,15 @@ let servers = {}; ///< The data structure that handles all the info for the serv
 client.on("ready", async () => {
     for (let guild of client.guilds.cache) {
         guild = guild[1];
+
+        updateServer({
+            serverID: guild.id
+        }, {
+            serverID: guild.id,
+            prefix: process.env.prefix,
+        }).then(() => {
+            console.log(db(`DB: Actualitzat server ${guild.name} correctament!`));
+        });
 
         let members = await guild.members.fetch();
         members.forEach((member) => {
@@ -154,10 +164,12 @@ client.on("ready", async () => {
     console.log(log("\nREADY :: Version " + process.env.version + "\nON " + client.guilds.cache.size + " servers with " + cmds.length + " commands\n" +
         "---------------------------------"));
 
+    //! TODO: TREURE AIXÒ
     fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
         if (err) console.error(err);
     });
-
+    
+    //! TODO: TREURE AIXÒ
     fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => {
         if (err) console.error(err);
     });
