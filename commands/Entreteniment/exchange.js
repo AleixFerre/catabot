@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 let conversions = require('../../Storage/conversions.json');
-const { getRandomColor } = require('../../common.js');
+const { getRandomColor } = require('../../lib/common.js');
 
 module.exports = {
     name: 'exchange',

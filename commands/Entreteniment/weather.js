@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const weather = require('weather-js');
-const { getRandomColor } = require('../../common.js');
+const { getRandomColor } = require('../../lib/common.js');
 
 module.exports = {
     name: 'weather',

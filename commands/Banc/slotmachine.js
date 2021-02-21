@@ -1,6 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { getRandomColor } = require('../../common.js');
+const { getRandomColor } = require('../../lib/common.js');
 
 module.exports = {
     name: 'slotmachine',

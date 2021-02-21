@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const moment = require('moment');
 const fs = require('fs');
-const { getRandomColor } = require('../../common.js');
+const { getRandomColor } = require('../../lib/common.js');
 
 module.exports = {
     name: 'daily',

@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const translate = require('@vitalets/google-translate-api');
-const { getRandomColor } = require('../../common.js');
+const { getRandomColor } = require('../../lib/common.js');
 
 module.exports = {
     name: 'cat',

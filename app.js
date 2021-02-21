@@ -18,7 +18,6 @@ moment().utcOffset('120');
 const cooldowns = new Map();
 
 let userData = JSON.parse(fs.readFileSync("./Storage/userData.json", 'utf8'));
-
 let serversInfo = JSON.parse(fs.readFileSync("./Storage/servers.json", "utf8"));
 
 let cmds = [];
@@ -51,9 +50,9 @@ fs.writeFile('docs/Storage/commands.json', JSON.stringify(cmds), (err) => {
 let servers = {}; ///< The data structure that handles all the info for the servers
 
 client.on("ready", async () => {
-
     for (let guild of client.guilds.cache) {
         guild = guild[1];
+        
         let members = await guild.members.fetch();
         members.forEach((member) => {
             if (!userData[guild.id + member.user.id])
@@ -83,9 +82,11 @@ client.on("ready", async () => {
                     userData[guild.id + member.user.id].xp = 0;
             }
         });
+        
 
         console.log(log(guild.name + ": " + guild.memberCount + " members"));
 
+       
         if (!serversInfo[guild.id]) {
             serversInfo[guild.id] = {};
         }

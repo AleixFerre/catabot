@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const champs = Object.keys(require('../../Storage/lol/champion.json').data);
 const spells = require('../../Storage/lol/summoner.json').data;
 const items = require('../../Storage/lol/item.json').data;
-const { getRandomColor } = require('../../common.js');
+const { getRandomColor } = require('../../lib/common.js');
 
 // Thanks to https://gist.github.com/andrei-m/982927#gistcomment-1931258
 function distanciaEdicio(a, b) {

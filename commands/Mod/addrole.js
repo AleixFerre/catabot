@@ -1,4 +1,4 @@
-const { getServerPrefix } = require("../../common.js");
+const { getServerPrefix } = require("../../lib/common.js");
 
 module.exports = {
     name: 'addrole',

@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const {
     getRandomColor
-} = require('../../common.js');
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'help',

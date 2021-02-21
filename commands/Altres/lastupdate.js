@@ -2,7 +2,7 @@ const fs = require("fs");
 const Discord = require('discord.js');
 const {
     getRandomColor, getServerPrefix
-} = require("../../common.js");
+} = require("../../lib/common.js");
 
 module.exports = {
     name: 'lastupdate',

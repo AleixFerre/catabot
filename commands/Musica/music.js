@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const {
 	getRandomColor,
 	getServerPrefix
-} = require("../../common.js");
+} = require("../../lib/common.js");
 
 const queue = new Map();
 
