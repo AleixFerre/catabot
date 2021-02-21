@@ -4,16 +4,18 @@ const moment = require('moment');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-const chalk = require('chalk');
-const log = chalk.bold.green;
-const remove = chalk.bold.red;
-const bot = chalk.bold.blue;
-const db = chalk.bold.cyan;
+const {
+    log,
+    remove,
+    bot,
+    db
+} = require('./lib/common.js');
 
 // Database facade functions
 const {
     updateUser,
-    updateServer
+    updateServer,
+    getServer
 } = require('./lib/database.js');
 
 const Discord = require("discord.js");
@@ -27,7 +29,11 @@ const cooldowns = new Map();
 let userData = JSON.parse(fs.readFileSync("./Storage/userData.json", "utf8"));
 let serversInfo = JSON.parse(fs.readFileSync("./Storage/servers.json", "utf8"));
 
-let cmds = [];
+// Describes if the system saves the commands into the docs/.../commands.json file
+// Es preferible que es tingui a FALSE a no ser que es vulgui guardar especificament
+const wantToSaveCommands = false;
+
+let cmds = []; // Array that will store all the bot commands
 
 /// Load the commands from all the folders -> files
 const commandDirs = fs.readdirSync('./commands');
@@ -36,23 +42,27 @@ for (const dir of commandDirs) {
     for (const file of files) {
         const command = require(`./commands/${dir}/${file}`);
         client.commands.set(command.name, command);
-        let usage = "";
-        if (command.usage) {
-            usage = command.usage;
+        if (wantToSaveCommands) {
+            let usage = "";
+            if (command.usage) {
+                usage = command.usage;
+            }
+            cmds.push({
+                name: command.name,
+                description: command.description,
+                type: command.type,
+                usage: "!" + command.name + (usage.length !== 0 ? " " + usage : ""),
+                aliases: command.aliases
+            });
         }
-        cmds.push({
-            name: command.name,
-            description: command.description,
-            type: command.type,
-            usage: "!" + command.name + (usage.length !== 0 ? " " + usage : ""),
-            aliases: command.aliases
-        });
     }
 }
 
-fs.writeFile('docs/Storage/commands.json', JSON.stringify(cmds), (err) => {
-    if (err) console.error(err);
-});
+if (wantToSaveCommands) {
+    fs.writeFile('docs/Storage/commands.json', JSON.stringify(cmds), (err) => {
+        if (err) console.error(err);
+    });
+}
 
 let servers = {}; ///< The data structure that handles all the info for the servers
 
@@ -62,86 +72,24 @@ client.on("ready", async () => {
 
         updateServer(guild.id, {
             serverID: guild.id,
-            prefix: process.env.prefix,
         }).then(() => {
             console.log(db(`DB: Actualitzat server ${guild.name} correctament!`));
         });
 
         let members = await guild.members.fetch();
         members.forEach((member) => {
-
             updateUser([member.id, guild.id], {
                 "ID.userID": member.id,
                 "ID.serverID": guild.id
-            }).then(console.log(db(`* DB: Actualitzat usuari ${member.user.username} correctament!`)));
-
-            if (!userData[guild.id + member.user.id])
-                userData[guild.id + member.user.id] = {};
-
-            if (!userData[guild.id + member.user.id].money) {
-                if (userData[guild.id + member.user.id].money !== 0) {
-                    if (member.user.bot)
-                        userData[guild.id + member.user.id].money = -1;
-                    else
-                        userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
-                }
-            }
-
-            if (!userData[guild.id + member.user.id].lastDaily) {
-                if (!member.user.bot)
-                    userData[guild.id + member.user.id].lastDaily = "Not Collected";
-            }
-
-            if (!userData[guild.id + member.user.id].level) {
-                if (!member.user.bot)
-                    userData[guild.id + member.user.id].level = 1;
-            }
-
-            if (!userData[guild.id + member.user.id].xp) {
-                if (!member.user.bot)
-                    userData[guild.id + member.user.id].xp = 0;
-            }
+            });
         });
-
 
         console.log(log(guild.name + ": " + guild.memberCount + " members"));
 
-
-        if (!serversInfo[guild.id]) {
-            serversInfo[guild.id] = {};
-        }
-        if (!serversInfo[guild.id].prefix) {
-            serversInfo[guild.id].prefix = process.env.prefix;
-        }
-        if (!serversInfo[guild.id].alertChannel) {
-            serversInfo[guild.id].alertChannel = null;
-        }
-        if (!serversInfo[guild.id].botChannel) {
-            serversInfo[guild.id].botChannel = null;
-        }
-        if (!serversInfo[guild.id].counterChannel) {
-            serversInfo[guild.id].counterChannel = null;
-        }
-        if (!serversInfo[guild.id].counterChannelName) {
-            serversInfo[guild.id].counterChannelName = null;
-        }
-        if (!serversInfo[guild.id].welcomeChannel) {
-            serversInfo[guild.id].welcomeChannel = null;
-        }
-
-        if (!servers[guild.id]) {
-            servers[guild.id] = {
-                prefix: serversInfo[guild.id].prefix,
-                alertChannel: serversInfo[guild.id].alertChannel,
-                botChannel: serversInfo[guild.id].botChannel,
-                counterChannel: serversInfo[guild.id].counterChannel,
-                counterChannelName: serversInfo[guild.id].counterChannelName,
-                welcomeChannel: serversInfo[guild.id].welcomeChannel,
-            };
-        }
+        let server = await getServer(guild.id);
 
         try {
-            let newName = "[ " + servers[guild.id].prefix + " ] CataBOT";
+            let newName = "[ " + server.prefix + " ] CataBOT";
             guild.members.fetch(process.env.clientid).then((member) => {
                 member.setNickname(newName);
             });
@@ -149,10 +97,10 @@ client.on("ready", async () => {
             console.error(err);
         }
 
-        if (servers[guild.id].counterChannel) {
+        if (server.counterChannel) {
             // Existeix un canal de contador, afegim un setInterval cada 12h
             setInterval(() => {
-                guild.channels.resolve(servers[guild.id].counterChannel).setName("members " + guild.memberCount);
+                guild.channels.resolve(server.counterChannel).setName("members " + guild.memberCount);
             }, 12 * 3600000);
         }
     }
@@ -165,18 +113,8 @@ client.on("ready", async () => {
         }
     });
 
-    console.log(log("\nREADY :: Version " + process.env.version + "\nON " + client.guilds.cache.size + " servers with " + cmds.length + " commands\n" +
+    console.log(log("\nREADY :: Version " + process.env.version + "\nON " + client.guilds.cache.size + " servers with " + client.commands.size + " commands\n" +
         "---------------------------------"));
-
-    //! TODO: TREURE AIXÒ
-    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
-        if (err) console.error(err);
-    });
-
-    //! TODO: TREURE AIXÒ
-    fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => {
-        if (err) console.error(err);
-    });
 
 });
 
@@ -184,67 +122,21 @@ client.on("guildCreate", (guild) => {
 
     guild.members.fetch().then((members) => {
         members.forEach(member => {
-            if (!userData[guild.id + member.user.id])
-                userData[guild.id + member.user.id] = {};
-
-            if (!userData[guild.id + member.user.id].money) {
-                if (userData[guild.id + member.user.id].money !== 0) {
-                    if (member.user.bot)
-                        userData[guild.id + member.user.id].money = -1;
-                    else
-                        userData[guild.id + member.user.id].money = Math.round(Math.random() * 1000);
-                }
-            }
-
-            if (!userData[guild.id + member.user.id].lastDaily) {
-                if (!member.user.bot)
-                    userData[guild.id + member.user.id].lastDaily = "Not Collected";
-            }
-
-            if (!userData[guild.id + member.user.id].level) {
-                if (!member.user.bot)
-                    userData[guild.id + member.user.id].level = 1;
-            }
-
-            if (!userData[guild.id + member.user.id].xp) {
-                if (!member.user.bot)
-                    userData[guild.id + member.user.id].xp = 0;
+            if (!member.user.bot) { // Si es un bot, no el guardo que no farà res!
+                updateUser([member.id, guild.id], {
+                    "ID.userID": member.id,
+                    "ID.serverID": guild.id
+                }).then(console.log(db(`S'ha guardat l'usuari ${member.user.username} correctament!`)));
             }
         });
     });
 
-    if (!serversInfo[guild.id]) {
-        serversInfo[guild.id] = {};
-    }
-    if (!serversInfo[guild.id].prefix) {
-        serversInfo[guild.id].prefix = process.env.prefix;
-    }
-    if (!serversInfo[guild.id].alertChannel) {
-        serversInfo[guild.id].alertChannel = null;
-    }
-    if (!serversInfo[guild.id].botChannel) {
-        serversInfo[guild.id].botChannel = null;
-    }
-    if (!serversInfo[guild.id].counterChannel) {
-        serversInfo[guild.id].counterChannel = null;
-    }
-    if (!serversInfo[guild.id].counterChannelName) {
-        serversInfo[guild.id].counterChannelName = null;
-    }
-    if (!serversInfo[guild.id].welcomeChannel) {
-        serversInfo[guild.id].welcomeChannel = null;
-    }
-
-    if (!servers[guild.id]) {
-        servers[guild.id] = {
-            prefix: serversInfo[guild.id].prefix,
-            alertChannel: serversInfo[guild.id].alertChannel,
-            botChannel: serversInfo[guild.id].botChannel,
-            counterChannel: serversInfo[guild.id].counterChannel,
-            counterChannelName: serversInfo[guild.id].counterChannelName,
-            welcomeChannel: serversInfo[guild.id].welcomeChannel,
-        };
-    }
+    updateServer(
+        guild.id, {
+            serverID: guild.id,
+            prefix: process.env.prefix
+        }
+    ).then(console.log(db(`S'ha guardat la nova guild ${guild.name} correctament!`)));
 
     try {
         let newName = "[ " + serversInfo[guild.id].prefix + " ] CataBOT";
@@ -534,7 +426,9 @@ mongoose.connect(process.env.MONGODBSRV, {
     useUnifiedTopology: true,
     useFindAndModify: false
 }).then(() => {
-    console.log(bot("CONNECTED TO THE DATABASE!"));
+    console.log(db("CONNECTAT A LA BASE DE DADES!"));
 }).catch(console.error);
 
+
+// DISCORD BOT CONNECTION
 client.login(process.env.token);
