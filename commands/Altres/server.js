@@ -1,6 +1,10 @@
 const Discord = require("discord.js");
-const { getRandomColor } = require('../../lib/common.js');
-const { getUsersFromServer } = require("../../lib/database.js");
+const {
+    getRandomColor
+} = require('../../lib/common.js');
+const {
+    getUsersFromServer
+} = require("../../lib/database.js");
 
 module.exports = {
     name: 'server',
@@ -42,7 +46,7 @@ module.exports = {
         userData.forEach(member => {
 
             let id = member.IDs.userID;
-            
+
             if (member.money > mesRicDiners) {
                 mesRicDiners = member.money;
                 mesRicNom = message.guild.members.resolve(id).user.username;

@@ -1,4 +1,6 @@
-const fs = require('fs');
+const {
+    updateUser
+} = require('../../lib/database');
 
 module.exports = {
     name: 'setlevel',
@@ -6,7 +8,7 @@ module.exports = {
     type: 'privat',
     usage: '<lvl, xp, @user>',
     cooldown: 5,
-    async execute(message, args, _servers, userData) {
+    async execute(message, args) {
 
         if (message.author.id !== process.env.IdOwner) {
             return message.reply("no tens permís per executar aquesta comanda!");
@@ -41,14 +43,14 @@ module.exports = {
 
         let content = `${to.username}, ara tens \`Nivell ${lvl}\` i \`${xp}xp\``;
 
-        userData[message.guild.id + to.id].level = lvl;
-        userData[message.guild.id + to.id].xp = xp;
-
-        fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => {
-            if (err) console.error(err);
+        await updateUser([to.id, message.guild.id], {
+            level: lvl,
+            xp: xp
         });
 
         await message.channel.send(content);
-        message.delete();
+        
+        if (message.author.bot)
+            message.delete();
     },
 };

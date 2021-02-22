@@ -5,6 +5,9 @@ const {
 const {
     getRandomColor
 } = require('../../lib/common.js');
+const {
+    getUsersFromServer
+} = require('../../lib/database.js');
 
 module.exports = {
     name: 'profile',
@@ -12,7 +15,7 @@ module.exports = {
     type: 'level',
     aliases: ['perfil'],
     cooldown: 1,
-    execute(message, _args, _servers, userData) {
+    async execute(message) {
 
         let mention = {};
         let posicio = 1;
@@ -28,25 +31,28 @@ module.exports = {
             return message.reply("els Bots no tenen perfil... pobres Bots 😫");
         }
 
-        let level = userData[message.guild.id + mention.id].level;
-        let xp = userData[message.guild.id + mention.id].xp;
-        let money = userData[message.guild.id + mention.id].money;
+        let usersData = await getUsersFromServer(message.guild.id);
 
-        message.guild.members.cache.forEach(member => {
-            if (userData[message.guild.id + member.id].level > level) {
+        let userData = usersData.find((user) => user.IDs.userID === mention.id);
+        let level = userData.level;
+        let xp = userData.xp;
+        let money = userData.money;
+
+        usersData.forEach(member => {
+            if (member.level > level) {
                 posicio++;
-            } else if (userData[message.guild.id + member.id].level === level) {
-                if (userData[message.guild.id + member.id].xp > xp) {
+            } else if (member.level === level) {
+                if (member.xp > xp) {
                     posicio++;
                 }
             }
-            if (userData[message.guild.id + member.id].money > money) {
+            if (member.money > money) {
                 posicioMoney++;
             }
         });
 
 
-        let progress = userData[message.guild.id + mention.id].xp / 10;
+        let progress = xp / 10;
         if (progress > 100) {
             progress = 100;
         }
@@ -54,14 +60,14 @@ module.exports = {
         let barra = "";
         let max = 10;
 
-        // ⬛⬛⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜
+        // ▰▰▰▰▰▱▱▱▱▱▱▱
         for (let i = 0; i < (progress / 10); i++) {
-            barra += "🟦";
+            barra += "▰";
             max--;
         }
 
         while (max > 0) {
-            barra += "⬜";
+            barra += "▱";
             max--;
         }
 
@@ -80,7 +86,7 @@ module.exports = {
             .addField('❯ Compte', mention.username, true)
             .addField('❯ Nivell', level, true)
             .addField('❯ XP', xp + "/1000", true)
-            .addField('❯ Top XP', posicio, true)
+            .addField('❯ Top XP', posicio || -1, true)
             .addField('❯ Rang', `${ranks[rankIndex - 1]} _[${rankIndex}/19]_`, true)
             .addField('❯ BarraXP', barra + " *[" + progress + "%]*", false)
             .addField('❯ Diners', money, true)

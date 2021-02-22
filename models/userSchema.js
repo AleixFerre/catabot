@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema({
     money: { type: Number, default: 1000 },
     lastDaily: { type: String, default: "Not Collected" },
     xp: { type: Number, default: 0 },
-    level: { type: Number, default: 0 },
+    level: { type: Number, default: 1 },
 });
 
 const model = mongoose.model('users', userSchema);

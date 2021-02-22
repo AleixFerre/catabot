@@ -1,14 +1,20 @@
-const fs = require('fs');
 const {
     ranks
 } = require("../../storage/ranks.json");
+const {
+    getUsersFromServer,
+    updateUser
+} = require('../../lib/database.js');
+const {
+    db
+} = require('../../lib/common');
 
 module.exports = {
     name: 'progress',
-    description: 'Et permet pujar de nivell. Comanda interna del bot',
+    description: 'Et permet pujar de nivell. Comanda interna del bot.',
     type: 'privat',
     cooldown: 0,
-    async execute(message, args, _servers, userData) {
+    async execute(message, args) {
 
         if (!message.author.bot && message.author.id !== process.env.IdOwner) {
             return message.reply("no tens permís per executar aquesta comanda!");
@@ -33,8 +39,11 @@ module.exports = {
 
         let content = `${to.username}, has guanyat \`${add}xp\``;
 
-        let xp = userData[message.guild.id + to.id].xp;
-        let level = userData[message.guild.id + to.id].level;
+        let usersData = await getUsersFromServer(message.guild.id);
+
+        let userData = usersData.find((user) => user.IDs.userID === to.id);
+        let level = userData.level;
+        let xp = userData.xp;
         let sumLvl = 0;
         let sumXp = 0;
 
@@ -78,21 +87,21 @@ module.exports = {
 
         // Si arrives a nivell 200, manten-te a nivell 200 i 0xp
         if (level + sumLvl >= 200) {
-            userData[message.guild.id + to.id].level = 200;
-            userData[message.guild.id + to.id].xp = 0;
+            level = 200;
+            xp = 0;
         } else {
-            userData[message.guild.id + to.id].level += sumLvl; // Sumem els nivells calculats
-            userData[message.guild.id + to.id].xp += sumXp; // Afegim la xp calculada
+            level += sumLvl; // Sumem els nivells calculats
+            xp += sumXp; // Afegim la xp calculada
         }
 
         // Calculem el rank de l'usuari ara
-        let rankIndexPost = Math.floor(userData[message.guild.id + to.id].level / 10) + 1;
+        let rankIndexPost = Math.floor(level / 10) + 1;
         if (rankIndexPost > 19) { // Maxim rank -> 19
             rankIndexPost = 19;
         }
 
         if (sumLvl > 0) { // Si es puja de nivell, avisa'm
-            content += `\n${to.username}, has arribat al \`Nivell ${userData[message.guild.id + to.id].level}\``;
+            content += `\n${to.username}, has arribat al \`Nivell ${level}\``;
             if (level + sumLvl >= 200) { // Si just pujes a nivell 200, avisa
                 content += `\n${to.username}, HAS ARRIBAT AL NIVELL MÀXIM!`;
             }
@@ -101,11 +110,13 @@ module.exports = {
             }
         }
 
-        fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => {
-            if (err) console.error(err);
-        });
+        updateUser([userData.IDs.userID, userData.IDs.serverID], {
+            level: level,
+            xp: xp
+        }).then(db(`DB: Usuari ${to.username} actualitzat ${level, xp}`));
 
         await message.channel.send(content);
-        message.delete();
+        if (message.author.bot)
+            message.delete();
     },
 };

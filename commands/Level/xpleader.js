@@ -2,6 +2,9 @@ const Discord = require("discord.js");
 const {
     getRandomColor
 } = require('../../lib/common.js');
+const {
+    getUsersFromServer
+} = require('../../lib/database.js');
 
 module.exports = {
     name: 'xpleader',
@@ -10,7 +13,7 @@ module.exports = {
     type: 'level',
     usage: '[ amount ]',
     cooldown: 10,
-    execute(message, args, server, userData) {
+    async execute(message, args, server, userData) {
 
         let board = [];
         let size = 10;
@@ -59,12 +62,12 @@ module.exports = {
             board.splice(i, 0, inserit);
         }
 
+        let usersData = await getUsersFromServer(message.guild.id);
 
-        message.guild.members.cache.forEach((member) => {
+        usersData.forEach((member) => {
             // Per cada membre del servidor, apliquem aquesta funció
 
-            let user = userData[message.guild.id + member.id];
-            insercioOrdenada(user, member.user.username);
+            insercioOrdenada(member, message.guild.members.resolve(member.IDs.userID).user.username);
 
             // Mantenim la taula sempre com a maxim amb size elements
             // This is really an IF statement but just in case

@@ -5,6 +5,9 @@ const {
 const {
     getRandomColor
 } = require('../../lib/common.js');
+const {
+    getUsersFromServer
+} = require('../../lib/database.js');
 
 module.exports = {
     name: 'level',
@@ -12,7 +15,7 @@ module.exports = {
     type: 'level',
     aliases: ['xp', 'lvl'],
     cooldown: 1,
-    execute(message, _args, _server, userData) {
+    async execute(message) {
 
         let mention = {};
         let posicio = 1;
@@ -27,20 +30,23 @@ module.exports = {
             return message.reply("els Bots no tenen nivell... pobres Bots 😫");
         }
 
-        let level = userData[message.guild.id + mention.id].level;
-        let xp = userData[message.guild.id + mention.id].xp;
+        let usersData = await getUsersFromServer(message.guild.id);
 
-        message.guild.members.cache.forEach(member => {
-            if (userData[message.guild.id + member.id].level > level) {
+        let userData = usersData.find((user) => user.IDs.userID === mention.id);
+        let level = userData.level;
+        let xp = userData.xp;
+
+        usersData.forEach(member => {
+            if (member.level > level) {
                 posicio++;
-            } else if (userData[message.guild.id + member.id].level === level) {
-                if (userData[message.guild.id + member.id].xp > xp) {
+            } else if (member.level === level) {
+                if (member.xp > xp) {
                     posicio++;
                 }
             }
         });
 
-        let progress = userData[message.guild.id + mention.id].xp / 10;
+        let progress = xp / 10;
         if (progress > 100) {
             progress = 100;
         }
@@ -75,7 +81,7 @@ module.exports = {
             .addField('❯ Compte', mention.username, true)
             .addField('❯ Nivell', level, true)
             .addField('❯ XP', xp + "/1000", true)
-            .addField('❯ Top', posicio, true)
+            .addField('❯ Top', posicio || -1, true)
             .addField('❯ Rang', `${ranks[rankIndex - 1]} _[${rankIndex}/19]_`, true)
             .addField('❯ Barra', barra + " *[" + progress + "%]*", false)
             .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
