@@ -1,3 +1,7 @@
+const {
+    getAllServers
+} = require("../../lib/database");
+
 module.exports = {
     name: 'alert',
     description: "Avisa a tots els servidors d'alguna cosa\nNomés l'owner del bot pot executar-ho",
@@ -16,9 +20,11 @@ module.exports = {
 
         msg = args.join(" ");
 
-        await client.guilds.cache.forEach(async guild => {
+        let servers = await getAllServers();
 
-            let channelID = servers[guild.id].alertChannel; //! IMPORTANT
+        servers.forEach(async guild => {
+
+            let channelID = guild.alertChannel;
             let channel = client.channels.cache.get(channelID);
 
             // Només si hi ha algun canal de text en tot el servidor

@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const { getRandomColor } = require('../../lib/common.js');
+const { getUsersFromServer } = require("../../lib/database.js");
 
 module.exports = {
     name: 'server',
@@ -7,14 +8,14 @@ module.exports = {
     cooldown: 1,
     description: 'Diu la informació del servidor.',
     aliases: ['serverinfo', 'guild'],
-    execute(message, _args, server, userData) {
+    async execute(message, _args, server) {
 
         let mesRicNom = "";
-        let mesRicDiners = 0;
+        let mesRicDiners = -1;
         let totalMoney = 0;
         let mesNivellNom = "";
-        let mesNivellLevel = 0;
-        let mesNivellXP = 0;
+        let mesNivellLevel = -1;
+        let mesNivellXP = -1;
 
         let canalAvisos = `<#${server.alertChannel}>`;
         if (!server.alertChannel) {
@@ -36,30 +37,30 @@ module.exports = {
             canalCounter = "*No adjudicat*";
         }
 
-        message.guild.members.cache.forEach(member => {
+        let userData = await getUsersFromServer(message.guild.id);
 
-            if (!userData[message.guild.id + member.id] || member.user.bot) {
-                return;
+        userData.forEach(member => {
+
+            let id = member.IDs.userID;
+            
+            if (member.money > mesRicDiners) {
+                mesRicDiners = member.money;
+                mesRicNom = message.guild.members.resolve(id).user.username;
             }
 
-            if (userData[message.guild.id + member.id].money > mesRicDiners) {
-                mesRicDiners = userData[message.guild.id + member.id].money;
-                mesRicNom = member.user.username;
-            }
-
-            if (userData[message.guild.id + member.id].level > mesNivellLevel) {
-                mesNivellLevel = userData[message.guild.id + member.id].level;
-                mesNivellXP = userData[message.guild.id + member.id].xp;
-                mesNivellNom = member.user.username;
-            } else if (userData[message.guild.id + member.id].level === mesNivellLevel) {
-                if (userData[message.guild.id + member.id].xp > mesNivellXP) {
-                    mesNivellLevel = userData[message.guild.id + member.id].level;
-                    mesNivellXP = userData[message.guild.id + member.id].xp;
-                    mesNivellNom = member.user.username;
+            if (member.level > mesNivellLevel) {
+                mesNivellLevel = member.level;
+                mesNivellXP = member.xp;
+                mesNivellNom = message.guild.members.resolve(id).user.username;
+            } else if (member.level === mesNivellLevel) {
+                if (member.xp > mesNivellXP) {
+                    mesNivellLevel = member.level;
+                    mesNivellXP = member.xp;
+                    mesNivellNom = message.guild.members.resolve(id).user.username;
                 }
             }
 
-            totalMoney += userData[message.guild.id + member.id].money;
+            totalMoney += member.money;
 
         });
 
@@ -70,15 +71,15 @@ module.exports = {
             .addField('❯ Propietari', message.guild.owner.user.username, true)
             .addField('❯ Num Membres', message.guild.memberCount, true)
             .addField('❯ Diners totals', totalMoney, true)
-            .addField('❯ El mes ric', mesRicNom, true)
+            .addField('❯ El mes ric', mesRicNom || "*Ningu*", true)
             .addField('❯ Diners del mes ric', mesRicDiners, true)
-            .addField('❯ Amb mes nivell', mesNivellNom, true)
-            .addField('❯ Nivell del MAX', mesNivellLevel, true)
-            .addField('❯ XP del MAX', mesNivellXP, true)
+            .addField('❯ Amb mes nivell', mesNivellNom || "*Ningu*", true)
+            .addField('❯ Màxim Nivell', mesNivellLevel, true)
+            .addField('❯ Màxima XP', mesNivellXP, true)
             .addField('❯ Canal d\'avisos', canalAvisos, true)
             .addField('❯ Canal del bot', canalBot, true)
             .addField('❯ Canal de benvinguda', canalBenvinguda, true)
-            .addField('❯ Canal contador', canalCounter, true)
+            .addField('❯ Canal comptador', canalCounter, true)
             .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
         message.channel.send(msg);

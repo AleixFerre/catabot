@@ -77,8 +77,8 @@ client.on("ready", async () => {
         members.forEach((member) => {
             if (!member.user.bot) { // Si es un bot, no el guardo que no farà res!
                 updateUser([member.id, guild.id], {
-                    "ID.userID": member.id,
-                    "ID.serverID": guild.id
+                    "IDs.userID": member.id,
+                    "IDs.serverID": guild.id
                 });
             }
         });
@@ -123,8 +123,8 @@ client.on("guildCreate", (guild) => {
         members.forEach(member => {
             if (!member.user.bot) { // Si es un bot, no el guardo que no farà res!
                 updateUser([member.id, guild.id], {
-                    "ID.userID": member.id,
-                    "ID.serverID": guild.id
+                    "IDs.userID": member.id,
+                    "IDs.serverID": guild.id
                 }).then(console.log(db(`DB: Guardat el nou usuari ${member.user.username} correctament!`)));
             }
         });
@@ -207,8 +207,8 @@ client.on('guildMemberAdd', async (member) => {
         console.log(log("Nou membre \"" + member.user.username + "\" afegit a la guild " + member.guild.name + "\n"));
 
         updateUser([member.id, member.guild.id], {
-            "ID.userID": member.id,
-            "ID.serverID": member.guild.id
+            "IDs.userID": member.id,
+            "IDs.serverID": member.guild.id
         }).then(console.log(db(`DB: Guardat el nou usuari ${member.user.username} correctament!`)));
     }
 
