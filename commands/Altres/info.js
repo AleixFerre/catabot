@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'info',
@@ -7,9 +9,9 @@ module.exports = {
     type: 'altres',
     cooldown: 1,
     aliases: ['stats', 'bot'],
-    execute(message, _args, servers, _userData, client) {
+    execute(message, _args, server, client) {
 
-        let description = "Soc un **BOT** de discord **en català**! Espero que sigui agradable la meva presencia en aquest servidor, " + message.author.username + ". Pots veure totes les meves comandes amb " + servers[message.guild.id].prefix + "help.";
+        let description = "Soc un **BOT** de discord **en català**! Espero que sigui agradable la meva presencia en aquest servidor, " + message.author.username + ". Pots veure totes les meves comandes amb " + server.prefix + "help.";
 
         let info = `• **Desenvolupador:** ${process.env.ownerDiscordUsername}\n` +
             `• **Pagina web: [catalahd.github.io/CataBot](${process.env.website})**\n` +

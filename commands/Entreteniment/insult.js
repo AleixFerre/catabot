@@ -1,7 +1,9 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const translate = require('@vitalets/google-translate-api');
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'insult',
@@ -29,12 +31,14 @@ module.exports = {
         async function getData() {
             await fetch(insultLink)
                 .then(res => res.json())
-                .then(async(data) => {
+                .then(async (data) => {
                     if (data.error) {
                         return message.reply("hi ha hagut un error!\n" + data.error_message);
                     } else {
                         insult = data.insult;
-                        await translate(insult, { to: "es" }).then(res => {
+                        await translate(insult, {
+                            to: "es"
+                        }).then(res => {
                             insult = res.text;
                         });
                     }

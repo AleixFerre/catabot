@@ -1,5 +1,7 @@
 const fs = require('fs');
-const { ranks } = require("../../Storage/ranks.json");
+const {
+    ranks
+} = require("../../Storage/ranks.json");
 
 module.exports = {
     name: 'progress',
@@ -99,7 +101,9 @@ module.exports = {
             }
         }
 
-        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+            if (err) console.error(err);
+        });
 
         await message.channel.send(content);
         message.delete();

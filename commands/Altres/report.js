@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'report',
@@ -7,9 +9,8 @@ module.exports = {
     type: 'altres',
     cooldown: 10,
     usage: '< @userToReport >',
-    async execute(message, _args, servers) {
+    async execute(message, _args, server) {
 
-        let server = servers[message.guild.id];
         let reported = message.mentions.members.first();
 
         if (!reported) {
@@ -35,7 +36,11 @@ module.exports = {
         let msg = await message.author.send("**1.- ASSUMPTE DEL REPORT** _Posa la paraula `\"Cancel\"` per cancel·lar la operació_");
         // Esperem resposta
         const filter = _m => true;
-        await msg.channel.awaitMessages(filter, { max: 1, time: 600000, errors: ['time'] }).then(collected => {
+        await msg.channel.awaitMessages(filter, {
+            max: 1,
+            time: 600000,
+            errors: ['time']
+        }).then(collected => {
             assumpte = collected.first().content;
         }).catch(error => {
             console.error(error);
@@ -48,7 +53,11 @@ module.exports = {
 
         await message.author.send("**2.- COS DEL REPORT** _Posa la paraula `\"Cancel\"` per cancel·lar la operació_");
         // Esperem resposta
-        await msg.channel.awaitMessages(filter, { max: 1, time: 600000, errors: ['time'] }).then(collected => {
+        await msg.channel.awaitMessages(filter, {
+            max: 1,
+            time: 600000,
+            errors: ['time']
+        }).then(collected => {
             cos = collected.first().content;
         }).catch(error => {
             console.error(error);

@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'pokedex',
@@ -9,9 +11,7 @@ module.exports = {
     aliases: ['poke', 'pokemon'],
     type: 'entreteniment',
     cooldown: 10,
-    execute(message, args, servers) {
-
-        let server = servers[message.guild.id];
+    execute(message, args, server) {
 
         if (!args[0]) {
             message.reply("No se el que vols buscar!");

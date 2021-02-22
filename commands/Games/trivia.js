@@ -1,7 +1,9 @@
 const fetch = require('node-fetch');
 const Discord = require('discord.js');
 const fs = require('fs');
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'trivia',
@@ -10,7 +12,7 @@ module.exports = {
     usage: '[ quantitat_preguntes ]',
     type: 'games',
     cooldown: 30,
-    async execute(message, args, servers, userData) {
+    async execute(message, args, server, userData) {
 
         // Només cal ABCD, però per si un cas
         const emojis = ["🇦", "🇧", "🇨", "🇩", "🇪", "🇫"];
@@ -18,7 +20,6 @@ module.exports = {
         const recompensa = 50; // Punts que guanyes per cada resposta correcta
         const max_persones = 5; // Maxim de persones que hi pot haber jugat en una sala
 
-        let server = servers[message.guild.id];
         let preguntes = [];
         let participants = [message.author];
         let classificacio = [0];
@@ -78,7 +79,11 @@ module.exports = {
             let entra_joc = false;
 
             while (!entra_joc && participants.length < max_persones) {
-                let collected = await msg_sala.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
+                let collected = await msg_sala.awaitReactions(filter, {
+                        max: 1,
+                        time: 60000,
+                        errors: ['time']
+                    })
                     .catch(() => -1);
 
                 // si ha acabat el temps, sortim
@@ -197,7 +202,11 @@ module.exports = {
                 participants.includes(msg.author) &&
                 es_correcte(msg.content.toLowerCase(), respostes);
 
-            let collected = await msg.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
+            let collected = await msg.channel.awaitMessages(filter, {
+                    max: 1,
+                    time: 60000,
+                    errors: ['time']
+                })
                 .catch(() => -1);
 
             if (collected === -1) {
@@ -281,7 +290,9 @@ module.exports = {
                 message.channel.send(p);
             });
 
-            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+                if (err) console.error(err);
+            });
 
         }
     },

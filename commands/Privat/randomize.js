@@ -6,9 +6,7 @@ module.exports = {
     usage: '[ max ]',
     cooldown: 30,
     type: 'privat',
-    execute(message, args, servers, userData) {
-
-        let server = servers[message.guild.id];
+    execute(message, args, server, userData) {
 
         if (message.author.id != process.env.IdOwner) {
             message.reply("aquesta comanda només pot ser executada per administradors del bot!");

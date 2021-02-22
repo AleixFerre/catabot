@@ -1,6 +1,10 @@
 const Discord = require("discord.js");
-const { ranks } = require("../../Storage/ranks.json");
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    ranks
+} = require("../../Storage/ranks.json");
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'level',
@@ -8,7 +12,7 @@ module.exports = {
     type: 'level',
     aliases: ['xp', 'lvl'],
     cooldown: 1,
-    execute(message, _args, _servers, userData) {
+    execute(message, _args, _server, userData) {
 
         let mention = {};
         let posicio = 1;

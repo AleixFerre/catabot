@@ -1,6 +1,9 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor, db
+} = require('../../lib/common.js');
+const { updateServer } = require('../../lib/database.js');
 
 module.exports = {
     name: 'prefix',
@@ -8,9 +11,7 @@ module.exports = {
     type: "altres",
     cooldown: 10,
     usage: '[ new ]',
-    async execute(message, args, servers) {
-
-        let server = servers[message.guild.id];
+    async execute(message, args, server) {
 
         let prefixEmbed = new Discord.MessageEmbed()
             .setColor(getRandomColor())
@@ -25,7 +26,6 @@ module.exports = {
             message.channel.send(prefixEmbed);
         } else {
             // Si hi ha un segon argument, intentem cambiar el prefix
-            let server = servers[message.guild.id];
             let newPrefix = args[0];
             const roleNeeded = "ADMINISTRATOR";
 
@@ -38,16 +38,14 @@ module.exports = {
             }
 
             prefixEmbed.addField("❯ Prefix anterior", server.prefix, true);
-
-            server.prefix = newPrefix;
-
-            prefixEmbed.addField("❯ Prefix nou", server.prefix, true);
+            prefixEmbed.addField("❯ Prefix nou", newPrefix, true);
             prefixEmbed.setDescription("El prefix s'ha cambiat correctament!");
 
-            servers[message.guild.id].prefix = newPrefix;
-            fs.writeFile('./Storage/servers.json', JSON.stringify(servers), (err) => { if (err) console.error(err); });
+            await updateServer(message.guild.id, {
+                prefix: newPrefix
+            }).then(console.log(db("DB: S'ha guardat el nou prefix correctament!")));
 
-            let newName = "[ " + server.prefix + " ] CataBOT";
+            let newName = "[ " + newPrefix + " ] CataBOT";
             await message.guild.me.setNickname(newName);
             message.channel.send(prefixEmbed);
         }

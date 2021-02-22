@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const fs = require('fs');
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'tictactoe',
@@ -8,7 +10,7 @@ module.exports = {
     aliases: ['tresenratlla', '3enratlla', 'playt'],
     type: 'games',
     cooldown: 30,
-    execute(message, _args, servers, userData) {
+    execute(message, _args, server, userData) {
 
         const emojis = ["🇦", "🇧", "🇨", "🇩", "🇪", "🇫", "🇬", "🇭", "🇮"];
         const lletres = ["a", "b", "c", "d", "e", "f", "g", "h", "i"];
@@ -16,7 +18,6 @@ module.exports = {
         const rodona = "⭕";
         const recompensa = 500; // La meitat si no es en dificil
 
-        let server = servers[message.guild.id];
         let msg_tauler; // variable que guarda el missatge del tauler
         let player = message.author; // Mai cambia
         let player2 = null; // null si juguem contra la IA
@@ -106,7 +107,11 @@ module.exports = {
                 message.author.id === player.id && torn === 1 &&
                 posicio_valida(message.content.toLowerCase());
 
-            return await message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
+            return await message.channel.awaitMessages(filter, {
+                    max: 1,
+                    time: 60000,
+                    errors: ['time']
+                })
                 .then(collected => {
                     let lletra = lletres.indexOf(collected.first().content.toLowerCase());
                     return lletra;
@@ -121,7 +126,11 @@ module.exports = {
                 message.author.id === player2.id && torn === 2 &&
                 posicio_valida(message.content.toLowerCase());
 
-            return await message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
+            return await message.channel.awaitMessages(filter, {
+                    max: 1,
+                    time: 60000,
+                    errors: ['time']
+                })
                 .then(collected => {
                     let lletra = lletres.indexOf(collected.first().content.toLowerCase());
                     return lletra;
@@ -213,7 +222,10 @@ module.exports = {
                             tauler[i * 3 + j] = buit; // Desfem el moviment
                             if (score > bestScore) { // Si es mes gran que el maxim
                                 bestScore = score; // Adjudiquem aquest moviment al millor
-                                bestMove = { i, j };
+                                bestMove = {
+                                    i,
+                                    j
+                                };
                             }
                         }
                     }
@@ -396,7 +408,9 @@ module.exports = {
 
             message.channel.send(recompensa_str);
 
-            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+                if (err) console.error(err);
+            });
         }
 
         // Programa principal IA
@@ -462,7 +476,11 @@ module.exports = {
                     (reaction.emoji.name === '🚪' && message.author.id !== user.id) ||
                     (reaction.emoji.name === '❌' && message.author.id === user.id)) && !user.bot;
 
-            let collected = await msg_sala.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
+            let collected = await msg_sala.awaitReactions(filter, {
+                    max: 1,
+                    time: 60000,
+                    errors: ['time']
+                })
                 .catch(async error => {
                     console.error(error);
                     return await message.channel.send("S'ha acabat el temps! La pròxima vegada vés més ràpid!");

@@ -2,8 +2,7 @@ const ytdl = require("ytdl-core");
 const ytSearch = require("yt-search");
 const Discord = require('discord.js');
 const {
-	getRandomColor,
-	getServerPrefix
+	getRandomColor
 } = require("../../lib/common.js");
 
 const queue = new Map();
@@ -14,9 +13,10 @@ module.exports = {
 	type: "musica",
 	aliases: ["musica", "play", "skip", "next", "stop"],
 	cooldown: 0,
-	async execute(message, args, servers, _userData, _client, cmd) {
+	async execute(message, args, server, _client, cmd) {
 
-		if (cmd === "music" || cmd === "musica") return mostrar_opcions(message, servers);
+		if (cmd === "music" || cmd === "musica")
+			return mostrar_opcions(message, server);
 
 		const voice_channel = message.member.voice.channel;
 		if (!voice_channel)
@@ -135,9 +135,9 @@ const stop_song = (message, server_queue) => {
 	server_queue.connection.dispatcher.end();
 };
 
-const mostrar_opcions = function (message, servers) {
+const mostrar_opcions = function (message, server) {
 
-	let prefix = getServerPrefix(message, servers);
+	let prefix = server.prefix;
 
 	let embed = new Discord.MessageEmbed()
 		.setColor(getRandomColor())

@@ -1,6 +1,8 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'slotmachine',
@@ -9,9 +11,7 @@ module.exports = {
     cooldown: 1,
     usage: '< amount/all >',
     aliases: ['slot'],
-    async execute(message, args, servers, userData) {
-
-        let server = servers[message.guild.id];
+    async execute(message, args, server, userData) {
 
         let amount = 0;
         let content = "";
@@ -84,7 +84,9 @@ module.exports = {
         }
 
         // Actualitzem el fitxer
-        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+            if (err) console.error(err);
+        });
 
         let embed = new Discord.MessageEmbed()
             .setColor(getRandomColor())

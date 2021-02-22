@@ -20,7 +20,9 @@ module.exports = {
             }
         });
 
-        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+            if (err) console.error(err);
+        });
         message.channel.send("Nivells resetejats correctament");
     },
 };

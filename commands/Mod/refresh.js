@@ -4,9 +4,14 @@ module.exports = {
     type: 'mod',
     cooldown: 300,
     aliases: ['refreshcounter'],
-    execute(message, _args, servers) {
-        let server = servers[message.guild.id];
+    execute(message, _args, server) {
+
         let id = server.counterChannel;
+
+        if (!id) {
+            message.reply("No tinc cap canal de contador adjudicat!");
+            return message.channel.send(server.prefix + "help refresh");
+        }
 
         message.guild.channels.resolve(id).setName("members " + message.guild.memberCount);
 

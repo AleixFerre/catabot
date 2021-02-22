@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'flipword',
@@ -8,9 +10,7 @@ module.exports = {
     usage: '< word >',
     cooldown: 1,
     aliases: ['flip'],
-    execute(message, args, servers) {
-
-        let server = servers[message.guild.id];
+    execute(message, args, server) {
 
         if (!args[0]) {
             message.reply("no se què girar!");

@@ -112,7 +112,7 @@ module.exports = {
                 out.push(" ");
             });
 
-            out = out.join("").substr(0, out.length-1);
+            out = out.join("").substr(0, out.length - 1);
         } else {
             // Morsificar
             out = [];

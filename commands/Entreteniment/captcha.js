@@ -1,6 +1,8 @@
 const Canvas = require('canvas');
 const Discord = require("discord.js");
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 function generateText(length) {
     let result = '';
@@ -74,7 +76,11 @@ module.exports = {
         // Await messages that fit the code
         const filter = m => m.content === text && m.author.id === message.author.id;
         // Errors: ['time'] treats ending because of the time limit as an error
-        message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
+        message.channel.awaitMessages(filter, {
+                max: 1,
+                time: 60000,
+                errors: ['time']
+            })
             .then(() => { // S'ha respos correctament el codi
                 message.channel.send("✅ Has respòs correctament! ✅");
             }).catch(() => { // Ha pasat el temps

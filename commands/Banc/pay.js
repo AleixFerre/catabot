@@ -6,11 +6,10 @@ module.exports = {
     type: 'banc',
     cooldown: 60,
     usage: '< amount/all > < @user >',
-    execute(message, args, servers, userData) {
+    execute(message, args, server, userData) {
 
         // ************* Precondicions *************
 
-        let server = servers[message.guild.id];
         let all = false;
 
         // Si no hi ha diners
@@ -82,7 +81,9 @@ module.exports = {
         userData[message.guild.id + otherUser.id].money += amount;
 
         // Actualitzem el fitxer de disc
-        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+            if (err) console.error(err);
+        });
         message.reply("has pagat " + amount + " monedes a " + otherUser.username + " correctament! 💸");
     },
 };

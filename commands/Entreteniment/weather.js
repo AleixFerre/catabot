@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const weather = require('weather-js');
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'weather',
@@ -8,9 +10,7 @@ module.exports = {
     type: 'entreteniment',
     cooldown: 10,
     aliases: ['temps', 'tiempo'],
-    async execute(message, args, servers) {
-
-        let server = servers[message.guild.id];
+    async execute(message, args, server) {
 
         if (!args[0]) {
             message.reply("no has posat la ciutat!");
@@ -20,7 +20,11 @@ module.exports = {
         let city = args.join(" ");
         let result = null;
 
-        await weather.find({ search: city, degreeType: 'C', lang: 'ca' }, (err, _result) => {
+        await weather.find({
+            search: city,
+            degreeType: 'C',
+            lang: 'ca'
+        }, (err, _result) => {
             if (err) {
                 console.log(err);
                 return message.channel.send("Hi ha hagut un error al buscar\n" + err);

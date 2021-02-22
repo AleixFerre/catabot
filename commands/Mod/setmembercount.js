@@ -1,4 +1,6 @@
-const fs = require('fs');
+const {
+    updateServer
+} = require('../../lib/database.js');
 
 module.exports = {
     name: 'setmembercount',
@@ -7,35 +9,34 @@ module.exports = {
     cooldown: 60,
     usage: '[ nou nom del canal ]',
     aliases: ['counthere', 'setcount', 'setcounter'],
-    execute(message, args, servers) {
+    execute(message, args, server) {
 
         let paraula = "adjudicat";
 
         if (args[0]) {
             // Treure
-            let id = servers[message.guild.id].counterChannel;
-            let nomAnterior = servers[message.guild.id].counterChannelName;
-            servers[message.guild.id].counterChannel = null;
-            servers[message.guild.id].counterChannelName = null;
+            let id = server.counterChannel;
+            let nomAnterior = server.counterChannelName;
+            server.counterChannel = null;
+            server.counterChannelName = null;
             paraula = "des" + paraula;
 
             message.guild.channels.resolve(id).setName(nomAnterior);
         } else {
             // Posar
-            servers[message.guild.id].counterChannel = message.channel.id;
-            servers[message.guild.id].counterChannelName = message.channel.name;
+            server.counterChannel = message.channel.id;
+            server.counterChannelName = message.channel.name;
 
             let memberCount = message.guild.memberCount;
 
             message.guild.channels.resolve(message.channel.id).setName("members " + memberCount);
         }
 
-        // Actualitzem el fitxer de disc
-        let file = "Storage/servers.json";
+        updateServer(message.guild.id, {
+            counterChannel: server.counterChannel,
+            counterChannelName: server.counterChannelName
+        }).then(console.log(db(`DB: Actualitzat el canal de benvinguda del servidor ${message.guild.name} correctament!`)));
 
-        fs.writeFile(file, JSON.stringify(servers), (err) => {
-            if (err) console.error(err);
-        });
         message.reply("has " + paraula + " el canal <#" + message.channel.id + "> com a canal de contador de membres de forma correcta!");
     },
 };

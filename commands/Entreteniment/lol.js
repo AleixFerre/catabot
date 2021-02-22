@@ -3,7 +3,9 @@ const fetch = require('node-fetch');
 const champs = Object.keys(require('../../Storage/lol/champion.json').data);
 const spells = require('../../Storage/lol/summoner.json').data;
 const items = require('../../Storage/lol/item.json').data;
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 // Thanks to https://gist.github.com/andrei-m/982927#gistcomment-1931258
 function distanciaEdicio(a, b) {
@@ -17,7 +19,7 @@ function distanciaEdicio(a, b) {
         b = tmp;
     }
 
-    row = Array(a.length + 1)
+    row = Array(a.length + 1);
     // init the row
     for (i = 0; i <= a.length; i++) {
         row[i] = i;
@@ -44,11 +46,11 @@ function distanciaEdicio(a, b) {
 }
 
 function predictChamp(champName) {
-    
+
     if (champName.toLowerCase() === "wukong") {
         return "MonkeyKing";
     }
-    
+
     // Si existeix un nom igual, retornar-lo
     if (champs.includes(champName)) {
         return champName;
@@ -64,7 +66,7 @@ function predictChamp(champName) {
 }
 
 function predict(nameToPredict, namesArray) {
-    
+
     // Si existeix un nom igual, retornar-lo
     if (namesArray.includes(nameToPredict)) {
         return nameToPredict;
@@ -83,8 +85,9 @@ function predict(nameToPredict, namesArray) {
 
 async function showChampStats(champName) {
 
+    let champ;
     try {
-        var champ = await fetch("http://ddragon.leagueoflegends.com/cdn/11.2.1/data/en_US/champion/" + champName + ".json");
+        champ = await fetch("http://ddragon.leagueoflegends.com/cdn/11.2.1/data/en_US/champion/" + champName + ".json");
         champ = await champ.json();
     } catch (err) {
         return "Ho sentim, però no existeix cap campió de nom **" + champName + "** 😦";
@@ -108,15 +111,15 @@ async function showChampStats(champName) {
 
     let embed = new Discord.MessageEmbed()
         .setColor(getRandomColor())
-        .setTitle("**" + champ.name + ", " + champ.title + "**")
+        .setTitle("**" + champ.name + ", " + champ.title + "**");
     // .setDescription(champ.blurb); // Mucho texto
 
     if (champ.allytips.length !== 0) {
-        embed.addField('❯ Ally tips', " 🔘 " + champ.allytips.join("\n 🔘 "), false)
+        embed.addField('❯ Ally tips', " 🔘 " + champ.allytips.join("\n 🔘 "), false);
     }
 
     if (champ.enemytips.length !== 0) {
-        embed.addField('❯ Enemy tips', " 🔴 " + champ.enemytips.join("\n 🔴 "), false)
+        embed.addField('❯ Enemy tips', " 🔴 " + champ.enemytips.join("\n 🔴 "), false);
     }
 
     embed.addField('❯ Stats', stats, true)
@@ -203,7 +206,7 @@ module.exports = {
     usage: "champ < champName >\n [ or ] spell < spellName >\n [ or ] item < itemName >",
     type: 'entreteniment',
     cooldown: 10,
-    async execute(message, args, servers) {
+    async execute(message, args, server) {
 
         let commandType = args.shift().toLowerCase();
         let messageToReply;
@@ -211,7 +214,7 @@ module.exports = {
 
         if (commandType === "champ" || commandType === "champion" || commandType === "champs") {
             for (let i = 0; i < args.length; i++) {
-                const nameCapitalized = args[i].charAt(0).toUpperCase() + args[i].slice(1)
+                const nameCapitalized = args[i].charAt(0).toUpperCase() + args[i].slice(1);
                 theName += nameCapitalized;
             }
 
@@ -224,7 +227,7 @@ module.exports = {
 
         } else if (commandType === "spell" || commandType === "summoner" || commandType === "summ") {
             for (let i = 0; i < args.length; i++) {
-                const nameCapitalized = args[i].charAt(0).toUpperCase() + args[i].slice(1)
+                const nameCapitalized = args[i].charAt(0).toUpperCase() + args[i].slice(1);
                 theName += nameCapitalized;
             }
             messageToReply = await showSpellStats(theName, message);
@@ -233,7 +236,7 @@ module.exports = {
         } else {
             // Cap de les que toca, avisar amb un missatge
             message.reply("no has escollit cap de les opcions!");
-            message.channel.send(servers[message.guild.id].prefix + "help lol");
+            message.channel.send(server.prefix + "help lol");
             return;
         }
 

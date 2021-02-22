@@ -1,6 +1,10 @@
 const Discord = require("discord.js");
-const { evaluate } = require('mathjs');
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    evaluate
+} = require('mathjs');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'calc',
@@ -9,9 +13,8 @@ module.exports = {
     cooldown: 5,
     aliases: ['math', 'calcula', 'calculadora', 'eval'],
     usage: '< expression > or < multiple/M exp1;; exp2>',
-    execute(message, args, servers) {
+    execute(message, args, server) {
 
-        let server = servers[message.guild.id];
         let expressions = []; // Array d'strings que contenen les expressions
 
         if (!args[0]) {
@@ -44,7 +47,7 @@ module.exports = {
             let str = "";
             // si es un array, el convertim a string
             for (i = 0; i < resultat.length; i++) {
-                if (typeof(resultat[i]) === "function") {
+                if (typeof (resultat[i]) === "function") {
                     str += "function";
                 } else {
                     str += resultat[i];

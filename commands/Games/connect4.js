@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const fs = require('fs');
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'connect4',
@@ -8,9 +10,7 @@ module.exports = {
     type: 'games',
     cooldown: 30,
     aliases: ['4enratlla', 'play4'],
-    async execute(message, _args, servers, userData) {
-
-        let server = servers[message.guild.id];
+    async execute(message, _args, server, userData) {
 
         let player = message.author;
         let player2 = null;
@@ -439,7 +439,11 @@ module.exports = {
 
             };
 
-            return await message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
+            return await message.channel.awaitMessages(filter, {
+                    max: 1,
+                    time: 60000,
+                    errors: ['time']
+                })
                 .then(collected => {
                     return Number(collected.first().content - 1); // Ajustem a la notacio començant per 0
                 }).catch(() => {
@@ -468,7 +472,11 @@ module.exports = {
 
             };
 
-            return await message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
+            return await message.channel.awaitMessages(filter, {
+                    max: 1,
+                    time: 60000,
+                    errors: ['time']
+                })
                 .then(collected => {
                     return Number(collected.first().content - 1); // Ajustem a la notacio començant per 0
                 }).catch(() => {
@@ -566,7 +574,9 @@ module.exports = {
 
             message.channel.send(recompensa_str);
 
-            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+                if (err) console.error(err);
+            });
         }
 
         async function jugar_contra_jugador() {
@@ -613,7 +623,11 @@ module.exports = {
                     (reaction.emoji.name === '🚪' && message.author.id !== user.id) ||
                     (reaction.emoji.name === '❌' && message.author.id === user.id)) && !user.bot;
 
-            let collected = await msg_sala.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
+            let collected = await msg_sala.awaitReactions(filter, {
+                    max: 1,
+                    time: 60000,
+                    errors: ['time']
+                })
                 .catch(async error => {
                     console.error(error);
                     return await message.channel.send("S'ha acabat el temps! La pròxima vegada vés més ràpid!");

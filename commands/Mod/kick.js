@@ -4,9 +4,9 @@ module.exports = {
     usage: '< @usuari > [ descripció ]',
     type: 'mod',
     cooldown: 30,
-    execute(message, args, servers) {
+    execute(message, args, server) {
 
-        let prefix = servers[message.guild.id].prefix;
+        let prefix = server.prefix;
 
         let user = message.mentions.users.first();
 

@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 let conversions = require('../../Storage/conversions.json');
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'exchange',
@@ -10,9 +12,8 @@ module.exports = {
     aliases: ['canvi'],
     example: "10 EUR USD",
     cooldown: 5,
-    async execute(message, args, servers) {
+    async execute(message, args, server) {
 
-        let server = servers[message.guild.id];
         if (args.length < 3) {
             message.reply("falten paràmetres!");
             return message.channel.send(server.prefix + "help exchange");

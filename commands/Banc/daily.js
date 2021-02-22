@@ -1,19 +1,19 @@
 const Discord = require("discord.js");
 const moment = require('moment');
 const fs = require('fs');
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'daily',
     description: 'Recolleix la teva recompensa diaria!',
     type: 'banc',
     cooldown: 60,
-    execute(message, _args, servers, userData) {
+    execute(message, _args, server, userData) {
 
         let content = "";
         moment.locale("ca"); // Posem el contingut en català
-
-        let server = servers[message.guild.id];
 
         let recompensa = 500;
         let level = userData[message.guild.id + message.author.id].level;
@@ -42,7 +42,9 @@ module.exports = {
             .setDescription(content)
             .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
-        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+            if (err) console.error(err);
+        });
         message.channel.send(msg);
     },
 };

@@ -1,7 +1,7 @@
 const fs = require("fs");
 const Discord = require('discord.js');
 const {
-    getRandomColor, getServerPrefix
+    getRandomColor,
 } = require("../../lib/common.js");
 
 module.exports = {
@@ -10,9 +10,9 @@ module.exports = {
     type: 'altres',
     cooldown: 10,
     aliases: ['parche', 'notes', 'changes', 'changelog', 'canvis'],
-    execute(message, _args, servers) {
+    execute(message, _args, server) {
 
-        let prefix = getServerPrefix(message, servers);
+        let prefix = server.prefix;
 
         let changes = fs.readFileSync("CHANGELOG.md")
             .toString().split("[")[1].split("]");
@@ -39,7 +39,7 @@ module.exports = {
                     cos: ""
                 });
             } else {
-                notes[notes.length-1].cos += change;
+                notes[notes.length - 1].cos += change;
             }
         }
 

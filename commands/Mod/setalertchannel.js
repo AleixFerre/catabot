@@ -1,4 +1,9 @@
-const fs = require('fs');
+const {
+    updateServer
+} = require('../../lib/database.js');
+const {
+    db
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'setalertchannel',
@@ -7,23 +12,22 @@ module.exports = {
     usage: '[ null ]',
     cooldown: 60,
     aliases: ['alerthere', 'setalert'],
-    execute(message, args, servers, _userData, _client) {
+    execute(message, args) {
 
         let paraula = "adjudicat";
+        let alertChannel = null;
 
         if (args[0] && args[0].toLowerCase() === "null") {
-            servers[message.guild.id].alertChannel = null;
+            alertChannel = null;
             paraula = "des" + paraula;
         } else {
-            servers[message.guild.id].alertChannel = message.channel.id;
+            alertChannel = message.channel.id;
         }
 
-        // Actualitzem el fitxer de disc
-        let file = "Storage/servers.json";
+        updateServer(message.guild.id, {
+            alertChannel: alertChannel
+        }).then(console.log(db(`DB: Actualitzat el canal de alertes del servidor ${message.guild.name} correctament!`)));
 
-        fs.writeFile(file, JSON.stringify(servers), (err) => {
-            if (err) console.error(err);
-        });
         message.reply("has " + paraula + " el canal <#" + message.channel.id + "> com a canal d'alertes del bot de forma correcta!");
     },
 };

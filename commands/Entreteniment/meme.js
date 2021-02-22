@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'meme',

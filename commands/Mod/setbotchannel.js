@@ -1,4 +1,6 @@
-const fs = require('fs');
+const {
+    updateServer
+} = require('../../lib/database.js');
 
 module.exports = {
     name: 'setbotchannel',
@@ -7,23 +9,22 @@ module.exports = {
     usage: '[ null ]',
     cooldown: 60,
     aliases: ['bothere', 'setbot'],
-    execute(message, args, servers, _userData, _client) {
+    execute(message, args) {
 
         let paraula = "adjudicat";
+        let botChannel = null;
 
         if (args[0] && args[0].toLowerCase() === "null") {
-            servers[message.guild.id].botChannel = null;
+            botChannel = null;
             paraula = "des" + paraula;
         } else {
-            servers[message.guild.id].botChannel = message.channel.id;
+            botChannel = message.channel.id;
         }
 
-        // Actualitzem el fitxer de disc
-        let file = "Storage/servers.json";
+        updateServer(message.guild.id, {
+            botChannel: botChannel
+        }).then(console.log(db(`DB: Actualitzat el canal del bot del servidor ${message.guild.name} correctament!`)));
 
-        fs.writeFile(file, JSON.stringify(servers), (err) => {
-            if (err) console.error(err);
-        });
         message.reply("has " + paraula + " el canal <#" + message.channel.id + "> com a canal principal del bot de forma correcta!");
     },
 };

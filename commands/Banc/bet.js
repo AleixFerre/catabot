@@ -6,9 +6,7 @@ module.exports = {
     type: 'banc',
     cooldown: 1,
     usage: '< amount/all > < @user >',
-    execute(message, args, servers, userData) {
-
-        const server = servers[message.guild.id];
+    execute(message, args, server, userData) {
 
         let moneyA = userData[message.guild.id + message.author.id].money;
         let amount = 0;
@@ -97,7 +95,9 @@ module.exports = {
             xpMax = Math.floor(Math.random() * (xpMax - 1) + 1); // Numero aleatori entre 1 i max
 
             // Actualitzem el fitxer
-            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+                if (err) console.error(err);
+            });
             message.channel.send(server.prefix + "progress " + (xpMax * 2) + " <@" + winnerID + ">");
             message.channel.send(server.prefix + "progress " + xpMax + " <@" + looserID + ">");
             message.channel.send("```" + content + "```");
@@ -112,7 +112,11 @@ module.exports = {
                     (reaction.emoji.name === '✅' || reaction.emoji.name === '❌') &&
                     user.id === other.id;
 
-                msg.awaitReactions(filter, { max: 1, time: 15000, errors: ['time'] })
+                msg.awaitReactions(filter, {
+                        max: 1,
+                        time: 15000,
+                        errors: ['time']
+                    })
                     .then((collected) => {
                         if (collected.length === 0) {
                             message.reply("no has escollit res!!");

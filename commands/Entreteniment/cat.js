@@ -1,7 +1,9 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const translate = require('@vitalets/google-translate-api');
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'cat',
@@ -25,7 +27,7 @@ module.exports = {
         async function getTitle() {
             await fetch("https://some-random-api.ml/facts/cat")
                 .then(res => res.json())
-                .then(async(data) => {
+                .then(async (data) => {
                     desc += data.fact;
                     await translate(desc, {
                         to: "es"

@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const translate = require('@vitalets/google-translate-api');
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'translate',
@@ -8,9 +10,8 @@ module.exports = {
     usage: "< text >",
     type: 'entreteniment',
     cooldown: 10,
-    async execute(message, args, servers) {
+    async execute(message, args, server) {
 
-        let server = servers[message.guild.id];
         let txt = "";
         let traducido = "";
 
@@ -21,7 +22,9 @@ module.exports = {
             return message.channel.send(server.prefix + "help translate");
         }
 
-        await translate(txt, { to: "es" }).then(res => {
+        await translate(txt, {
+            to: "es"
+        }).then(res => {
             traducido = res.text;
         });
 

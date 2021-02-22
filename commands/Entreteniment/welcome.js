@@ -17,7 +17,7 @@ module.exports = {
     description: 'Et dona la benvinguda',
     type: 'entreteniment',
     cooldown: 60,
-    async execute(message, args, servers, _userData, client) {
+    async execute(message, args, server, _userData, client) {
 
         function getMemberFromMention(mention) {
             if (!mention) return;
@@ -28,7 +28,7 @@ module.exports = {
         if (!member)
             member = message.member;
 
-        let channelID = servers[message.guild.id].welcomeChannel;
+        let channelID = server.welcomeChannel;
         if (!channelID) {
             // Si el canal no està configurats
             channelID = message.channel.id;

@@ -4,8 +4,10 @@ module.exports = {
     usage: '< text >',
     cooldown: 10,
     type: 'entreteniment',
-    async execute(message, args, servers) {
-        let prefix = servers[message.guild.id].prefix;
+    async execute(message, args, server) {
+
+        let prefix = server.prefix;
+
         if (args[0]) {
             if (args[0][0] === prefix)
                 return message.reply("recorda que les comandes les has d'executar tu 😅");
@@ -15,5 +17,6 @@ module.exports = {
             message.reply("Què vols que digui?").catch(console.error);
             message.channel.send(servers[message.guild.id].prefix + "help say");
         }
+
     },
 };

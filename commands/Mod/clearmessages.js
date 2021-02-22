@@ -5,10 +5,9 @@ module.exports = {
     usage: '< amount >',
     aliases: ['cls', 'clm'],
     cooldown: 10,
-    async execute(message, args, servers) {
+    async execute(message, args, server) {
 
         let amount = 1;
-        let server = servers[message.guild.id];
 
         if (!args[0]) {
             message.reply("no se quants missatges he de borrar!");

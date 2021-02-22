@@ -7,9 +7,7 @@ module.exports = {
     cooldown: 1,
     usage: '< amount/all > [ multiplyer ]',
     aliases: ['dobleonada'],
-    execute(message, args, servers, userData) {
-
-        let server = servers[message.guild.id];
+    execute(message, args, server, userData) {
 
         let amount = 0;
         let multiplyer = 1; // Per defecte x1
@@ -88,7 +86,9 @@ module.exports = {
         }
 
         // Actualitzem el fitxer
-        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+            if (err) console.error(err);
+        });
 
         let xpMax = amount;
 

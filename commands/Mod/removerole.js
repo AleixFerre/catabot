@@ -1,5 +1,3 @@
-const { getServerPrefix } = require("../../lib/common.js");
-
 module.exports = {
     name: 'removerole',
     description: 'Treu un Rol d\'un Usuari en concret (si tens permisos)',
@@ -8,10 +6,10 @@ module.exports = {
     aliases: ['esborrarrol', 'treurerol', 'esborrarrol', 'delrole'],
     example: '@CatalaHD Admin',
     cooldown: 5,
-    execute(message, args, servers) {
+    execute(message, args, server) {
 
         const targetUser = message.mentions.users.first();
-        const prefix = getServerPrefix(message, servers);
+        const prefix = server.prefix;
         
         if (!targetUser) {
             message.reply("siusplau, menciona a qui li vols esborrar un rol.");

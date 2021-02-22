@@ -1,7 +1,11 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const { paraules } = require("../../Storage/paraules.json");
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    paraules
+} = require("../../Storage/paraules.json");
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'hangman',
@@ -9,7 +13,7 @@ module.exports = {
     aliases: ['ahorcado', 'penjat', 'playh'],
     type: 'games',
     cooldown: 30,
-    async execute(message, _args, servers, userData) {
+    async execute(message, _args, server, userData) {
 
         const lletres = 'abcdefghijklmnopqrstuvwxyz'.split(''); // totes les lletres que pot tenir una paraula
         const recompensa = 500; // Punts que guanyes al final
@@ -17,7 +21,6 @@ module.exports = {
         const caracter_no_descobert = "⬜";
 
         let jugant_sol = false; // Diu si estas jugant sol o no
-        let server = servers[message.guild.id];
         let dites = [];
         let paraula = "";
         let participants = [message.author];
@@ -62,7 +65,11 @@ module.exports = {
             let entra_joc = false;
 
             while (!entra_joc && participants.length < 5) {
-                let collected = await msg_sala.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
+                let collected = await msg_sala.awaitReactions(filter, {
+                        max: 1,
+                        time: 60000,
+                        errors: ['time']
+                    })
                     .catch(() => -1);
 
                 // si ha acabat el temps, sortim
@@ -130,7 +137,11 @@ module.exports = {
             let server_msg = await message.channel.send("El host està escollint la paraula...");
 
             const filter = msg => paraula_valida(msg.content.toLowerCase().split("")) && !msg.author.bot;
-            let collected = await demanar_msg.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
+            let collected = await demanar_msg.channel.awaitMessages(filter, {
+                    max: 1,
+                    time: 60000,
+                    errors: ['time']
+                })
                 .catch(() => -1);
 
             if (collected === -1) {
@@ -217,7 +228,11 @@ module.exports = {
 
         async function esperar_lletra(msg) { // Retorna la lletra del missatge
             const filter = msg => lletra_valida(msg.content[0].toLowerCase()) && comprovar_host(msg) && !msg.author.bot;
-            let collected = await msg.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
+            let collected = await msg.channel.awaitMessages(filter, {
+                    max: 1,
+                    time: 60000,
+                    errors: ['time']
+                })
                 .catch(() => -1);
 
             if (collected === -1) {
@@ -318,7 +333,9 @@ module.exports = {
 
 
             await message.channel.send(embed_final);
-            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+                if (err) console.error(err);
+            });
 
         }
     },

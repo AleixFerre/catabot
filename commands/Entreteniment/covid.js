@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'covid',
@@ -9,14 +11,13 @@ module.exports = {
     usage: '[ country ]',
     cooldown: 10,
     aliases: ['coronavirus'],
-    async execute(message, args, servers) {
+    async execute(message, args, server) {
 
         let covidUrl = "https://coronavirus-19-api.herokuapp.com/";
         let codeUrl = "https://api.printful.com/countries/";
         let covidData = {};
         let flag = "https://i.imgur.com/oEmt2KA.png";
         let country = "";
-        let server = servers[message.guild.id];
         let isWorld = false;
 
         if (args[0]) {
@@ -54,7 +55,7 @@ module.exports = {
 
         try {
             await getInfo();
-        } catch(err) {
+        } catch (err) {
             message.reply("el país no existeix! Recorda que ho has de posar en anglès!");
             return message.channel.send(server.prefix + "help covid");
         }
@@ -62,7 +63,7 @@ module.exports = {
         if (!isWorld) {
             await getFlag().catch(console.error);
         }
-        
+
         const covidEmbed = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle(isWorld ? "**CORONAVIRUS AL MON**" : "**CORONAVIRUS A " + country.toUpperCase() + "**")

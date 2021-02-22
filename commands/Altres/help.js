@@ -10,7 +10,7 @@ module.exports = {
     cooldown: 1,
     usage: '[ nom de la comanda ]',
     aliases: ['h', 'commands', 'info'],
-    execute(message, args, servers) {
+    execute(message, args, server) {
 
         const data = [];
         const {
@@ -19,7 +19,7 @@ module.exports = {
 
         let prefix = "!";
         if (message.guild) {
-            prefix = servers[message.guild.id].prefix;
+            prefix = server.prefix;
         }
 
         if (!args.length) {

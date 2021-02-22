@@ -28,9 +28,6 @@ moment().utcOffset('120');
 
 const cooldowns = new Map();
 
-let userData = JSON.parse(fs.readFileSync("./Storage/userData.json", "utf8"));
-let serversInfo = JSON.parse(fs.readFileSync("./Storage/servers.json", "utf8"));
-
 // Describes if the system saves the commands into the docs/.../commands.json file
 // Es preferible que es tingui a FALSE a no ser que es vulgui guardar especificament
 const wantToSaveCommands = false;
@@ -270,7 +267,7 @@ client.on('guildMemberRemove', async (member) => {
 
     console.log(remove("El membre \"" + member.user.username + "\" ha sortit de la guild " + member.guild.name + "\n"));
 
-    let channelID = servers[member.guild.id].welcomeChannel;
+    let channelID = await getServer(member.guild.id).welcomeChannel;
     if (!channelID) {
         // Si no hi ha el canal configurat, no enviem res
         return;
@@ -318,8 +315,9 @@ client.on('guildMemberRemove', async (member) => {
 client.on('message', async (message) => {
 
     let prefix = process.env.prefix;
+    let server = await getServer(message.guild.id); //? Es podria guardar en cache per no haver de fer un fetch a cada missatge
     if (message.guild) {
-        prefix = servers[message.guild.id].prefix;
+        prefix = server.prefix;
     }
 
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
@@ -341,15 +339,15 @@ client.on('message', async (message) => {
 
     if (command.type === 'mod') {
         if (!message.member.hasPermission("ADMINISTRATOR")) {
-            message.reply("no tens permisos d'administrador per executar aquesta comanda!");
+            message.reply("no tens els permisos d'Administrador necessaris per executar aquesta comanda!");
             return;
         }
     }
 
     if (!message.author.bot && message.channel.members && !message.member.hasPermission("ADMINISTRATOR") &&
         commandName !== "setbot" && commandName !== "setalert" && commandName !== "h" && commandName !== "help") {
-        if (message.channel.id !== servers[message.guild.id].botChannel) {
-            message.author.send("Siusplau, utilitza el bot al canal pertinent. En aquest cas és <#" + servers[message.guild.id].botChannel + ">");
+        if (message.channel.id !== server.botChannel) {
+            message.author.send("Siusplau, utilitza el bot al canal pertinent. En aquest cas és <#" + server.botChannel + ">");
         }
     }
 
@@ -372,7 +370,7 @@ client.on('message', async (message) => {
     timeStamps.set(message.author.id, currentTime);
 
     try {
-        command.execute(message, args, servers, userData, client, commandName);
+        command.execute(message, args, server, client, commandName);
     } catch (error) {
         console.error(error);
         message.reply('alguna cosa ha anat malament, siusplau contacta amb ' + process.env.ownerDiscordUsername +

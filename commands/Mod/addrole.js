@@ -1,5 +1,3 @@
-const { getServerPrefix } = require("../../lib/common.js");
-
 module.exports = {
     name: 'addrole',
     description: 'Afegeix un Rol a un Usuari en concret (si tens permisos)',
@@ -8,11 +6,11 @@ module.exports = {
     example: '@CatalaHD Admin',
     aliases: ['afegirrol', 'giverole', 'adjudicarrol'],
     cooldown: 5,
-    execute(message, args, servers) {
+    execute(message, args, server) {
 
         const targetUser = message.mentions.users.first();
-        const prefix = getServerPrefix(message, servers);
-        
+        const prefix = server.prefix;
+
         if (!targetUser) {
             message.reply("siusplau, menciona a qui li vols esborrar un rol.");
             return message.channel.send(prefix + "help removerole");
@@ -21,7 +19,9 @@ module.exports = {
         args.shift();
         const roleName = args.join(" ");
 
-        const { guild } = message;
+        const {
+            guild
+        } = message;
 
         const role = guild.roles.cache.find((role) => {
             return role.name === roleName;

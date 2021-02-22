@@ -7,7 +7,7 @@ module.exports = {
     cooldown: 1,
     description: 'Diu la informació del servidor.',
     aliases: ['serverinfo', 'guild'],
-    execute(message, _args, servers, userData) {
+    execute(message, _args, server) {
 
         let mesRicNom = "";
         let mesRicDiners = 0;
@@ -16,7 +16,6 @@ module.exports = {
         let mesNivellLevel = 0;
         let mesNivellXP = 0;
 
-        let server = servers[message.guild.id];
         let canalAvisos = `<#${server.alertChannel}>`;
         if (!server.alertChannel) {
             canalAvisos = "*No adjudicat*";

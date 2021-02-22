@@ -4,9 +4,7 @@ module.exports = {
     type: 'privat',
     usage: '< msg >',
     cooldown: 60,
-    async execute(message, args, servers, _userData, client) {
-
-        let server = servers[message.guild.id];
+    async execute(message, args, server, client) {
 
         if (!args[0]) {
             message.reply("no se de què avisar!");
@@ -20,7 +18,7 @@ module.exports = {
 
         await client.guilds.cache.forEach(async guild => {
 
-            let channelID = servers[guild.id].alertChannel;
+            let channelID = servers[guild.id].alertChannel; //! IMPORTANT
             let channel = client.channels.cache.get(channelID);
 
             // Només si hi ha algun canal de text en tot el servidor

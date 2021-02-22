@@ -7,9 +7,7 @@ module.exports = {
     type: 'entreteniment',
     cooldown: 1,
     usage: '< rock/paper/scissors >',
-    execute(message, args, servers) {
-
-        let server = servers[message.guild.id];
+    execute(message, args, server) {
 
         let player = "rock";
         if (!args[0]) {

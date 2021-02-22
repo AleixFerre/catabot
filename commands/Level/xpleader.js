@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
 
 module.exports = {
     name: 'xpleader',
@@ -8,11 +10,10 @@ module.exports = {
     type: 'level',
     usage: '[ amount ]',
     cooldown: 10,
-    execute(message, args, servers, userData) {
+    execute(message, args, server, userData) {
 
         let board = [];
         let size = 10;
-        let server = servers[message.guild.id];
 
         if (args[0] && !isNaN(args[0])) {
             size = Number(args[0]);
