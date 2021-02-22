@@ -7,7 +7,7 @@ module.exports = {
     cooldown: 1,
     description: 'Diu la informació del servidor.',
     aliases: ['serverinfo', 'guild'],
-    execute(message, _args, server) {
+    execute(message, _args, server, userData) {
 
         let mesRicNom = "";
         let mesRicDiners = 0;

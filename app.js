@@ -387,7 +387,7 @@ mongoose.connect(process.env.MONGODBSRV, {
     useUnifiedTopology: true,
     useFindAndModify: false
 }).then(() => {
-    console.log(db("CONNECTAT A LA BASE DE DADES!"));
+    console.log(db("CONNECTAT CORRECTAMENT A LA BASE DE DADES!"));
 }).catch(console.error);
 
 
