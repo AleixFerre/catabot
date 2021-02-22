@@ -15,7 +15,9 @@ const {
 const {
     updateUser,
     updateServer,
-    getServer
+    getServer,
+    deleteUser,
+    deleteServer
 } = require('./lib/database.js');
 
 const Discord = require("discord.js");
@@ -128,7 +130,7 @@ client.on("guildCreate", (guild) => {
                 updateUser([member.id, guild.id], {
                     "ID.userID": member.id,
                     "ID.serverID": guild.id
-                }).then(console.log(db(`S'ha guardat el nou usuari ${member.user.username} correctament!`)));
+                }).then(console.log(db(`DB: Guardat el nou usuari ${member.user.username} correctament!`)));
             }
         });
     });
@@ -138,7 +140,7 @@ client.on("guildCreate", (guild) => {
             serverID: guild.id,
             prefix: process.env.prefix
         }
-    ).then(console.log(db(`S'ha guardat la nova guild ${guild.name} correctament!`)));
+    ).then(console.log(db(`DB: Guardada la nova guild ${guild.name} correctament!`)));
 
     try {
         let newName = "[ " + process.env.prefix + " ] CataBOT";
@@ -176,27 +178,17 @@ client.on("guildDelete", (guild) => {
 
     guild.members.fetch().then((members) => {
         members.forEach(member => {
-            if (userData[guild.id + member.user.id]) {
-                userData[guild.id + member.user.id] = {};
+            if (!member.user.bot) { // Si es un bot, no el guardo que no farà res!
+                deleteUser([member.id, guild.id])
+                    .then(console.log(db(`DB: Esborrat l'usuari ${member.user.username} correctament!`)));
             }
         });
     });
 
-    if (servers[guild.id]) {
-        servers[guild.id] = {};
-    }
+    deleteServer(guild.id)
+        .then(console.log(db(`DB: Esborrat el server ${guild.name} correctament!`)));
 
-    if (serversInfo[guild.id]) {
-        serversInfo[guild.id] = {};
-    }
-
-    console.log(remove("El bot ha sigut expulsat del servidor \"" + guild.name + "\"\n"));
-    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
-        if (err) console.error(err);
-    });
-    fs.writeFile('Storage/servers.json', JSON.stringify(serversInfo), (err) => {
-        if (err) console.error(err);
-    });
+    console.log(remove("El bot ha sortit del servidor \"" + guild.name + "\"\n"));
 
 });
 
@@ -215,43 +207,19 @@ client.on('guildMemberAdd', async (member) => {
 
     if (member.user.bot) {
         console.log(bot("Nou bot \"" + member.user.username + "\" afegit a la guild " + member.guild.name + "\n"));
+        console.log(db("DB: L'usuari és un bot, ignorant..."));
     } else {
         console.log(log("Nou membre \"" + member.user.username + "\" afegit a la guild " + member.guild.name + "\n"));
+
+        updateUser([member.id, member.guild.id], {
+            "ID.userID": member.id,
+            "ID.serverID": member.guild.id
+        }).then(console.log(db(`DB: Guardat el nou usuari ${member.user.username} correctament!`)));
     }
 
-    if (!userData[member.guild.id + member.user.id]) {
-        userData[member.guild.id + member.user.id] = {};
-    }
-
-    if (!userData[member.guild.id + member.user.id].money) {
-        if (member.user.bot)
-            userData[member.guild.id + member.user.id].money = -1;
-        else
-            userData[member.guild.id + member.user.id].money = Math.round(Math.random() * 1000);
-    }
-
-    // Sino tens xp, tampoc tens nivell, no te sentit
-    if (!userData[member.guild.id + member.user.id].xp) {
-        if (member.user.bot) {
-            userData[member.guild.id + member.user.id].xp = -1;
-            userData[member.guild.id + member.user.id].level = -1;
-        } else {
-            userData[member.guild.id + member.user.id].xp = 0;
-            userData[member.guild.id + member.user.id].level = 1;
-        }
-    }
-
-    if (!userData[member.guild.id + member.user.id].lastDaily) {
-        userData[member.guild.id + member.user.id].lastDaily = "Not Collected";
-    }
-
-    fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
-        if (err) console.error(err);
-    });
-
-    let channelID = servers[member.guild.id].welcomeChannel;
+    let channelID = await getServer(member.guild.id).welcomeChannel;
     if (!channelID) {
-        // Si no hi ha el canal process.envurat, no enviem res
+        // Si no hi ha el canal configurat, no enviem res
         return;
     }
 
@@ -304,7 +272,7 @@ client.on('guildMemberRemove', async (member) => {
 
     let channelID = servers[member.guild.id].welcomeChannel;
     if (!channelID) {
-        // Si no hi ha el canal process.envurat, no enviem res
+        // Si no hi ha el canal configurat, no enviem res
         return;
     }
 
@@ -415,7 +383,7 @@ client.on('message', async (message) => {
 });
 
 
-// MONGO DB CONNECTION
+// MONGODB CONNECTION
 mongoose.connect(process.env.MONGODBSRV, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
