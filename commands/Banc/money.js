@@ -3,7 +3,7 @@ const {
     getRandomColor
 } = require('../../lib/common.js');
 const {
-    getUser
+    getUsersFromServer
 } = require('../../lib/database.js');
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
     aliases: ['diners'],
     cooldown: 10,
     type: 'banc',
-    execute(message) {
+    async execute(message) {
 
         let mention = {};
         let posicio = 1;
@@ -28,10 +28,11 @@ module.exports = {
             return message.reply("els Bots no tenen diners... pobres Bots 😫");
         }
 
-        let money = userData[message.guild.id + mention.id].money;
+        let users = await getUsersFromServer(message.guild.id);
+        let money = users.find((user) => user.IDs.userID === mention.id).money;
 
-        message.guild.members.cache.forEach(member => {
-            if (userData[message.guild.id + member.id].money > money) {
+        users.forEach(member => {
+            if (member.money > money) {
                 posicio++;
             }
         });

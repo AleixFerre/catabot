@@ -1,4 +1,10 @@
-const fs = require('fs');
+const {
+    db
+} = require('../../lib/common.js');
+const {
+    getUser,
+    updateUser
+} = require('../../lib/database.js');
 
 module.exports = {
     name: 'bet',
@@ -6,13 +12,13 @@ module.exports = {
     type: 'banc',
     cooldown: 1,
     usage: '< amount/all > < @user >',
-    execute(message, args, server, userData) {
+    async execute(message, args, server) {
 
-        let moneyA = userData[message.guild.id + message.author.id].money;
+        var moneyA = await getUser(message.author.id, message.guild.id);
+        moneyA = moneyA.money;
+        var moneyB = 0;
         let amount = 0;
         let content = "";
-        let all = false;
-        let moneyB = 0;
         let other = {};
 
         if (!args[0]) {
@@ -22,7 +28,8 @@ module.exports = {
 
         if (message.mentions.users.first()) {
             other = message.mentions.users.first();
-            moneyB = userData[message.guild.id + other.id].money;
+            moneyB = await getUser(other.id, message.guild.id);
+            moneyB = moneyB.money;
         } else {
             message.reply("no has mencionat la persona amb la que apostar!");
             return message.channel.send(server.prefix + "help bet");
@@ -30,7 +37,6 @@ module.exports = {
 
         if (args[0] === "all") {
             amount = moneyA;
-            all = true;
         } else if (isNaN(args[0])) {
             message.reply("has de posar un numero vàlid o all");
             return message.channel.send(server.prefix + "help bet");
@@ -43,7 +49,7 @@ module.exports = {
         }
 
         if (other.bot) {
-            return message.reply("no pots apostar contra un bot! Per això utilitza el !gamble");
+            return message.reply("no pots apostar contra un bot! Per això utilitza el " + server.prefix + "gamble");
         } else if (other.id === message.author.id) {
             return message.reply("no pots apostar contra tu mateix, burro!");
         }
@@ -56,16 +62,17 @@ module.exports = {
 
         // ******************* Aceptem la aposta ******************* 
 
-        function calculateWinnerSendMessage() {
+        async function calculateWinnerSendMessage(moneyA, moneyB) {
             // Comprovem si guanya A o B
+
             let coin = Math.round(Math.random()); // We round between 0-1 so we have randomly true or false
             let winner, looser = "";
             let winnerID, looserID = "";
 
             if (coin === 1) {
                 // Guanya A
-                userData[message.guild.id + message.author.id].money += parseInt(amount);
-                userData[message.guild.id + other.id].money -= parseInt(amount);
+                moneyA += parseInt(amount);
+                moneyB -= parseInt(amount);
 
                 winner = message.author.username;
                 looser = other.username;
@@ -75,8 +82,8 @@ module.exports = {
 
             } else {
                 // Guanya B
-                userData[message.guild.id + other.id].money += parseInt(amount);
-                userData[message.guild.id + message.author.id].money -= parseInt(amount);
+                moneyB += parseInt(amount);
+                moneyA -= parseInt(amount);
 
                 winner = other.username;
                 looser = message.author.username;
@@ -94,10 +101,14 @@ module.exports = {
 
             xpMax = Math.floor(Math.random() * (xpMax - 1) + 1); // Numero aleatori entre 1 i max
 
-            // Actualitzem el fitxer
-            fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => {
-                if (err) console.error(err);
-            });
+            await updateUser([message.author.id, message.guild.id], {
+                money: moneyA
+            }).then(console.log(db(`DB: S'ha actualitzat les monedes del user A ${message.author.username} a ${moneyA} correctament!`)));
+
+            await updateUser([other.id, message.guild.id], {
+                money: moneyB
+            }).then(console.log(db(`DB: S'ha actualitzat les monedes del user B ${other.username} a ${moneyB} correctament!`)));
+
             message.channel.send(server.prefix + "progress " + (xpMax * 2) + " <@" + winnerID + ">");
             message.channel.send(server.prefix + "progress " + xpMax + " <@" + looserID + ">");
             message.channel.send("```" + content + "```");
@@ -142,10 +153,10 @@ module.exports = {
                             return msg.delete();
                         }
 
-                        calculateWinnerSendMessage();
+                        calculateWinnerSendMessage(moneyA, moneyB);
                         msg.delete();
 
-                    }).catch(collected => {
+                    }).catch(() => {
                         message.channel.send("<@" + other.id + ">, no has escollit res, cancel·lant la proposta...");
                         msg.delete();
                         return;

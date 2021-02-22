@@ -1,4 +1,7 @@
-const fs = require('fs');
+const {
+    getUser,
+    updateUser
+} = require("../../lib/database");
 
 module.exports = {
     name: 'gamble',
@@ -7,14 +10,15 @@ module.exports = {
     cooldown: 1,
     usage: '< amount/all > [ multiplyer ]',
     aliases: ['dobleonada'],
-    execute(message, args, server, userData) {
+    async execute(message, args, server) {
 
         let amount = 0;
         let multiplyer = 1; // Per defecte x1
         let multiplicant = false;
         let content = "";
         let all = false;
-        const money = userData[message.guild.id + message.author.id].money;
+        let user = await getUser(message.author.id, message.guild.id);
+        const money = user.money;
 
         if (!args[0]) {
             message.reply("no se quant vols apostar!");
@@ -66,14 +70,14 @@ module.exports = {
         if (coin === 1) {
             // Guanyem
             amount *= multiplyer; // Multipliquem per m per qui hagi apostat multiplicant
-            userData[message.guild.id + message.author.id].money += parseInt(amount);
+            user.money += parseInt(amount);
             content = message.author.username + " has guanyat😆!\n💰" + amount + " monedes afegides a la teva conta.💰";
             if (multiplicant) {
                 content += "\nHas utilitzat el multiplicador x" + multiplyer;
             }
         } else {
             // Perdem
-            userData[message.guild.id + message.author.id].money -= parseInt(amount);
+            user.money -= parseInt(amount);
             if (all) {
                 content = message.author.username + " HAS PERDUT TOT";
             } else {
@@ -85,9 +89,8 @@ module.exports = {
             }
         }
 
-        // Actualitzem el fitxer
-        fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => {
-            if (err) console.error(err);
+        await updateUser([message.author.id, message.guild.id], {
+            money: user.money
         });
 
         let xpMax = amount;

@@ -313,8 +313,9 @@ client.on('guildMemberRemove', async (member) => {
 client.on('message', async (message) => {
 
     let prefix = process.env.prefix;
-    let server = await getServer(message.guild.id); //? Es podria guardar en cache per no haver de fer un fetch a cada missatge
+    let server;
     if (message.guild) {
+        server = await getServer(message.guild.id);
         prefix = server.prefix;
     }
 

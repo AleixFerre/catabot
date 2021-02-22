@@ -1,4 +1,7 @@
-const fs = require('fs');
+const {
+    getUser,
+    updateUser
+} = require('../../lib/database');
 
 module.exports = {
     name: 'pay',
@@ -6,7 +9,7 @@ module.exports = {
     type: 'banc',
     cooldown: 60,
     usage: '< amount/all > < @user >',
-    execute(message, args, server, userData) {
+    async execute(message, args, server) {
 
         // ************* Precondicions *************
 
@@ -39,14 +42,17 @@ module.exports = {
             return message.channel.send(server.prefix + "help pay");
         }
 
+        let user = await getUser(message.author.id, message.guild.id);
+
         let amount = 0;
         if (all) {
-            amount = userData[message.guild.id + message.author.id].money;
+            amount = user.money;
         } else {
             amount = Number(args[0]);
         }
 
         let otherUser = message.mentions.users.first();
+        let other = await getUser(otherUser.id, message.guild.id);
 
         if (otherUser.bot) {
             // si el mencionat es un bot
@@ -58,14 +64,13 @@ module.exports = {
             return message.reply("no et pots pagar a tu mateix!");
         }
 
-
         if (!message.guild.member(otherUser.id)) {
             // si el mencionat no esta al servidor
             return message.reply("l'usuari mencionat no es troba al servidor!");
         }
 
         // Si no tens els diners suficients
-        let dinersActuals = userData[message.guild.id + message.author.id].money;
+        let dinersActuals = user.money;
 
         if (dinersActuals < amount) {
             return message.reply("no tens tants diners!\n```Téns: " + dinersActuals + "\nVols pagar: " + amount + '\n```');
@@ -75,15 +80,19 @@ module.exports = {
         // ************* Transacció *************
 
         // Treure diners de message.author
-        userData[message.guild.id + message.author.id].money -= amount;
+        user.money -= amount;
 
         // Posar diners a otherUser
-        userData[message.guild.id + otherUser.id].money += amount;
+        other.money += amount;
 
-        // Actualitzem el fitxer de disc
-        fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => {
-            if (err) console.error(err);
+        await updateUser([message.author.id, message.guild.id], {
+            money: user.money
         });
+
+        await updateUser([otherUser.id, message.guild.id], {
+            money: other.money
+        });
+
         message.reply("has pagat " + amount + " monedes a " + otherUser.username + " correctament! 💸");
     },
 };

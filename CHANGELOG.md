@@ -20,7 +20,7 @@ _All **ÇÇ** strings are representations of the server prefix_
 - Nova comanda `morsify` / `demorsify` que tradueix un text a Morse i al revés.
   - Més info amb la comanda `ÇÇhelp morsify`.
 - S'ha afegit un Cooldown entre cada comanda.
-  - Pots veure la informació del cooldown de cada comanda amb `ÇÇhelp < nom de la comanda>`.
+  - Pots veure la informació del cooldown de cada comanda amb `ÇÇhelp < nom de la comanda >`.
 - Nova comanda `lastupdate` que et permet veure les notes de l'ultima actualització del bot.
   - Més info amb la comanda `ÇÇhelp lastupdate`.
 - Nou mòdul de comandes `music`. Ara el bot pot entrar als canals de veu i reproduir la musica que vulguis!. Més info amb la comanda `ÇÇmusic`.

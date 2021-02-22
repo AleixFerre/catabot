@@ -1,22 +1,26 @@
 const Discord = require("discord.js");
 const moment = require('moment');
-const fs = require('fs');
 const {
     getRandomColor
 } = require('../../lib/common.js');
+const {
+    getUser,
+    updateUser
+} = require("../../lib/database.js");
 
 module.exports = {
     name: 'daily',
     description: 'Recolleix la teva recompensa diaria!',
     type: 'banc',
     cooldown: 60,
-    execute(message, _args, server, userData) {
+    async execute(message, _args, server) {
 
         let content = "";
         moment.locale("ca"); // Posem el contingut en català
 
         let recompensa = 500;
-        let level = userData[message.guild.id + message.author.id].level;
+        let user = await getUser(message.author.id, message.guild.id);
+        level = user.level;
         let rank = Math.floor(level / 10) + 1;
         if (rank > 19) {
             rank = 19;
@@ -24,9 +28,9 @@ module.exports = {
 
         recompensa += Math.floor(recompensa * (rank - 1) / 10);
 
-        if (userData[message.guild.id + message.member.id].lastDaily != moment().format('L')) {
-            userData[message.guild.id + message.member.id].lastDaily = moment().format('L');
-            userData[message.guild.id + message.member.id].money += recompensa;
+        if (user.lastDaily != moment().format('L')) {
+            user.lastDaily = moment().format('L');
+            user.money += recompensa;
             content = "💰`" + recompensa + " monedes` han sigut afegides a la teva conta!\nGràcies per recollir la teva recompensa diaria!";
 
             xpMax = Math.floor(Math.random() * (recompensa - 1) + 1); // Numero aleatori entre 1 i recompensa
@@ -42,9 +46,11 @@ module.exports = {
             .setDescription(content)
             .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
-        fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => {
-            if (err) console.error(err);
+        await updateUser([message.author.id, message.guild.id], {
+            lastDaily: user.lastDaily,
+            money: user.money
         });
+
         message.channel.send(msg);
     },
 };

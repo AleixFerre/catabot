@@ -1,8 +1,11 @@
-const fs = require('fs');
 const Discord = require('discord.js');
 const {
     getRandomColor
 } = require('../../lib/common.js');
+const {
+    getUser,
+    updateUser
+} = require('../../lib/database');
 
 module.exports = {
     name: 'slotmachine',
@@ -16,7 +19,8 @@ module.exports = {
         let amount = 0;
         let content = "";
         let all = false;
-        const money = userData[message.guild.id + message.author.id].money;
+        let user = await getUser(message.author.id, message.guild.id);
+        const money = user.money;
 
         if (!args[0]) {
             message.reply("no se quant vols apostar!");
@@ -70,11 +74,11 @@ module.exports = {
                 throw message.reply("hi ha hagut un error!");
             }
 
-            userData[message.guild.id + message.author.id].money += parseInt(amount);
+            user.money += parseInt(amount);
             content += "\n💰" + amount + " monedes afegides a la teva conta.💰";
         } else {
             // Res
-            userData[message.guild.id + message.author.id].money -= parseInt(amount);
+            user.money -= parseInt(amount);
             if (all) {
                 content = message.author.username + " HAS PERDUT TOT";
             } else {
@@ -83,9 +87,8 @@ module.exports = {
             content += "😞!\n💰" + amount + " monedes esborrades de la teva conta.💰";
         }
 
-        // Actualitzem el fitxer
-        fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => {
-            if (err) console.error(err);
+        await updateUser([message.author.id, message.guild.id], {
+            money: user.money
         });
 
         let embed = new Discord.MessageEmbed()
