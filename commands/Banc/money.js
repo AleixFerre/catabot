@@ -1,5 +1,10 @@
 const Discord = require("discord.js");
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getRandomColor
+} = require('../../lib/common.js');
+const {
+    getUser
+} = require('../../lib/database.js');
 
 module.exports = {
     name: 'money',
@@ -8,7 +13,7 @@ module.exports = {
     aliases: ['diners'],
     cooldown: 10,
     type: 'banc',
-    execute(message, _args, _servers, userData) {
+    execute(message) {
 
         let mention = {};
         let posicio = 1;

@@ -1,4 +1,10 @@
-const fs = require('fs');
+const {
+    db
+} = require('../../lib/common.js');
+const {
+    getUser,
+    updateUser
+} = require('../../lib/database.js');
 
 module.exports = {
     name: 'generate',
@@ -6,7 +12,7 @@ module.exports = {
     type: 'privat',
     cooldown: 5,
     usage: '< amount > < @user >',
-    execute(message, args, server, userData) {
+    async execute(message, args, server) {
 
         // ************* Precondicions *************
 
@@ -54,10 +60,12 @@ module.exports = {
         // ************* Transacció *************
 
         // Posar diners a otherUser
-        userData[message.guild.id + otherUser.id].money += amount;
+        let userData = await getUser(otherUser.id, message.guild.id);
+        userData.money += amount;
+        updateUser([userData.IDs.userID, userData.IDs.serverID], {
+            money: userData.money
+        }).then(db(`DB: Usuari ${otherUser.username} actualitzat ${userData.money}`));
 
-        // Actualitzem el fitxer de disc
-        fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
         message.reply("has ingressat " + amount + " monedes a " + otherUser.username + " correctament! 💸");
     },
 };

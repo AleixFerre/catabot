@@ -2,7 +2,7 @@ const {
     ranks
 } = require("../../storage/ranks.json");
 const {
-    getUsersFromServer,
+    getUser,
     updateUser
 } = require('../../lib/database.js');
 const {
@@ -39,9 +39,13 @@ module.exports = {
 
         let content = `${to.username}, has guanyat \`${add}xp\``;
 
-        let usersData = await getUsersFromServer(message.guild.id);
+        let userData = await getUser(to.id, message.guild.id);
 
-        let userData = usersData.find((user) => user.IDs.userID === to.id);
+        if (!userData) {
+            message.channel.send("Error: No s'ha trobat a l'usuari!");
+            return;
+        }
+
         let level = userData.level;
         let xp = userData.xp;
         let sumLvl = 0;

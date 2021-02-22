@@ -1,4 +1,9 @@
-const fs = require('fs');
+const {
+    db
+} = require('../../lib/common.js');
+const {
+    updateAllUsersFromServer, getUsersFromServer, updateUser
+} = require('../../lib/database.js');
 
 module.exports = {
     name: 'randomize',
@@ -6,7 +11,7 @@ module.exports = {
     usage: '[ max ]',
     cooldown: 30,
     type: 'privat',
-    execute(message, args, server, userData) {
+    async execute(message, args, server) {
 
         if (message.author.id != process.env.IdOwner) {
             message.reply("aquesta comanda només pot ser executada per administradors del bot!");
@@ -23,18 +28,13 @@ module.exports = {
             }
         }
 
-        message.guild.members.cache.forEach(member => {
-            if (userData[message.guild.id + member.user.id]) {
-                if (userData[message.guild.id + member.user.id].money) {
-                    if (member.user.bot)
-                        userData[message.guild.id + member.user.id].money = -1;
-                    else
-                        userData[message.guild.id + member.user.id].money = Math.round(Math.random() * max);
-                }
-            }
+        let serverUsers = await getUsersFromServer(message.guild.id);
+        serverUsers.forEach((user) => {
+            updateUser([user.IDs.userID, message.guild.id], {
+                money: Math.floor(Math.random() * max)
+            }).then(console.log(db(`DB: Randomitzades les monedes de ${message.guild.members.resolve(user.IDs.userID).user.username} correctament`)));
         });
 
-        fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
         message.channel.send('🔀 Monedes randomitzades correctament amb un valor maxim de ' + max + '! ✅');
     },
 };
