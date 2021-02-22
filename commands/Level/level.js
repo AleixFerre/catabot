@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const {
     ranks
-} = require("../../Storage/ranks.json");
+} = require("../../storage/ranks.json");
 const {
     getRandomColor
 } = require('../../lib/common.js');

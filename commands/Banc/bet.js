@@ -95,7 +95,7 @@ module.exports = {
             xpMax = Math.floor(Math.random() * (xpMax - 1) + 1); // Numero aleatori entre 1 i max
 
             // Actualitzem el fitxer
-            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+            fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => {
                 if (err) console.error(err);
             });
             message.channel.send(server.prefix + "progress " + (xpMax * 2) + " <@" + winnerID + ">");

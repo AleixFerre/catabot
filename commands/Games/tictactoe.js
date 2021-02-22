@@ -408,7 +408,7 @@ module.exports = {
 
             message.channel.send(recompensa_str);
 
-            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+            fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => {
                 if (err) console.error(err);
             });
         }

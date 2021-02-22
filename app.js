@@ -58,12 +58,10 @@ for (const dir of commandDirs) {
 }
 
 if (wantToSaveCommands) {
-    fs.writeFile('docs/Storage/commands.json', JSON.stringify(cmds), (err) => {
+    fs.writeFile('docs/storage/commands.json', JSON.stringify(cmds), (err) => {
         if (err) console.error(err);
     });
 }
-
-let servers = {}; ///< The data structure that handles all the info for the servers
 
 client.on("ready", async () => {
     for (let guild of client.guilds.cache) {

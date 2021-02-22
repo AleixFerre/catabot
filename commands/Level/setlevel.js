@@ -44,7 +44,7 @@ module.exports = {
         userData[message.guild.id + to.id].level = lvl;
         userData[message.guild.id + to.id].xp = xp;
 
-        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+        fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => {
             if (err) console.error(err);
         });
 

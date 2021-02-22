@@ -1,7 +1,7 @@
 // Script que mostra la info de manera ordenada 
 
 let commands = [];
-fetch("https://raw.githubusercontent.com/CatalaHD/CataBot/master/docs/Storage/commands.json")
+fetch("https://raw.githubusercontent.com/CatalaHD/CataBot/master/docs/storage/commands.json")
     .then(response => response.json())
     .then(json => {
         commands = json;

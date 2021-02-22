@@ -42,7 +42,7 @@ module.exports = {
             .setDescription(content)
             .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
-        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+        fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => {
             if (err) console.error(err);
         });
         message.channel.send(msg);

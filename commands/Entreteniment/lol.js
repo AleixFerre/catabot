@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
-const champs = Object.keys(require('../../Storage/lol/champion.json').data);
-const spells = require('../../Storage/lol/summoner.json').data;
-const items = require('../../Storage/lol/item.json').data;
+const champs = Object.keys(require('../../storage/lol/champion.json').data);
+const spells = require('../../storage/lol/summoner.json').data;
+const items = require('../../storage/lol/item.json').data;
 const {
     getRandomColor
 } = require('../../lib/common.js');

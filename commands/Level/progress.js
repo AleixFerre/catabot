@@ -1,7 +1,7 @@
 const fs = require('fs');
 const {
     ranks
-} = require("../../Storage/ranks.json");
+} = require("../../storage/ranks.json");
 
 module.exports = {
     name: 'progress',
@@ -101,7 +101,7 @@ module.exports = {
             }
         }
 
-        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+        fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => {
             if (err) console.error(err);
         });
 

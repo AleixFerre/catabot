@@ -34,7 +34,7 @@ module.exports = {
             }
         });
 
-        fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
+        fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => { if (err) console.error(err); });
         message.channel.send('🔀 Monedes randomitzades correctament amb un valor maxim de ' + max + '! ✅');
     },
 };

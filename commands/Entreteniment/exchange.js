@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-let conversions = require('../../Storage/conversions.json');
+let conversions = require('../../storage/conversions.json');
 const {
     getRandomColor
 } = require('../../lib/common.js');

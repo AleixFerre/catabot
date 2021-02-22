@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const {
     paraules
-} = require("../../Storage/paraules.json");
+} = require("../../storage/paraules.json");
 const {
     getRandomColor
 } = require('../../lib/common.js');
@@ -333,7 +333,7 @@ module.exports = {
 
 
             await message.channel.send(embed_final);
-            fs.writeFile('Storage/userData.json', JSON.stringify(userData), (err) => {
+            fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => {
                 if (err) console.error(err);
             });
 
