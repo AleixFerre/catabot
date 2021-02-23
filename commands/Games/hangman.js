@@ -1,11 +1,15 @@
 const Discord = require('discord.js');
-const fs = require('fs');
 const {
     paraules
 } = require("../../storage/paraules.json");
 const {
-    getRandomColor
+    getRandomColor,
+    db
 } = require('../../lib/common.js');
+const {
+    getUser,
+    updateUser
+} = require('../../lib/database');
 
 module.exports = {
     name: 'hangman',
@@ -13,7 +17,7 @@ module.exports = {
     aliases: ['ahorcado', 'penjat', 'playh'],
     type: 'games',
     cooldown: 30,
-    async execute(message, _args, server, userData) {
+    async execute(message, _args, server) {
 
         const lletres = 'abcdefghijklmnopqrstuvwxyz'.split(''); // totes les lletres que pot tenir una paraula
         const recompensa = 500; // Punts que guanyes al final
@@ -315,9 +319,14 @@ module.exports = {
 
             if (acabat === 1) {
                 desc = "Hem guanyat! Tots els integrants guanyen 💰`" + recompensa + " monedes`💰!\n";
-                participants.forEach(participant => {
+                participants.forEach(async participant => {
                     message.channel.send(`${server.prefix}progress ${xp_recompensa} ${participant}`);
-                    userData[message.guild.id + participant.id].money += recompensa;
+                    let user = await getUser(participant.id, message.guild.id);
+                    user.money += recompensa;
+                    await updateUser([participant.id, message.guild.id], {
+                        money: user.money
+                    });
+                    console.log(db(`DB: Afegida la recompensaa l'usuari ${participant.username} correctament`));
                 });
             } else {
                 emoji = "😦";
@@ -333,10 +342,6 @@ module.exports = {
 
 
             await message.channel.send(embed_final);
-            fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => {
-                if (err) console.error(err);
-            });
-
         }
     },
 };

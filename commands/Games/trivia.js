@@ -1,9 +1,13 @@
 const fetch = require('node-fetch');
 const Discord = require('discord.js');
-const fs = require('fs');
 const {
-    getRandomColor
+    getRandomColor,
+    db
 } = require('../../lib/common.js');
+const {
+    getUser,
+    updateUser
+} = require('../../lib/database');
 
 module.exports = {
     name: 'trivia',
@@ -12,7 +16,7 @@ module.exports = {
     usage: '[ quantitat_preguntes ]',
     type: 'games',
     cooldown: 30,
-    async execute(message, args, server, userData) {
+    async execute(message, args, server) {
 
         // Només cal ABCD, però per si un cas
         const emojis = ["🇦", "🇧", "🇨", "🇩", "🇪", "🇫"];
@@ -267,12 +271,18 @@ module.exports = {
 
             // 🥇 🥈 🥉
 
-            resultats.forEach((result) => {
+            await resultats.forEach(async (result) => {
                 let num = i;
                 if (i === 1) {
                     num = '🥇';
                     recompenses_txt += `${result.user.username}, has guanyat 💰\`${result.money} monedes\`💰!`;
-                    userData[message.guild.id + result.user.id].money += result.money;
+
+                    let user = await getUser(result.user.id, message.guild.id);
+                    user.money += result.money;
+                    await updateUser([result.user.id, message.guild.id], {
+                        money: user.money
+                    });
+                    console.log(db(`DB: Afegida la recompensaa l'usuari ${result.user.username} correctament`));
                 } else if (i === 2) {
                     num = '🥈';
                 } else if (i === 3) {
@@ -289,11 +299,6 @@ module.exports = {
             progresses.forEach(p => {
                 message.channel.send(p);
             });
-
-            fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => {
-                if (err) console.error(err);
-            });
-
         }
     },
 };

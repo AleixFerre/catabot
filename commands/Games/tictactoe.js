@@ -1,8 +1,11 @@
 const Discord = require("discord.js");
-const fs = require('fs');
 const {
     getRandomColor
 } = require('../../lib/common.js');
+const {
+    getUser,
+    updateUser
+} = require("../../lib/database.js");
 
 module.exports = {
     name: 'tictactoe',
@@ -10,7 +13,7 @@ module.exports = {
     aliases: ['tresenratlla', '3enratlla', 'playt'],
     type: 'games',
     cooldown: 30,
-    execute(message, _args, server, userData) {
+    execute(message, _args, server) {
 
         const emojis = ["🇦", "🇧", "🇨", "🇩", "🇪", "🇫", "🇬", "🇭", "🇮"];
         const lletres = ["a", "b", "c", "d", "e", "f", "g", "h", "i"];
@@ -360,27 +363,29 @@ module.exports = {
             afegir_recompenses(guanyador); // Afegim les recompenses adients
         }
 
-        function afegir_recompenses(guanyador) {
+        async function afegir_recompenses(guanyador) {
             const xp = Math.floor(Math.random() * 500 + 500); // Entre 500 i 1000
             const mitat = Math.floor(recompensa / 2);
             let recompensa_str = "**RECOMPENSES**\n";
+
+            let user1 = await getUser(player.id, message.guild.id);
 
             if (IA) { // Si juguem contra la IA
                 if (dificil) {
                     if (guanyador === 1) { // Si guanyem nosaltres, tot el pot per nosaltres
                         recompensa_str += `${player.username}, has guanyat 💰\`${recompensa}\` monedes💰!`;
-                        userData[message.guild.id + player.id].money += recompensa;
+                        user1.money += recompensa;
                     } else if (guanyador === 0) { // Empat, es reparteix el pot, però la maquina no juga
                         recompensa_str += `${player.username}, has guanyat 💰\`${mitat}\` monedes💰!`;
-                        userData[message.guild.id + player.id].money += mitat;
+                        user1.money += mitat;
                     }
                 } else { // Si estem jugant en facil
                     if (guanyador === 1) { // Si guanyem nosaltres, tot el pot per nosaltres
                         recompensa_str += `${player.username}, has guanyat 💰\`${mitat}\` monedes💰!`;
-                        userData[message.guild.id + player.id].money += mitat;
+                        user1.money += mitat;
                     } else if (guanyador === 0) { // Empat, es reparteix el pot, però la maquina no juga
                         recompensa_str += `${player.username}, has guanyat 💰\`${mitat/2}\` monedes💰!`;
-                        userData[message.guild.id + player.id].money += mitat / 2;
+                        user1.money += mitat / 2;
                     }
                 }
 
@@ -388,18 +393,25 @@ module.exports = {
                 message.channel.send(`${server.prefix}progress ${xp} ${player}`);
 
             } else { // Si estem jugant contra una altra persona
+
+                let user2 = await getUser(player2.id, message.guild.id);
+
                 if (guanyador === 1) { // Guanya p1, tot el pot per ell
                     recompensa_str += `${player.username}, has guanyat 💰\`${recompensa}\` monedes💰!`;
-                    userData[message.guild.id + player.id].money += recompensa;
+                    user1.money += recompensa;
                 } else if (guanyador === 2) { // Guanya p2, tot el pot per ell
                     recompensa_str += `${player2.username}, has guanyat 💰\`${recompensa}\`monedes💰!`;
-                    userData[message.guild.id + player2.id].money += recompensa;
+                    user2.money += recompensa;
                 } else if (guanyador === 0) { // Empat, es reparteix el pot
                     recompensa_str += `${player.username}, has guanyat 💰\`${mitat}\` monedes💰!`;
                     recompensa_str += `${player2.username}, has guanyat 💰\`${mitat}\` monedes💰!`;
-                    userData[message.guild.id + player.id].money += mitat;
-                    userData[message.guild.id + player2.id].money += mitat;
+                    user1.money += mitat;
+                    user2.money += mitat;
                 }
+
+                await updateUser([player2.id, message.guild.id], {
+                    money: user2.money
+                });
 
                 // Sumem xp als dos
                 message.channel.send(`${server.prefix}progress ${xp} ${player}`);
@@ -408,8 +420,8 @@ module.exports = {
 
             message.channel.send(recompensa_str);
 
-            fs.writeFile('storage/userData.json', JSON.stringify(userData), (err) => {
-                if (err) console.error(err);
+            await updateUser([player.id, message.guild.id], {
+                money: user1.money
             });
         }
 
