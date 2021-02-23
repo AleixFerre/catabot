@@ -1,6 +1,6 @@
 const {
     getAllServers
-} = require("../../lib/database");
+} = require("../../lib/database.js");
 
 module.exports = {
     name: 'alert',
@@ -22,7 +22,7 @@ module.exports = {
 
         let servers = await getAllServers();
 
-        servers.forEach(async guild => {
+        await servers.forEach(async guild => {
 
             let channelID = guild.alertChannel;
             let channel = client.channels.cache.get(channelID);
