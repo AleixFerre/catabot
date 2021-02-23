@@ -11,7 +11,7 @@ module.exports = {
 	name: "music",
 	description: "Més info amb la comanda `!music`.",
 	type: "musica",
-	aliases: ["musica", "play", "skip", "next", "stop"],
+	aliases: ["musica", "play", "skip", "next", "stop", "disconnect"],
 	cooldown: 0,
 	async execute(message, args, server, _client, cmd) {
 
@@ -34,7 +34,7 @@ module.exports = {
 		// Depenent del que vulguis fer, executa una funcio o una altra
 		if (cmd === "play") play_song(message, args, server_queue, voice_channel);
 		else if (cmd === "skip" || cmd === "next") skip_song(message, server_queue);
-		else if (cmd === "stop") stop_song(message, server_queue);
+		else if (cmd === "stop" || cmd === "disconnect") stop_song(message, server_queue);
 	},
 };
 
@@ -63,6 +63,7 @@ const play_song = async function (message, args, server_queue, voice_channel) {
 			};
 		} else {
 			message.channel.send("❌ Error: No s'ha pogut cercar el video correctament.");
+			return;
 		}
 	}
 

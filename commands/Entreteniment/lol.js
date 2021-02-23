@@ -208,6 +208,12 @@ module.exports = {
     cooldown: 10,
     async execute(message, args, server) {
 
+        if (args.length < 1) {
+            message.reply("has d'escollir una opció!");
+            message.channel.send(server.prefix + "help lol");
+            return;
+        }
+
         let commandType = args.shift().toLowerCase();
         let messageToReply;
         let theName = "";

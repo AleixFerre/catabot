@@ -14,9 +14,12 @@ module.exports = {
 
         let prefix = server.prefix;
 
-        let changes = fs.readFileSync("CHANGELOG.md")
-            .toString().split("[")[1].split("]");
+        let changes = fs.readFileSync("CHANGELOG.md").toString();
+        
+        changes = changes.split("[")[1].split("]");
 
+        console.log(changes);
+        
         let versio = changes[0].replace("\\", "").trim();
 
         const embed = new Discord.MessageEmbed()
