@@ -8,7 +8,7 @@ module.exports = {
     name: 'lastupdate',
     description: 'Mostra les notes de la ultima actualització del bot',
     type: 'altres',
-    cooldown: 10,
+    cooldown: 0,
     aliases: ['parche', 'notes', 'changes', 'changelog', 'canvis'],
     async execute(message, _args, server) {
 
