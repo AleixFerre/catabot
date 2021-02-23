@@ -24,13 +24,16 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
+// TESTING BOT
+const testing = false;
+
 moment().utcOffset('120');
 
 const cooldowns = new Map();
 
 // Describes if the system saves the commands into the docs/.../commands.json file
 // Es preferible que es tingui a FALSE a no ser que es vulgui guardar especificament
-const wantToSaveCommands = false;
+const wantToSaveCommands = true;
 
 let cmds = []; // Array that will store all the bot commands
 
@@ -391,4 +394,4 @@ mongoose.connect(process.env.MONGODBSRV, {
 
 
 // DISCORD BOT CONNECTION
-client.login(process.env.token);
+client.login(testing ? process.env.tokenTest : process.env.token);

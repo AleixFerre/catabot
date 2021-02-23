@@ -17,9 +17,7 @@ module.exports = {
         let changes = fs.readFileSync("CHANGELOG.md").toString();
         
         changes = changes.split("[")[1].split("]");
-
-        console.log(changes);
-        
+      
         let versio = changes[0].replace("\\", "").trim();
 
         const embed = new Discord.MessageEmbed()
@@ -28,8 +26,8 @@ module.exports = {
             .setTimestamp().setFooter('CataBOT ' + new Date().getFullYear() + ' © All rights reserved');
 
         changes = changes[1].replace("\\", "")
-            .replace(/-/ig, "❯")
-            .replace(/  ❯/ig, "•")
+            .replace(/ \*/ig, " •")
+            .replace(/\*/ig, "❯")
             .replace(/ÇÇ/ig, prefix)
             .trim()
             .split("\n");
@@ -42,7 +40,7 @@ module.exports = {
                     cos: ""
                 });
             } else {
-                notes[notes.length - 1].cos += change;
+                notes[notes.length - 1].cos += change + '\n';
             }
         }
 
