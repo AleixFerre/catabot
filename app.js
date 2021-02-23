@@ -33,7 +33,7 @@ const cooldowns = new Map();
 
 // Describes if the system saves the commands into the docs/.../commands.json file
 // Es preferible que es tingui a FALSE a no ser que es vulgui guardar especificament
-const wantToSaveCommands = true;
+const wantToSaveCommands = false;
 
 let cmds = []; // Array that will store all the bot commands
 
