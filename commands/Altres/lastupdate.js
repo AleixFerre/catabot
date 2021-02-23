@@ -10,7 +10,7 @@ module.exports = {
     type: 'altres',
     cooldown: 10,
     aliases: ['parche', 'notes', 'changes', 'changelog', 'canvis'],
-    execute(message, _args, server) {
+    async execute(message, _args, server) {
 
         let prefix = server.prefix;
 
