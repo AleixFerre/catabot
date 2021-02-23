@@ -47,6 +47,9 @@ module.exports = {
             embed.addField(nota.titol, nota.cos || "_No hi ha més informació._", false);
         }
 
-        message.channel.send(embed);
+        await message.channel.send(embed);
+
+        if (message.author.bot)
+            message.delete();
     }
 };
