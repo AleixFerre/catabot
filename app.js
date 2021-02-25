@@ -125,7 +125,8 @@ client.on("guildCreate", (guild) => {
             if (!member.user.bot) { // Si es un bot, no el guardo que no farà res!
                 updateUser([member.id, guild.id], {
                     "IDs.userID": member.id,
-                    "IDs.serverID": guild.id
+                    "IDs.serverID": guild.id,
+                    money: Math.floor(Math.random() * 1000)
                 }).then(console.log(db(`DB: Guardat el nou usuari ${member.user.username} correctament!`)));
             }
         });
@@ -209,7 +210,8 @@ client.on('guildMemberAdd', async (member) => {
 
         updateUser([member.id, member.guild.id], {
             "IDs.userID": member.id,
-            "IDs.serverID": member.guild.id
+            "IDs.serverID": member.guild.id,
+            money: Math.floor(Math.random() * 1000)
         }).then(console.log(db(`DB: Guardat el nou usuari ${member.user.username} correctament!`)));
     }
 
