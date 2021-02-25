@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const {
-    getRandomColor
+    getRandomColor,
+    separateWithCommas
 } = require('../../lib/common.js');
 
 module.exports = {
@@ -74,8 +75,9 @@ module.exports = {
             // Convertimos el campo en space case
             let result = camp.replace(/([A-Z])/g, " $1");
             let finalResult = result.charAt(0).toUpperCase() + result.slice(1);
-            if (covidData[camp])
-                covidEmbed.addField("❯ " + finalResult, covidData[camp], true);
+            if (covidData[camp]) {
+                covidEmbed.addField("❯ " + finalResult, separateWithCommas(covidData[camp]), true);
+            }
         });
 
         covidEmbed.setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
