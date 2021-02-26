@@ -5,6 +5,8 @@ const {
 	getRandomColor
 } = require("../../lib/common.js");
 
+const VIDEO_MAX_DURATION = 60 * 60 * 5; // 5h in seconds
+
 const queue = new Map();
 
 module.exports = {
@@ -65,6 +67,9 @@ const play_song = async function (message, args, server_queue, voice_channel) {
 		song = {
 			title: song_info.videoDetails.title,
 			url: song_info.videoDetails.video_url,
+			duration: parseInt(song_info.videoDetails.lengthSeconds),
+			canal: song_info.videoDetails.ownerChannelName,
+			thumbnail: song_info.videoDetails.thumbnails[song_info.videoDetails.thumbnails.length - 1].url
 		};
 	} else {
 		const video_finder = async (query) => {
@@ -73,16 +78,23 @@ const play_song = async function (message, args, server_queue, voice_channel) {
 		};
 
 		const video = await video_finder(args.join(" "));
-		
+
 		if (video) {
 			song = {
 				title: video.title,
-				url: video.url
+				url: video.url,
+				duration: video.seconds,
+				canal: video.author.name,
+				thumbnail: video.thumbnail
 			};
 		} else {
 			message.channel.send("❌ Error: No s'ha pogut cercar el video correctament.");
 			return;
 		}
+	}
+
+	if (song.duration > VIDEO_MAX_DURATION) {
+		return message.channel.send("❌ Error: No es poden reproduir videos de més de 5h.");
 	}
 
 	if (!server_queue) {
@@ -119,9 +131,11 @@ const video_player = async (guild, song) => {
 		queue.delete(guild.id);
 		return;
 	}
+
 	const stream = ytdl(song.url, {
 		filter: "audioonly"
 	});
+
 	song_queue.connection
 		.play(stream, {
 			seek: 0,
@@ -131,6 +145,7 @@ const video_player = async (guild, song) => {
 			song_queue.songs.shift();
 			video_player(guild, song_queue.songs[0]);
 		});
+
 	await song_queue.text_channel.send(`🎶 S'està reproduint: **${song.title}**`);
 };
 
@@ -185,12 +200,17 @@ const show_list = (message, server_queue) => {
 	}
 
 	const songs = server_queue.songs;
-	let msg = "";
-	for (let i = 1; i < songs.length; i++) {
-		msg += songs[i].title + "\n";
+
+	let embed = new Discord.MessageEmbed()
+		.setColor(getRandomColor())
+		.setTitle("🎵 ** Està sonant: " + songs[0].title + "** 🎵")
+		.setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+
+	for (let i = 1; i < Math.min(songs.length, 20); i++) {
+		embed.addField(`${i}.- ${songs[i].title}`, songs[i].canal + " | " + durationToString(songs[i].duration), false);
 	}
 
-	message.channel.send(msg);
+	message.channel.send(embed);
 };
 
 const show_np = (message, server_queue) => {
@@ -203,8 +223,17 @@ const show_np = (message, server_queue) => {
 		return message.channel.send(`No s'està reproduint cap cançó 😔`);
 	}
 
-	const msg = server_queue.songs[0].title + "\n";
-	message.channel.send(msg);
+	const current = server_queue.songs[0];
+
+	let embed = new Discord.MessageEmbed()
+		.setColor(getRandomColor())
+		.setTitle("🎵 **" + current.title + "** 🎵")
+		.addField('❯ Canal', current.canal, true)
+		.addField('❯ Duració', durationToString(current.duration), true)
+		.setThumbnail(current.thumbnail)
+		.setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+
+	message.channel.send(embed);
 };
 
 const mostrar_opcions = (message, server) => {
@@ -225,3 +254,5 @@ const mostrar_opcions = (message, server) => {
 	message.channel.send(embed);
 
 };
+
+const durationToString = (duration) => `${Math.floor(duration / 60)}:${duration % 60} min`;
