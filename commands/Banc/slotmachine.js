@@ -34,7 +34,12 @@ module.exports = {
             message.reply("has de posar un numero vàlid o all");
             return message.channel.send(server.prefix + "help slot");
         } else {
-            amount = args[0];
+            amount = Number(args[0]);
+        }
+                
+        if (amount % 1 !== 0) {
+            message.reply("només pots apostar nombres enters!");
+            return message.channel.send(server.prefix + "help slotmachine");
         }
 
         if (amount <= 0) {

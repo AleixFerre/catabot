@@ -51,6 +51,12 @@ module.exports = {
             amount = Number(args[0]);
         }
 
+                
+        if (amount % 1 !== 0) {
+            message.reply("només pots apostar nombres enters!");
+            return message.channel.send(server.prefix + "help pay");
+        }
+
         let otherUser = message.mentions.users.first();
         let other = await getUser(otherUser.id, message.guild.id);
 
