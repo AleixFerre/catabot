@@ -17,7 +17,7 @@ module.exports = {
     description: 'Et dona la benvinguda',
     type: 'entreteniment',
     cooldown: 60,
-    async execute(message, args, server, _userData, client) {
+    async execute(message, args, server, client) {
 
         function getMemberFromMention(mention) {
             if (!mention) return;
@@ -34,7 +34,7 @@ module.exports = {
             channelID = message.channel.id;
         }
 
-        let channel = client.channels.cache.get(channelID);
+        let channel = client.channels.resolve(channelID);
 
         const canvas = Canvas.createCanvas(700, 250);
         const ctx = canvas.getContext('2d');
@@ -70,6 +70,9 @@ module.exports = {
 
         const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
 
-        channel.send(`Benvingut al servidor, ${member}!`, attachment);
+        await channel.send(`Benvingut al servidor, ${member}!`, attachment);
+
+        if (message.author.bot)
+            message.delete();
     },
 };

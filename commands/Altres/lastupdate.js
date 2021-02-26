@@ -7,9 +7,10 @@ const changelog = require('../../storage/CHANGELOG.json');
 module.exports = {
     name: 'lastupdate',
     description: 'Mostra les notes d\'una actualització del bot escollida. Si no es posa cap paràmetre s\'escolleix la actual',
-    usage: '[ versió ]',
+    usage: '[ versió: x.x ]',
     type: 'altres',
     cooldown: 0,
+    example: '1.3',
     aliases: ['parche', 'notes', 'changes', 'changelog', 'canvis'],
     async execute(message, args, server) {
 
@@ -21,7 +22,8 @@ module.exports = {
             if (args[0].match(/\d{1,2}\.\d{1,2}/g)) {
                 versio = args[0];
             } else {
-                return message.reply("la versió té un format incorrecte!\nUn format vàlid seria `1.2` o `3.3`.");
+                message.reply("la versió té un format incorrecte!");
+                return message.channel.send(prefix + "help lastupdate");
             }
         }
         
