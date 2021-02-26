@@ -14,7 +14,7 @@ module.exports = {
     description: 'Mostra el teu perfil',
     type: 'level',
     aliases: ['perfil'],
-    cooldown: 1,
+    cooldown: 0,
     async execute(message) {
 
         let mention = {};

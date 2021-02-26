@@ -9,7 +9,7 @@ const {
 module.exports = {
     name: 'server',
     type: 'altres',
-    cooldown: 1,
+    cooldown: 0,
     description: 'Diu la informació del servidor.',
     aliases: ['serverinfo', 'guild'],
     async execute(message, _args, server) {

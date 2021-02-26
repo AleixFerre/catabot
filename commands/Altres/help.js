@@ -7,7 +7,7 @@ module.exports = {
     name: 'help',
     description: 'Mostra informació de les comandes',
     type: "altres",
-    cooldown: 1,
+    cooldown: 0,
     usage: '[ nom de la comanda ]',
     aliases: ['h', 'commands', 'info'],
     execute(message, args, server) {
@@ -154,7 +154,7 @@ module.exports = {
             helpEmbed.addField('Tipus', 'altres');
 
         if (command.aliases)
-            helpEmbed.addField('Alias', command.aliases.join(', '));
+            helpEmbed.addField('Alies', command.aliases.join(', '));
 
         if (command.usage)
             helpEmbed.addField('Ús', prefix + command.name + ' ' + command.usage);

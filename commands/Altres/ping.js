@@ -7,7 +7,7 @@ module.exports = {
     name: 'ping',
     description: 'Retorna el ping del servidor i de la API!',
     type: 'altres',
-    cooldown: 1,
+    cooldown: 0,
     execute(message) {
         let ping = Math.floor(message.client.ws.ping);
 

@@ -11,7 +11,20 @@ module.exports = {
 	name: "music",
 	description: "Més info amb la comanda `!music`.",
 	type: "musica",
-	aliases: ["musica", "play", "skip", "next", "stop", "disconnect"],
+	aliases: [
+		"musica",
+		"play",
+		"skip",
+		"next",
+		"stop",
+		"disconnect",
+		"clear",
+		"q",
+		"queue",
+		"llista",
+		"nowplaying",
+		"np"
+	],
 	cooldown: 0,
 	async execute(message, args, server, _client, cmd) {
 
@@ -35,6 +48,9 @@ module.exports = {
 		if (cmd === "play") play_song(message, args, server_queue, voice_channel);
 		else if (cmd === "skip" || cmd === "next") skip_song(message, server_queue);
 		else if (cmd === "stop" || cmd === "disconnect") stop_song(message, server_queue);
+		else if (cmd === "q" || cmd === "llista" || cmd === "queue") show_list(message, server_queue);
+		else if (cmd === "np" || cmd === "nowplaying") show_np(message, server_queue);
+		else if (cmd === "clear") clear_list(message, server_queue);
 	},
 };
 
@@ -132,11 +148,64 @@ const stop_song = (message, server_queue) => {
 		return message.channel.send(
 			"❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!"
 		);
+
+	if (!server_queue) {
+		return message.channel.send(`No hi ha cap cançó a la cua 😔`);
+	}
+
 	server_queue.songs = [];
 	server_queue.connection.dispatcher.end();
 };
 
-const mostrar_opcions = function (message, server) {
+const clear_list = (message, server_queue) => {
+	if (!message.member.voice.channel)
+		return message.channel.send(
+			"❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!"
+		);
+
+	if (!server_queue || server_queue.songs.length === 1) {
+		return message.channel.send(`No hi ha cap cançó a la cua 😔`);
+	}
+
+	const n = server_queue.songs.length - 1;
+	server_queue.songs.splice(1, n);
+	message.channel.send(`🗑️ Esborrades ${n} cançons!`);
+};
+
+const show_list = (message, server_queue) => {
+	if (!message.member.voice.channel)
+		return message.channel.send(
+			"❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!"
+		);
+
+	if (!server_queue || server_queue.songs.length === 1) {
+		return message.channel.send(`No hi ha cap cançó a la cua 😔`);
+	}
+
+	const songs = server_queue.songs;
+	let msg = "";
+	for (let i = 1; i < songs.length; i++) {
+		msg += songs[i].title + "\n";
+	}
+
+	message.channel.send(msg);
+};
+
+const show_np = (message, server_queue) => {
+	if (!message.member.voice.channel)
+		return message.channel.send(
+			"❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!"
+		);
+
+	if (!server_queue || server_queue.songs.length === 1) {
+		return message.channel.send(`No s'està reproduint cap cançó 😔`);
+	}
+
+	const msg = server_queue.songs[0].title + "\n";
+	message.channel.send(msg);
+};
+
+const mostrar_opcions = (message, server) => {
 
 	let prefix = server.prefix;
 
@@ -144,8 +213,11 @@ const mostrar_opcions = function (message, server) {
 		.setColor(getRandomColor())
 		.setTitle("🎵 **Comandes de MUSICA** 🎵")
 		.addField('❯ ' + prefix + 'play < URL / cerca >', "El bot s'unirà al teu canal de veu i reproduirà les cançons que vulguis.", false)
-		.addField('❯ ' + prefix + 'skip', "Es passarà a la següent cançó de la llista.", false)
-		.addField('❯ ' + prefix + 'stop', "No vols més musica? El bot s'envà del canal esborrant les cançons de la llista.", false)
+		.addField('❯ ' + prefix + 'skip / next', "Es passarà a la següent cançó de la llista.", false)
+		.addField('❯ ' + prefix + 'stop / disconnect', "No vols més musica? El bot s'envà del canal esborrant les cançons de la llista.", false)
+		.addField('❯ ' + prefix + 'q / queue / llista', "Et mostra la llista de reproducció.", false)
+		.addField('❯ ' + prefix + 'np / nowplaying', "Et mostra la cançó que s'està reproduint ara mateix.", false)
+		.addField('❯ ' + prefix + 'clear', "Esborra totes les cançons de la llista.", false)
 		.setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
 
 	message.channel.send(embed);

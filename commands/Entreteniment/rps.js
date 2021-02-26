@@ -5,7 +5,7 @@ module.exports = {
     name: 'rps',
     description: 'Juga a pedra-paper-tissora amb el bot',
     type: 'entreteniment',
-    cooldown: 1,
+    cooldown: 0,
     usage: '< rock/paper/scissors >',
     execute(message, args, server) {
 

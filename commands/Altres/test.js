@@ -5,7 +5,7 @@ module.exports = {
     name: 'test',
     description: 'Comanda de prova',
     type: 'altres',
-    cooldown: 1,
+    cooldown: 0,
     execute(message) {
         
         let msg = new Discord.MessageEmbed()

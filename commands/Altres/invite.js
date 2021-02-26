@@ -6,7 +6,7 @@ const {
 module.exports = {
     name: 'invite',
     type: 'altres',
-    cooldown: 1,
+    cooldown: 0,
     description: 'T\'envia un missatge amb el link del bot.',
     execute(message) {
         // Get the invite link With admin permissions

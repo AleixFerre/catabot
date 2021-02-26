@@ -2,8 +2,13 @@
   "1.4": {
     "nom": "v1.4",
     "dades": [{
-      "main": "",
-      "secondary": []
+      "main": "Afegides noves comandes de musica.",
+      "secondary": [
+        "`ÇÇq`: Et mostra la llista de reproducció.",
+        "`ÇÇnp`: Et mostra la cançó que s'està reproduint ara mateix.",
+        "`ÇÇclear`: Esborra totes les cançons de la llista.",
+        "Més info amb la comanda `ÇÇmusic`."
+      ]
     }]
   },
   "1.3": {

@@ -8,7 +8,7 @@ module.exports = {
     description: 'F en el chat chavales',
     usage: " [ description ]",
     type: 'entreteniment',
-    cooldown: 1,
+    cooldown: 0,
     execute(message, args) {
 
         const msg = new Discord.MessageEmbed()
