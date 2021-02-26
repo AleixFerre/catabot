@@ -62,8 +62,6 @@ const play_song = async function (message, args, server_queue, voice_channel) {
 	if (ytdl.validateURL(args[0])) {
 		const song_info = await ytdl.getInfo(args[0]);
 
-		console.log(song_info);
-
 		song = {
 			title: song_info.videoDetails.title,
 			url: song_info.videoDetails.video_url,
@@ -76,8 +74,6 @@ const play_song = async function (message, args, server_queue, voice_channel) {
 
 		const video = await video_finder(args.join(" "));
 		
-		console.log(video);
-
 		if (video) {
 			song = {
 				title: video.title,
@@ -203,7 +199,7 @@ const show_np = (message, server_queue) => {
 			"❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!"
 		);
 
-	if (!server_queue || server_queue.songs.length === 1) {
+	if (!server_queue) {
 		return message.channel.send(`No s'està reproduint cap cançó 😔`);
 	}
 
