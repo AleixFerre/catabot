@@ -22,14 +22,19 @@ module.exports = {
 
         let servers = await getAllServers();
 
-        await servers.forEach(async guild => {
+        servers.forEach(async guild => {
 
             let channelID = guild.alertChannel;
             let channel = client.channels.cache.get(channelID);
 
             // Només si hi ha algun canal de text en tot el servidor
-            if (channel)
-                await channel.send(msg); // Envia el missatge d'alerta
+            if (channel) {
+                if (msg.toLowerCase() === "changelog") {
+                    await channel.send(guild.prefix + "lastupdate"); // Envia la comanda de notes
+                } else {
+                    await channel.send(msg); // Envia el missatge d'alerta
+                }
+            }
         });
 
         message.reply("missatges enviats correctament");
