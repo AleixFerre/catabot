@@ -33,6 +33,10 @@ const cooldowns = new Map();
 const wantToSaveCommands = false;
 const testing = false; // TESTING BOT
 
+if (testing) {
+    console.log(remove("AVÍS: TESTING ACTIVAT!"));
+}
+
 let cmds = []; // Array that will store all the bot commands
 
 /// Load the commands from all the folders -> files
@@ -75,6 +79,7 @@ client.on("ready", async () => {
         });
 
         let members = await guild.members.fetch();
+
         members.forEach((member) => {
             if (!member.user.bot) { // Si es un bot, no el guardo que no farà res!
                 updateUser([member.id, guild.id], {
@@ -90,9 +95,14 @@ client.on("ready", async () => {
 
         try {
             let newName = "[ " + server.prefix + " ] CataBOT";
-            guild.members.fetch(process.env.clientid).then((member) => {
-                member.setNickname(newName);
-            });
+            let member;
+            if (testing) {
+                newName += " Test";
+                member = await guild.members.fetch(process.env.clientidTest);
+            } else {
+                member = await guild.members.fetch(process.env.clientid);
+            }
+            member.setNickname(newName);
         } catch (err) {
             console.error(err);
         }
@@ -141,7 +151,14 @@ client.on("guildCreate", (guild) => {
 
     try {
         let newName = "[ " + process.env.prefix + " ] CataBOT";
-        guild.members.cache.get(process.env.clientid).setNickname(newName);
+        let member;
+        if (testing) {
+            newName += " Test";
+            member = guild.members.cache.get(process.env.clientidTest);
+        } else {
+            member = guild.members.cache.get(process.env.clientid);
+        }
+        member.setNickname(newName);
     } catch (err) {
         console.error(err);
     }
@@ -352,7 +369,7 @@ client.on('message', async (message) => {
 
 
 // MONGODB CONNECTION
-mongoose.connect(process.env.MONGODBSRV, {
+mongoose.connect(testing ? process.env.MONGODBSRVTest : process.env.MONGODBSRV, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false

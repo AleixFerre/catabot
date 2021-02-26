@@ -112,7 +112,7 @@ module.exports = {
 
             data.push(helpContent);
             data.push('\n • Pots enviar ' + prefix + 'help [nom comanda] per obtenir informació més detallada de la comanda!\n' +
-                " • Pots veure totes les comandes [aquí](https://catalahd.github.io/CataBot/commands.html).");
+                " • Pots veure totes les comandes [aquí](https://catalahd.github.io/CataBot/commands).");
 
             fullHelpEmbed.setDescription(data);
 
