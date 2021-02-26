@@ -1,51 +1,54 @@
-const fs = require('fs');
 const Discord = require('discord.js');
 const {
     getRandomColor,
 } = require("../../lib/common.js");
+const changelog = require('../../storage/CHANGELOG.json');
 
 module.exports = {
     name: 'lastupdate',
-    description: 'Mostra les notes de la ultima actualització del bot',
+    description: 'Mostra les notes d\'una actualització del bot escollida. Si no es posa cap paràmetre s\'escolleix la actual',
+    usage: '[ versió ]',
     type: 'altres',
     cooldown: 0,
     aliases: ['parche', 'notes', 'changes', 'changelog', 'canvis'],
-    async execute(message, _args, server) {
+    async execute(message, args, server) {
 
-        let prefix = server.prefix;
+        const prefix = server.prefix;
 
-        let changes = fs.readFileSync("CHANGELOG.md").toString();
+        let versio = process.env.version;
+
+        if (args[0]) {
+            if (args[0].match(/\d{1,2}\.\d{1,2}/g)) {
+                versio = args[0];
+            } else {
+                return message.reply("la versió té un format incorrecte!\nUn format vàlid seria `1.2` o `3.3`.");
+            }
+        }
         
-        changes = changes.split("[")[1].split("]");
-      
-        let versio = changes[0].replace("\\", "").trim();
+        changes = changelog[versio];
+        if (!changes) {
+            let keys = Object.keys(changelog);
+            keys = keys.map((i) => "`" + i + "`");
+            return message.reply("no existeix aquesta versió!\nPots escollir entre les versions disponibles: " + keys.join(", "));
+        }
+
+        versio = changes.nom;
+        const dades = changes.dades;
 
         const embed = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle("**NOTES DEL CATABOT " + versio + "**")
             .setTimestamp().setFooter('CataBOT ' + new Date().getFullYear() + ' © All rights reserved');
 
-        changes = changes[1].replace("\\", "")
-            .replace(/ \*/ig, " •")
-            .replace(/\*/ig, "❯")
-            .replace(/ÇÇ/ig, prefix)
-            .trim()
-            .split("\n");
-
-        let notes = [];
-        for (let change of changes) {
-            if (change[0] === "❯") {
-                notes.push({
-                    titol: change,
-                    cos: ""
-                });
+        for (let nota of dades) {
+            let cos = nota.secondary;
+            nota.main = "❯ " + nota.main.replace(/ÇÇ/ig, prefix);
+            if (cos.length === 0) {
+                embed.addField(nota.main, "_No hi ha més informació._", false);
             } else {
-                notes[notes.length - 1].cos += change + '\n';
+                cos = cos.map((i) => "• " + i.replace(/ÇÇ/ig, prefix));
+                embed.addField(nota.main, cos.join("\n"), false);
             }
-        }
-
-        for (let nota of notes) {
-            embed.addField(nota.titol, nota.cos || "_No hi ha més informació._", false);
         }
 
         await message.channel.send(embed);

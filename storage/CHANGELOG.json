@@ -1,13 +1,13 @@
 {
-  "v1.4": {
-    "index": 1.4,
+  "1.4": {
+    "nom": "v1.4",
     "dades": [{
       "main": "",
       "secondary": []
     }]
   },
-  "v1.3": {
-    "index": 1.3,
+  "1.3": {
+    "nom": "v1.3",
     "dades": [{
         "main": "Nova comanda `lol` amb la que pots buscar tota la informació del League of Legends.",
         "secondary": [
@@ -48,18 +48,19 @@
         "secondary": ["Més info amb la comanda `ÇÇhelp lastupdate`."]
       },
       {
-        "main": "Nou mòdul de comandes `music`. Ara el bot pot entrar als canals de veu i reproduir la musica que vulguis!. Més info amb la comanda `ÇÇmusic`.",
+        "main": "Nou mòdul de comandes `music`. Ara el bot pot entrar als canals de veu i reproduir la musica que vulguis!.",
         "secondary": [
           "`ÇÇplay`: Pots cercar videos a youtube o entrar directament la URL.",
           "`ÇÇskip`: Pots passar a la següent de la llista.",
           "`ÇÇstop`: Pots parar el bot desconnectant-se del canal i esborrant totes les cançons de la llista.",
-          "(S'estan preparant properes comandes com `ÇÇlist/queue`, `ÇÇnowPlaying/np`, `ÇÇpause`, `ÇÇshuffle`, `ÇÇclearList`, `ÇÇskipTo` i `ÇÇloop`)."
+          "(S'estan preparant properes comandes com `ÇÇlist/queue`, `ÇÇnowPlaying/np`, `ÇÇpause`, `ÇÇshuffle`, `ÇÇclearList`, `ÇÇskipTo` i `ÇÇloop`).",
+          "Més info amb la comanda `ÇÇmusic`."
         ]
       }
     ]
   },
-  "v1.2": {
-    "index": 1.2,
+  "1.2": {
+    "nom": "v1.2",
     "dades": [{
         "main": "Ara l'esborrat de missatges és més ràpid i pot arribar a esborrar fins a 100 missatges alhora contant el missatge enviat amb la comanda.",
         "secondary": []
@@ -70,8 +71,8 @@
       }
     ]
   },
-  "v1.1": {
-    "index": 1.1,
+  "1.1": {
+    "nom": "v1.1",
     "dades": [{
         "main": "Ara, per fi, el bot es **PÚBLIC**, per tant se'l pot convidar a qualsevol servidor.",
         "secondary": []
