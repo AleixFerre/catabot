@@ -255,4 +255,13 @@ const mostrar_opcions = (message, server) => {
 
 };
 
-const durationToString = (duration) => `${Math.floor(duration / 60)}:${duration % 60} min`;
+const durationToString = (duration) => {
+	const UNA_HORA = 60 * 60;
+	if (duration > UNA_HORA) // Si es mes gran que 1h
+		return `${Math.floor(duration / UNA_HORA)}h ${Math.floor((duration % UNA_HORA) / 60)}min ${duration % 60}sec`;
+
+	if (duration > 60)
+		return `${Math.floor(duration / 60)}min ${duration % 60}sec`;
+
+	return `${duration}sec`;
+};
