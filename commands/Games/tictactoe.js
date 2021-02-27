@@ -62,7 +62,7 @@ module.exports = {
                 .setTitle("**TRES EN RATLLA**")
                 .setDescription(`Torn de <@${player.id}>` + "\nEscriu la lletra de la posició a la que vols jugar")
                 .addField('❯ Tauler', tauler_string, true)
-                .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+                .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
             msg_tauler = await message.channel.send(msg);
         }
@@ -75,7 +75,7 @@ module.exports = {
                 .setColor(getRandomColor())
                 .setTitle("**TRES EN RATLLA**")
                 .addField('❯ Tauler', tauler_string, true)
-                .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+                .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
             if (acabat === -1) {
                 let c = "";
@@ -470,7 +470,7 @@ module.exports = {
                 .setTitle("**TRES EN RATLLA**")
                 .setDescription("=> [🚪] UNIR-SE A LA SALA\n=> [🤖] IA FÀCIL\n=> [👾] IA DIFÍCIL\n" +
                     "=> [❌] CANCEL·LAR")
-                .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+                .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
             let msg_sala = await message.channel.send(embed_sala);
 

@@ -84,7 +84,7 @@ module.exports = {
             .addField('❯ Top', posicio || -1, true)
             .addField('❯ Rang', `${ranks[rankIndex - 1]} _[${rankIndex}/19]_`, true)
             .addField('❯ Barra', barra + " *[" + progress + "%]*", false)
-            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+            .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
         message.channel.send(msg);
     },

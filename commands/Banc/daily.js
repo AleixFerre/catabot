@@ -44,7 +44,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("💰 **DAILY** 💰")
             .setDescription(content)
-            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+            .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
         await updateUser([message.author.id, message.guild.id], {
             lastDaily: user.lastDaily,

@@ -31,7 +31,7 @@ const cooldowns = new Map();
 // Describes if the system saves the commands into the docs/.../commands.json file
 // Es preferible que es tingui a FALSE a no ser que es vulgui guardar especificament
 const wantToSaveCommands = false;
-const testing = false; // TESTING BOT
+const testing = true; // TESTING BOT
 
 if (testing) {
     console.log(remove("AVÍS: TESTING ACTIVAT!"));

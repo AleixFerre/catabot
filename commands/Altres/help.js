@@ -76,7 +76,7 @@ module.exports = {
                 .setTitle('El **CataBOT** té ' + commands.size + ' comandes')
                 .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif', 'https://github.com/CatalaHD/CataBot')
                 .setThumbnail('https://i.imgur.com/OMp4api.png')
-                .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+                .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
             let aux = mod.map(c => c.name);
             helpContent += '👮 **COMANDES DE MODERACIÓ** 👮 [' + aux.length + ']\n';
@@ -179,7 +179,7 @@ module.exports = {
             helpEmbed.addField('Cooldown', field);
         }
 
-        helpEmbed.setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+        helpEmbed.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
         message.channel.send(helpEmbed);
 

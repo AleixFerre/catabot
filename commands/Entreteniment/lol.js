@@ -126,7 +126,7 @@ async function showChampStats(champName) {
         .addField('❯ Info', info, true)
         .addField('❯ Tags', champ.tags.join(", "), true)
         .setThumbnail("http://ddragon.leagueoflegends.com/cdn/11.2.1/img/champion/" + champName + ".png")
-        .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+        .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
     return embed;
 }
@@ -154,7 +154,7 @@ async function showSpellStats(spellName) {
         .addField('❯ Cooldown', spell.cooldownBurn, true)
         .addField('❯ Summoner Level', spell.summonerLevel, true)
         .addField('❯ Range', spell.rangeBurn, true)
-        .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+        .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
     return embed;
 }
@@ -174,7 +174,7 @@ async function showItemStats(itemName) {
         .setThumbnail("http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/" + item.image.full)
         .setTitle("**" + item.name + "**")
         .setDescription(item.plaintext)
-        .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+        .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
     let tags = item.tags;
     if (tags.length !== 0) {

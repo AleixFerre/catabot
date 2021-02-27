@@ -615,7 +615,7 @@ module.exports = {
                 .setTitle("**QUATRE EN RATLLA**")
                 .setDescription("=> [🚪] UNIR-SE A LA SALA\n=> [🤖] VS IA\n=> [👾] VS IA DIFÍCIL\n" +
                     "=> [❌] CANCEL·LAR")
-                .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+                .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
             let msg_sala = await message.channel.send(embed_sala);
 

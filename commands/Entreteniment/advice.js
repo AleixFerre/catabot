@@ -47,7 +47,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle(title + advice.id + "**")
             .setDescription(advice.advice)
-            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+            .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
         message.channel.send(msg);
     },

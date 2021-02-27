@@ -44,7 +44,7 @@ module.exports = {
             .addField('❯ Compte', mention.username, true)
             .addField('❯ Diners', money, true)
             .addField('❯ Top', posicio, true)
-            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+            .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
         message.channel.send(msg);
     },

@@ -80,7 +80,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("💠 XPLeaderboard de " + message.guild.name + " 💠")
             // .setThumbnail(message.guild.iconURL())
-            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+            .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
         let i = 1;
 

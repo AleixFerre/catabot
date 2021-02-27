@@ -43,7 +43,7 @@ module.exports = {
             .setTitle("**CANVI**")
             .setDescription("Quants " + args[2].toUpperCase() + " són " + args[0] + " " + args[1].toUpperCase() + "?")
             .addField("❯ Resultat", res + " " + args[2].toUpperCase())
-            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+            .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
         message.channel.send(msg);
 

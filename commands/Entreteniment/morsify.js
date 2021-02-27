@@ -133,7 +133,7 @@ module.exports = {
             .setTitle("**" + title + "**")
             .addField('❯ Entrada', "`" + str + "`")
             .addField('❯ Resultat', error ? "`Error d'entrada, prova amb només lletres sense accent i números!`" : "`" + out + "`")
-            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+            .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
         message.channel.send(msg);
     },

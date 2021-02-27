@@ -30,7 +30,7 @@ module.exports = {
             .setTitle("**FLIP THE WORD**")
             .setThumbnail('https://bit.ly/CataBot_RawIcon')
             .addField('❯ Resultat', word, true)
-            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+            .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
         message.channel.send(msg);
     },

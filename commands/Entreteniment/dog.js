@@ -44,7 +44,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("🐶 GOSSETS!! 🐶")
             .setDescription(desc)
-            .setImage(dogUrl).setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+            .setImage(dogUrl).setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
         message.channel.send(catEmbed);
 

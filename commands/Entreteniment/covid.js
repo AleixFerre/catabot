@@ -80,7 +80,7 @@ module.exports = {
             }
         });
 
-        covidEmbed.setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+        covidEmbed.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
         message.channel.send(covidEmbed);
 

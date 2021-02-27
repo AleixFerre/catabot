@@ -84,7 +84,7 @@ module.exports = {
             .addField('❯ Canal del bot', canalBot, true)
             .addField('❯ Canal de benvinguda', canalBenvinguda, true)
             .addField('❯ Canal comptador', canalCounter, true)
-            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+            .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
         message.channel.send(msg);
     },

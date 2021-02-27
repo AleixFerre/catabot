@@ -52,7 +52,7 @@ module.exports = {
                 .setDescription("=> [🚪] UNIR-SE / SORTIR DE LA SALA\n=> [✅] COMENÇAR PARTIDA\n" +
                     "=> [❌] CANCEL·LAR\n" + "**[ Màxim 5 persones per sala! ]**")
                 .addField('❯ Participant 1: ', message.author.tag, false)
-                .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+                .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
             let msg_sala = await message.channel.send(embed_sala);
 
@@ -112,7 +112,7 @@ module.exports = {
                 .setTitle("**EL JOC DEL PENJAT**")
                 .setDescription("=> [🚪] UNIR-SE / SORTIR DE LA SALA\n=> [✅] COMENÇAR PARTIDA\n" +
                     "=> [❌] CANCEL·LAR\n" + "**[ Màxim 5 persones per sala! ]**")
-                .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+                .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
             for (let i = 0; i < participants.length; i++) {
                 embed.addField('❯ Participant ' + (i + 1) + ': ', participants[i].tag, false);
@@ -180,7 +180,7 @@ module.exports = {
                     "Lletres dites => [ " + dites.join(" ").toUpperCase() + " ]\n" +
                     "Errades => " + errades + "/" + max_errades)
                 .setThumbnail("https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/hangman/white_" + errades + ".png")
-                .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+                .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
             return await message.channel.send(embed_paraula);
 
@@ -194,7 +194,7 @@ module.exports = {
                     "Lletres dites => [ " + dites.join(" ").toUpperCase() + " ]\n" +
                     "Errades => " + errades + "/" + max_errades)
                 .setThumbnail("https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/hangman/white_" + errades + ".png")
-                .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+                .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
             await missatge.edit(embed_paraula);
         }
@@ -338,7 +338,7 @@ module.exports = {
                 .setTitle("**" + emoji + " FINAL DE LA PARTIDA " + emoji + "**")
                 .setDescription(desc)
                 .setAuthor(paraula.toUpperCase(), questionLink, link)
-                .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+                .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
 
             await message.channel.send(embed_final);

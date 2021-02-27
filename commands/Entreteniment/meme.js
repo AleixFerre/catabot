@@ -20,7 +20,7 @@ module.exports = {
                     .setTitle(data.subreddit.toUpperCase() + " MEME")
                     .setDescription(data.title)
                     .setImage(data.url)
-                    .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+                    .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
                 message.channel.send(memeEmbed);
             });

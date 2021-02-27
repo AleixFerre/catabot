@@ -25,7 +25,7 @@ module.exports = {
             .setTitle("**ESCOLLEIX**")
             .setThumbnail('https://bit.ly/CataBot_RawIcon')
             .addField('❯ Escollida', choice, true)
-            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+            .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
         message.channel.send(msg);
     },

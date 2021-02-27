@@ -42,7 +42,7 @@ module.exports = {
             .setColor(getRandomColor())
             .setTitle("**TIRA ELS DAUS**")
             .setThumbnail('https://i.imgur.com/h2c4xWd.png')
-            .setTimestamp().setFooter("CataBOT " + new Date().getFullYear() + " © All rights reserved");
+            .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
         for (let i = 0; i < num; i++) {
             msg.addField("❯ Resultat " + (i + 1), Math.round(Math.random() * (size - 1)) + 1, true); // Result 1:size
