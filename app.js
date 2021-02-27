@@ -31,10 +31,13 @@ const cooldowns = new Map();
 // Describes if the system saves the commands into the docs/.../commands.json file
 // Es preferible que es tingui a FALSE a no ser que es vulgui guardar especificament
 const wantToSaveCommands = false;
-const testing = true; // TESTING BOT
+const testing = false; // TESTING BOT
 
 if (testing) {
     console.log(remove("AVÍS: TESTING ACTIVAT!"));
+}
+if (wantToSaveCommands) {
+    console.log(remove("AVÍS: GUARDAT DE COMANDES ACTIVAT!"));
 }
 
 let cmds = []; // Array that will store all the bot commands
