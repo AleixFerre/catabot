@@ -4,9 +4,9 @@
     "dades": [{
       "main": "Afegides noves comandes de musica.",
       "secondary": [
-        "`ÇÇq`: Et mostra la llista de reproducció.",
         "`ÇÇnp`: Et mostra la cançó que s'està reproduint ara mateix.",
-        "`ÇÇclear`: Esborra totes les cançons de la llista.",
+        "`ÇÇq [ nPagina ]`: Et mostra la llista de reproducció.",
+        "`ÇÇclear [ n ]`: Esborra algunes o totes les cançons de la llista.",
         "Més info amb la comanda `ÇÇmusic`."
       ]
     }]

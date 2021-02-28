@@ -5,9 +5,9 @@ _All **ÇÇ** strings are representations of the server prefix_
 \[v1.4\]
 
 * Afegides noves comandes de música.
-  * `ÇÇq`: Et mostra la llista de reproducció.
   * `ÇÇnp`: Et mostra la cançó que s'està reproduint ara mateix.
-  * `ÇÇclear`: Esborra totes les cançons de la llista.
+  * `ÇÇq [ nPagina ]`: Et mostra la llista de reproducció a la pàgina que vulguis.
+  * `ÇÇclear [ n ]`: Esborra algunes o totes les cançons de la llista.
   * Més info amb la comanda `ÇÇmusic`.
 
 \[v1.3\]

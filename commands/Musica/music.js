@@ -6,6 +6,7 @@ const {
 } = require("../../lib/common.js");
 
 const VIDEO_MAX_DURATION = 60 * 60 * 5; // 5h in seconds
+const MAX_VIEW_SONG_LIST = 10; // Maximes cançons a mostrar a la llista
 
 const queue = new Map();
 
@@ -25,7 +26,8 @@ module.exports = {
 		"queue",
 		"llista",
 		"nowplaying",
-		"np"
+		"np",
+		"playlist",
 	],
 	cooldown: 0,
 	async execute(message, args, server, _client, cmd) {
@@ -47,22 +49,31 @@ module.exports = {
 		const server_queue = queue.get(message.guild.id);
 
 		// Depenent del que vulguis fer, executa una funcio o una altra
-		if (cmd === "play") play_song(message, args, server_queue, voice_channel);
+		if (cmd === "play") play_song(message, args, server_queue, voice_channel, server.prefix);
 		else if (cmd === "skip" || cmd === "next") skip_song(message, server_queue);
 		else if (cmd === "stop" || cmd === "disconnect") stop_song(message, server_queue);
-		else if (cmd === "q" || cmd === "llista" || cmd === "queue") show_list(message, server_queue);
+		else if (cmd === "q" || cmd === "llista" || cmd === "queue") show_list(message, server_queue, args);
 		else if (cmd === "np" || cmd === "nowplaying") show_np(message, server_queue);
-		else if (cmd === "clear") clear_list(message, server_queue);
+		else if (cmd === "clear") clear_list(message, server_queue, args);
+		else if (cmd === "playlist") playlist_songs(message, args, server_queue, voice_channel);
 	},
 };
 
-const play_song = async function (message, args, server_queue, voice_channel) {
+const play_song = async function (message, args, server_queue, voice_channel, prefix) {
 	if (!args.length)
 		return message.channel.send("❌ Error: No se què he de posar! Necessito un segon argument.");
 	let song = {};
 
+	if (args[0].match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/i)) {
+		return message.channel.send(`⚠️ Llista de reproducció detectada!\nFés servir la comanda \`${prefix}playlist < URL >\` per posar totes les cançons de cop.`);
+	}
+
 	if (ytdl.validateURL(args[0])) {
 		const song_info = await ytdl.getInfo(args[0]);
+
+		if (song_info.videoDetails.isLiveContent) {
+			return message.channel.send("❌ Error: No es poden posar transmissions en directe! Prova millor amb un video.");
+		}
 
 		song = {
 			title: song_info.videoDetails.title,
@@ -124,9 +135,82 @@ const play_song = async function (message, args, server_queue, voice_channel) {
 		let embed = new Discord.MessageEmbed()
 			.setColor(getRandomColor())
 			.setTitle(`👍 **${song.title}** afegida a la cua correctament!`)
-			.setDescription(`Reproduint al canal \`${voice_channel.name}\``)
 			.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 		return message.channel.send(embed);
+	}
+};
+
+const playlist_songs = async function (message, args, server_queue, voice_channel) {
+	if (!args.length) {
+		return message.channel.send("❌ Error: No se què he de posar! Necessito un segon argument.");
+	}
+	let songs = [];
+
+	if (args[0].match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/i)) {
+		const video_finder = async (query) => {
+			const url = new URL(query);
+			const listID = url.searchParams.get("list");
+			const video_result = await ytSearch({
+				listId: listID
+			});
+			return video_result.videos.length > 1 ? video_result.videos : null;
+		};
+
+		const videos = await video_finder(args.join(" "));
+		if (videos) {
+			for (let video of videos) {
+				if (video.duration.seconds <= VIDEO_MAX_DURATION) {
+					songs.push({
+						title: video.title,
+						url: `https://youtube.com/watch?v=${video.videoId}`,
+						duration: video.duration.seconds,
+						channel: video.author.name,
+						thumbnail: video.thumbnail,
+						requestedBy: message.author
+					});
+				}
+			}
+		} else {
+			return message.channel.send("❌ Error: No s'ha trobat cap video a la playlist.");
+		}
+	} else {
+		return message.channel.send("❌ Error: Posa un enllaç de playlist vàlid, siusplau.");
+	}
+
+	let willPlayNow = !server_queue;
+
+	for (let song of songs) {
+		if (!server_queue) {
+			const queue_constructor = {
+				voice_channel: voice_channel,
+				text_channel: message.channel,
+				connection: null,
+				songs: [],
+			};
+			queue.set(message.guild.id, queue_constructor);
+			queue_constructor.songs.push(song);
+			server_queue = queue.get(message.guild.id);
+		} else {
+			server_queue.songs.push(song);
+		}
+	}
+
+	let embed = new Discord.MessageEmbed()
+		.setColor(getRandomColor())
+		.setTitle(`👍 S'ha afegit ${songs.length} cançons a la cua correctament!`)
+		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+	message.channel.send(embed);
+
+	if (willPlayNow) {
+		try {
+			const connection = await voice_channel.join();
+			server_queue.connection = connection;
+			video_player(message.guild, server_queue.songs[0], voice_channel.name);
+		} catch (err) {
+			queue.delete(message.guild.id);
+			message.channel.send("❌ Error: Hi ha hagut un error al connectar-me!");
+			throw err;
+		}
 	}
 };
 
@@ -156,7 +240,6 @@ const video_player = async (guild, song, voice_channel_name) => {
 	let embed = new Discord.MessageEmbed()
 		.setColor(getRandomColor())
 		.setTitle(`🎶 Està sonant: **${song.title}**`)
-		.setDescription(`Reproduint al canal \`${voice_channel_name}\``)
 		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 	await song_queue.text_channel.send(embed);
 };
@@ -193,7 +276,7 @@ const stop_song = (message, server_queue) => {
 	message.react("👍");
 };
 
-const clear_list = (message, server_queue) => {
+const clear_list = (message, server_queue, args) => {
 	if (!message.member.voice.channel)
 		return message.channel.send(
 			"❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!"
@@ -206,7 +289,23 @@ const clear_list = (message, server_queue) => {
 		return message.channel.send(embed);
 	}
 
-	const n = server_queue.songs.length - 1; // Totes menys la actual (la primera)
+	let n = server_queue.songs.length - 1; // Totes menys la actual (la primera)
+
+	if (args[0]) {
+		if (isNaN(args[0])) {
+			return message.channel.send("❌ Error: La quantitat a esborrar ha de ser un numero!");
+		}
+		n = parseInt(args[0]);
+	}
+
+	if (n <= 0) {
+		return message.channel.send("❌ Error: La quantitat ha de ser un numero positiu!");
+	}
+	if (n >= server_queue.songs.length) {
+		message.channel.send("⚠️ Avís: La quantitat és més gran que la mida de la llista, esborrant totes...");
+		n = server_queue.songs.length - 1;
+	}
+
 	server_queue.songs.splice(1, n);
 
 	let embed = new Discord.MessageEmbed()
@@ -216,7 +315,8 @@ const clear_list = (message, server_queue) => {
 	return message.channel.send(embed);
 };
 
-const show_list = (message, server_queue) => {
+const show_list = (message, server_queue, args) => {
+
 	if (!message.member.voice.channel)
 		return message.channel.send(
 			"❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!"
@@ -229,14 +329,33 @@ const show_list = (message, server_queue) => {
 		return message.channel.send(embed);
 	}
 
+	let nPagina = 1;
+
+	if (args[0]) {
+		if (isNaN(args[0])) {
+			return message.channel.send("❌ Error: El numero de pàgina ha de ser un numero enter.");
+		}
+		nPagina = parseInt(args[0]);
+	}
+
 	const songs = server_queue.songs;
+	let nPagines = Math.floor(songs.length / MAX_VIEW_SONG_LIST) + 1;
+	const ultimaPagina = songs.length % MAX_VIEW_SONG_LIST;
+
+	if (nPagina <= 0 || nPagina > nPagines) {
+		return message.channel.send("❌ Error: Numero de pàgina invàlid.");
+	}
+
+	const minim = MAX_VIEW_SONG_LIST * (nPagina - 1) + 1;
+	const midaPagina = nPagina === nPagines ? ultimaPagina - 1 : MAX_VIEW_SONG_LIST;
 
 	let embed = new Discord.MessageEmbed()
 		.setColor(getRandomColor())
 		.setTitle(`🎵 **${songs[0].title}** 🎵`)
+		.setDescription(`Pàgina ${nPagina}/${nPagines} | Cançons ${minim}-${minim + midaPagina - 1} | Total ${songs.length}`)
 		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
-	for (let i = 1; i < Math.min(songs.length, 20); i++) {
+	for (let i = minim; i < minim + midaPagina; i++) {
 		embed.addField(`${i}.- ${songs[i].title}`, `${songs[i].channel} | ${durationToString(songs[i].duration)} | ${songs[i].requestedBy}`, false);
 	}
 
@@ -277,12 +396,14 @@ const mostrar_opcions = (message, server) => {
 	let embed = new Discord.MessageEmbed()
 		.setColor(getRandomColor())
 		.setTitle("🎵 **Comandes de MUSICA** 🎵")
+		.setDescription("Els paràmetres entre < > són obligatoris i els marcats entre [ ] són opcionals.")
 		.addField(`❯ ${prefix}play < URL / cerca >`, "El bot s'unirà al teu canal de veu i reproduirà les cançons que vulguis.", false)
+		.addField(`❯ ${prefix}playlist < URL >`, "Posa totes les cançons que vulguis en una fracció de segon!", false)
 		.addField(`❯ ${prefix}skip / next`, "Es passarà a la següent cançó de la llista.", false)
 		.addField(`❯ ${prefix}stop / disconnect`, "No vols més musica? El bot s'envà del canal esborrant les cançons de la llista.", false)
-		.addField(`❯ ${prefix}q / queue / llista`, "Et mostra la llista de reproducció.", false)
+		.addField(`❯ ${prefix}q / queue / llista [ nPagina ]`, "Et mostra la llista de reproducció.", false)
 		.addField(`❯ ${prefix}np / nowplaying`, "Et mostra la cançó que està sonant ara mateix.", false)
-		.addField(`❯ ${prefix}clear`, "Esborra totes les cançons de la llista.", false)
+		.addField(`❯ ${prefix}clear [ n ]`, "Esborra algunes o totes les cançons de la llista.", false)
 		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
 	message.channel.send(embed);
