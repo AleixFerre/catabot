@@ -76,6 +76,10 @@ const play_song = async function (message, args, server_queue, voice_channel, pr
 			return message.channel.send("❌ Error: No es poden posar transmissions en directe! Prova millor amb un video.");
 		}
 
+		if (song_info.videoDetails.isPrivate) {
+			return message.channel.send("❌ Error: El video és privat!");
+		}
+
 		song = {
 			title: song_info.videoDetails.title,
 			url: song_info.videoDetails.video_url,
@@ -160,7 +164,7 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 		const videos = await video_finder(args.join(" "));
 		if (videos) {
 			for (let video of videos) {
-				if (video.duration.seconds <= VIDEO_MAX_DURATION) {
+				if (video.duration.seconds <= VIDEO_MAX_DURATION && video.duration.seconds !== 0) {
 					songs.push({
 						title: video.title,
 						url: `https://youtube.com/watch?v=${video.videoId}`,
