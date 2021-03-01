@@ -1,18 +1,20 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'f',
     description: 'F en el chat chavales',
     usage: " [ description ]",
-    type: 'entreteniment',
+    type: TYPE,
     cooldown: 0,
     execute(message, args) {
 
         const msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**F**")
             .setDescription(args.join(" "))
             .setImage("https://media.giphy.com/media/j6ZlX8ghxNFRknObVk/giphy.gif")

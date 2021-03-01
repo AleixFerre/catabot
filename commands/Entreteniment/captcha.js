@@ -4,6 +4,8 @@ const {
     getRandomColor
 } = require('../../lib/common.js');
 
+const TYPE = "entreteniment";
+
 function generateText(length) {
     let result = '';
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -47,7 +49,7 @@ function getRandomTransform() {
 module.exports = {
     name: 'captcha',
     description: 'Et genera un nou parell imatge-text de Captcha',
-    type: 'entreteniment',
+    type: TYPE,
     cooldown: 60,
     async execute(message) {
 

@@ -1,12 +1,14 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'coin',
     description: 'Te la jugues al 50%',
-    type: 'entreteniment',
+    type: TYPE,
     cooldown: 0,
     aliases: ['cflip', 'caraocreu'],
     execute(message) {
@@ -25,7 +27,7 @@ module.exports = {
         }
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**CARA O CREU**")
             .setThumbnail('http://bit.ly/CataBot_' + img)
             .addField('❯ Resultat', result, true)

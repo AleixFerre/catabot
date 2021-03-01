@@ -2,15 +2,17 @@ const {
     db
 } = require('../../lib/common.js');
 const {
-    updateAllUsersFromServer, getUsersFromServer, updateUser
+    getUsersFromServer, updateUser
 } = require('../../lib/database.js');
+
+const TYPE = "privat";
 
 module.exports = {
     name: 'randomize',
     description: 'Posa un valor aleatori de monedes a tots els usuaris del servidor',
     usage: '[ max ]',
     cooldown: 30,
-    type: 'privat',
+    type: TYPE,
     async execute(message, args, server) {
 
         if (message.author.id != process.env.IdOwner) {

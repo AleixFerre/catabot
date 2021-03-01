@@ -4,8 +4,10 @@ const champs = Object.keys(require('../../storage/lol/champion.json').data);
 const spells = require('../../storage/lol/summoner.json').data;
 const items = require('../../storage/lol/item.json').data;
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 // Thanks to https://gist.github.com/andrei-m/982927#gistcomment-1931258
 function distanciaEdicio(a, b) {
@@ -110,7 +112,7 @@ async function showChampStats(champName) {
         "• Attack Speed: `" + champ.stats.attackspeed + '`';
 
     let embed = new Discord.MessageEmbed()
-        .setColor(getRandomColor())
+        .setColor(getColorFromCommand(TYPE))
         .setTitle("**" + champ.name + ", " + champ.title + "**");
     // .setDescription(champ.blurb); // Mucho texto
 
@@ -147,7 +149,7 @@ async function showSpellStats(spellName) {
     }
 
     let embed = new Discord.MessageEmbed()
-        .setColor(getRandomColor())
+        .setColor(getColorFromCommand(TYPE))
         .setTitle("**" + spell.name + "**")
         .setThumbnail("http://ddragon.leagueoflegends.com/cdn/11.2.1/img/spell/Summoner" + predictedSpell + ".png")
         .setDescription(spell.description)
@@ -170,7 +172,7 @@ async function showItemStats(itemName) {
     const item = filteredItems[0];
 
     let embed = new Discord.MessageEmbed()
-        .setColor(getRandomColor())
+        .setColor(getColorFromCommand(TYPE))
         .setThumbnail("http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/" + item.image.full)
         .setTitle("**" + item.name + "**")
         .setDescription(item.plaintext)
@@ -204,7 +206,7 @@ module.exports = {
     name: 'lol',
     description: 'Busca la info del LoL que vulguis',
     usage: "champ < champName >\n [ or ] spell < spellName >\n [ or ] item < itemName >",
-    type: 'entreteniment',
+    type: TYPE,
     cooldown: 10,
     async execute(message, args, server) {
 

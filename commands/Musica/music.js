@@ -2,18 +2,19 @@ const ytdl = require("ytdl-core");
 const ytSearch = require("yt-search");
 const Discord = require('discord.js');
 const {
-	getRandomColor
+	getColorFromCommand
 } = require("../../lib/common.js");
 
 const VIDEO_MAX_DURATION = 60 * 60 * 5; // 5h in seconds
 const MAX_VIEW_SONG_LIST = 10; // Maximes cançons a mostrar a la llista
+const TYPE = "musica";
 
 const queue = new Map();
 
 module.exports = {
 	name: "music",
 	description: "Més info amb la comanda `!music`.",
-	type: "musica",
+	type: TYPE,
 	aliases: [
 		"musica",
 		"play",
@@ -133,7 +134,7 @@ const play_song = async function (message, args, server_queue, voice_channel, pr
 	} else {
 		server_queue.songs.push(song);
 		let embed = new Discord.MessageEmbed()
-			.setColor(getRandomColor())
+			.setColor(getColorFromCommand(TYPE))
 			.setTitle(`👍 **${song.title}** afegida a la cua correctament!`)
 			.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 		return message.channel.send(embed);
@@ -196,7 +197,7 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 	}
 
 	let embed = new Discord.MessageEmbed()
-		.setColor(getRandomColor())
+		.setColor(getColorFromCommand(TYPE))
 		.setTitle(`👍 S'ha afegit ${songs.length} cançons a la cua correctament!`)
 		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 	message.channel.send(embed);
@@ -238,7 +239,7 @@ const video_player = async (guild, song, voice_channel_name) => {
 		});
 
 	let embed = new Discord.MessageEmbed()
-		.setColor(getRandomColor())
+		.setColor(getColorFromCommand(TYPE))
 		.setTitle(`🎶 Està sonant: **${song.title}**`)
 		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 	await song_queue.text_channel.send(embed);
@@ -251,7 +252,7 @@ const skip_song = (message, server_queue) => {
 		);
 	if (!server_queue) {
 		let embed = new Discord.MessageEmbed()
-			.setColor(getRandomColor())
+			.setColor(getColorFromCommand(TYPE))
 			.setTitle("No hi ha cap cançó a la cua 😔");
 		return message.channel.send(embed);
 	}
@@ -266,7 +267,7 @@ const stop_song = (message, server_queue) => {
 
 	if (!server_queue) {
 		let embed = new Discord.MessageEmbed()
-			.setColor(getRandomColor())
+			.setColor(getColorFromCommand(TYPE))
 			.setTitle("No hi ha cap cançó a la cua 😔");
 		return message.channel.send(embed);
 	}
@@ -284,7 +285,7 @@ const clear_list = (message, server_queue, args) => {
 
 	if (!server_queue || server_queue.songs.length === 1) {
 		let embed = new Discord.MessageEmbed()
-			.setColor(getRandomColor())
+			.setColor(getColorFromCommand(TYPE))
 			.setTitle("No hi ha cap cançó a la cua 😔");
 		return message.channel.send(embed);
 	}
@@ -309,7 +310,7 @@ const clear_list = (message, server_queue, args) => {
 	server_queue.songs.splice(1, n);
 
 	let embed = new Discord.MessageEmbed()
-		.setColor(getRandomColor())
+		.setColor(getColorFromCommand(TYPE))
 		.setTitle(`🗑️ Esborrades ${n} cançons!`)
 		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 	return message.channel.send(embed);
@@ -324,7 +325,7 @@ const show_list = (message, server_queue, args) => {
 
 	if (!server_queue || server_queue.songs.length === 1) {
 		let embed = new Discord.MessageEmbed()
-			.setColor(getRandomColor())
+			.setColor(getColorFromCommand(TYPE))
 			.setTitle("No hi ha cap cançó a la cua 😔");
 		return message.channel.send(embed);
 	}
@@ -350,9 +351,9 @@ const show_list = (message, server_queue, args) => {
 	const midaPagina = nPagina === nPagines ? ultimaPagina - 1 : MAX_VIEW_SONG_LIST;
 
 	let embed = new Discord.MessageEmbed()
-		.setColor(getRandomColor())
+		.setColor(getColorFromCommand(TYPE))
 		.setTitle(`🎵 **${songs[0].title}** 🎵`)
-		.setDescription(`Pàgina ${nPagina}/${nPagines} | Cançons ${minim}-${minim + midaPagina - 1} | Total ${songs.length}`)
+		.setDescription(`Pàgina ${nPagina}/${nPagines} | Cançons ${minim}-${minim + midaPagina - 1} | Total ${songs.length - 1}`)
 		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
 	for (let i = minim; i < minim + midaPagina; i++) {
@@ -370,7 +371,7 @@ const show_np = (message, server_queue) => {
 
 	if (!server_queue) {
 		let embed = new Discord.MessageEmbed()
-			.setColor(getRandomColor())
+			.setColor(getColorFromCommand(TYPE))
 			.setTitle("No està sonant cap cançó 😔");
 		return message.channel.send(embed);
 	}
@@ -378,7 +379,7 @@ const show_np = (message, server_queue) => {
 	const current = server_queue.songs[0];
 
 	let embed = new Discord.MessageEmbed()
-		.setColor(getRandomColor())
+		.setColor(getColorFromCommand(TYPE))
 		.setTitle(`🎵 **${current.title}** 🎵`)
 		.addField('❯ Canal', current.channel, true)
 		.addField('❯ Duració', durationToString(current.duration), true)
@@ -394,7 +395,7 @@ const mostrar_opcions = (message, server) => {
 	let prefix = server.prefix;
 
 	let embed = new Discord.MessageEmbed()
-		.setColor(getRandomColor())
+		.setColor(getColorFromCommand(TYPE))
 		.setTitle("🎵 **Comandes de MUSICA** 🎵")
 		.setDescription("Els paràmetres entre < > són obligatoris i els marcats entre [ ] són opcionals.")
 		.addField(`❯ ${prefix}play < URL / cerca >`, "El bot s'unirà al teu canal de veu i reproduirà les cançons que vulguis.", false)

@@ -1,14 +1,16 @@
 const Discord = require("discord.js");
 let conversions = require('../../storage/conversions.json');
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'exchange',
     description: 'Et permet canviar de moneda facilment',
     usage: '< quantitat > < monedaIn > < monedaOut >',
-    type: 'entreteniment',
+    type: TYPE,
     aliases: ['canvi'],
     example: "10 EUR USD",
     cooldown: 5,
@@ -39,7 +41,7 @@ module.exports = {
         let res = (parseFloat(args[0]) * canviAUSD / canviDeUSD).toFixed(3);
 
         const msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**CANVI**")
             .setDescription("Quants " + args[2].toUpperCase() + " són " + args[0] + " " + args[1].toUpperCase() + "?")
             .addField("❯ Resultat", res + " " + args[2].toUpperCase())

@@ -1,12 +1,14 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'penis',
     description: 'Mostra la mida del teu penis',
-    type: 'entreteniment',
+    type: TYPE,
     cooldown: 0,
     aliases: ['pene'],
     execute(message, args) {
@@ -26,7 +28,7 @@ module.exports = {
         penisString += 'D';
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**MIDA DEL TEU PENIS**")
             .addField(`❯ Mida del penis de ${mention.username}`, penisString, true)
             .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);

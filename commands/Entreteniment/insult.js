@@ -2,14 +2,16 @@ const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const translate = require('@vitalets/google-translate-api');
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'insult',
     description: 'Insulta a qui vulguis',
     usage: "[ who ]",
-    type: 'entreteniment',
+    type: TYPE,
     cooldown: 10,
     async execute(message, args) {
 
@@ -48,7 +50,7 @@ module.exports = {
         await getData();
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle(title)
             .setDescription(insult)
             .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);

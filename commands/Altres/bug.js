@@ -1,10 +1,14 @@
 const Discord = require("discord.js");
-const { getRandomColor } = require('../../lib/common.js');
+const {
+    getColorFromCommand
+} = require('../../lib/common.js');
+
+const TYPE = "altres";
 
 module.exports = {
     name: 'bug',
     description: 'Avisa al propietari del bot d\'algun bug.',
-    type: 'altres',
+    type: TYPE,
     cooldown: 10,
     async execute(message) {
 
@@ -18,14 +22,18 @@ module.exports = {
 
         seleccionar_tipus_msg = await titol.channel.send("Selecciona una opció: Bug [⚠️], Millora [❤️], Altres [❓] o Cancel·lar [❌]");
 
-        emojis.forEach(async(emoji) => {
+        emojis.forEach(async (emoji) => {
             await seleccionar_tipus_msg.react(emoji);
         });
 
         // Esperem la reaccio de l'usuari
         let c = "";
         const filter_reactions = (reaction, user) => emojis.includes(reaction.emoji.name) && (user.id === message.author.id);
-        let collected = await seleccionar_tipus_msg.awaitReactions(filter_reactions, { max: 1, time: 600000, errors: ['time'] }).catch(error => {
+        let collected = await seleccionar_tipus_msg.awaitReactions(filter_reactions, {
+            max: 1,
+            time: 600000,
+            errors: ['time']
+        }).catch(error => {
             console.error(error);
             return message.author.send("S'ha acabat el temps! La pròxima vegada vés més ràpid!");
         });
@@ -55,7 +63,11 @@ module.exports = {
 
         // Esperem resposta
         const filter = _m => true;
-        await msg.channel.awaitMessages(filter, { max: 1, time: 600000, errors: ['time'] }).then(collected => {
+        await msg.channel.awaitMessages(filter, {
+            max: 1,
+            time: 600000,
+            errors: ['time']
+        }).then(collected => {
             assumpte = collected.first().content;
         }).catch(error => {
             console.error(error);
@@ -64,7 +76,11 @@ module.exports = {
 
         await message.author.send("**2.- COS " + c + "**");
         // Esperem resposta
-        await msg.channel.awaitMessages(filter, { max: 1, time: 600000, errors: ['time'] }).then(collected => {
+        await msg.channel.awaitMessages(filter, {
+            max: 1,
+            time: 600000,
+            errors: ['time']
+        }).then(collected => {
             cos = collected.first().content;
         }).catch(error => {
             console.error(error);
@@ -77,7 +93,7 @@ module.exports = {
         }
 
         let embed = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**AVÍS del BOT**")
             .addField('❯ Autor', message.author.tag, true)
             .addField('❯ Tipus', firstCapital(tipus), true)

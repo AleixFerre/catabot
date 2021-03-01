@@ -1,12 +1,14 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "altres";
 
 module.exports = {
     name: 'report',
     description: 'Avisa al propietari del servidor d\'algun usuari amb mal comportament.',
-    type: 'altres',
+    type: TYPE,
     cooldown: 10,
     usage: '< @userToReport >',
     async execute(message, _args, server) {
@@ -70,7 +72,7 @@ module.exports = {
 
         // Enviem el missatge a l'owner del servidor
         let embed = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**REPORT**")
             .addField('❯ Reportant', message.author.tag, true)
             .addField('❯ Reportat', reported.user.tag, true)

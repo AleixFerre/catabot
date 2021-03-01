@@ -12,10 +12,12 @@ const applyText = (canvas, text) => {
     return ctx.font;
 };
 
+const TYPE = "banc";
+
 module.exports = {
     name: 'welcome',
     description: 'Et dona la benvinguda',
-    type: 'entreteniment',
+    type: TYPE,
     cooldown: 60,
     async execute(message, args, server, client) {
 

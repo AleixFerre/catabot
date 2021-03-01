@@ -2,13 +2,15 @@ const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const translate = require('@vitalets/google-translate-api');
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'cat',
     description: 'Mostra una imatge d\'un gat aleatori',
-    type: 'entreteniment',
+    type: TYPE,
     aliases: ['gat'],
     cooldown: 10,
     async execute(message) {
@@ -41,7 +43,7 @@ module.exports = {
         await getTitle().catch(console.error);
 
         const catEmbed = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("🐱 GATETS!! 🐱")
             .setDescription(desc)
             .setImage(catUrl).setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);

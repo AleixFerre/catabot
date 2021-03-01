@@ -1,10 +1,12 @@
 const Discord = require("discord.js");
-const { getRandomColor } = require('../../lib/common.js');
+const { getColorFromCommand } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'rps',
     description: 'Juga a pedra-paper-tissora amb el bot',
-    type: 'entreteniment',
+    type: TYPE,
     cooldown: 0,
     usage: '< rock/paper/scissors >',
     execute(message, args, server) {
@@ -46,7 +48,7 @@ module.exports = {
         }
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**PEDRA PAPER TISORA**")
             .setThumbnail('https://bit.ly/CataBot_RawIcon')
             .addField('❯ Player', player, true)

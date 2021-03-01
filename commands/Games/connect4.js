@@ -1,16 +1,18 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
 const {
     getUser,
     updateUser
 } = require('../../lib/database.js');
 
+const TYPE = "games";
+
 module.exports = {
     name: 'connect4',
     description: 'Joc 4: [BETA] Juga al 4 en ratlla amb els teus amics o contra la IA!',
-    type: 'games',
+    type: TYPE,
     cooldown: 30,
     aliases: ['4enratlla', 'play4'],
     async execute(message, _args, server) {
@@ -611,7 +613,7 @@ module.exports = {
         // Fase anterior al joc on s'escolleix quin mode volem jugar
         async function fase_sala() {
             let embed_sala = new Discord.MessageEmbed()
-                .setColor(getRandomColor())
+                .setColor(getColorFromCommand(TYPE))
                 .setTitle("**QUATRE EN RATLLA**")
                 .setDescription("=> [🚪] UNIR-SE A LA SALA\n=> [🤖] VS IA\n=> [👾] VS IA DIFÍCIL\n" +
                     "=> [❌] CANCEL·LAR")

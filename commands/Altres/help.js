@@ -1,14 +1,17 @@
 const Discord = require("discord.js");
+const commandTypes = require('../../storage/commandTypes.json');
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "altres"; 
 
 module.exports = {
     name: 'help',
     description: 'Mostra informació de les comandes',
-    type: "altres",
+    type: TYPE,
     cooldown: 0,
-    usage: '[ nom de la comanda ]',
+    usage: '[ nom / tipus de la comanda ]',
     aliases: ['h', 'commands', 'info'],
     execute(message, args, server) {
 
@@ -72,42 +75,42 @@ module.exports = {
 
             // Creem l'embed i l'anem omplint
             const fullHelpEmbed = new Discord.MessageEmbed()
-                .setColor(getRandomColor())
+                .setColor(getColorFromCommand(TYPE))
                 .setTitle('El **CataBOT** té ' + commands.size + ' comandes')
                 .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif', 'https://github.com/CatalaHD/CataBot')
                 .setThumbnail('https://i.imgur.com/OMp4api.png')
                 .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
             let aux = mod.map(c => c.name);
-            helpContent += '👮 **COMANDES DE MODERACIÓ** 👮 [' + aux.length + ']\n';
+            helpContent += "**" + commandTypes.mod.displayName + '** [' + aux.length + ']\n';
             helpContent += "`" + aux.join(", ") + "`";
 
             aux = entreteniment.map(c => c.name);
-            helpContent += '\n\n🥳 **COMANDES DE ENTRETENIMENT** 🥳 [' + aux.length + ']\n';
+            helpContent += '\n\n**' + commandTypes.entreteniment.displayName + '** [' + aux.length + ']\n';
             helpContent += "`" + aux.join(", ") + "`";
 
             aux = musica.map(c => c.name);
-            helpContent += '\n\n🎵 **COMANDES DE MUSICA** 🎵 [' + aux.length + ']\n';
+            helpContent += '\n\n**' + commandTypes.musica.displayName + '** [' + aux.length + ']\n';
             helpContent += "`" + aux.join(", ") + "`";
 
             aux = banc.map(c => c.name);
-            helpContent += '\n\n💰 **COMANDES DE BANC** 💰 [' + aux.length + ']\n';
+            helpContent += '\n\n**' + commandTypes.banc.displayName + '** [' + aux.length + ']\n';
             helpContent += "`" + aux.join(", ") + "`";
 
             aux = level.map(c => c.name);
-            helpContent += '\n\n💠 **COMANDES DE NIVELL** 💠 [' + aux.length + ']\n';
+            helpContent += '\n\n**' + commandTypes.level.displayName + '** [' + aux.length + ']\n';
             helpContent += "`" + aux.join(", ") + "`";
 
             aux = games.map(c => c.name);
-            helpContent += '\n\n🎮 **JOCS** 🎮 [' + aux.length + ']\n';
+            helpContent += '\n\n**' + commandTypes.games.displayName + '** [' + aux.length + ']\n';
             helpContent += "`" + aux.join(", ") + "`";
 
             aux = privat.map(c => c.name);
-            helpContent += '\n\n🔒 **COMANDES PRIVADES** 🔒 [' + aux.length + ']\n';
+            helpContent += '\n\n**' + commandTypes.privat.displayName + '** [' + aux.length + ']\n';
             helpContent += "`" + aux.join(", ") + "`";
 
             aux = altres.map(c => c.name);
-            helpContent += '\n\n🌈 **ALTRES COMANDES** 🌈 [' + aux.length + ']\n';
+            helpContent += '\n\n**' + commandTypes.altres.displayName + '** [' + aux.length + ']\n';
             helpContent += "`" + aux.join(", ") + "`";
 
             data.push(helpContent);
@@ -133,53 +136,77 @@ module.exports = {
         }
 
         const name = args[0].toLowerCase();
-        const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
+        let command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
+        const isType = !command;
 
-        if (!command) {
-            return message.reply(name + ' no és una comanda vàlida!');
+        if (isType) {
+            command = commandTypes[name] || Object.values(commandTypes).find(c => c.aliases && c.aliases.includes(name));
+            if (!command) {
+                return message.reply(`${name} no és una comanda vàlida ni un tipus de comandes!`);
+            }
         }
 
         const helpEmbed = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
             .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif', 'https://github.com/CatalaHD/CataBot')
             .setTitle(command.name.toUpperCase())
-            .setThumbnail('https://i.imgur.com/OMp4api.png');
+            .setThumbnail('https://i.imgur.com/OMp4api.png')
+            .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
-        if (command.description)
-            helpEmbed.setDescription(command.description);
+        if (isType) {
 
-        if (command.type)
-            helpEmbed.addField('Tipus', command.type);
-        else
-            helpEmbed.addField('Tipus', 'altres');
+            helpEmbed.setColor(command.color)
+                .setTitle(command.displayName)
+                .setDescription(command.description);
 
-        if (command.aliases)
-            helpEmbed.addField('Alies', command.aliases.join(', '));
-
-        if (command.usage)
-            helpEmbed.addField('Ús', prefix + command.name + ' ' + command.usage);
-
-        if (command.example)
-            helpEmbed.addField('Exemple', prefix + command.name + ' ' + command.example);
-
-        if (command.cooldown) {
-            let segons = command.cooldown;
-            let field = segons + (segons === 1 ? ' segon' : ' segons');
-
-            if (segons >= 60) {
-                let minuts = Math.floor(command.cooldown / 60);
-                let segonsRestants = command.cooldown % 60;
-                field += " (" + minuts + (minuts === 1 ? " minut" : " minuts");
-                if (segonsRestants !== 0) {
-                    field += " i " + segonsRestants + (segonsRestants === 1 ? " segon" : " segons");
-                }
-                field += ")";
+            if (command.aliases) {
+                helpEmbed.addField("Alies", command.aliases.join(", "), false);
             }
 
-            helpEmbed.addField('Cooldown', field);
-        }
+            let cmds = [];
+            commands.forEach((c) => {
+                if (c.type === command.name) {
+                    cmds.push(c.name);
+                }
+            });
+            helpEmbed.addField("Comandes:", cmds.join(", "), false);
 
-        helpEmbed.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+        } else {
+            helpEmbed.setColor(getColorFromCommand(command.type));
+
+            if (command.description)
+                helpEmbed.setDescription(command.description);
+
+            if (command.type)
+                helpEmbed.addField('Tipus', command.type);
+            else
+                helpEmbed.addField('Tipus', 'altres');
+
+            if (command.aliases)
+                helpEmbed.addField('Alies', command.aliases.join(', '));
+
+            if (command.usage)
+                helpEmbed.addField('Ús', prefix + command.name + ' ' + command.usage);
+
+            if (command.example)
+                helpEmbed.addField('Exemple', prefix + command.name + ' ' + command.example);
+
+            if (command.cooldown) {
+                let segons = command.cooldown;
+                let field = segons + (segons === 1 ? ' segon' : ' segons');
+
+                if (segons >= 60) {
+                    let minuts = Math.floor(command.cooldown / 60);
+                    let segonsRestants = command.cooldown % 60;
+                    field += " (" + minuts + (minuts === 1 ? " minut" : " minuts");
+                    if (segonsRestants !== 0) {
+                        field += " i " + segonsRestants + (segonsRestants === 1 ? " segon" : " segons");
+                    }
+                    field += ")";
+                }
+
+                helpEmbed.addField('Cooldown', field);
+            }
+        }
 
         message.channel.send(helpEmbed);
 

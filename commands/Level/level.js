@@ -3,16 +3,18 @@ const {
     ranks
 } = require("../../storage/ranks.json");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
 const {
     getUsersFromServer
 } = require('../../lib/database.js');
 
+const TYPE = "level";
+
 module.exports = {
     name: 'level',
     description: 'Et mostra el nivell que ets',
-    type: 'level',
+    type: TYPE,
     aliases: ['xp', 'lvl'],
     cooldown: 0,
     async execute(message) {
@@ -75,7 +77,7 @@ module.exports = {
         let rankLink = "https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/rank_icons/" + rankIndex + ".png";
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("💠 Nivell 💠")
             .setThumbnail(rankLink)
             .addField('❯ Compte', mention.username, true)

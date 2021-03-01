@@ -5,10 +5,12 @@ const {
     db
 } = require('../../lib/common.js');
 
+const TYPE = "mod";
+
 module.exports = {
     name: 'setalertchannel',
     description: 'Adjudica el canal d\'alertes al canal que s\'executa la comanda\nEs pot desadjudicar el canal passant **null** com a argument',
-    type: 'mod',
+    type: TYPE,
     usage: '[ null ]',
     cooldown: 60,
     aliases: ['alerthere', 'setalert'],

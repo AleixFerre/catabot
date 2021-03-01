@@ -1,12 +1,14 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "altres";
 
 module.exports = {
     name: 'info',
     description: 'Diu la informació del bot.',
-    type: 'altres',
+    type: TYPE,
     cooldown: 0,
     aliases: ['stats', 'bot'],
     execute(message, _args, server, client) {
@@ -27,7 +29,7 @@ module.exports = {
             "• **Comandes:** `" + client.commands.size + "`";
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setAuthor(`CataBOT [v${process.env.version}] by Català HD`, 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif', 'https://github.com/CatalaHD/CataBot')
             .setDescription(description)
             .addField('❯ Informació:', info, true)

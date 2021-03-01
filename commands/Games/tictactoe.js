@@ -1,17 +1,19 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
 const {
     getUser,
     updateUser
 } = require("../../lib/database.js");
 
+const TYPE = "games";
+
 module.exports = {
     name: 'tictactoe',
     description: 'Joc 1: [BETA] Juga al tres en ratlla! Escriu pel xat NOMÉS LA LLETRA de la posició on vols jugar.',
     aliases: ['tresenratlla', '3enratlla', 'playt'],
-    type: 'games',
+    type: TYPE,
     cooldown: 30,
     execute(message, _args, server) {
 
@@ -58,7 +60,7 @@ module.exports = {
             let tauler_string = montar_tauler_string();
 
             let msg = new Discord.MessageEmbed()
-                .setColor(getRandomColor())
+                .setColor(getColorFromCommand(TYPE))
                 .setTitle("**TRES EN RATLLA**")
                 .setDescription(`Torn de <@${player.id}>` + "\nEscriu la lletra de la posició a la que vols jugar")
                 .addField('❯ Tauler', tauler_string, true)
@@ -72,7 +74,7 @@ module.exports = {
             let tauler_string = montar_tauler_string();
 
             let msg = new Discord.MessageEmbed()
-                .setColor(getRandomColor())
+                .setColor(getColorFromCommand(TYPE))
                 .setTitle("**TRES EN RATLLA**")
                 .addField('❯ Tauler', tauler_string, true)
                 .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
@@ -466,7 +468,7 @@ module.exports = {
         // Fase anterior al joc on s'escolleix quin mode volem jugar
         async function fase_sala() {
             let embed_sala = new Discord.MessageEmbed()
-                .setColor(getRandomColor())
+                .setColor(getColorFromCommand(TYPE))
                 .setTitle("**TRES EN RATLLA**")
                 .setDescription("=> [🚪] UNIR-SE A LA SALA\n=> [🤖] IA FÀCIL\n=> [👾] IA DIFÍCIL\n" +
                     "=> [❌] CANCEL·LAR")

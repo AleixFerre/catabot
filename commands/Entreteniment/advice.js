@@ -1,14 +1,16 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'advice',
     description: 'Et diu un consell de la vida aleatori',
     usage: '[ search ]',
-    type: 'entreteniment',
+    type: TYPE,
     aliases: ['consell'],
     cooldown: 5,
     async execute(message, args) {
@@ -44,7 +46,7 @@ module.exports = {
         if (error) return;
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle(title + advice.id + "**")
             .setDescription(advice.advice)
             .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);

@@ -1,14 +1,16 @@
 const Discord = require('discord.js');
 const {
-    getRandomColor,
+    getColorFromCommand,
 } = require("../../lib/common.js");
 const changelog = require('../../storage/CHANGELOG.json');
+
+const TYPE = "altres";
 
 module.exports = {
     name: 'lastupdate',
     description: 'Mostra les notes d\'una actualització del bot escollida. Si no es posa cap paràmetre s\'escolleix la actual',
     usage: '[ versió: x.x ]',
-    type: 'altres',
+    type: TYPE,
     cooldown: 0,
     example: '1.3',
     aliases: ['parche', 'notes', 'changes', 'changelog', 'canvis'],
@@ -38,7 +40,7 @@ module.exports = {
         const dades = changes.dades;
 
         const embed = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**NOTES DEL CATABOT " + versio + "**")
             .setTimestamp().setFooter('CataBOT ' + new Date().getFullYear() + ' © All rights reserved');
 

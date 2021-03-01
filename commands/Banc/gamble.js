@@ -3,10 +3,12 @@ const {
     updateUser
 } = require("../../lib/database");
 
+const TYPE = "banc";
+
 module.exports = {
     name: 'gamble',
     description: '50% de guanyar, apostant monedes.',
-    type: 'banc',
+    type: TYPE,
     cooldown: 0,
     usage: '< amount/all > [ multiplyer ]',
     aliases: ['dobleonada'],

@@ -5,10 +5,12 @@ const {
     updateServer
 } = require('../../lib/database.js');
 
+const TYPE = "mod";
+
 module.exports = {
     name: 'setbotchannel',
     description: 'Adjudica el canal d\'alertes al canal que s\'executa la comanda\nEs pot desadjudicar el canal passant **null** com a argument',
-    type: 'mod',
+    type: TYPE,
     usage: '[ null ]',
     cooldown: 60,
     aliases: ['bothere', 'setbot'],

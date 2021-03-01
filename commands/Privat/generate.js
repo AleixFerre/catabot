@@ -6,10 +6,12 @@ const {
     updateUser
 } = require('../../lib/database.js');
 
+const TYPE = "privat";
+
 module.exports = {
     name: 'generate',
     description: 'Ingresa una quantitat a una persona',
-    type: 'privat',
+    type: TYPE,
     cooldown: 5,
     usage: '< amount > < @user >',
     async execute(message, args, server) {

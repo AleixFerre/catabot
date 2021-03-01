@@ -1,21 +1,23 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'meme',
     cooldown: 10,
     description: 'Mostra un meme aleatori de reddit',
-    type: 'entreteniment',
+    type: TYPE,
     execute(message) {
 
         fetch("https://meme-api.herokuapp.com/gimme")
             .then(res => res.json())
             .then((data) => {
                 const memeEmbed = new Discord.MessageEmbed()
-                    .setColor(getRandomColor())
+                    .setColor(getColorFromCommand(TYPE))
                     .setURL(data.postLink)
                     .setTitle(data.subreddit.toUpperCase() + " MEME")
                     .setDescription(data.title)

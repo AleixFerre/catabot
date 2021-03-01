@@ -1,8 +1,10 @@
+const TYPE = "mod";
+
 module.exports = {
     name: 'addrole',
     description: 'Afegeix un Rol a un Usuari en concret (si tens permisos)',
     usage: '< @usuari > < nom del rol >',
-    type: 'mod',
+    type: TYPE,
     example: '@CatalaHD Admin',
     aliases: ['afegirrol', 'giverole', 'adjudicarrol'],
     cooldown: 5,

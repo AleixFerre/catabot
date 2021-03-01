@@ -2,10 +2,12 @@ const {
     updateUser
 } = require('../../lib/database');
 
+const TYPE = "privat";
+
 module.exports = {
     name: 'setlevel',
     description: "Adjudica el nivell d'algú. Comanda interna del bot",
-    type: 'privat',
+    type: TYPE,
     usage: '<lvl, xp, @user>',
     cooldown: 5,
     async execute(message, args) {
@@ -49,7 +51,7 @@ module.exports = {
         });
 
         await message.channel.send(content);
-        
+
         if (message.author.bot)
             message.delete();
     },

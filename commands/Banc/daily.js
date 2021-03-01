@@ -1,17 +1,19 @@
 const Discord = require("discord.js");
 const moment = require('moment');
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
 const {
     getUser,
     updateUser
 } = require("../../lib/database.js");
 
+const TYPE = "banc";
+
 module.exports = {
     name: 'daily',
     description: 'Recolleix la teva recompensa diaria!',
-    type: 'banc',
+    type: TYPE,
     cooldown: 60,
     async execute(message, _args, server) {
 
@@ -41,7 +43,7 @@ module.exports = {
         }
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("💰 **DAILY** 💰")
             .setDescription(content)
             .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);

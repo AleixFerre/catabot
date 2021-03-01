@@ -1,15 +1,17 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'pokedex',
     description: 'Mostra la pokedex del pokemon que li entris',
     usage: '< pokemon >',
     aliases: ['poke', 'pokemon'],
-    type: 'entreteniment',
+    type: TYPE,
     cooldown: 10,
     execute(message, args, server) {
 
@@ -60,7 +62,7 @@ module.exports = {
 
 
                 const pokeEmbed = new Discord.MessageEmbed()
-                    .setColor(getRandomColor())
+                    .setColor(getColorFromCommand(TYPE))
                     .setAuthor('POKEDEX', 'https://pngimage.net/wp-content/uploads/2018/06/pokemon-go-icon-png-3.png', 'https://pokemon.fandom.com/es/wiki/' + args.join("_"))
                     .setTitle("**#" + data.id + " | " + capitalize(data.name) + " | " + data.generation + "º GEN**") // Capitalize the first letter
                     .setDescription(data.description)

@@ -3,10 +3,12 @@ const {
     updateUser
 } = require('../../lib/database');
 
+const TYPE = "banc";
+
 module.exports = {
     name: 'pay',
     description: 'Paga una quantitat a una persona',
-    type: 'banc',
+    type: TYPE,
     cooldown: 60,
     usage: '< amount/all > < @user >',
     async execute(message, args, server) {

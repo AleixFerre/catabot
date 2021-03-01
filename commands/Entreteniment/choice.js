@@ -1,12 +1,14 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'choice',
     description: 'Deix que el bot escolleixi per tu.\n**SI QUE ES PERMETEN ESPAIS** mentre es repectin les comes',
-    type: 'entreteniment',
+    type: TYPE,
     aliases: ['escolleix'],
     cooldown: 0,
     usage: '< choice 1, choice2, ...>',
@@ -21,7 +23,7 @@ module.exports = {
         let choice = choices[Math.floor(Math.random() * choices.length)];
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**ESCOLLEIX**")
             .setThumbnail('https://bit.ly/CataBot_RawIcon')
             .addField('❯ Escollida', choice, true)

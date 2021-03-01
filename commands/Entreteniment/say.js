@@ -1,9 +1,11 @@
+const TYPE = "banc";
+
 module.exports = {
     name: 'say',
     description: 'Fes que el bot digui el que vulguis',
     usage: '< text >',
     cooldown: 10,
-    type: 'entreteniment',
+    type: TYPE,
     async execute(message, args, server) {
 
         let prefix = server.prefix;

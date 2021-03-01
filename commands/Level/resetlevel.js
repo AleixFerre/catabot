@@ -2,10 +2,12 @@ const {
     updateAllUsers
 } = require('../../lib/database.js');
 
+const TYPE = "privat";
+
 module.exports = {
     name: 'resetlevel',
     description: 'Es resetejen tots els nivells de la gent. Comanda interna del bot.',
-    type: 'privat',
+    type: TYPE,
     cooldown: 60,
     async execute(message) {
 

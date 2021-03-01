@@ -1,14 +1,16 @@
 const Discord = require("discord.js");
 const translate = require('@vitalets/google-translate-api');
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'translate',
     description: 'Tradueix el que vulguis al espanyol!',
     usage: "< text >",
-    type: 'entreteniment',
+    type: TYPE,
     cooldown: 10,
     async execute(message, args, server) {
 
@@ -29,7 +31,7 @@ module.exports = {
         });
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**TRAUDEIX**")
             .setDescription(traducido)
             .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);

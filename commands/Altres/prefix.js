@@ -1,19 +1,21 @@
 const Discord = require('discord.js');
 const {
-    getRandomColor, db
+    getColorFromCommand, db
 } = require('../../lib/common.js');
 const { updateServer } = require('../../lib/database.js');
+
+const TYPE = "altres";
 
 module.exports = {
     name: 'prefix',
     description: 'Et mostra el prefix i et permet cambiar-lo amb un segon argument',
-    type: "altres",
+    type: TYPE,
     cooldown: 10,
     usage: '[ new ]',
     async execute(message, args, server) {
 
         let prefixEmbed = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle('**PREFIX**')
             .setTimestamp().setFooter('CataBOT ' + new Date().getFullYear() + ' © All rights reserved');
 

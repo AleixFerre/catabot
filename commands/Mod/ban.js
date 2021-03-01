@@ -1,8 +1,10 @@
+const TYPE = "mod";
+
 module.exports = {
     name: 'ban',
     description: 'Beta un usuari del servidor',
     usage: '< @usuari > [ descripcio ]',
-    type: 'mod',
+    type: TYPE,
     cooldown: 30,
     execute(message, args, server) {
 

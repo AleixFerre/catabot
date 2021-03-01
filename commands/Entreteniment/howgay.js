@@ -1,12 +1,14 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'howgay',
     description: 'Et diu lo gay que ets',
-    type: 'entreteniment',
+    type: TYPE,
     cooldown: 0,
     aliases: ['gay'],
     execute(message, args) {
@@ -20,7 +22,7 @@ module.exports = {
         }
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**QUANT GAY ETS?**")
             .setThumbnail('https://i.imgur.com/jr5elyc.png')
             .addField('❯ Resultat', `${mention.username}, ets ` + gay + '% gay!', true)

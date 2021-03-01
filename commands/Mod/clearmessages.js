@@ -1,7 +1,9 @@
+const TYPE = "mod";
+
 module.exports = {
     name: 'clearmessages',
     description: 'Borra n missatges del canal de text on s\'estigui executant la comanda',
-    type: 'mod',
+    type: TYPE,
     usage: '< amount >',
     aliases: ['cls', 'clm'],
     cooldown: 10,

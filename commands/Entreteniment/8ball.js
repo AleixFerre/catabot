@@ -1,12 +1,14 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const translate = require('@vitalets/google-translate-api');
-const { getRandomColor } = require('../../lib/common.js');
+const { getColorFromCommand } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: '8ball',
     description: 'Et permet preguntar-li a la bola de la sort el que et passarà al futur...',
-    type: 'entreteniment',
+    type: TYPE,
     usage: '< question >',
     aliases: ['8', 'ball'],
     cooldown: 5,
@@ -38,7 +40,7 @@ module.exports = {
             });
 
             let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**8BALL**")
             .setThumbnail('http://bit.ly/CataBot_' + type)
             .addField('❯ Pregunta', question, true)

@@ -1,7 +1,9 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 const decoding = {
     '.-': 'a',
@@ -86,7 +88,7 @@ const encoding = {
 module.exports = {
     name: 'morsify',
     description: 'No saps codi Morse? Aqui tens un des/codificador.\nSi poses un text normal, te\'l tradueix a Morse i viceversa.',
-    type: 'entreteniment',
+    type: TYPE,
     aliases: ['morse', 'demorsify'],
     usage: '< morse/ASCII >',
     cooldown: 0,
@@ -129,7 +131,7 @@ module.exports = {
 
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**" + title + "**")
             .addField('❯ Entrada', "`" + str + "`")
             .addField('❯ Resultat', error ? "`Error d'entrada, prova amb només lletres sense accent i números!`" : "`" + out + "`")

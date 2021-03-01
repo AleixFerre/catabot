@@ -3,7 +3,7 @@ const {
     paraules
 } = require("../../storage/paraules.json");
 const {
-    getRandomColor,
+    getColorFromCommand,
     db
 } = require('../../lib/common.js');
 const {
@@ -11,11 +11,13 @@ const {
     updateUser
 } = require('../../lib/database');
 
+const TYPE = "games";
+
 module.exports = {
     name: 'hangman',
     description: 'Joc 3: [BETA] Juga amb els teus amics al joc del penjat!',
     aliases: ['ahorcado', 'penjat', 'playh'],
-    type: 'games',
+    type: TYPE,
     cooldown: 30,
     async execute(message, _args, server) {
 
@@ -47,7 +49,7 @@ module.exports = {
         async function fase_sala() {
 
             let embed_sala = new Discord.MessageEmbed()
-                .setColor(getRandomColor())
+                .setColor(getColorFromCommand(TYPE))
                 .setTitle("**EL JOC DEL PENJAT**")
                 .setDescription("=> [🚪] UNIR-SE / SORTIR DE LA SALA\n=> [✅] COMENÇAR PARTIDA\n" +
                     "=> [❌] CANCEL·LAR\n" + "**[ Màxim 5 persones per sala! ]**")
@@ -108,7 +110,7 @@ module.exports = {
 
         async function actualitzar_msg_sala(msg) {
             let embed = new Discord.MessageEmbed()
-                .setColor(getRandomColor())
+                .setColor(getColorFromCommand(TYPE))
                 .setTitle("**EL JOC DEL PENJAT**")
                 .setDescription("=> [🚪] UNIR-SE / SORTIR DE LA SALA\n=> [✅] COMENÇAR PARTIDA\n" +
                     "=> [❌] CANCEL·LAR\n" + "**[ Màxim 5 persones per sala! ]**")
@@ -174,7 +176,7 @@ module.exports = {
         async function escriure_missatge() { // Escriu el missatge de la paraula
 
             let embed_paraula = new Discord.MessageEmbed()
-                .setColor(getRandomColor())
+                .setColor(getColorFromCommand(TYPE))
                 .setTitle("**EL JOC DEL PENJAT -- TORN " + torn + "**")
                 .setDescription("**PARAULA => **" + generar_paraula() + "\n" +
                     "Lletres dites => [ " + dites.join(" ").toUpperCase() + " ]\n" +
@@ -188,7 +190,7 @@ module.exports = {
 
         async function actualitzar_msg_paraula(missatge) { // Actualitzem el missatge de la paraula
             let embed_paraula = new Discord.MessageEmbed()
-                .setColor(getRandomColor())
+                .setColor(getColorFromCommand(TYPE))
                 .setTitle("**EL JOC DEL PENJAT -- TORN " + torn + "**")
                 .setDescription("**PARAULA => **" + generar_paraula() + "\n" +
                     "Lletres dites => [ " + dites.join(" ").toUpperCase() + " ]\n" +
@@ -334,7 +336,7 @@ module.exports = {
             }
 
             let embed_final = new Discord.MessageEmbed()
-                .setColor(getRandomColor())
+                .setColor(getColorFromCommand(TYPE))
                 .setTitle("**" + emoji + " FINAL DE LA PARTIDA " + emoji + "**")
                 .setDescription(desc)
                 .setAuthor(paraula.toUpperCase(), questionLink, link)

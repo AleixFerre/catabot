@@ -3,13 +3,15 @@ const {
     evaluate
 } = require('mathjs');
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'calc',
     description: 'No tens calculadora? Aquí en tens una.',
-    type: 'entreteniment',
+    type: TYPE,
     cooldown: 5,
     aliases: ['math', 'calcula', 'calculadora', 'eval'],
     usage: '< expression > or < multiple/M exp1;; exp2>',
@@ -60,7 +62,7 @@ module.exports = {
         }
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**CALCULADORA**")
             .addField('❯ Entrada', "```js\n" + expressions.join(', ') + "```")
             .addField('❯ Resultat', "```js\n" + resultat + "```")

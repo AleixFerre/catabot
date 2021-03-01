@@ -2,10 +2,12 @@ const {
     getAllServers
 } = require("../../lib/database.js");
 
+const TYPE = "privat";
+
 module.exports = {
     name: 'alert',
     description: "Avisa a tots els servidors d'alguna cosa\nNomés l'owner del bot pot executar-ho",
-    type: 'privat',
+    type: TYPE,
     usage: '< msg >',
     cooldown: 60,
     async execute(message, args, server, client) {

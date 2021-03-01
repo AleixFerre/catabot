@@ -1,19 +1,21 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
 const {
     getUsersFromServer
 } = require('../../lib/database.js');
 
+const TYPE = "level";
+
 module.exports = {
     name: 'xpleader',
     description: 'Mostra la classificació de nivell del servidor',
     aliases: ['xpl', 'lvltop', 'xptop', 'topxp', 'toplvl', 'toplevel'],
-    type: 'level',
+    type: TYPE,
     usage: '[ amount ]',
     cooldown: 10,
-    async execute(message, args, server, userData) {
+    async execute(message, args, server) {
 
         let board = [];
         let size = 10;
@@ -77,7 +79,7 @@ module.exports = {
         });
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("💠 XPLeaderboard de " + message.guild.name + " 💠")
             // .setThumbnail(message.guild.iconURL())
             .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);

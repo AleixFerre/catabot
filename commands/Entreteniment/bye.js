@@ -12,10 +12,12 @@ const applyText = (canvas, text) => {
     return ctx.font;
 };
 
+const TYPE = "entreteniment";
+
 module.exports = {
     name: 'bye',
     description: 'Et despedeix del servidor',
-    type: 'entreteniment',
+    type: TYPE,
     cooldown: 60,
     async execute(message, args, server, client) {
 

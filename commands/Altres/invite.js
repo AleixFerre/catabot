@@ -1,11 +1,13 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "altres";
 
 module.exports = {
     name: 'invite',
-    type: 'altres',
+    type: TYPE,
     cooldown: 0,
     description: 'T\'envia un missatge amb el link del bot.',
     execute(message) {
@@ -13,7 +15,7 @@ module.exports = {
         let link = 'https://discordapp.com/oauth2/authorize?client_id=' + process.env.clientid + '&permissions=8&scope=bot';
 
         const embedMessage = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle('Invite link')
             .setURL(link)
             .setAuthor('CataBOT', 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif', 'https://github.com/CatalaHD/CataBot')

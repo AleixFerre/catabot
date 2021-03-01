@@ -1,8 +1,10 @@
+const TYPE = "mod";
+
 module.exports = {
     name: 'kick',
     description: 'Expulsa permanentment un usuari del servidor',
     usage: '< @usuari > [ descripció ]',
-    type: 'mod',
+    type: TYPE,
     cooldown: 30,
     execute(message, args, server) {
 

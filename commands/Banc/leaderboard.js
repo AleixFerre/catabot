@@ -1,14 +1,16 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
 const { getUsersFromServer } = require("../../lib/database.js");
+
+const TYPE = "banc";
 
 module.exports = {
     name: 'leaderboard',
     description: 'Mostra la classificació de monedes del servidor',
     aliases: ['leader', 'top'],
-    type: 'banc',
+    type: TYPE,
     cooldown: 10,
     usage: '[ amount ]',
     async execute(message, args) {
@@ -71,7 +73,7 @@ module.exports = {
         });
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("🏆 Leaderboard de " + message.guild.name + " 🏆")
             //.setThumbnail(message.guild.iconURL())
             .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);

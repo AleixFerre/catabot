@@ -1,7 +1,9 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'dice',
@@ -9,7 +11,7 @@ module.exports = {
     usage: '[ size ] [ amount ]',
     aliases: ['roll'],
     cooldown: 0,
-    type: 'entreteniment',
+    type: TYPE,
     execute(message, args) {
 
         let size = 6;
@@ -39,7 +41,7 @@ module.exports = {
         }
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**TIRA ELS DAUS**")
             .setThumbnail('https://i.imgur.com/h2c4xWd.png')
             .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);

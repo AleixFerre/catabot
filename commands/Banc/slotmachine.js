@@ -1,20 +1,22 @@
 const Discord = require('discord.js');
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
 const {
     getUser,
     updateUser
 } = require('../../lib/database');
 
+const TYPE = "banc";
+
 module.exports = {
     name: 'slotmachine',
     description: 'Maquina tragaperras de toda la vida.\nNecessites que totes siguin iguals',
-    type: 'banc',
+    type: TYPE,
     cooldown: 0,
     usage: '< amount/all >',
     aliases: ['slot'],
-    async execute(message, args, server, userData) {
+    async execute(message, args, server) {
 
         let amount = 0;
         let content = "";
@@ -97,7 +99,7 @@ module.exports = {
         });
 
         let embed = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**🎰 SLOT MACHINE 🎰**")
             .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 

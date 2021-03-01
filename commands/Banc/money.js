@@ -1,10 +1,12 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
 const {
     getUsersFromServer
 } = require('../../lib/database.js');
+
+const TYPE = "banc";
 
 module.exports = {
     name: 'money',
@@ -12,7 +14,7 @@ module.exports = {
     usage: '[ @user ]',
     aliases: ['diners'],
     cooldown: 10,
-    type: 'banc',
+    type: TYPE,
     async execute(message) {
 
         let mention = {};
@@ -38,7 +40,7 @@ module.exports = {
         });
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("💰 Banc 💰")
             .setThumbnail(mention.avatarURL)
             .addField('❯ Compte', mention.username, true)

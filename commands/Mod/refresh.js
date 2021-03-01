@@ -1,7 +1,9 @@
+const TYPE = "mod";
+
 module.exports = {
     name: 'refresh',
     description: 'Refresca el contador de membres manualment. Aquest contador s\'actualitza automàticament cada 12h.',
-    type: 'mod',
+    type: TYPE,
     cooldown: 300,
     aliases: ['refreshcounter'],
     execute(message, _args, server) {

@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const Discord = require('discord.js');
 const {
-    getRandomColor,
+    getColorFromCommand,
     db
 } = require('../../lib/common.js');
 const {
@@ -9,12 +9,14 @@ const {
     updateUser
 } = require('../../lib/database');
 
+const TYPE = "games";
+
 module.exports = {
     name: 'trivia',
     description: 'Joc 2: [BETA] Juga amb els teus amics al joc de les preguntes!',
     aliases: ['quiz', 'playq'],
     usage: '[ quantitat_preguntes ]',
-    type: 'games',
+    type: TYPE,
     cooldown: 30,
     async execute(message, args, server) {
 
@@ -61,7 +63,7 @@ module.exports = {
         async function fase_sala() {
 
             let embed_sala = new Discord.MessageEmbed()
-                .setColor(getRandomColor())
+                .setColor(getColorFromCommand(TYPE))
                 .setTitle("**TRIVIA AMB " + n_preguntes + " PREGUNTES**")
                 .setDescription("=> [🚪] UNIR-SE / SORTIR DE LA SALA\n=> [✅] COMENÇAR PARTIDA\n" +
                     "=> [❌] CANCEL·LAR" + "**[ Màxim 5 persones per sala! ]**")
@@ -123,7 +125,7 @@ module.exports = {
 
         async function actualitzar_msg_sala(msg) {
             let embed = new Discord.MessageEmbed()
-                .setColor(getRandomColor())
+                .setColor(getColorFromCommand(TYPE))
                 .setTitle("**TRIVIA**")
                 .setDescription("=> [🚪] UNIR-SE / SORTIR DE LA SALA\n=> [✅] COMENÇAR PARTIDA\n" +
                     "=> [❌] CANCEL·LAR" + "**[ Màxim 5 persones per sala! ]**")
@@ -154,7 +156,7 @@ module.exports = {
             let pregunta_decoded = buff.toString('ascii');
 
             let embed = new Discord.MessageEmbed()
-                .setColor(getRandomColor())
+                .setColor(getColorFromCommand(TYPE))
                 .setTitle("**TRIVIA - PREGUNTA " + (q_index + 1) + "/" + n_preguntes + "**")
                 .setDescription(pregunta_decoded)
                 .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
@@ -260,7 +262,7 @@ module.exports = {
             // Mostrar posicio, nom i monedes
 
             let msg = new Discord.MessageEmbed()
-                .setColor(getRandomColor())
+                .setColor(getColorFromCommand(TYPE))
                 .setTitle("🏆 Resultat de la partida 🏆")
                 .setDescription("Només el primer recolleix el premi!")
                 .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);

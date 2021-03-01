@@ -9,10 +9,13 @@ const {
     db
 } = require('../../lib/common');
 
+
+const TYPE = "privat";
+
 module.exports = {
     name: 'progress',
     description: 'Et permet pujar de nivell. Comanda interna del bot.',
-    type: 'privat',
+    type: TYPE,
     cooldown: 0,
     async execute(message, args) {
 

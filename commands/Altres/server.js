@@ -1,14 +1,16 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
 const {
     getUsersFromServer
 } = require("../../lib/database.js");
 
+const TYPE = "altres";
+
 module.exports = {
     name: 'server',
-    type: 'altres',
+    type: TYPE,
     cooldown: 0,
     description: 'Diu la informació del servidor.',
     aliases: ['serverinfo', 'guild'],
@@ -69,7 +71,7 @@ module.exports = {
         });
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle(message.guild.name)
             .setThumbnail(message.guild.iconURL())
             .addField('❯ Propietari', message.guild.owner.user.username, true)

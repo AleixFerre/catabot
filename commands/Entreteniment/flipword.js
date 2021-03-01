@@ -1,12 +1,14 @@
 const Discord = require("discord.js");
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'flipword',
     description: 'Posa la paraula al revés',
-    type: 'entreteniment',
+    type: TYPE,
     usage: '< word >',
     cooldown: 0,
     aliases: ['flip'],
@@ -26,7 +28,7 @@ module.exports = {
         word = reverseString(word);
 
         let msg = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle("**FLIP THE WORD**")
             .setThumbnail('https://bit.ly/CataBot_RawIcon')
             .addField('❯ Resultat', word, true)

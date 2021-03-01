@@ -1,8 +1,10 @@
+const TYPE = "mod";
+
 module.exports = {
     name: 'removerole',
     description: 'Treu un Rol d\'un Usuari en concret (si tens permisos)',
     usage: '< @usuari > < nom del rol >',
-    type: 'mod',
+    type: TYPE,
     aliases: ['esborrarrol', 'treurerol', 'esborrarrol', 'delrole'],
     example: '@CatalaHD Admin',
     cooldown: 5,

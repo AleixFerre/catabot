@@ -1,13 +1,15 @@
 const Discord = require("discord.js");
 const weather = require('weather-js');
 const {
-    getRandomColor
+    getColorFromCommand
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'weather',
     description: 'Mostra el temps que fa.',
-    type: 'entreteniment',
+    type: TYPE,
     cooldown: 10,
     aliases: ['temps', 'tiempo'],
     async execute(message, args, server) {
@@ -37,7 +39,7 @@ module.exports = {
             }
 
             let msg = new Discord.MessageEmbed()
-                .setColor(getRandomColor())
+                .setColor(getColorFromCommand(TYPE))
                 .setTitle("**TEMPS a " + result.location.name + "**")
                 .setThumbnail(result.current.imageUrl)
                 .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);

@@ -1,14 +1,16 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const {
-    getRandomColor,
+    getColorFromCommand,
     separateWithCommas
 } = require('../../lib/common.js');
+
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'covid',
     description: 'Mostra la info del Coronavirus actualment',
-    type: 'entreteniment',
+    type: TYPE,
     usage: '[ country ]',
     cooldown: 10,
     aliases: ['coronavirus'],
@@ -66,7 +68,7 @@ module.exports = {
         }
 
         const covidEmbed = new Discord.MessageEmbed()
-            .setColor(getRandomColor())
+            .setColor(getColorFromCommand(TYPE))
             .setTitle(isWorld ? "**CORONAVIRUS AL MON**" : "**CORONAVIRUS A " + country.toUpperCase() + "**")
             .setThumbnail(flag);
 
