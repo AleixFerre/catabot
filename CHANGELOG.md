@@ -8,6 +8,9 @@ _All **ÇÇ** strings are representations of the server prefix_
   * `ÇÇnp`: Et mostra la cançó que s'està reproduint ara mateix.
   * `ÇÇq [ nPagina ]`: Et mostra la llista de reproducció a la pàgina que vulguis.
   * `ÇÇclear [ n ]`: Esborra algunes o totes les cançons de la llista.
+  * `ÇÇpause`: Posa la reproducció en pausa.
+  * `ÇÇresume`: Repren la reproducció pausada.
+  * Ara es pot veure la duració de les cançons i el temps al afegir cançons a la cua.
   * Més info amb la comanda `ÇÇmusic`.
 
 \[v1.3\]

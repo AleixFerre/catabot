@@ -29,6 +29,8 @@ module.exports = {
 		"nowplaying",
 		"np",
 		"playlist",
+		"pause",
+		"resume"
 	],
 	cooldown: 0,
 	async execute(message, args, server, _client, cmd) {
@@ -57,6 +59,8 @@ module.exports = {
 		else if (cmd === "np" || cmd === "nowplaying") show_np(message, server_queue);
 		else if (cmd === "clear") clear_list(message, server_queue, args);
 		else if (cmd === "playlist") playlist_songs(message, args, server_queue, voice_channel);
+		else if (cmd === "pause") pause_song(message, server_queue, server.prefix);
+		else if (cmd === "resume") resume_song(message, server_queue);
 	},
 };
 
@@ -137,7 +141,7 @@ const play_song = async function (message, args, server_queue, voice_channel, pr
 		}
 	} else {
 		// Temps del dispatcher actual
-		const streamSeconds = queue.get(message.guild.id).connection.dispatcher.streamTime / 1000;
+		const streamSeconds = server_queue.connection.dispatcher.streamTime / 1000;
 		let estimatedTime = server_queue.songs[0].duration - streamSeconds; // Quant falta
 
 		// + El temps de les de la cua
@@ -193,12 +197,11 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 	}
 
 	let willPlayNow = !server_queue;
-	
+
 	// Temps del dispatcher actual
-	const server = queue.get(message.guild.id);
 	let estimatedTime = 0;
-	if (server) {
-		const streamSeconds = server.connection.dispatcher.streamTime / 1000;
+	if (server_queue) {
+		const streamSeconds = server_queue.connection.dispatcher.streamTime / 1000;
 		estimatedTime = server_queue.songs[0].duration - streamSeconds; // Quant falta
 
 		// + El temps de les de la cua
@@ -227,7 +230,7 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 		.setColor(getColorFromCommand(TYPE))
 		.setTitle(`👍 S'ha afegit ${songs.length} cançons a la cua correctament!`)
 		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
-	
+
 	if (estimatedTime > 0) {
 		embed.setDescription(`Temps estimat per reproduir: ${durationToString(Math.floor(estimatedTime))}`);
 	}
@@ -417,7 +420,7 @@ const show_np = (message, server_queue) => {
 
 	const current = server_queue.songs[0];
 	const N_LINE_CHARS = 10;
-	const secondsPlaying = queue.get(message.guild.id).connection.dispatcher.streamTime / 1000;
+	const secondsPlaying = server_queue.connection.dispatcher.streamTime / 1000;
 	const percent = secondsPlaying / current.duration * N_LINE_CHARS;
 	let line = "";
 
@@ -442,6 +445,41 @@ const show_np = (message, server_queue) => {
 	message.channel.send(embed);
 };
 
+const pause_song = (message, server_queue, prefix) => {
+	if (server_queue.connection.dispatcher.paused) {
+		return message.channel.send(`⚠️ Alerta: El reproductor ja està pausat! Posa \`${prefix}resume\``);
+	}
+	try {
+		server_queue.connection.dispatcher.pause();
+	} catch (err) {
+		console.error(err);
+		return message.channel.send("❌ Error: Hi ha hagut un error al pausar!");
+	}
+	let embed = new Discord.MessageEmbed()
+		.setColor(getColorFromCommand(TYPE))
+		.setTitle("⏸️ Pausant...")
+		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`)
+		.setDescription(`Per rependre la reproducció posa \`${prefix}resume\``);
+	message.channel.send(embed);
+};
+
+const resume_song = (message, server_queue) => {
+	if (!server_queue.connection.dispatcher.paused) {
+		return message.channel.send(`⚠️ Alerta: El reproductor no està pausat!`);
+	}
+	try {
+		server_queue.connection.dispatcher.resume();
+	} catch (err) {
+		console.error(err);
+		return message.channel.send("❌ Error: Hi ha hagut un error al rependre la cançó!");
+	}
+	let embed = new Discord.MessageEmbed()
+		.setColor(getColorFromCommand(TYPE))
+		.setTitle("⏯️ Reprenent...")
+		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+	message.channel.send(embed);
+};
+
 const mostrar_opcions = (message, server) => {
 
 	let prefix = server.prefix;
@@ -457,6 +495,8 @@ const mostrar_opcions = (message, server) => {
 		.addField(`❯ ${prefix}q / queue / llista [ nPagina ]`, "Et mostra la llista de reproducció.", false)
 		.addField(`❯ ${prefix}np / nowplaying`, "Et mostra la cançó que està sonant ara mateix.", false)
 		.addField(`❯ ${prefix}clear [ n ]`, "Esborra algunes o totes les cançons de la llista.", false)
+		.addField(`❯ ${prefix}pause`, "Posa la reproducció en pausa.", false)
+		.addField(`❯ ${prefix}resume`, "Repren la reproducció pausada.", false)
 		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
 	message.channel.send(embed);
