@@ -136,10 +136,20 @@ const play_song = async function (message, args, server_queue, voice_channel, pr
 			throw err;
 		}
 	} else {
+		// Temps del dispatcher actual
+		const streamSeconds = queue.get(message.guild.id).connection.dispatcher.streamTime / 1000;
+		let estimatedTime = server_queue.songs[0].duration - streamSeconds; // Quant falta
+
+		// + El temps de les de la cua
+		for (let i = 1; i < server_queue.songs.length; i++) {
+			estimatedTime += server_queue.songs[i].duration;
+		}
+
 		server_queue.songs.push(song);
 		let embed = new Discord.MessageEmbed()
 			.setColor(getColorFromCommand(TYPE))
 			.setTitle(`👍 **${song.title}** afegida a la cua correctament!`)
+			.setDescription(`Temps estimat per reproduir: ${durationToString(Math.floor(estimatedTime))}`)
 			.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 		return message.channel.send(embed);
 	}
@@ -358,12 +368,18 @@ const show_list = (message, server_queue, args) => {
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
 		.setTitle(`🎵 **${songs[0].title}** 🎵`)
-		.setDescription(`Pàgina ${nPagina}/${nPagines} | Cançons ${minim}-${minim + midaPagina - 1} | Total ${n}`)
 		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
 	for (let i = minim; i < minim + midaPagina; i++) {
 		embed.addField(`${i}.- ${songs[i].title}`, `${songs[i].channel} | ${durationToString(songs[i].duration)} | ${songs[i].requestedBy}`, false);
 	}
+	
+	let totalTime = 0;
+	for (let i = 1; i < songs.length; i++) {
+		totalTime += songs[i].duration;
+	}
+
+	embed.setDescription(`Pàgina ${nPagina}/${nPagines} | Cançons ${minim}-${minim + midaPagina - 1} | Total ${n} | Duració ${durationToString(totalTime)}`);
 
 	message.channel.send(embed);
 };
@@ -386,7 +402,7 @@ const show_np = (message, server_queue) => {
 	const secondsPlaying = queue.get(message.guild.id).connection.dispatcher.streamTime / 1000;
 	const percent = secondsPlaying / current.duration * N_LINE_CHARS;
 	let line = "";
-	
+
 	for (let i = 0; i < N_LINE_CHARS; i++) {
 		if (i < percent) {
 			line += "▰";
