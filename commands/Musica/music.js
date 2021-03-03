@@ -193,6 +193,19 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 	}
 
 	let willPlayNow = !server_queue;
+	
+	// Temps del dispatcher actual
+	const server = queue.get(message.guild.id);
+	let estimatedTime = 0;
+	if (server) {
+		const streamSeconds = server.connection.dispatcher.streamTime / 1000;
+		estimatedTime = server_queue.songs[0].duration - streamSeconds; // Quant falta
+
+		// + El temps de les de la cua
+		for (let i = 1; i < server_queue.songs.length; i++) {
+			estimatedTime += server_queue.songs[i].duration;
+		}
+	}
 
 	for (let song of songs) {
 		if (!server_queue) {
@@ -214,6 +227,11 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 		.setColor(getColorFromCommand(TYPE))
 		.setTitle(`👍 S'ha afegit ${songs.length} cançons a la cua correctament!`)
 		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+	
+	if (estimatedTime > 0) {
+		embed.setDescription(`Temps estimat per reproduir: ${durationToString(Math.floor(estimatedTime))}`);
+	}
+
 	message.channel.send(embed);
 
 	if (willPlayNow) {
@@ -373,7 +391,7 @@ const show_list = (message, server_queue, args) => {
 	for (let i = minim; i < minim + midaPagina; i++) {
 		embed.addField(`${i}.- ${songs[i].title}`, `${songs[i].channel} | ${durationToString(songs[i].duration)} | ${songs[i].requestedBy}`, false);
 	}
-	
+
 	let totalTime = 0;
 	for (let i = 1; i < songs.length; i++) {
 		totalTime += songs[i].duration;
