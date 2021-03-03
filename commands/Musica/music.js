@@ -30,7 +30,8 @@ module.exports = {
 		"np",
 		"playlist",
 		"pause",
-		"resume"
+		"resume",
+		"playnow"
 	],
 	cooldown: 0,
 	async execute(message, args, server, _client, cmd) {
@@ -55,6 +56,7 @@ module.exports = {
 		if (cmd === "play") play_song(message, args, server_queue, voice_channel, server.prefix);
 		else if (cmd === "skip" || cmd === "next") skip_song(message, server_queue);
 		else if (cmd === "stop" || cmd === "disconnect") stop_song(message, server_queue);
+		else if (cmd === "playnow") playnow_song(message, args, server_queue, voice_channel, server.prefix);
 		else if (cmd === "q" || cmd === "llista" || cmd === "queue") show_list(message, server_queue, args);
 		else if (cmd === "np" || cmd === "nowplaying") show_np(message, server_queue);
 		else if (cmd === "clear") clear_list(message, server_queue, args);
@@ -156,6 +158,89 @@ const play_song = async function (message, args, server_queue, voice_channel, pr
 			.setDescription(`Temps estimat per reproduir: ${durationToString(Math.floor(estimatedTime))}`)
 			.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 		return message.channel.send(embed);
+	}
+};
+
+const playnow_song = async function (message, args, server_queue, voice_channel, prefix) {
+	if (!args.length)
+		return message.channel.send("❌ Error: No se què he de posar! Necessito un segon argument.");
+	let song = {};
+
+	if (args[0].match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/i)) {
+		return message.channel.send(`⚠️ Llista de reproducció detectada!\nFés servir la comanda \`${prefix}playlist < URL >\` per posar totes les cançons de cop.`);
+	}
+
+	if (ytdl.validateURL(args[0])) {
+		const song_info = await ytdl.getInfo(args[0]);
+
+		if (song_info.videoDetails.isLiveContent) {
+			return message.channel.send("❌ Error: No es poden posar transmissions en directe! Prova millor amb un video.");
+		}
+
+		if (song_info.videoDetails.isPrivate) {
+			return message.channel.send("❌ Error: El video és privat!");
+		}
+
+		song = {
+			title: song_info.videoDetails.title,
+			url: song_info.videoDetails.video_url,
+			duration: parseInt(song_info.videoDetails.lengthSeconds),
+			channel: song_info.videoDetails.ownerChannelName,
+			thumbnail: song_info.videoDetails.thumbnails[song_info.videoDetails.thumbnails.length - 1].url,
+			requestedBy: message.author
+		};
+	} else {
+		const video_finder = async (query) => {
+			const video_result = await ytSearch(query);
+			return video_result.videos.length > 1 ? video_result.videos[0] : null;
+		};
+
+		const video = await video_finder(args.join(" "));
+
+		if (video) {
+			song = {
+				title: video.title,
+				url: video.url,
+				duration: video.seconds,
+				channel: video.author.name,
+				thumbnail: video.thumbnail,
+				requestedBy: message.author
+			};
+		} else {
+			message.channel.send("❌ Error: No s'ha pogut cercar el video correctament.");
+			return;
+		}
+	}
+
+	if (song.duration > VIDEO_MAX_DURATION) {
+		return message.channel.send("❌ Error: No es poden reproduir videos de més de 5h.");
+	}
+
+	if (!server_queue) {
+		const queue_constructor = {
+			voice_channel: voice_channel,
+			text_channel: message.channel,
+			connection: null,
+			songs: [],
+		};
+
+		queue.set(message.guild.id, queue_constructor);
+		queue_constructor.songs.push(song);
+
+		try {
+			const connection = await voice_channel.join();
+			queue_constructor.connection = connection;
+			video_player(message.guild, queue_constructor.songs[0], voice_channel.name);
+		} catch (err) {
+			queue.delete(message.guild.id);
+			message.channel.send("❌ Error: Hi ha hagut un error al connectar-me!");
+			throw err;
+		}
+	} else {
+		// Posem la cançó a la primera posició de la llista
+		server_queue.songs.splice(1, 0, song);
+		// Passem a la seguent
+		server_queue.connection.dispatcher.end();
 	}
 };
 
@@ -489,6 +574,7 @@ const mostrar_opcions = (message, server) => {
 		.setTitle("🎵 **Comandes de MUSICA** 🎵")
 		.setDescription("Els paràmetres entre < > són obligatoris i els marcats entre [ ] són opcionals.")
 		.addField(`❯ ${prefix}play < URL / cerca >`, "El bot s'unirà al teu canal de veu i reproduirà les cançons que vulguis.", false)
+		.addField(`❯ ${prefix}playNow < URL / cerca >`, "Posa una cançó ara mateix.\nLa comanda respectarà la cua següent però es passarà la cançó actual.", false)
 		.addField(`❯ ${prefix}playlist < URL >`, "Posa totes les cançons que vulguis en una fracció de segon!", false)
 		.addField(`❯ ${prefix}skip / next`, "Es passarà a la següent cançó de la llista.", false)
 		.addField(`❯ ${prefix}stop / disconnect`, "No vols més musica? El bot s'envà del canal esborrant les cançons de la llista.", false)

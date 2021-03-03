@@ -4,6 +4,7 @@
     "dades": [{
       "main": "Afegides noves comandes de musica.",
       "secondary": [
+        "`ÇÇplayNow`: Posa una cançó ara mateix. La comanda respectarà la cua següent però es passarà la cançó actual.",
         "`ÇÇnp`: Et mostra la cançó que s'està reproduint ara mateix.",
         "`ÇÇq [ nPagina ]`: Et mostra la llista de reproducció.",
         "`ÇÇclear [ n ]`: Esborra algunes o totes les cançons de la llista.",

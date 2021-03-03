@@ -5,6 +5,7 @@ _All **ÇÇ** strings are representations of the server prefix_
 \[v1.4\]
 
 * Afegides noves comandes de música.
+  * `´ÇÇplayNow`: Posa una cançó ara mateix. La comanda respectarà la cua següent però es passarà la cançó actual.
   * `ÇÇnp`: Et mostra la cançó que s'està reproduint ara mateix.
   * `ÇÇq [ nPagina ]`: Et mostra la llista de reproducció a la pàgina que vulguis.
   * `ÇÇclear [ n ]`: Esborra algunes o totes les cançons de la llista.
