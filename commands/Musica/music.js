@@ -6,7 +6,7 @@ const {
 } = require("../../lib/common.js");
 
 const VIDEO_MAX_DURATION = 60 * 60 * 5; // 5h in seconds
-const MAX_VIEW_SONG_LIST = 10; // Maximes cançons a mostrar a la llista
+const MAX_VIEW_SONG_LIST = 10; // Maximes cançons a mostrar a la llista | ASSERT MAX_VIEW_SONG_LIST != 0
 const TYPE = "musica";
 
 const queue = new Map();
@@ -344,20 +344,21 @@ const show_list = (message, server_queue, args) => {
 	}
 
 	const songs = server_queue.songs;
-	let nPagines = Math.floor(songs.length / MAX_VIEW_SONG_LIST) + 1;
-	const ultimaPagina = songs.length % MAX_VIEW_SONG_LIST;
+	const n = songs.length - 1;
+	const nPagines = Math.ceil(n / MAX_VIEW_SONG_LIST);
+	const ultimaPagina = n % MAX_VIEW_SONG_LIST;
 
 	if (nPagina <= 0 || nPagina > nPagines) {
 		return message.channel.send("❌ Error: Numero de pàgina invàlid.");
 	}
 
 	const minim = MAX_VIEW_SONG_LIST * (nPagina - 1) + 1;
-	const midaPagina = nPagina === nPagines ? ultimaPagina - 1 : MAX_VIEW_SONG_LIST;
+	const midaPagina = (nPagina === nPagines) ? ultimaPagina : MAX_VIEW_SONG_LIST;
 
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
 		.setTitle(`🎵 **${songs[0].title}** 🎵`)
-		.setDescription(`Pàgina ${nPagina}/${nPagines} | Cançons ${minim}-${minim + midaPagina - 1} | Total ${songs.length - 1}`)
+		.setDescription(`Pàgina ${nPagina}/${nPagines} | Cançons ${minim}-${minim + midaPagina - 1} | Total ${n}`)
 		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
 	for (let i = minim; i < minim + midaPagina; i++) {
@@ -381,9 +382,22 @@ const show_np = (message, server_queue) => {
 	}
 
 	const current = server_queue.songs[0];
+	const N_LINE_CHARS = 10;
+	const secondsPlaying = queue.get(message.guild.id).connection.dispatcher.streamTime / 1000;
+	const percent = secondsPlaying / current.duration * N_LINE_CHARS;
+	let line = "";
+	
+	for (let i = 0; i < N_LINE_CHARS; i++) {
+		if (i < percent) {
+			line += "▰";
+		} else {
+			line += "▱";
+		}
+	}
 
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
+		.setDescription(`${line} ${durationToString(Math.floor(secondsPlaying))} | [🔗](${current.url})`)
 		.setTitle(`🎵 **${current.title}** 🎵`)
 		.addField('❯ Canal', current.channel, true)
 		.addField('❯ Duració', durationToString(current.duration), true)
