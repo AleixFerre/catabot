@@ -531,6 +531,11 @@ const show_np = (message, server_queue) => {
 };
 
 const pause_song = (message, server_queue, prefix) => {
+	
+	if (!server_queue || !server_queue.connection) {
+		return message.channel.send('❌ Error: No hi ha cançons reproduint-se!');
+	}
+
 	if (server_queue.connection.dispatcher.paused) {
 		return message.channel.send(`⚠️ Alerta: El reproductor ja està pausat! Posa \`${prefix}resume\``);
 	}
