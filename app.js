@@ -92,7 +92,7 @@ client.on("ready", async () => {
             }
         });
 
-        console.log(log(guild.name + ": " + guild.memberCount + " members"));
+        console.log(log(guild.name + ": " + guild.memberCount + " membres"));
 
         let server = await getServer(guild.id);
 
@@ -113,8 +113,8 @@ client.on("ready", async () => {
         if (server.counterChannel) {
             // Existeix un canal de contador, afegim un setInterval cada 12h
             setInterval(() => {
-                guild.channels.resolve(server.counterChannel).setName("members " + guild.memberCount);
-            }, 12 * 3600000);
+                guild.channels.resolve(server.counterChannel).setName(`${guild.memberCount} membres`);
+            }, Math.random() * 12 * 3600000);
         }
     }
 

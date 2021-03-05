@@ -34,14 +34,14 @@ module.exports = {
 
             let memberCount = message.guild.memberCount;
 
-            message.guild.channels.resolve(message.channel.id).setName("members " + memberCount);
+            message.guild.channels.resolve(message.channel.id).setName("membres " + memberCount);
         }
 
         updateServer(message.guild.id, {
             counterChannel: server.counterChannel,
             counterChannelName: server.counterChannelName
-        }).then(console.log(db(`DB: Actualitzat el canal de benvinguda del servidor ${message.guild.name} correctament!`)));
+        }).then(console.log(db(`DB: Actualitzat el canal comptador del servidor ${message.guild.name} correctament!`)));
 
-        message.reply("has " + paraula + " el canal <#" + message.channel.id + "> com a canal de contador de membres de forma correcta!");
+        message.reply("has " + paraula + " el canal <#" + message.channel.id + "> com a canal comptador de membres de forma correcta!");
     },
 };

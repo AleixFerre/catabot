@@ -31,7 +31,10 @@ module.exports = {
 		"playlist",
 		"pause",
 		"resume",
-		"playnow"
+		"playnow",
+		"loop",
+		"volume",
+		"volum"
 	],
 	cooldown: 0,
 	async execute(message, args, server, _client, cmd) {
@@ -41,9 +44,8 @@ module.exports = {
 
 		const voice_channel = message.member.voice.channel;
 		if (!voice_channel)
-			return message.channel.send(
-				"❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!"
-			);
+			return message.channel.send("❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!");
+
 		const permissions = voice_channel.permissionsFor(message.client.user);
 		if (!permissions.has("CONNECT"))
 			return message.channel.send("❌ Error: No tens els permissos correctes!");
@@ -63,6 +65,8 @@ module.exports = {
 		else if (cmd === "playlist") playlist_songs(message, args, server_queue, voice_channel);
 		else if (cmd === "pause") pause_song(message, server_queue, server.prefix);
 		else if (cmd === "resume") resume_song(message, server_queue);
+		else if (cmd === "loop") switch_loop(message, server_queue);
+		else if (cmd === "volume" || cmd === "volum") set_volume(message, server_queue, args[0]);
 	},
 };
 
@@ -127,6 +131,8 @@ const play_song = async function (message, args, server_queue, voice_channel, pr
 			text_channel: message.channel,
 			connection: null,
 			songs: [],
+			loop: false,
+			skipping: false
 		};
 
 		queue.set(message.guild.id, queue_constructor);
@@ -222,6 +228,8 @@ const playnow_song = async function (message, args, server_queue, voice_channel,
 			text_channel: message.channel,
 			connection: null,
 			songs: [],
+			loop: false,
+			skipping: false
 		};
 
 		queue.set(message.guild.id, queue_constructor);
@@ -302,6 +310,8 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 				text_channel: message.channel,
 				connection: null,
 				songs: [],
+				loop: false,
+				skipping: false
 			};
 			queue.set(message.guild.id, queue_constructor);
 			queue_constructor.songs.push(song);
@@ -354,15 +364,17 @@ const video_player = async (guild, song, voice_channel_name) => {
 			volume: 0.5
 		})
 		.on("finish", () => {
-			song_queue.songs.shift();
+			if (song_queue.skipping || !song_queue.loop) {
+				song_queue.songs.shift();
+				song_queue.skipping = false;
+			}
 			video_player(guild, song_queue.songs[0], voice_channel_name);
 		});
 
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
-		.setTitle(`🎶 Està sonant: **${song.title}**`)
-		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
-	await song_queue.text_channel.send(embed);
+		.setTitle(`🎶 Està sonant: **${song.title}**`);
+	song_queue.text_channel.send(embed);
 };
 
 const skip_song = (message, server_queue) => {
@@ -376,6 +388,7 @@ const skip_song = (message, server_queue) => {
 			.setTitle("No hi ha cap cançó a la cua 😔");
 		return message.channel.send(embed);
 	}
+	server_queue.skipping = true;
 	server_queue.connection.dispatcher.end();
 };
 
@@ -524,6 +537,8 @@ const show_np = (message, server_queue) => {
 		.addField('❯ Canal', current.channel, true)
 		.addField('❯ Duració', durationToString(current.duration), true)
 		.addField('❯ Afegida per', current.requestedBy, true)
+		.addField('❯ Loop', server_queue.loop ? "Activat" : "Desactivat", true)
+		.addField('❯ Volume', `${server_queue.connection.dispatcher.volume * 100}/100`, true)
 		.setThumbnail(current.thumbnail)
 		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
@@ -531,7 +546,7 @@ const show_np = (message, server_queue) => {
 };
 
 const pause_song = (message, server_queue, prefix) => {
-	
+
 	if (!server_queue || !server_queue.connection) {
 		return message.channel.send('❌ Error: No hi ha cançons reproduint-se!');
 	}
@@ -554,20 +569,68 @@ const pause_song = (message, server_queue, prefix) => {
 };
 
 const resume_song = (message, server_queue) => {
+	if (!server_queue || !server_queue.connection) {
+		return message.channel.send('❌ Error: No hi ha cançons reproduint-se!');
+	}
+
 	if (!server_queue.connection.dispatcher.paused) {
 		return message.channel.send(`⚠️ Alerta: El reproductor no està pausat!`);
 	}
+
 	try {
 		server_queue.connection.dispatcher.resume();
 	} catch (err) {
 		console.error(err);
 		return message.channel.send("❌ Error: Hi ha hagut un error al rependre la cançó!");
 	}
+
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
 		.setTitle("⏯️ Reprenent...")
 		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 	message.channel.send(embed);
+};
+
+const switch_loop = (message, server_queue) => {
+
+	if (!server_queue || !server_queue.connection) {
+		return message.channel.send('❌ Error: No hi ha cançons reproduint-se!');
+	}
+
+	let paraula = server_queue.loop ? "Desactivant" : "Activant";
+
+	server_queue.loop = !server_queue.loop;
+
+	let embed = new Discord.MessageEmbed()
+		.setColor(getColorFromCommand(TYPE))
+		.setTitle(`🔁 ${paraula} loop...`)
+		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+	message.channel.send(embed);
+};
+
+const set_volume = (message, server_queue, newVolume) => {
+
+	if (!server_queue || !server_queue.connection) {
+		return message.channel.send('❌ Error: No hi ha cançons reproduint-se!');
+	}
+
+	if (!newVolume) {
+		let embed = new Discord.MessageEmbed()
+			.setColor(getColorFromCommand(TYPE))
+			.setTitle(`🔊 Volum actual: ${server_queue.connection.dispatcher.volume * 100}/100`)
+			.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+		return message.channel.send(embed);
+	} else if (isNaN(newVolume) || newVolume < 0 || newVolume > 200) {
+		return message.channel.send('❌ Error: El numero cal que sigui enter entre 0 i 200!');
+	}
+
+	server_queue.connection.dispatcher.setVolume(parseInt(newVolume) / 100);
+	let embed = new Discord.MessageEmbed()
+		.setColor(getColorFromCommand(TYPE))
+		.setTitle(`🔊 Nou volum: ${server_queue.connection.dispatcher.volume * 100}/100`)
+		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+
+	return message.channel.send(embed);
 };
 
 const mostrar_opcions = (message, server) => {
