@@ -651,6 +651,8 @@ const mostrar_opcions = (message, server) => {
 		.addField(`❯ ${prefix}clear [ n ]`, "Esborra algunes o totes les cançons de la llista.", false)
 		.addField(`❯ ${prefix}pause`, "Posa la reproducció en pausa.", false)
 		.addField(`❯ ${prefix}resume`, "Repren la reproducció pausada.", false)
+		.addField(`❯ ${prefix}volume [ n ]`, "Posa un nou volum de la reproducció. Et mostra el volum actual si no es passa cap paràmetre.", false)
+		.addField(`❯ ${prefix}loop`, "Alterna el mode LOOP. Quan està activat, el bot reproduirà la mateixa cançó una i altra vegada.", false)
 		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
 	message.channel.send(embed);

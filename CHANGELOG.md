@@ -11,6 +11,8 @@ _All **ÇÇ** strings are representations of the server prefix_
   * `ÇÇclear [ n ]`: Esborra algunes o totes les cançons de la llista.
   * `ÇÇpause`: Posa la reproducció en pausa.
   * `ÇÇresume`: Repren la reproducció pausada.
+  * `ÇÇvolume`: Posa un nou volum de la reproducció. Et mostra el volum actual si no es passa cap paràmetre.
+  * `ÇÇloop`: Alterna el mode LOOP. Quan està activat, el bot reproduirà la mateixa cançó una i altra vegada.
   * Ara es pot veure la duració de les cançons i el temps al afegir cançons a la cua.
   * Més info amb la comanda `ÇÇmusic`.
 
