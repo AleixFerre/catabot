@@ -351,7 +351,7 @@ const video_player = async (guild, song, voice_channel_name) => {
 	const song_queue = queue.get(guild.id);
 
 	if (!song) {
-		song_queue.voice_channel.leave();º
+		song_queue.voice_channel.leave();
 		queue.delete(guild.id);
 		return;
 	}
