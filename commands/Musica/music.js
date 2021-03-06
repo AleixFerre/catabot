@@ -388,6 +388,11 @@ const skip_song = (message, server_queue) => {
 			.setTitle("No hi ha cap cançó a la cua 😔");
 		return message.channel.send(embed);
 	}
+
+	if (server_queue.connection.dispatcher.paused) {
+		server_queue.connection.dispatcher.resume();
+	}
+
 	server_queue.skipping = true;
 	server_queue.connection.dispatcher.end();
 };
@@ -403,6 +408,10 @@ const stop_song = (message, server_queue) => {
 			.setColor(getColorFromCommand(TYPE))
 			.setTitle("No hi ha cap cançó a la cua 😔");
 		return message.channel.send(embed);
+	}
+	
+	if (server_queue.connection.dispatcher.paused) {
+		server_queue.connection.dispatcher.resume();
 	}
 
 	server_queue.songs = [];
@@ -635,7 +644,7 @@ const set_volume = (message, server_queue, newVolume) => {
 
 const mostrar_opcions = (message, server) => {
 
-	let prefix = server.prefix;
+	const prefix = server.prefix;
 
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
