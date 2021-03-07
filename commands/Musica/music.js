@@ -247,7 +247,7 @@ const playnow_song = async function (message, args, server_queue, voice_channel,
 	} else {
 		// Posem la cançó a la primera posició de la llista
 		server_queue.songs.splice(1, 0, song);
-		song_queue.skipping = true;
+		server_queue.skipping = true;
 
 		// Passem a la seguent
 		server_queue.connection.dispatcher.end();
