@@ -748,6 +748,7 @@ const mostrar_opcions = (message, server) => {
 		.setDescription("Els paràmetres entre < > són obligatoris i els marcats entre [ ] són opcionals.")
 		.addField(`❯ ${prefix}play < URL / cerca >`, "El bot s'unirà al teu canal de veu i reproduirà les cançons que vulguis.", false)
 		.addField(`❯ ${prefix}playNow < URL / cerca >`, "Posa una cançó ara mateix.\nLa comanda respectarà la cua següent però es passarà la cançó actual.", false)
+		.addField(`❯ ${prefix}playNext < URL / cerca >`, "Posa una cançó al principi de la cua.", false)
 		.addField(`❯ ${prefix}playlist < URL >`, "Posa totes les cançons que vulguis en una fracció de segon!", false)
 		.addField(`❯ ${prefix}skip / next`, "Es passarà a la següent cançó de la llista.", false)
 		.addField(`❯ ${prefix}stop / disconnect`, "No vols més musica? El bot s'envà del canal esborrant les cançons de la llista.", false)
