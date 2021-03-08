@@ -341,23 +341,27 @@ client.on('message', async (message) => {
         }
     }
 
-    if (!cooldowns.has(commandName)) {
-        cooldowns.set(commandName, new Discord.Collection());
-    }
+    if (!message.author.bot) {
 
-    const currentTime = Date.now();
-    const timeStamps = cooldowns.get(commandName);
-    const cooldownAmount = (command.cooldown) * 1000;
-
-    if (timeStamps.has(message.author.id)) {
-        const expirationTime = timeStamps.get(message.author.id) + cooldownAmount;
-        if (currentTime < expirationTime) {
-            const timeLeft = (expirationTime - currentTime) / 1000;
-            return message.reply(`siusplau espera ${timeLeft.toFixed(1)} segons abans d'utilitzar la comanda \`${commandName}\``);
+        if (!cooldowns.has(commandName)) {
+            cooldowns.set(commandName, new Discord.Collection());
         }
-    }
 
-    timeStamps.set(message.author.id, currentTime);
+        const currentTime = Date.now();
+        const timeStamps = cooldowns.get(commandName);
+        const cooldownAmount = (command.cooldown) * 1000;
+
+        if (timeStamps.has(message.author.id)) {
+            const expirationTime = timeStamps.get(message.author.id) + cooldownAmount;
+            if (currentTime < expirationTime) {
+                const timeLeft = (expirationTime - currentTime) / 1000;
+                return message.reply(`siusplau espera ${timeLeft.toFixed(1)} segons abans d'utilitzar la comanda \`${commandName}\``);
+            }
+        }
+
+        timeStamps.set(message.author.id, currentTime);
+
+    }
 
     try {
         command.execute(message, args, server, client, commandName);
