@@ -179,6 +179,10 @@ const video_player = async (guild, song, voice_channel_name) => {
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
 		.setTitle(`🎶 Està sonant: **${song.title}**`);
+
+	if (song_queue.loop) {
+		embed.setDescription("🔁 Loop activat!");
+	}
 	song_queue.text_channel.send(embed);
 };
 
@@ -237,8 +241,7 @@ const play_song = async function (message, args, server_queue, voice_channel, pr
 		let embed = new Discord.MessageEmbed()
 			.setColor(getColorFromCommand(TYPE))
 			.setTitle(`👍 **${song.title}** afegida a la cua correctament!`)
-			.setDescription(`Temps estimat per reproduir: ${durationToString(Math.floor(estimatedTime))}`)
-			.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+			.setDescription(`Temps estimat per reproduir: ${durationToString(Math.floor(estimatedTime))}`);
 		return message.channel.send(embed);
 	}
 };
@@ -338,8 +341,7 @@ const playnext_song = async function (message, args, server_queue, voice_channel
 		let embed = new Discord.MessageEmbed()
 			.setColor(getColorFromCommand(TYPE))
 			.setTitle(`👍 **${song.title}** afegida al principi de la cua correctament!`)
-			.setDescription(`Temps estimat per reproduir: ${durationToString(Math.floor(estimatedTime))}`)
-			.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+			.setDescription(`Temps estimat per reproduir: ${durationToString(Math.floor(estimatedTime))}`);
 		return message.channel.send(embed);
 	}
 };
@@ -414,8 +416,7 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
-		.setTitle(`👍 S'ha afegit ${songs.length} cançons a la cua correctament!`)
-		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+		.setTitle(`👍 S'ha afegit ${songs.length} cançons a la cua correctament!`);
 
 	if (estimatedTime > 0) {
 		embed.setDescription(`Temps estimat per reproduir: ${durationToString(Math.floor(estimatedTime))}`);
@@ -521,8 +522,7 @@ const clear_list = (message, server_queue, args) => {
 
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
-		.setTitle(`🗑️ Esborrades ${n} cançons!`)
-		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+		.setTitle(`🗑️ Esborrades ${n} cançons correctament!`);
 	return message.channel.send(embed);
 };
 
@@ -563,8 +563,7 @@ const show_list = (message, server_queue, args) => {
 
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
-		.setTitle(`🎵 **${songs[0].title}** 🎵`)
-		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+		.setTitle(`🎵 **${songs[0].title}** 🎵`);
 
 	for (let i = minim; i < minim + midaPagina; i++) {
 		embed.addField(`${i}.- ${songs[i].title}`, `${songs[i].channel} | ${durationToString(songs[i].duration)} | ${songs[i].requestedBy}`, false);
@@ -575,7 +574,7 @@ const show_list = (message, server_queue, args) => {
 		totalTime += songs[i].duration;
 	}
 
-	embed.setDescription(`Pàgina ${nPagina}/${nPagines} | Cançons ${minim}-${minim + midaPagina - 1} | Total ${n} | Duració ${durationToString(totalTime)}`);
+	embed.setFooter(`Pàgina ${nPagina}/${nPagines} | Cançons ${minim}-${minim + midaPagina - 1} | Total ${n} | Duració ${durationToString(totalTime)}`);
 
 	message.channel.send(embed);
 };
@@ -615,9 +614,8 @@ const show_np = (message, server_queue) => {
 		.addField('❯ Duració', durationToString(current.duration), true)
 		.addField('❯ Afegida per', current.requestedBy, true)
 		.addField('❯ Loop', server_queue.loop ? "Activat" : "Desactivat", true)
-		.addField('❯ Volume', `${server_queue.connection.dispatcher.volume * 100}/100`, true)
-		.setThumbnail(current.thumbnail)
-		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+		.addField('❯ Volume', `${server_queue.connection.dispatcher.volume * 100}%`, true)
+		.setThumbnail(current.thumbnail);
 
 	message.channel.send(embed);
 };
@@ -640,7 +638,6 @@ const pause_song = (message, server_queue, prefix) => {
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
 		.setTitle("⏸️ Pausant...")
-		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`)
 		.setDescription(`Per rependre la reproducció posa \`${prefix}resume\``);
 	message.channel.send(embed);
 };
@@ -663,8 +660,7 @@ const resume_song = (message, server_queue) => {
 
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
-		.setTitle("⏯️ Reprenent...")
-		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+		.setTitle("⏯️ Reprenent...");
 	message.channel.send(embed);
 };
 
@@ -680,8 +676,7 @@ const switch_loop = (message, server_queue) => {
 
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
-		.setTitle(`🔁 ${paraula} loop...`)
-		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+		.setTitle(`🔁 ${paraula} loop...`);
 	message.channel.send(embed);
 };
 
@@ -694,8 +689,7 @@ const set_volume = (message, server_queue, newVolume) => {
 	if (!newVolume) {
 		let embed = new Discord.MessageEmbed()
 			.setColor(getColorFromCommand(TYPE))
-			.setTitle(`🔊 Volum actual: ${server_queue.connection.dispatcher.volume * 100}/100`)
-			.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+			.setTitle(`🔊 Volum actual: ${server_queue.connection.dispatcher.volume * 100}%`);
 		return message.channel.send(embed);
 	} else if (isNaN(newVolume) || newVolume < 0 || newVolume > 200) {
 		return message.channel.send('❌ Error: El numero cal que sigui enter entre 0 i 200!');
@@ -704,8 +698,7 @@ const set_volume = (message, server_queue, newVolume) => {
 	server_queue.connection.dispatcher.setVolume(parseInt(newVolume) / 100);
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
-		.setTitle(`🔊 Nou volum: ${server_queue.connection.dispatcher.volume * 100}/100`)
-		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+		.setTitle(`🔊 Nou volum: ${server_queue.connection.dispatcher.volume * 100}%`);
 
 	return message.channel.send(embed);
 };
