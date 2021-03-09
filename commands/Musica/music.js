@@ -7,7 +7,7 @@ const {
 
 const VIDEO_MAX_DURATION = 60 * 60 * 5; // 5h in seconds
 const MAX_VIEW_SONG_LIST = 10; // Maximes cançons a mostrar a la llista | ASSERT MAX_VIEW_SONG_LIST != 0
-const DISCONNECTION_DELAY_SECONDS = 10; // Temps d'espera en desconnectar-se en segons
+const DISCONNECTION_DELAY_SECONDS = 60; // Temps d'espera en desconnectar-se en segons
 const TYPE = "musica";
 
 const queue = new Map();
