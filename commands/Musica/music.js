@@ -72,24 +72,21 @@ module.exports = {
 	},
 };
 
-const play_song = async function (message, args, server_queue, voice_channel, prefix) {
-	if (!args.length)
-		return message.channel.send("❌ Error: No se què he de posar! Necessito un segon argument.");
-	let song = {};
+async function cercar_video(args, message) {
 
-	if (args[0].match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/i)) {
-		return message.channel.send(`⚠️ Llista de reproducció detectada!\nFés servir la comanda \`${prefix}playlist < URL >\` per posar totes les cançons de cop.`);
-	}
+	let song = {};
 
 	if (ytdl.validateURL(args[0])) {
 		const song_info = await ytdl.getInfo(args[0]);
 
 		if (song_info.videoDetails.isLiveContent) {
-			return message.channel.send("❌ Error: No es poden posar transmissions en directe! Prova millor amb un video.");
+			message.channel.send("❌ Error: No es poden posar transmissions en directe! Prova millor amb un video.");
+			return;
 		}
 
 		if (song_info.videoDetails.isPrivate) {
-			return message.channel.send("❌ Error: El video és privat!");
+			message.channel.send("❌ Error: El video és privat!");
+			return;
 		}
 
 		song = {
@@ -123,19 +120,40 @@ const play_song = async function (message, args, server_queue, voice_channel, pr
 		}
 	}
 
+	return song;
+
+}
+
+function queue_constructor_generic(voice_channel, message) {
+	return {
+		voice_channel: voice_channel,
+		text_channel: message.channel,
+		connection: null,
+		songs: [],
+		loop: false,
+		skipping: false
+	};
+}
+
+
+const play_song = async function (message, args, server_queue, voice_channel, prefix) {
+	if (!args.length)
+		return message.channel.send("❌ Error: No se què he de posar! Necessito un segon argument.");
+
+	if (args[0].match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/i)) {
+		return message.channel.send(`⚠️ Llista de reproducció detectada!\nFés servir la comanda \`${prefix}playlist < URL >\` per posar totes les cançons de cop.`);
+	}
+
+	const song = await cercar_video(args, message);
+
+	if (!song) return;
+
 	if (song.duration > VIDEO_MAX_DURATION) {
 		return message.channel.send("❌ Error: No es poden reproduir videos de més de 5h.");
 	}
 
 	if (!server_queue) {
-		const queue_constructor = {
-			voice_channel: voice_channel,
-			text_channel: message.channel,
-			connection: null,
-			songs: [],
-			loop: false,
-			skipping: false
-		};
+		const queue_constructor = queue_constructor_generic(voice_channel, message);
 
 		queue.set(message.guild.id, queue_constructor);
 		queue_constructor.songs.push(song);
@@ -172,67 +190,21 @@ const play_song = async function (message, args, server_queue, voice_channel, pr
 const playnow_song = async function (message, args, server_queue, voice_channel, prefix) {
 	if (!args.length)
 		return message.channel.send("❌ Error: No se què he de posar! Necessito un segon argument.");
-	let song = {};
 
 	if (args[0].match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/i)) {
 		return message.channel.send(`⚠️ Llista de reproducció detectada!\nFés servir la comanda \`${prefix}playlist < URL >\` per posar totes les cançons de cop.`);
 	}
 
-	if (ytdl.validateURL(args[0])) {
-		const song_info = await ytdl.getInfo(args[0]);
+	const song = await cercar_video(args, message);
 
-		if (song_info.videoDetails.isLiveContent) {
-			return message.channel.send("❌ Error: No es poden posar transmissions en directe! Prova millor amb un video.");
-		}
-
-		if (song_info.videoDetails.isPrivate) {
-			return message.channel.send("❌ Error: El video és privat!");
-		}
-
-		song = {
-			title: song_info.videoDetails.title,
-			url: song_info.videoDetails.video_url,
-			duration: parseInt(song_info.videoDetails.lengthSeconds),
-			channel: song_info.videoDetails.ownerChannelName,
-			thumbnail: song_info.videoDetails.thumbnails[song_info.videoDetails.thumbnails.length - 1].url,
-			requestedBy: message.author
-		};
-	} else {
-		const video_finder = async (query) => {
-			const video_result = await ytSearch(query);
-			return video_result.videos.length > 1 ? video_result.videos[0] : null;
-		};
-
-		const video = await video_finder(args.join(" "));
-
-		if (video) {
-			song = {
-				title: video.title,
-				url: video.url,
-				duration: video.seconds,
-				channel: video.author.name,
-				thumbnail: video.thumbnail,
-				requestedBy: message.author
-			};
-		} else {
-			message.channel.send("❌ Error: No s'ha pogut cercar el video correctament.");
-			return;
-		}
-	}
+	if (!song) return;
 
 	if (song.duration > VIDEO_MAX_DURATION) {
 		return message.channel.send("❌ Error: No es poden reproduir videos de més de 5h.");
 	}
 
 	if (!server_queue) {
-		const queue_constructor = {
-			voice_channel: voice_channel,
-			text_channel: message.channel,
-			connection: null,
-			songs: [],
-			loop: false,
-			skipping: false
-		};
+		const queue_constructor = queue_constructor_generic(voice_channel, message);
 
 		queue.set(message.guild.id, queue_constructor);
 		queue_constructor.songs.push(song);
@@ -259,67 +231,21 @@ const playnow_song = async function (message, args, server_queue, voice_channel,
 const playnext_song = async function (message, args, server_queue, voice_channel, prefix) {
 	if (!args.length)
 		return message.channel.send("❌ Error: No se què he de posar! Necessito un segon argument.");
-	let song = {};
 
 	if (args[0].match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/i)) {
 		return message.channel.send(`⚠️ Llista de reproducció detectada!\nFés servir la comanda \`${prefix}playlist < URL >\` per posar totes les cançons de cop.`);
 	}
 
-	if (ytdl.validateURL(args[0])) {
-		const song_info = await ytdl.getInfo(args[0]);
+	const song = await cercar_video(args, message);
 
-		if (song_info.videoDetails.isLiveContent) {
-			return message.channel.send("❌ Error: No es poden posar transmissions en directe! Prova millor amb un video.");
-		}
-
-		if (song_info.videoDetails.isPrivate) {
-			return message.channel.send("❌ Error: El video és privat!");
-		}
-
-		song = {
-			title: song_info.videoDetails.title,
-			url: song_info.videoDetails.video_url,
-			duration: parseInt(song_info.videoDetails.lengthSeconds),
-			channel: song_info.videoDetails.ownerChannelName,
-			thumbnail: song_info.videoDetails.thumbnails[song_info.videoDetails.thumbnails.length - 1].url,
-			requestedBy: message.author
-		};
-	} else {
-		const video_finder = async (query) => {
-			const video_result = await ytSearch(query);
-			return video_result.videos.length > 1 ? video_result.videos[0] : null;
-		};
-
-		const video = await video_finder(args.join(" "));
-
-		if (video) {
-			song = {
-				title: video.title,
-				url: video.url,
-				duration: video.seconds,
-				channel: video.author.name,
-				thumbnail: video.thumbnail,
-				requestedBy: message.author
-			};
-		} else {
-			message.channel.send("❌ Error: No s'ha pogut cercar el video correctament.");
-			return;
-		}
-	}
+	if (!song) return;
 
 	if (song.duration > VIDEO_MAX_DURATION) {
 		return message.channel.send("❌ Error: No es poden reproduir videos de més de 5h.");
 	}
 
 	if (!server_queue) {
-		const queue_constructor = {
-			voice_channel: voice_channel,
-			text_channel: message.channel,
-			connection: null,
-			songs: [],
-			loop: false,
-			skipping: false
-		};
+		const queue_constructor = queue_constructor_generic(voice_channel, message);
 
 		queue.set(message.guild.id, queue_constructor);
 		queue_constructor.songs.push(song);
@@ -401,14 +327,7 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 
 	for (let song of songs) {
 		if (!server_queue) {
-			const queue_constructor = {
-				voice_channel: voice_channel,
-				text_channel: message.channel,
-				connection: null,
-				songs: [],
-				loop: false,
-				skipping: false
-			};
+			const queue_constructor = queue_constructor_generic(voice_channel, message);			
 			queue.set(message.guild.id, queue_constructor);
 			queue_constructor.songs.push(song);
 			server_queue = queue.get(message.guild.id);
@@ -505,7 +424,7 @@ const stop_song = (message, server_queue) => {
 			.setTitle("No hi ha cap cançó a la cua 😔");
 		return message.channel.send(embed);
 	}
-	
+
 	if (server_queue.connection.dispatcher.paused) {
 		server_queue.connection.dispatcher.resume();
 	}
