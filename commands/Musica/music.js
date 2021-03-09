@@ -7,6 +7,7 @@ const {
 
 const VIDEO_MAX_DURATION = 60 * 60 * 5; // 5h in seconds
 const MAX_VIEW_SONG_LIST = 10; // Maximes cançons a mostrar a la llista | ASSERT MAX_VIEW_SONG_LIST != 0
+const DISCONNECTION_DELAY_SECONDS = 10; // Temps d'espera en desconnectar-se en segons
 const TYPE = "musica";
 
 const queue = new Map();
@@ -131,10 +132,57 @@ function queue_constructor_generic(voice_channel, message) {
 		connection: null,
 		songs: [],
 		loop: false,
-		skipping: false
+		skipping: false,
+		stopping: false,
+		timeout: null
 	};
 }
 
+function sortir_i_esborrar(song_queue, guild) {
+	const embed = new Discord.MessageEmbed()
+		.setColor(getColorFromCommand(TYPE))
+		.setTitle(`👋 Adeu!`)
+		.setDescription(`Desconnectant del canal de veu ${song_queue.voice_channel}${song_queue.stopping ? "" : ` després de ${DISCONNECTION_DELAY_SECONDS}s d'inactivitat`}.`);
+	song_queue.text_channel.send(embed);
+	song_queue.voice_channel.leave();
+	queue.delete(guild.id);
+}
+
+const video_player = async (guild, song, voice_channel_name) => {
+	const song_queue = queue.get(guild.id);
+
+	if (!song) {
+		if (song_queue.stopping)
+			sortir_i_esborrar(song_queue, guild);
+		else
+			song_queue.timeout = setTimeout(sortir_i_esborrar, 1000 * DISCONNECTION_DELAY_SECONDS, song_queue, guild);
+		return;
+	}
+
+	const stream = ytdl(song.url, {
+		filter: "audioonly"
+	});
+
+	song_queue.connection
+		.play(stream, {
+			seek: 0,
+			volume: 0.5
+		})
+		.on("finish", () => {
+			if (song_queue.skipping || !song_queue.loop) {
+				song_queue.songs.shift();
+				song_queue.skipping = false;
+			}
+			video_player(guild, song_queue.songs[0], voice_channel_name);
+		});
+
+	let embed = new Discord.MessageEmbed()
+		.setColor(getColorFromCommand(TYPE))
+		.setTitle(`🎶 Està sonant: **${song.title}**`);
+	song_queue.text_channel.send(embed);
+};
+
+/// ============================================
 
 const play_song = async function (message, args, server_queue, voice_channel, prefix) {
 	if (!args.length)
@@ -167,6 +215,14 @@ const play_song = async function (message, args, server_queue, voice_channel, pr
 			message.channel.send("❌ Error: Hi ha hagut un error al connectar-me!");
 			throw err;
 		}
+	} else if (server_queue.timeout) {
+		// Netejem el timeout
+		clearTimeout(server_queue.timeout);
+		server_queue.timeout = null;
+
+		// Reproduim la cançó ara mateix
+		server_queue.songs.push(song);
+		video_player(message.guild, server_queue.songs[0], server_queue.voice_channel.name);
 	} else {
 		// Temps del dispatcher actual
 		const streamSeconds = server_queue.connection.dispatcher.streamTime / 1000;
@@ -218,6 +274,13 @@ const playnow_song = async function (message, args, server_queue, voice_channel,
 			message.channel.send("❌ Error: Hi ha hagut un error al connectar-me!");
 			throw err;
 		}
+	} else if (server_queue.timeout) {
+		clearTimeout(server_queue.timeout);
+		server_queue.timeout = null;
+
+		// Reproduim la cançó ara mateix
+		server_queue.songs.push(song);
+		video_player(message.guild, server_queue.songs[0], server_queue.voice_channel.name);
 	} else {
 		// Posem la cançó a la primera posició de la llista
 		server_queue.songs.splice(1, 0, song);
@@ -259,6 +322,13 @@ const playnext_song = async function (message, args, server_queue, voice_channel
 			message.channel.send("❌ Error: Hi ha hagut un error al connectar-me!");
 			throw err;
 		}
+	} else if (server_queue.timeout) {
+		clearTimeout(server_queue.timeout);
+		server_queue.timeout = null;
+
+		// Reproduim la cançó ara mateix
+		server_queue.songs.push(song);
+		video_player(message.guild, server_queue.songs[0], server_queue.voice_channel.name);
 	} else {
 		// Posem la cançó a la primera posició de la llista
 		server_queue.songs.splice(1, 0, song);
@@ -316,18 +386,24 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 	// Temps del dispatcher actual
 	let estimatedTime = 0;
 	if (server_queue) {
-		const streamSeconds = server_queue.connection.dispatcher.streamTime / 1000;
-		estimatedTime = server_queue.songs[0].duration - streamSeconds; // Quant falta
+		if (server_queue.timeout) {
+			willPlayNow = true;
+			clearTimeout(server_queue.timeout);
+			server_queue.timeout = null;
+		} else {
+			const streamSeconds = server_queue.connection.dispatcher.streamTime / 1000;
+			estimatedTime = server_queue.songs[0].duration - streamSeconds; // Quant falta
 
-		// + El temps de les de la cua
-		for (let i = 1; i < server_queue.songs.length; i++) {
-			estimatedTime += server_queue.songs[i].duration;
+			// + El temps de les de la cua
+			for (let i = 1; i < server_queue.songs.length; i++) {
+				estimatedTime += server_queue.songs[i].duration;
+			}
 		}
 	}
 
 	for (let song of songs) {
 		if (!server_queue) {
-			const queue_constructor = queue_constructor_generic(voice_channel, message);			
+			const queue_constructor = queue_constructor_generic(voice_channel, message);
 			queue.set(message.guild.id, queue_constructor);
 			queue_constructor.songs.push(song);
 			server_queue = queue.get(message.guild.id);
@@ -360,44 +436,13 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 	}
 };
 
-const video_player = async (guild, song, voice_channel_name) => {
-	const song_queue = queue.get(guild.id);
-
-	if (!song) {
-		song_queue.voice_channel.leave();
-		queue.delete(guild.id);
-		return;
-	}
-
-	const stream = ytdl(song.url, {
-		filter: "audioonly"
-	});
-
-	song_queue.connection
-		.play(stream, {
-			seek: 0,
-			volume: 0.5
-		})
-		.on("finish", () => {
-			if (song_queue.skipping || !song_queue.loop) {
-				song_queue.songs.shift();
-				song_queue.skipping = false;
-			}
-			video_player(guild, song_queue.songs[0], voice_channel_name);
-		});
-
-	let embed = new Discord.MessageEmbed()
-		.setColor(getColorFromCommand(TYPE))
-		.setTitle(`🎶 Està sonant: **${song.title}**`);
-	song_queue.text_channel.send(embed);
-};
-
 const skip_song = (message, server_queue) => {
 	if (!message.member.voice.channel)
 		return message.channel.send(
 			"❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!"
 		);
-	if (!server_queue) {
+
+	if (!server_queue || !server_queue.connection || !server_queue.connection.dispatcher) {
 		let embed = new Discord.MessageEmbed()
 			.setColor(getColorFromCommand(TYPE))
 			.setTitle("No hi ha cap cançó a la cua 😔");
@@ -425,13 +470,21 @@ const stop_song = (message, server_queue) => {
 		return message.channel.send(embed);
 	}
 
+	if (server_queue.timeout) {
+		server_queue.songs = [];
+		server_queue.stopping = true;
+		clearTimeout(server_queue.timeout);
+		server_queue.timeout = null;
+		return sortir_i_esborrar(server_queue, message.guild);
+	}
+
 	if (server_queue.connection.dispatcher.paused) {
 		server_queue.connection.dispatcher.resume();
 	}
 
 	server_queue.songs = [];
+	server_queue.stopping = true;
 	server_queue.connection.dispatcher.end();
-	message.react("👍");
 };
 
 const clear_list = (message, server_queue, args) => {
@@ -480,7 +533,7 @@ const show_list = (message, server_queue, args) => {
 			"❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!"
 		);
 
-	if (!server_queue || server_queue.songs.length === 1) {
+	if (!server_queue || server_queue.songs.length <= 1) {
 		let embed = new Discord.MessageEmbed()
 			.setColor(getColorFromCommand(TYPE))
 			.setTitle("No hi ha cap cançó a la cua 😔");
@@ -533,7 +586,7 @@ const show_np = (message, server_queue) => {
 			"❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!"
 		);
 
-	if (!server_queue) {
+	if (!server_queue || server_queue.timeout) {
 		let embed = new Discord.MessageEmbed()
 			.setColor(getColorFromCommand(TYPE))
 			.setTitle("No està sonant cap cançó 😔");
@@ -571,7 +624,7 @@ const show_np = (message, server_queue) => {
 
 const pause_song = (message, server_queue, prefix) => {
 
-	if (!server_queue || !server_queue.connection) {
+	if (!server_queue || !server_queue.connection || !server_queue.connection.dispatcher) {
 		return message.channel.send('❌ Error: No hi ha cançons reproduint-se!');
 	}
 
@@ -593,7 +646,7 @@ const pause_song = (message, server_queue, prefix) => {
 };
 
 const resume_song = (message, server_queue) => {
-	if (!server_queue || !server_queue.connection) {
+	if (!server_queue || !server_queue.connection || !server_queue.connection.dispatcher) {
 		return message.channel.send('❌ Error: No hi ha cançons reproduint-se!');
 	}
 
@@ -617,7 +670,7 @@ const resume_song = (message, server_queue) => {
 
 const switch_loop = (message, server_queue) => {
 
-	if (!server_queue || !server_queue.connection) {
+	if (!server_queue || !server_queue.connection || !server_queue.connection.dispatcher) {
 		return message.channel.send('❌ Error: No hi ha cançons reproduint-se!');
 	}
 
@@ -634,7 +687,7 @@ const switch_loop = (message, server_queue) => {
 
 const set_volume = (message, server_queue, newVolume) => {
 
-	if (!server_queue || !server_queue.connection) {
+	if (!server_queue || !server_queue.connection || !server_queue.connection.dispatcher) {
 		return message.channel.send('❌ Error: No hi ha cançons reproduint-se!');
 	}
 
@@ -656,6 +709,8 @@ const set_volume = (message, server_queue, newVolume) => {
 
 	return message.channel.send(embed);
 };
+
+/// ============================================
 
 const mostrar_opcions = (message, server) => {
 
