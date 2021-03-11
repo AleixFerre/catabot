@@ -56,6 +56,13 @@ module.exports = {
 
 		const server_queue = queue.get(message.guild.id);
 
+		if (server_queue && server_queue.voice_channel) {
+			// Has d'estar al mateix canal del bot
+			if (server_queue.voice_channel !== voice_channel) {
+				return message.channel.send("❌ Error: Has d'estar al mateix canal de veu que el bot!");
+			}
+		}
+
 		// Depenent del que vulguis fer, executa una funcio o una altra
 		if (cmd === "play") play_song(message, args, server_queue, voice_channel, server.prefix);
 		else if (cmd === "skip" || cmd === "next") skip_song(message, server_queue);
