@@ -47,20 +47,20 @@ module.exports = {
 
 		const voice_channel = message.member.voice.channel;
 		if (!voice_channel)
-			return message.channel.send("❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!");
+			return message.channel.send("**❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!**");
 
 		const permissions = voice_channel.permissionsFor(message.client.user);
 		if (!permissions.has("CONNECT"))
-			return message.channel.send("❌ Error: No tens els permissos correctes!");
+			return message.channel.send("**❌ Error: No tens els permissos correctes!**");
 		if (!permissions.has("SPEAK"))
-			return message.channel.send("❌ Error: No tens els permissos correctes!");
+			return message.channel.send("**❌ Error: No tens els permissos correctes!**");
 
 		const server_queue = queue.get(message.guild.id);
 
 		if (server_queue && server_queue.voice_channel) {
 			// Has d'estar al mateix canal del bot
 			if (server_queue.voice_channel !== voice_channel) {
-				return message.channel.send("❌ Error: Has d'estar al mateix canal de veu que el bot!");
+				return message.channel.send("**❌ Error: Has d'estar al mateix canal de veu que el bot!**");
 			}
 		}
 
@@ -89,12 +89,12 @@ async function cercar_video(args, message) {
 		const song_info = await ytdl.getInfo(args[0]);
 
 		if (song_info.videoDetails.isLiveContent) {
-			message.channel.send("❌ Error: No es poden posar transmissions en directe! Prova millor amb un video.");
+			message.channel.send("**❌ Error: No es poden posar transmissions en directe! Prova millor amb un video.**");
 			return;
 		}
 
 		if (song_info.videoDetails.isPrivate) {
-			message.channel.send("❌ Error: El video és privat!");
+			message.channel.send("**❌ Error: El video és privat!**");
 			return;
 		}
 
@@ -124,7 +124,7 @@ async function cercar_video(args, message) {
 				requestedBy: message.author
 			};
 		} else {
-			message.channel.send("❌ Error: No s'ha pogut cercar el video correctament.");
+			message.channel.send("**❌ Error: Ho sento, no he trobat cap vídeo. 😦**");
 			return;
 		}
 	}
@@ -178,38 +178,44 @@ const video_player = async (guild, song, voice_channel_name) => {
 		return;
 	}
 
-	const stream = ytdl(song.url, {
-		filter: "audioonly"
-	});
-
-	song_queue.connection
-		.play(stream, {
-			seek: 0,
-			volume: song_queue.volume
-		})
-		.on("finish", () => {
-			if (song_queue.skipping || !song_queue.loop) {
-				song_queue.songs.shift();
-				song_queue.skipping = false;
-			}
-			video_player(guild, song_queue.songs[0], voice_channel_name);
+	try {
+		const stream = ytdl(song.url, {
+			filter: "audioonly"
 		});
 
-	let embed = new Discord.MessageEmbed()
-		.setColor(getColorFromCommand(TYPE))
-		.setTitle(`🎶 Està sonant: **${song.title}**`);
+		song_queue.connection
+			.play(stream, {
+				seek: 0,
+				volume: song_queue.volume
+			})
+			.on("finish", () => {
+				if (song_queue.skipping || !song_queue.loop) {
+					song_queue.songs.shift();
+					song_queue.skipping = false;
+				}
+				video_player(guild, song_queue.songs[0], voice_channel_name);
+			});
 
-	if (song_queue.loop) {
-		embed.setDescription("🔁 Loop activat!");
+		let embed = new Discord.MessageEmbed()
+			.setColor(getColorFromCommand(TYPE))
+			.setTitle(`🎶 Està sonant: **${song.title}**`);
+
+		if (song_queue.loop) {
+			embed.setDescription("🔁 Loop activat!");
+		}
+		song_queue.text_channel.send(embed);
+
+	} catch (err) {
+		return message.channel.send("**❌ Error: Alguna cosa ha petat! Hi ha hagut un error al reproduir.**\n" +
+			"Mes info: " + err.toString());
 	}
-	song_queue.text_channel.send(embed);
 };
 
 /// ============================================
 
 const play_song = async function (message, args, server_queue, voice_channel, prefix) {
 	if (!args.length)
-		return message.channel.send("❌ Error: No se què he de posar! Necessito un segon argument.");
+		return message.channel.send("**❌ Error: No se què he de posar! Necessito un segon argument.**");
 
 	if (args[0].match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/i)) {
 		return message.channel.send(`⚠️ Llista de reproducció detectada!\nFés servir la comanda \`${prefix}playlist < URL >\` per posar totes les cançons de cop.`);
@@ -220,7 +226,7 @@ const play_song = async function (message, args, server_queue, voice_channel, pr
 	if (!song) return;
 
 	if (song.duration > VIDEO_MAX_DURATION) {
-		return message.channel.send("❌ Error: No es poden reproduir videos de més de 5h.");
+		return message.channel.send("**❌ Error: No es poden reproduir videos de més de 5h.**");
 	}
 
 	if (!server_queue) {
@@ -235,7 +241,8 @@ const play_song = async function (message, args, server_queue, voice_channel, pr
 			video_player(message.guild, queue_constructor.songs[0], voice_channel.name);
 		} catch (err) {
 			queue.delete(message.guild.id);
-			message.channel.send("❌ Error: Hi ha hagut un error al connectar-me!");
+			message.channel.send("**❌ Error: Hi ha hagut un error al connectar-me!**\n" +
+				"Mes info: " + err.toString());
 			throw err;
 		}
 	} else if (server_queue.timeout) {
@@ -267,7 +274,7 @@ const play_song = async function (message, args, server_queue, voice_channel, pr
 
 const playnow_song = async function (message, args, server_queue, voice_channel, prefix) {
 	if (!args.length)
-		return message.channel.send("❌ Error: No se què he de posar! Necessito un segon argument.");
+		return message.channel.send("**❌ Error: No se què he de posar! Necessito un segon argument.**");
 
 	if (args[0].match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/i)) {
 		return message.channel.send(`⚠️ Llista de reproducció detectada!\nFés servir la comanda \`${prefix}playlist < URL >\` per posar totes les cançons de cop.`);
@@ -278,7 +285,7 @@ const playnow_song = async function (message, args, server_queue, voice_channel,
 	if (!song) return;
 
 	if (song.duration > VIDEO_MAX_DURATION) {
-		return message.channel.send("❌ Error: No es poden reproduir videos de més de 5h.");
+		return message.channel.send("**❌ Error: No es poden reproduir videos de més de 5h.**");
 	}
 
 	if (!server_queue) {
@@ -293,8 +300,8 @@ const playnow_song = async function (message, args, server_queue, voice_channel,
 			video_player(message.guild, queue_constructor.songs[0], voice_channel.name);
 		} catch (err) {
 			queue.delete(message.guild.id);
-			message.channel.send("❌ Error: Hi ha hagut un error al connectar-me!");
-			throw err;
+			message.channel.send("**❌ Error: Hi ha hagut un error al connectar-me!**\n" +
+				"Mes info: " + err.toString());
 		}
 	} else if (server_queue.timeout) {
 		clearTimeout(server_queue.timeout);
@@ -367,11 +374,12 @@ const playnext_song = async function (message, args, server_queue, voice_channel
 
 const playlist_songs = async function (message, args, server_queue, voice_channel) {
 	if (!args.length) {
-		return message.channel.send("❌ Error: No se què he de posar! Necessito un segon argument.");
+		return message.channel.send("**❌ Error: No se què he de posar! Necessito un segon argument.**");
 	}
 	let songs = [];
 
 	if (args[0].match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/i)) {
+
 		const video_finder = async (query) => {
 			const url = new URL(query);
 			const listID = url.searchParams.get("list");
@@ -381,7 +389,15 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 			return video_result.videos.length > 1 ? video_result.videos : null;
 		};
 
-		const videos = await video_finder(args.join(" "));
+		let videos;
+		try {
+			videos = await video_finder(args.join(" "));
+		} catch (err) {
+			return message.channel.send("**❌ Error: La playlist no està disponible.**\n" +
+				"Mira si és publica i que no provingui de `music.youtube.com`\n" +
+				"Mes info: " + err.toString());
+		}
+
 		if (videos) {
 			for (let video of videos) {
 				if (video.duration.seconds <= VIDEO_MAX_DURATION && video.duration.seconds !== 0) {
@@ -396,10 +412,10 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 				}
 			}
 		} else {
-			return message.channel.send("❌ Error: No s'ha trobat cap video a la playlist.");
+			return message.channel.send("**❌ Error: No s'ha trobat cap video a la playlist.**");
 		}
 	} else {
-		return message.channel.send("❌ Error: Posa un enllaç de playlist vàlid, siusplau.");
+		return message.channel.send("**❌ Error: Posa un enllaç de playlist vàlid, siusplau.**");
 	}
 
 	let willPlayNow = !server_queue;
@@ -450,8 +466,8 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 			video_player(message.guild, server_queue.songs[0], voice_channel.name);
 		} catch (err) {
 			queue.delete(message.guild.id);
-			message.channel.send("❌ Error: Hi ha hagut un error al connectar-me!");
-			throw err;
+			message.channel.send("**❌ Error: Hi ha hagut un error al connectar-me!**\n" +
+				"Mes info: " + err.toString());
 		}
 	}
 };
@@ -480,7 +496,7 @@ const skip_song = (message, server_queue) => {
 const stop_song = (message, server_queue) => {
 	if (!message.member.voice.channel)
 		return message.channel.send(
-			"❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!"
+			"**❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!**"
 		);
 
 	if (!server_queue) {
@@ -510,7 +526,7 @@ const stop_song = (message, server_queue) => {
 const clear_list = (message, server_queue, args) => {
 	if (!message.member.voice.channel)
 		return message.channel.send(
-			"❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!"
+			"**❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!**"
 		);
 
 	if (!server_queue || server_queue.songs.length === 1) {
@@ -524,16 +540,17 @@ const clear_list = (message, server_queue, args) => {
 
 	if (args[0]) {
 		if (isNaN(args[0])) {
-			return message.channel.send("❌ Error: La quantitat a esborrar ha de ser un numero!");
+			return message.channel.send("**❌ Error: La quantitat a esborrar ha de ser un numero!**");
 		}
 		n = parseInt(args[0]);
 	}
 
 	if (n <= 0) {
-		return message.channel.send("❌ Error: La quantitat ha de ser un numero positiu!");
+		return message.channel.send("**❌ Error: La quantitat ha de ser un numero positiu!**");
 	}
+
 	if (n >= server_queue.songs.length) {
-		message.channel.send("⚠️ Avís: La quantitat és més gran que la mida de la llista, esborrant totes...");
+		message.channel.send("**⚠️ Avís: La quantitat és més gran que la mida de la llista, esborrant totes...**");
 		n = server_queue.songs.length - 1;
 	}
 
@@ -549,7 +566,7 @@ const show_list = (message, server_queue, args) => {
 
 	if (!message.member.voice.channel)
 		return message.channel.send(
-			"❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!"
+			"**❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!**"
 		);
 
 	if (!server_queue || server_queue.songs.length <= 1) {
@@ -563,7 +580,7 @@ const show_list = (message, server_queue, args) => {
 
 	if (args[0]) {
 		if (isNaN(args[0])) {
-			return message.channel.send("❌ Error: El numero de pàgina ha de ser un numero enter.");
+			return message.channel.send("**❌ Error: El numero de pàgina ha de ser un numero enter.**");
 		}
 		nPagina = parseInt(args[0]);
 	}
@@ -574,7 +591,7 @@ const show_list = (message, server_queue, args) => {
 	const ultimaPagina = n % MAX_VIEW_SONG_LIST;
 
 	if (nPagina <= 0 || nPagina > nPagines) {
-		return message.channel.send("❌ Error: Numero de pàgina invàlid.");
+		return message.channel.send("**❌ Error: Numero de pàgina invàlid.**");
 	}
 
 	const minim = MAX_VIEW_SONG_LIST * (nPagina - 1) + 1;
@@ -601,7 +618,7 @@ const show_list = (message, server_queue, args) => {
 const show_np = (message, server_queue) => {
 	if (!message.member.voice.channel)
 		return message.channel.send(
-			"❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!"
+			"**❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!**"
 		);
 
 	if (!server_queue || server_queue.timeout) {
@@ -642,17 +659,17 @@ const show_np = (message, server_queue) => {
 const pause_song = (message, server_queue, prefix) => {
 
 	if (!server_queue || !server_queue.connection || !server_queue.connection.dispatcher) {
-		return message.channel.send('❌ Error: No hi ha cançons reproduint-se!');
+		return message.channel.send('**❌ Error: No hi ha cançons reproduint-se!**');
 	}
 
 	if (server_queue.connection.dispatcher.paused) {
-		return message.channel.send(`⚠️ Alerta: El reproductor ja està pausat! Posa \`${prefix}resume\``);
+		return message.channel.send(`**⚠️ Alerta: El reproductor ja està pausat!**\nPosa \`${prefix}resume\` per rependre la reproducció`);
 	}
 	try {
 		server_queue.connection.dispatcher.pause();
 	} catch (err) {
 		console.error(err);
-		return message.channel.send("❌ Error: Hi ha hagut un error al pausar!");
+		return message.channel.send("**❌ Error: Hi ha hagut un error al pausar!**");
 	}
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
@@ -663,18 +680,18 @@ const pause_song = (message, server_queue, prefix) => {
 
 const resume_song = (message, server_queue) => {
 	if (!server_queue || !server_queue.connection || !server_queue.connection.dispatcher) {
-		return message.channel.send('❌ Error: No hi ha cançons reproduint-se!');
+		return message.channel.send('**❌ Error: No hi ha cançons reproduint-se!**');
 	}
 
 	if (!server_queue.connection.dispatcher.paused) {
-		return message.channel.send(`⚠️ Alerta: El reproductor no està pausat!`);
+		return message.channel.send(`**⚠️ Alerta: El reproductor no està pausat!**`);
 	}
 
 	try {
 		server_queue.connection.dispatcher.resume();
 	} catch (err) {
 		console.error(err);
-		return message.channel.send("❌ Error: Hi ha hagut un error al rependre la cançó!");
+		return message.channel.send("**❌ Error: Hi ha hagut un error al rependre la cançó!**");
 	}
 
 	let embed = new Discord.MessageEmbed()
@@ -686,7 +703,7 @@ const resume_song = (message, server_queue) => {
 const switch_loop = (message, server_queue) => {
 
 	if (!server_queue || !server_queue.connection || !server_queue.connection.dispatcher) {
-		return message.channel.send('❌ Error: No hi ha cançons reproduint-se!');
+		return message.channel.send('**❌ Error: No hi ha cançons reproduint-se!**');
 	}
 
 	let paraula = server_queue.loop ? "Desactivant" : "Activant";
@@ -702,7 +719,7 @@ const switch_loop = (message, server_queue) => {
 const set_volume = (message, server_queue, newVolume) => {
 
 	if (!server_queue || !server_queue.connection || !server_queue.connection.dispatcher) {
-		return message.channel.send('❌ Error: No hi ha cançons reproduint-se!');
+		return message.channel.send('**❌ Error: No hi ha cançons reproduint-se!**');
 	}
 
 	if (!newVolume) {
@@ -711,7 +728,7 @@ const set_volume = (message, server_queue, newVolume) => {
 			.setTitle(`🔊 Volum actual: ${server_queue.connection.dispatcher.volume * 100}%`);
 		return message.channel.send(embed);
 	} else if (isNaN(newVolume) || newVolume < 0 || newVolume > 200) {
-		return message.channel.send('❌ Error: El numero cal que sigui enter entre 0 i 200!');
+		return message.channel.send('**❌ Error: El numero cal que sigui enter entre 0 i 200!**');
 	}
 
 	server_queue.connection.dispatcher.setVolume(parseInt(newVolume) / 100);
