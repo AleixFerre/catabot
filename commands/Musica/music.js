@@ -36,7 +36,8 @@ module.exports = {
 		"playnext",
 		"loop",
 		"volume",
-		"volum"
+		"volum",
+		"vol",
 	],
 	cooldown: 0,
 	async execute(message, args, server, _client, cmd) {
@@ -76,7 +77,7 @@ module.exports = {
 		else if (cmd === "pause") pause_song(message, server_queue, server.prefix);
 		else if (cmd === "resume") resume_song(message, server_queue);
 		else if (cmd === "loop") switch_loop(message, server_queue);
-		else if (cmd === "volume" || cmd === "volum") set_volume(message, server_queue, args[0]);
+		else if (cmd === "volume" || cmd === "vol" || cmd === "volum") set_volume(message, server_queue, args[0]);
 	},
 };
 
@@ -141,7 +142,8 @@ function queue_constructor_generic(voice_channel, message) {
 		loop: false,
 		skipping: false,
 		stopping: false,
-		timeout: null
+		timeout: null,
+		volume: 0.5
 	};
 }
 
@@ -173,7 +175,7 @@ const video_player = async (guild, song, voice_channel_name) => {
 	song_queue.connection
 		.play(stream, {
 			seek: 0,
-			volume: 0.5
+			volume: song_queue.volume
 		})
 		.on("finish", () => {
 			if (song_queue.skipping || !song_queue.loop) {
@@ -703,6 +705,8 @@ const set_volume = (message, server_queue, newVolume) => {
 	}
 
 	server_queue.connection.dispatcher.setVolume(parseInt(newVolume) / 100);
+	server_queue.volume = server_queue.connection.dispatcher.volume;
+
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
 		.setTitle(`🔊 Nou volum: ${server_queue.connection.dispatcher.volume * 100}%`);
