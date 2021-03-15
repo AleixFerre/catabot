@@ -147,11 +147,17 @@ function queue_constructor_generic(voice_channel, message) {
 	};
 }
 
-function sortir_i_esborrar(song_queue, guild) {
+function sortir_i_esborrar(song_queue, guild, abandonat) {
 	const embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
-		.setTitle(`👋 Adeu!`)
-		.setDescription(`Desconnectant del canal de veu ${song_queue.voice_channel}${song_queue.stopping ? "" : ` després de ${DISCONNECTION_DELAY_SECONDS}s d'inactivitat`}.`);
+		.setTitle(`👋 Adeu!`);
+
+	if (abandonat) {
+		embed.setDescription(`Desconnectant del canal de veu ${song_queue.voice_channel} ja que no hi ha ningú més al canal.`);
+	} else {
+		embed.setDescription(`Desconnectant del canal de veu ${song_queue.voice_channel}${song_queue.stopping ? "" : ` després de ${DISCONNECTION_DELAY_SECONDS}s d'inactivitat`}.`);
+	}
+
 	song_queue.text_channel.send(embed);
 	song_queue.voice_channel.leave();
 	queue.delete(guild.id);
@@ -160,11 +166,15 @@ function sortir_i_esborrar(song_queue, guild) {
 const video_player = async (guild, song, voice_channel_name) => {
 	const song_queue = queue.get(guild.id);
 
+	if (song_queue.voice_channel.members.size === 1) {
+		return sortir_i_esborrar(song_queue, guild, true);
+	}
+
 	if (!song) {
 		if (song_queue.stopping)
-			sortir_i_esborrar(song_queue, guild);
+			sortir_i_esborrar(song_queue, guild, false);
 		else
-			song_queue.timeout = setTimeout(sortir_i_esborrar, 1000 * DISCONNECTION_DELAY_SECONDS, song_queue, guild);
+			song_queue.timeout = setTimeout(sortir_i_esborrar, 1000 * DISCONNECTION_DELAY_SECONDS, song_queue, guild, false);
 		return;
 	}
 
@@ -485,7 +495,7 @@ const stop_song = (message, server_queue) => {
 		server_queue.stopping = true;
 		clearTimeout(server_queue.timeout);
 		server_queue.timeout = null;
-		return sortir_i_esborrar(server_queue, message.guild);
+		return sortir_i_esborrar(server_queue, message.guild, false);
 	}
 
 	if (server_queue.connection.dispatcher.paused) {
