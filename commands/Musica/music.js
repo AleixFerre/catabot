@@ -39,6 +39,8 @@ module.exports = {
 		"volume",
 		"volum",
 		"vol",
+		"silent",
+		"silentmode",
 	],
 	cooldown: 0,
 	async execute(message, args, server, _client, cmd) {
@@ -79,6 +81,7 @@ module.exports = {
 		else if (cmd === "resume") resume_song(message, server_queue);
 		else if (cmd === "loop") switch_loop(message, server_queue);
 		else if (cmd === "volume" || cmd === "vol" || cmd === "volum") set_volume(message, server_queue, args[0]);
+		else if (cmd === "silent" || cmd === "silentmode") silent_mode(message, server_queue);
 	},
 };
 
@@ -144,7 +147,8 @@ function queue_constructor_generic(voice_channel, message) {
 		skipping: false,
 		stopping: false,
 		timeout: null,
-		volume: 0.5
+		volume: 0.5,
+		silent: false
 	};
 }
 
@@ -197,14 +201,16 @@ const video_player = async (guild, song, voice_channel_name) => {
 				video_player(guild, song_queue.songs[0], voice_channel_name);
 			});
 
-		let embed = new Discord.MessageEmbed()
-			.setColor(getColorFromCommand(TYPE))
-			.setTitle(`🎶 Està sonant: **${song.title}**`);
+		if (!song_queue.silent) {
+			let embed = new Discord.MessageEmbed()
+				.setColor(getColorFromCommand(TYPE))
+				.setTitle(`🎶 Està sonant: **${song.title}**`);
 
-		if (song_queue.loop) {
-			embed.setDescription("🔁 Loop activat!");
+			if (song_queue.loop) {
+				embed.setDescription("🔁 Loop activat!");
+			}
+			song_queue.text_channel.send(embed);
 		}
-		song_queue.text_channel.send(embed);
 
 	} catch (err) {
 		return message.channel.send("**❌ Error: Alguna cosa ha petat! Hi ha hagut un error al reproduir.**\n" +
@@ -742,6 +748,20 @@ const set_volume = (message, server_queue, newVolume) => {
 	return message.channel.send(embed);
 };
 
+const silent_mode = (message, server_queue) => {
+
+	if (!server_queue || !server_queue.connection || !server_queue.connection.dispatcher) {
+		return message.channel.send('**❌ Error: No hi ha cançons reproduint-se!**');
+	}
+
+	server_queue.silent = !server_queue.silent;
+
+	let embed = new Discord.MessageEmbed()
+		.setColor(getColorFromCommand(TYPE))
+		.setTitle(`🔇 Mode silenci ${server_queue.silent ? "activat" : "desactivat"} correctament!`);
+	return message.channel.send(embed);
+};
+
 /// ============================================
 
 const mostrar_opcions = (message, server) => {
@@ -765,6 +785,7 @@ const mostrar_opcions = (message, server) => {
 		.addField(`❯ ${prefix}resume`, "Repren la reproducció pausada.", false)
 		.addField(`❯ ${prefix}volume [ n ]`, "Posa un nou volum de la reproducció. Et mostra el volum actual si no es passa cap paràmetre.", false)
 		.addField(`❯ ${prefix}loop`, "Alterna el mode LOOP. Quan està activat, el bot reproduirà la mateixa cançó una i altra vegada.", false)
+		.addField(`❯ ${prefix}silent/ silentMode`, "Alterna el mode SILENT. Aquest fa que el bot no mostri la cançó actual quan passa a la següent cançó.")
 		.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
 	message.channel.send(embed);
