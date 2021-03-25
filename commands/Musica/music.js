@@ -9,6 +9,7 @@ const VIDEO_MAX_DURATION = 60 * 60 * 5; // 5h in seconds
 const MAX_VIEW_SONG_LIST = 10; // Maximes cançons a mostrar a la llista | ASSERT MAX_VIEW_SONG_LIST != 0
 const DISCONNECTION_DELAY_SECONDS = 60; // Temps d'espera en desconnectar-se en segons
 const TYPE = "musica";
+const PLAYLIST_PATTERN = /^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/i;
 
 const queue = new Map();
 
@@ -217,7 +218,7 @@ const play_song = async function (message, args, server_queue, voice_channel, pr
 	if (!args.length)
 		return message.channel.send("**❌ Error: No se què he de posar! Necessito un segon argument.**");
 
-	if (args[0].match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/i)) {
+	if (args[0].match(PLAYLIST_PATTERN)) {
 		return message.channel.send(`⚠️ Llista de reproducció detectada!\nFés servir la comanda \`${prefix}playlist < URL >\` per posar totes les cançons de cop.`);
 	}
 
@@ -276,7 +277,7 @@ const playnow_song = async function (message, args, server_queue, voice_channel,
 	if (!args.length)
 		return message.channel.send("**❌ Error: No se què he de posar! Necessito un segon argument.**");
 
-	if (args[0].match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/i)) {
+	if (args[0].match(PLAYLIST_PATTERN)) {
 		return message.channel.send(`⚠️ Llista de reproducció detectada!\nFés servir la comanda \`${prefix}playlist < URL >\` per posar totes les cançons de cop.`);
 	}
 
@@ -324,7 +325,7 @@ const playnext_song = async function (message, args, server_queue, voice_channel
 	if (!args.length)
 		return message.channel.send("❌ Error: No se què he de posar! Necessito un segon argument.");
 
-	if (args[0].match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/i)) {
+	if (args[0].match(PLAYLIST_PATTERN)) {
 		return message.channel.send(`⚠️ Llista de reproducció detectada!\nFés servir la comanda \`${prefix}playlist < URL >\` per posar totes les cançons de cop.`);
 	}
 
@@ -378,7 +379,7 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 	}
 	let songs = [];
 
-	if (args[0].match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/i)) {
+	if (args[0].match(PLAYLIST_PATTERN)) {
 
 		const video_finder = async (query) => {
 			const url = new URL(query);

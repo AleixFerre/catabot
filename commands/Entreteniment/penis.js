@@ -11,13 +11,13 @@ module.exports = {
     type: TYPE,
     cooldown: 0,
     aliases: ['pene'],
-    execute(message, args) {
+    execute(message) {
 
         let penis = Math.round(Math.random() * 9 + 1); // Clamped bewteen 1 : 10
 
         let mention = message.author;
 
-        if (args[0]) {
+        if (message.mentions.users.first()) {
             mention = message.mentions.users.first();
         }
 

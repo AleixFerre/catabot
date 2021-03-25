@@ -7,17 +7,17 @@ const TYPE = "entreteniment";
 
 module.exports = {
     name: 'howgay',
-    description: 'Et diu lo gay que ets',
+    description: 'Et diu quant gay ets',
     type: TYPE,
     cooldown: 0,
     aliases: ['gay'],
-    execute(message, args) {
+    execute(message) {
 
         let gay = Math.round(Math.random() * 99 + 1); // Clamped bewteen 1% : 100%
 
         let mention = message.author;
 
-        if (args[0]) {
+        if (message.mentions.users.first()) {
             mention = message.mentions.users.first();
         }
 

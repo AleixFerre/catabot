@@ -366,10 +366,14 @@ client.on('message', async (message) => {
     try {
         command.execute(message, args, server, client, commandName);
     } catch (error) {
-        console.error(error);
-        message.reply('alguna cosa ha anat malament, siusplau contacta amb ' + process.env.ownerDiscordUsername +
-            '\nSi saps el que ha passat i vols reportar un bug pots fer-ho a\n' +
-            'https://github.com/CatalaHD/CataBot/issues');
+        const errorEmbed = new Discord.MessageEmbed()
+            .setColor(0xff0000) // Red
+            .setTitle("⚠️ Alguna cosa ha anat malament! ⚠️")
+            .setDescription("Si saps el que ha passat, pots reportar el bug [aqui](https://github.com/CatalaHD/CataBot/issues).")
+            .addField("Error:", error);
+
+        console.log(error);
+        message.channel.send(errorEmbed);
     }
 
 });
