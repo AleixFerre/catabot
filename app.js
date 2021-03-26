@@ -373,7 +373,15 @@ client.on('message', async (message) => {
             .addField("Error:", error);
 
         console.log(error);
-        message.channel.send(errorEmbed);
+
+        message.channel.send(errorEmbed); // Enviem la info pel canal
+
+        errorEmbed.addField("Guild", message.guild.name, true)
+		    .addField("Channel", message.channel.name, true);
+
+        // Enviem info adicional al admin
+        let owner = await message.client.users.fetch(process.env.IdOwner);
+        owner.send(errorEmbed);
     }
 
 });

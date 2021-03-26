@@ -213,8 +213,7 @@ const video_player = async (guild, song, voice_channel_name) => {
 		}
 
 	} catch (err) {
-		return message.channel.send("**❌ Error: Alguna cosa ha petat! Hi ha hagut un error al reproduir.**\n" +
-			"Mes info: " + err.toString());
+		return enviarError(message, "Alguna cosa ha petat! Hi ha hagut un error al reproduir.", err);
 	}
 };
 
@@ -248,9 +247,7 @@ const play_song = async function (message, args, server_queue, voice_channel, pr
 			video_player(message.guild, queue_constructor.songs[0], voice_channel.name);
 		} catch (err) {
 			queue.delete(message.guild.id);
-			message.channel.send("**❌ Error: Hi ha hagut un error al connectar-me!**\n" +
-				"Mes info: " + err.toString());
-			throw err;
+			return enviarError(message, "Hi ha hagut un error al connectar-me!", err);
 		}
 	} else if (server_queue.timeout) {
 		// Netejem el timeout
@@ -307,8 +304,7 @@ const playnow_song = async function (message, args, server_queue, voice_channel,
 			video_player(message.guild, queue_constructor.songs[0], voice_channel.name);
 		} catch (err) {
 			queue.delete(message.guild.id);
-			message.channel.send("**❌ Error: Hi ha hagut un error al connectar-me!**\n" +
-				"Mes info: " + err.toString());
+			return enviarError(message, "Hi ha hagut un error al connectar-me!", err);
 		}
 	} else if (server_queue.timeout) {
 		clearTimeout(server_queue.timeout);
@@ -355,8 +351,7 @@ const playnext_song = async function (message, args, server_queue, voice_channel
 			video_player(message.guild, queue_constructor.songs[0], voice_channel.name);
 		} catch (err) {
 			queue.delete(message.guild.id);
-			message.channel.send("❌ Error: Hi ha hagut un error al connectar-me!");
-			throw err;
+			return enviarError(message, "Hi ha hagut un error al connectar-me!", err);
 		}
 	} else if (server_queue.timeout) {
 		clearTimeout(server_queue.timeout);
@@ -400,9 +395,8 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 		try {
 			videos = await video_finder(args.join(" "));
 		} catch (err) {
-			return message.channel.send("**❌ Error: La playlist no està disponible.**\n" +
-				"Mira si és publica i que no provingui de `music.youtube.com`\n" +
-				"Mes info: " + err.toString());
+			return enviarError(message, "La playlist no està disponible.**\n" +
+				"Mira si és publica i que no provingui de `music.youtube.com`", err);
 		}
 
 		if (videos) {
@@ -473,8 +467,7 @@ const playlist_songs = async function (message, args, server_queue, voice_channe
 			video_player(message.guild, server_queue.songs[0], voice_channel.name);
 		} catch (err) {
 			queue.delete(message.guild.id);
-			message.channel.send("**❌ Error: Hi ha hagut un error al connectar-me!**\n" +
-				"Mes info: " + err.toString());
+			return enviarError(message, "Hi ha hagut un error al connectar-me!", err);
 		}
 	}
 };
@@ -676,7 +669,7 @@ const pause_song = (message, server_queue, prefix) => {
 		server_queue.connection.dispatcher.pause();
 	} catch (err) {
 		console.error(err);
-		return message.channel.send("**❌ Error: Hi ha hagut un error al pausar!**");
+		return enviarError(message, "Hi ha hagut un error al pausar!", err);
 	}
 	let embed = new Discord.MessageEmbed()
 		.setColor(getColorFromCommand(TYPE))
@@ -698,7 +691,7 @@ const resume_song = (message, server_queue) => {
 		server_queue.connection.dispatcher.resume();
 	} catch (err) {
 		console.error(err);
-		return message.channel.send("**❌ Error: Hi ha hagut un error al rependre la cançó!**");
+		return enviarError(message, "Hi ha hagut un error al rependre la cançó!", err);
 	}
 
 	let embed = new Discord.MessageEmbed()
@@ -801,4 +794,20 @@ const durationToString = (duration) => {
 		return `${Math.floor(duration / 60)} min ${duration % 60} sec`;
 
 	return `${duration} sec`;
+};
+
+const enviarError = async (message, str, err) => {
+	const errorEmbed = new Discord.MessageEmbed()
+		.setColor(0xff0000) // Red
+		.setTitle("⚠️ Alguna cosa ha anat malament! ⚠️")
+		.setDescription(str)
+		.addField("Error", err, false);
+	
+	message.channel.send(errorEmbed);
+
+	errorEmbed.addField("Guild", message.guild.name, true)
+		.addField("Channel", message.channel.name, true);
+
+	let owner = await message.client.users.fetch(process.env.IdOwner);
+	owner.send(errorEmbed);
 };
