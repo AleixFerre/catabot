@@ -18,6 +18,11 @@
         "Ara el bot s'espera uns segons abans de desconnectar-se.",
         "Més info amb la comanda `ÇÇmusic`."
       ]
+    }, {
+      "main": "S'ha afegit una nova comanda de poll per generar enquestes",
+      "secondary": [
+        "Es recomana que es facin servir al canal adequat perque quedin guardades i que es vegin en el temps."
+      ]
     }]
   },
   "1.3": {

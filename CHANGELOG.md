@@ -5,8 +5,8 @@ _All **ÇÇ** strings are representations of the server prefix_
 \[v1.4\]
 
 * Afegides noves comandes de música.
-  * `´ÇÇplayNow`: Posa una cançó ara mateix. La comanda respectarà la cua següent però es passarà la cançó actual.
-  * `´ÇÇplayNext`: Posa una cançó al principi de la cua.
+  * `ÇÇplayNow`: Posa una cançó ara mateix. La comanda respectarà la cua següent però es passarà la cançó actual.
+  * `ÇÇplayNext`: Posa una cançó al principi de la cua.
   * `ÇÇnp`: Et mostra la cançó que s'està reproduint ara mateix.
   * `ÇÇq [ nPagina ]`: Et mostra la llista de reproducció a la pàgina que vulguis.
   * `ÇÇclear [ n ]`: Esborra algunes o totes les cançons de la llista.
@@ -18,6 +18,8 @@ _All **ÇÇ** strings are representations of the server prefix_
   * Ara es pot veure la duració de les cançons i el temps al afegir cançons a la cua.
   * Ara el bot s'espera uns segons abans de desconnectar-se.
   * Més info amb la comanda `ÇÇmusic`.
+* S'ha afegit una nova comanda de poll per generar enquestes
+  * Es recomana que es facin servir al canal adequat perque quedin guardades i que es vegin en el temps.
 
 \[v1.3\]
 
