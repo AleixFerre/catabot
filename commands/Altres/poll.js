@@ -21,7 +21,8 @@ module.exports = {
         // Create the embed message
         let embed = new Discord.MessageEmbed()
             .setColor(getColorFromCommand(TYPE))
-            .setTitle(args.join(" "));
+            .setTitle(args.join(" "))
+            .setFooter(`Enquesta inciada per ${message.author.tag}`);
 
         // Await to send the message
         let msg = await message.channel.send(embed);
@@ -31,5 +32,7 @@ module.exports = {
             msg.react("👍"),
             msg.react("👎")
         ]);
+
+        message.delete();
     },
 };
