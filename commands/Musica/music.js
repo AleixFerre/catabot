@@ -14,8 +14,12 @@ const {
 	switch_loop,
 	set_volume,
 	silent_mode,
+	shuffle_list,
+	invert_list,
 	mostrar_opcions,
+	getServerQueue,
 } = require("../../lib/musicModule.js");
+
 
 module.exports = {
 	name: "music",
@@ -45,6 +49,8 @@ module.exports = {
 		"vol",
 		"silent",
 		"silentmode",
+		"shuffle",
+		"invert"
 	],
 	cooldown: 0,
 	async execute(message, args, server, _client, cmd) {
@@ -62,7 +68,7 @@ module.exports = {
 		if (!permissions.has("SPEAK"))
 			return message.channel.send("**❌ Error: No tens els permissos correctes!**");
 
-		const server_queue = queue.get(message.guild.id);
+		const server_queue = getServerQueue(message.guild.id);
 
 		if (server_queue && server_queue.voice_channel) {
 			// Has d'estar al mateix canal del bot
@@ -86,5 +92,7 @@ module.exports = {
 		else if (cmd === "loop") switch_loop(message, server_queue);
 		else if (cmd === "volume" || cmd === "vol" || cmd === "volum") set_volume(message, server_queue, args[0]);
 		else if (cmd === "silent" || cmd === "silentmode") silent_mode(message, server_queue);
+		else if (cmd === "shuffle") shuffle_list(message, server_queue);
+		else if (cmd === "invert") invert_list(message, server_queue);
 	},
 };
