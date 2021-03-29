@@ -26,8 +26,6 @@ client.commands = new Discord.Collection();
 
 moment().utcOffset('120');
 
-const cooldowns = new Map();
-
 // Describes if the system saves the commands into the docs/.../commands.json file
 // Es preferible que es tingui a FALSE a no ser que es vulgui guardar especificament
 const wantToSaveCommands = (process.env.SAVE_COMMANDS === 'true');
@@ -334,35 +332,6 @@ client.on('message', async (message) => {
         }
     }
 
-    if (!message.author.bot && message.channel.members && !message.member.hasPermission("ADMINISTRATOR") &&
-        commandName !== "setbot" && commandName !== "setalert" && commandName !== "h" && commandName !== "help") {
-        if (message.channel.id !== server.botChannel) {
-            message.author.send("Siusplau, utilitza el bot al canal pertinent. En aquest cas és <#" + server.botChannel + ">");
-        }
-    }
-
-    if (!message.author.bot) {
-
-        if (!cooldowns.has(commandName)) {
-            cooldowns.set(commandName, new Discord.Collection());
-        }
-
-        const currentTime = Date.now();
-        const timeStamps = cooldowns.get(commandName);
-        const cooldownAmount = (command.cooldown) * 1000;
-
-        if (timeStamps.has(message.author.id)) {
-            const expirationTime = timeStamps.get(message.author.id) + cooldownAmount;
-            if (currentTime < expirationTime) {
-                const timeLeft = (expirationTime - currentTime) / 1000;
-                return message.reply(`siusplau espera ${timeLeft.toFixed(1)} segons abans d'utilitzar la comanda \`${commandName}\``);
-            }
-        }
-
-        timeStamps.set(message.author.id, currentTime);
-
-    }
-
     try {
         command.execute(message, args, server, client, commandName);
     } catch (error) {
@@ -377,7 +346,7 @@ client.on('message', async (message) => {
         message.channel.send(errorEmbed); // Enviem la info pel canal
 
         errorEmbed.addField("Guild", message.guild.name, true)
-		    .addField("Channel", message.channel.name, true);
+            .addField("Channel", message.channel.name, true);
 
         // Enviem info adicional al admin
         let owner = await message.client.users.fetch(process.env.IdOwner);
