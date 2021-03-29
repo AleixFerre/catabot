@@ -4,6 +4,8 @@ _All **ÇÇ** strings are representations of the server prefix_
 
 \[v1.4\]
 
+* Esborrats els cooldowns de les comandes i els avisos de no fer servir els canals correctament.
+  * Molestaven massa, millor esborrar una cosa que molesta més que ajuda.
 * Afegides noves comandes de música.
   * `ÇÇplayNow`: Posa una cançó ara mateix. La comanda respectarà la cua següent però es passarà la cançó actual.
   * `ÇÇplayNext`: Posa una cançó al principi de la cua.
@@ -20,7 +22,7 @@ _All **ÇÇ** strings are representations of the server prefix_
   * Ara es pot veure la duració de les cançons i el temps al afegir cançons a la cua.
   * Ara el bot s'espera uns segons abans de desconnectar-se.
   * Més info amb la comanda `ÇÇmusic`.
-* S'ha afegit una nova comanda de poll per generar enquestes
+* S'ha afegit una nova comanda de `ÇÇpoll` per generar enquestes
   * Es recomana que es facin servir al canal adequat perque quedin guardades i que es vegin en el temps.
 
 \[v1.3\]

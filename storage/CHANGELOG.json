@@ -2,7 +2,12 @@
   "1.4": {
     "nom": "v1.4",
     "dades": [{
-      "main": "Afegides noves comandes de musica.",
+      "main": "Esborrats els cooldowns de les comandes i els avisos de no fer servir els canals correctament.",
+      "secondary": [
+        "Molestaven massa, millor esborrar una cosa que molesta més que ajuda."
+      ]
+    }, {
+      "main": "[1]: Afegides noves comandes de musica.",
       "secondary": [
         "`ÇÇplayNow`: Posa una cançó ara mateix. La comanda respectarà la cua següent però es passarà la cançó actual.",
         "`ÇÇplayNext`: Posa una cançó al principi de la cua.",
@@ -10,7 +15,11 @@
         "`ÇÇq [ nPagina ]`: Et mostra la llista de reproducció.",
         "`ÇÇclear [ n ]`: Esborra algunes o totes les cançons de la llista.",
         "`ÇÇpause`: Posa la reproducció en pausa.",
-        "`ÇÇresume`: Repren la reproducció pausada.",
+        "`ÇÇresume`: Repren la reproducció pausada."
+      ]
+    }, {
+      "main": "[2]: Afegides noves comandes de musica.",
+      "secondary": [
         "`ÇÇvolume`: Posa un nou volum de la reproducció. Et mostra el volum actual si no es passa cap paràmetre.",
         "`ÇÇloop`: Alterna el mode LOOP. Quan està activat, el bot reproduirà la mateixa cançó una i altra vegada.",
         "`ÇÇsilent`: Alterna el mode SILENT. Aquest fa que el bot no mostri la cançó actual quan passa a la següent cançó.",
@@ -21,7 +30,7 @@
         "Més info amb la comanda `ÇÇmusic`."
       ]
     }, {
-      "main": "S'ha afegit una nova comanda de poll per generar enquestes",
+      "main": "S'ha afegit una nova comanda de `ÇÇpoll` per generar enquestes",
       "secondary": [
         "Es recomana que es facin servir al canal adequat perque quedin guardades i que es vegin en el temps."
       ]
