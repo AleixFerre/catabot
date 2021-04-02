@@ -1,4 +1,4 @@
-const TYPE = "banc";
+const TYPE = "entreteniment";
 
 module.exports = {
     name: 'say',

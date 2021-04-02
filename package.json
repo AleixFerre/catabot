@@ -20,7 +20,7 @@
     "author": "CatalaHD",
     "license": "MIT",
     "dependencies": {
-        "@vitalets/google-translate-api": "^5.0.0",
+        "@vitalets/google-translate-api": "^5.1.0",
         "canvas": "^2.6.1",
         "chalk": "^4.1.0",
         "discord.js": "^12.5.1",
@@ -30,7 +30,7 @@
         "moment": "^2.29.1",
         "mongoose": "^5.11.17",
         "node-fetch": "^2.6.1",
-        "opusscript": "0.0.7",
+        "opusscript": "^0.0.8",
         "simple-youtube-api": "^5.2.1",
         "weather-js": "^2.0.0",
         "yt-search": "^2.7.3",
