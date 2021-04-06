@@ -1,4 +1,5 @@
 const TYPE = "musica";
+
 const {
 	play_song,
 	skip_song,
@@ -26,7 +27,6 @@ module.exports = {
 	description: "Més info amb la comanda `!music`.",
 	type: TYPE,
 	aliases: [
-		"musica",
 		"play",
 		"skip",
 		"next",

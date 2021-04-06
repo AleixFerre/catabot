@@ -11,6 +11,7 @@ module.exports = {
     description: 'Mostra el temps que fa.',
     type: TYPE,
     cooldown: 10,
+    usage: '< ciutat/país >',
     aliases: ['temps', 'tiempo'],
     async execute(message, args, server) {
 

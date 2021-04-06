@@ -4,7 +4,7 @@ const {
     getColorFromCommand
 } = require('../../lib/common.js');
 
-const TYPE = "altres"; 
+const TYPE = "altres";
 
 module.exports = {
     name: 'help',
@@ -156,7 +156,7 @@ module.exports = {
 
             helpEmbed.setColor(command.color)
                 .setTitle(command.displayName)
-                .setDescription(command.description);
+                .setDescription(command.description.replace(/ÇÇ/ig, prefix));
 
             if (command.aliases) {
                 helpEmbed.addField("Alies", command.aliases.join(", "), false);
