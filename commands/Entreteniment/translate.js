@@ -8,7 +8,7 @@ const TYPE = "entreteniment";
 
 module.exports = {
     name: 'translate',
-    description: 'Tradueix el que vulguis al espanyol!',
+    description: 'Tradueix el que vulguis al català!',
     usage: "< text >",
     type: TYPE,
     cooldown: 10,
@@ -25,7 +25,7 @@ module.exports = {
         }
 
         await translate(txt, {
-            to: "es"
+            to: "ca"
         }).then(res => {
             traducido = res.text;
         });

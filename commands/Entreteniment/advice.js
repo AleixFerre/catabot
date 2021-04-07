@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
+const translate = require('@vitalets/google-translate-api');
 const {
     getColorFromCommand
 } = require('../../lib/common.js');
@@ -45,10 +46,16 @@ module.exports = {
 
         if (error) return;
 
+        await translate(advice.advice, {
+            to: "ca"
+        }).then(res => {
+            traducido = res.text;
+        });
+
         let msg = new Discord.MessageEmbed()
             .setColor(getColorFromCommand(TYPE))
             .setTitle(title + advice.id + "**")
-            .setDescription(advice.advice)
+            .setDescription(traducido)
             .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
         message.channel.send(msg);

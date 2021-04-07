@@ -10,7 +10,9 @@ module.exports = {
     description: 'Et diu quant gay ets',
     type: TYPE,
     cooldown: 0,
-    aliases: ['gay'],
+    aliases: [
+        'gay'
+    ],
     execute(message) {
 
         let gay = Math.round(Math.random() * 99 + 1); // Clamped bewteen 1% : 100%

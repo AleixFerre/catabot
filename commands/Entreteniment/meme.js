@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
+const translate = require('@vitalets/google-translate-api');
 const {
     getColorFromCommand
 } = require('../../lib/common.js');
@@ -15,12 +16,19 @@ module.exports = {
 
         fetch("https://meme-api.herokuapp.com/gimme")
             .then(res => res.json())
-            .then((data) => {
+            .then(async (data) => {
+
+                await translate(data.title, {
+                    to: "ca"
+                }).then(res => {
+                    title = res.text;
+                });
+
                 const memeEmbed = new Discord.MessageEmbed()
                     .setColor(getColorFromCommand(TYPE))
                     .setURL(data.postLink)
-                    .setTitle(data.subreddit.toUpperCase() + " MEME")
-                    .setDescription(data.title)
+                    .setTitle(data.subreddit.toUpperCase())
+                    .setDescription(title)
                     .setImage(data.url)
                     .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 

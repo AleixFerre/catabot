@@ -39,7 +39,7 @@ module.exports = {
                     } else {
                         insult = data.insult;
                         await translate(insult, {
-                            to: "es"
+                            to: "ca"
                         }).then(res => {
                             insult = res.text;
                         });

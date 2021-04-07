@@ -32,7 +32,7 @@ module.exports = {
                 .then(async (data) => {
                     desc += data.fact;
                     await translate(desc, {
-                        to: "es"
+                        to: "ca"
                     }).then(res => {
                         desc = res.text;
                     });

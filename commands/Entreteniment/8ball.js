@@ -1,7 +1,9 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 const translate = require('@vitalets/google-translate-api');
-const { getColorFromCommand } = require('../../lib/common.js');
+const {
+    getColorFromCommand
+} = require('../../lib/common.js');
 
 const TYPE = "entreteniment";
 
@@ -34,12 +36,14 @@ module.exports = {
                 question = json.magic.question;
                 answer = json.magic.answer;
 
-                await translate(answer, { to: "es" }).then(res => {
+                await translate(answer, {
+                    to: "ca"
+                }).then(res => {
                     answer = res.text;
                 });
             });
 
-            let msg = new Discord.MessageEmbed()
+        let msg = new Discord.MessageEmbed()
             .setColor(getColorFromCommand(TYPE))
             .setTitle("**8BALL**")
             .setThumbnail('http://bit.ly/CataBot_' + type)
