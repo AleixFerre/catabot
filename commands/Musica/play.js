@@ -11,7 +11,7 @@ module.exports = {
     description: "El bot s'unirà al teu canal de veu i reproduirà les cançons que vulguis.",
     usage: '< URL / cerca >',
     type: TYPE,
-    cooldown: 0,
+    aliases: ['p'],
     async execute(message, args, server) {
 
         const voice_channel = message.member.voice.channel;

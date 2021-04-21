@@ -12,7 +12,6 @@ module.exports = {
     name: 'calc',
     description: 'No tens calculadora? Aquí en tens una.',
     type: TYPE,
-    cooldown: 5,
     aliases: ['math', 'calcula', 'calculadora', 'eval'],
     usage: '< expression > or < multiple/M exp1;; exp2>',
     execute(message, args, server) {

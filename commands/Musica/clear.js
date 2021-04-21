@@ -11,7 +11,6 @@ module.exports = {
     description: "Esborra algunes o totes les cançons de la llista.",
     usage: '[ n ]',
     type: TYPE,
-    cooldown: 0,
     async execute(message, args) {
 
         const voice_channel = message.member.voice.channel;

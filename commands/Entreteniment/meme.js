@@ -9,7 +9,6 @@ const TYPE = "entreteniment";
 
 module.exports = {
     name: 'meme',
-    cooldown: 10,
     description: 'Mostra un meme aleatori de reddit',
     type: TYPE,
     execute(message) {

@@ -10,7 +10,6 @@ module.exports = {
     name: "pause",
     description: "Posa la reproducció en pausa.",
     type: TYPE,
-    cooldown: 0,
     async execute(message, _args, server) {
 
         const voice_channel = message.member.voice.channel;

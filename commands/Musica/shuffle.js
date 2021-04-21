@@ -10,7 +10,6 @@ module.exports = {
     name: "shuffle",
     description: "Barreja la cua de reproducció.",
     type: TYPE,
-    cooldown: 0,
     async execute(message) {
 
         const voice_channel = message.member.voice.channel;

@@ -9,7 +9,6 @@ module.exports = {
     name: 'poll',
     description: 'Genera una enquesta.',
     type: TYPE,
-    cooldown: 0,
     aliases: ['vote'],
     async execute(message, args) {
 

@@ -9,7 +9,6 @@ module.exports = {
     name: 'bug',
     description: 'Avisa al propietari del bot d\'algun bug.',
     type: TYPE,
-    cooldown: 10,
     async execute(message) {
 
         message.reply("has rebut tota la info necessaria per DM");

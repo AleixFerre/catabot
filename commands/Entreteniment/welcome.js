@@ -18,7 +18,6 @@ module.exports = {
     name: 'welcome',
     description: 'Et dona la benvinguda',
     type: TYPE,
-    cooldown: 60,
     async execute(message, args, server, client) {
 
         function getMemberFromMention(mention) {

@@ -13,7 +13,6 @@ module.exports = {
     name: 'connect4',
     description: 'Joc 4: [BETA] Juga al 4 en ratlla amb els teus amics o contra la IA!',
     type: TYPE,
-    cooldown: 30,
     aliases: ['4enratlla', 'play4'],
     async execute(message, _args, server) {
 

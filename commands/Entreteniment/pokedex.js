@@ -12,7 +12,6 @@ module.exports = {
     usage: '< pokemon >',
     aliases: ['poke', 'pokemon'],
     type: TYPE,
-    cooldown: 10,
     execute(message, args, server) {
 
         if (!args[0]) {

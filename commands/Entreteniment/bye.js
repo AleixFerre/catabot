@@ -18,7 +18,6 @@ module.exports = {
     name: 'bye',
     description: 'Et despedeix del servidor',
     type: TYPE,
-    cooldown: 60,
     async execute(message, args, server, client) {
 
         function getMemberFromMention(mention) {

@@ -4,7 +4,6 @@ module.exports = {
     name: 'say',
     description: 'Fes que el bot digui el que vulguis',
     usage: '< text >',
-    cooldown: 10,
     type: TYPE,
     async execute(message, args, server) {
 

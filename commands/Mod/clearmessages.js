@@ -6,7 +6,6 @@ module.exports = {
     type: TYPE,
     usage: '< amount >',
     aliases: ['cls', 'clm'],
-    cooldown: 10,
     async execute(message, args, server) {
 
         let amount = 1;
@@ -18,16 +17,18 @@ module.exports = {
         if (isNaN(args[0])) {
             return message.reply("has de posar un numero!");
         }
-        
+
         amount = Number(args[0]);
-        
+
         if (amount > 100) {
             return message.reply("no pots borrar més de 100 missatges alhora!");
         } else if (amount < 1) {
             return message.reply("no pots borrar menys d'1 missatge!");
         }
 
-        await message.channel.messages.fetch({ limit: amount }).then(messages => {    
+        await message.channel.messages.fetch({
+            limit: amount
+        }).then(messages => {
             message.channel.bulkDelete(messages, true);
         }).catch(console.error);
     },

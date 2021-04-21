@@ -91,7 +91,6 @@ module.exports = {
     type: TYPE,
     aliases: ['morse', 'demorsify'],
     usage: '< morse/ASCII >',
-    cooldown: 0,
     execute(message, args) {
 
         if (!args[0])

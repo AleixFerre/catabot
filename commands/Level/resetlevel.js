@@ -8,7 +8,6 @@ module.exports = {
     name: 'resetlevel',
     description: 'Es resetejen tots els nivells de la gent. Comanda interna del bot.',
     type: TYPE,
-    cooldown: 60,
     async execute(message) {
 
         if (message.author.id !== process.env.IdOwner) {

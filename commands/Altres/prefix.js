@@ -10,7 +10,6 @@ module.exports = {
     name: 'prefix',
     description: 'Et mostra el prefix i et permet cambiar-lo amb un segon argument',
     type: TYPE,
-    cooldown: 10,
     usage: '[ new ]',
     async execute(message, args, server) {
 

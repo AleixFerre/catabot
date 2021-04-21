@@ -11,7 +11,6 @@ module.exports = {
     description: 'Mostra la classificació de monedes del servidor',
     aliases: ['leader', 'top'],
     type: TYPE,
-    cooldown: 10,
     usage: '[ amount ]',
     async execute(message, args) {
 

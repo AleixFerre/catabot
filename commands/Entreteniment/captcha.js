@@ -50,7 +50,6 @@ module.exports = {
     name: 'captcha',
     description: 'Et genera un nou parell imatge-text de Captcha',
     type: TYPE,
-    cooldown: 60,
     async execute(message) {
 
         let text = generateText(5);

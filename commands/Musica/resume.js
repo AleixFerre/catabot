@@ -10,7 +10,6 @@ module.exports = {
     name: "resume",
     description: "Repren la reproducció pausada.",
     type: TYPE,
-    cooldown: 0,
     async execute(message) {
 
         const voice_channel = message.member.voice.channel;

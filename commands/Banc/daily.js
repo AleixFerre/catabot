@@ -14,7 +14,6 @@ module.exports = {
     name: 'daily',
     description: 'Recolleix la teva recompensa diaria!',
     type: TYPE,
-    cooldown: 60,
     async execute(message, _args, server) {
 
         let content = "";

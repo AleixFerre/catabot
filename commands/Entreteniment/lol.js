@@ -207,7 +207,6 @@ module.exports = {
     description: 'Busca la info del LoL que vulguis',
     usage: "champ < champName >\n [ or ] spell < spellName >\n [ or ] item < itemName >",
     type: TYPE,
-    cooldown: 10,
     async execute(message, args, server) {
 
         if (args.length < 1) {

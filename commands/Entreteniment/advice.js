@@ -13,7 +13,6 @@ module.exports = {
     usage: '[ search ]',
     type: TYPE,
     aliases: ['consell'],
-    cooldown: 5,
     async execute(message, args) {
 
         let adviceLink = "https://api.adviceslip.com/advice";

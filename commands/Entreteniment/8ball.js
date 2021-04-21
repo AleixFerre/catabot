@@ -13,7 +13,6 @@ module.exports = {
     type: TYPE,
     usage: '< question >',
     aliases: ['8', 'ball'],
-    cooldown: 5,
     async execute(message, args, server) {
 
         if (!args[0]) {

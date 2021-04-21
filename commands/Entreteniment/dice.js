@@ -10,7 +10,6 @@ module.exports = {
     description: 'Tira els daus que vulguis com vulguis',
     usage: '[ size ] [ amount ]',
     aliases: ['roll'],
-    cooldown: 0,
     type: TYPE,
     execute(message, args) {
 

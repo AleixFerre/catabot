@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
-const { getColorFromCommand } = require('../../lib/common.js');
+const {
+    getColorFromCommand
+} = require('../../lib/common.js');
 
 const TYPE = "entreteniment";
 
@@ -7,7 +9,6 @@ module.exports = {
     name: 'rps',
     description: 'Juga a pedra-paper-tissora amb el bot',
     type: TYPE,
-    cooldown: 0,
     usage: '< rock/paper/scissors >',
     execute(message, args, server) {
 
@@ -24,9 +25,18 @@ module.exports = {
         }
 
         const logic = { // Reference: https://rosettacode.org/wiki/Rock-paper-scissors#JavaScript
-            rock: { w: 'scissors', l: 'paper' },
-            paper: { w: 'rock', l: 'scissors' },
-            scissors: { w: 'paper', l: 'rock' }
+            rock: {
+                w: 'scissors',
+                l: 'paper'
+            },
+            paper: {
+                w: 'rock',
+                l: 'scissors'
+            },
+            scissors: {
+                w: 'paper',
+                l: 'rock'
+            }
         };
 
         let choices = Object.keys(logic);

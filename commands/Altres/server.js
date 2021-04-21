@@ -11,7 +11,6 @@ const TYPE = "altres";
 module.exports = {
     name: 'server',
     type: TYPE,
-    cooldown: 0,
     description: 'Diu la informació del servidor.',
     aliases: ['serverinfo', 'guild'],
     async execute(message, _args, server) {

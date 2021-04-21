@@ -11,7 +11,6 @@ module.exports = {
     name: 'setmoney',
     description: 'Adjudica una quantitat a una persona',
     type: TYPE,
-    cooldown: 5,
     usage: '< amount > < @user >',
     execute(message, args, server) {
 

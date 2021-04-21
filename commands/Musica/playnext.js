@@ -11,7 +11,6 @@ module.exports = {
     description: "Posa una cançó al principi de la cua.",
     usage: '< URL / cerca >',
     type: TYPE,
-    cooldown: 0,
     async execute(message, args, server) {
 
         const voice_channel = message.member.voice.channel;

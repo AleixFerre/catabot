@@ -16,7 +16,6 @@ module.exports = {
     description: 'Et mostra el nivell que ets',
     type: TYPE,
     aliases: ['xp', 'lvl'],
-    cooldown: 0,
     async execute(message) {
 
         let mention = {};

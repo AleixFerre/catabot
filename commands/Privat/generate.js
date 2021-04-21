@@ -12,7 +12,6 @@ module.exports = {
     name: 'generate',
     description: 'Ingresa una quantitat a una persona',
     type: TYPE,
-    cooldown: 5,
     usage: '< amount > < @user >',
     async execute(message, args, server) {
 

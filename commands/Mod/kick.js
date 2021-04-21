@@ -5,7 +5,6 @@ module.exports = {
     description: 'Expulsa permanentment un usuari del servidor',
     usage: '< @usuari > [ descripció ]',
     type: TYPE,
-    cooldown: 30,
     execute(message, args, server) {
 
         let prefix = server.prefix;

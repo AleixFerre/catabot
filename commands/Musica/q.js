@@ -15,7 +15,6 @@ module.exports = {
         "queue",
         "cua"
     ],
-    cooldown: 0,
     async execute(message, args) {
 
         const voice_channel = message.member.voice.channel;

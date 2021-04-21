@@ -12,7 +12,6 @@ module.exports = {
     description: 'Mostra una imatge d\'un gos aleatori',
     type: TYPE,
     aliases: ['gos'],
-    cooldown: 10,
     async execute(message) {
 
         let desc = "";

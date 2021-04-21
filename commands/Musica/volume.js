@@ -5,17 +5,15 @@ const {
     getServerQueue,
 } = require("../../lib/musicModule.js");
 
-
 module.exports = {
     name: "volume",
     description: "Posa un nou volum de la reproducció. Et mostra el volum actual si no es passa cap paràmetre.",
-    usage: '[ n ]',
+    usage: '[ n / earrape ]',
     type: TYPE,
     aliases: [
         "volum",
         "vol"
     ],
-    cooldown: 0,
     async execute(message, args) {
 
         const voice_channel = message.member.voice.channel;

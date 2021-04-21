@@ -9,7 +9,6 @@ module.exports = {
     name: 'gamble',
     description: '50% de guanyar, apostant monedes.',
     type: TYPE,
-    cooldown: 0,
     usage: '< amount/all > [ multiplyer ]',
     aliases: ['dobleonada'],
     async execute(message, args, server) {

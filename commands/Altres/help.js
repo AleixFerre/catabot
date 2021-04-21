@@ -10,7 +10,6 @@ module.exports = {
     name: 'help',
     description: 'Mostra informació de les comandes',
     type: TYPE,
-    cooldown: 0,
     usage: '[ nom / tipus de la comanda ]',
     aliases: ['h', 'commands', 'info'],
     execute(message, args, server) {
@@ -189,23 +188,6 @@ module.exports = {
 
             if (command.example)
                 helpEmbed.addField('Exemple', prefix + command.name + ' ' + command.example);
-
-            if (command.cooldown) {
-                let segons = command.cooldown;
-                let field = segons + (segons === 1 ? ' segon' : ' segons');
-
-                if (segons >= 60) {
-                    let minuts = Math.floor(command.cooldown / 60);
-                    let segonsRestants = command.cooldown % 60;
-                    field += " (" + minuts + (minuts === 1 ? " minut" : " minuts");
-                    if (segonsRestants !== 0) {
-                        field += " i " + segonsRestants + (segonsRestants === 1 ? " segon" : " segons");
-                    }
-                    field += ")";
-                }
-
-                helpEmbed.addField('Cooldown', field);
-            }
         }
 
         message.channel.send(helpEmbed);

@@ -13,7 +13,6 @@ module.exports = {
     type: TYPE,
     aliases: ['canvi'],
     example: "10 EUR USD",
-    cooldown: 5,
     async execute(message, args, server) {
 
         if (args.length < 3) {

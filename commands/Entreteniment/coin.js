@@ -9,7 +9,6 @@ module.exports = {
     name: 'coin',
     description: 'Te la jugues al 50%',
     type: TYPE,
-    cooldown: 0,
     aliases: ['cflip', 'caraocreu'],
     execute(message) {
 

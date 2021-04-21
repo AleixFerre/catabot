@@ -10,7 +10,6 @@ module.exports = {
     name: "loop",
     description: "Alterna el mode LOOP. Quan està activat, el bot reproduirà la mateixa cançó una i altra vegada.",
     type: TYPE,
-    cooldown: 0,
     async execute(message) {
 
         const voice_channel = message.member.voice.channel;

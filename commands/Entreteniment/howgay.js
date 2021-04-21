@@ -9,7 +9,6 @@ module.exports = {
     name: 'howgay',
     description: 'Et diu quant gay ets',
     type: TYPE,
-    cooldown: 0,
     aliases: [
         'gay'
     ],

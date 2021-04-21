@@ -9,7 +9,6 @@ module.exports = {
     description: "Adjudica el nivell d'algú. Comanda interna del bot",
     type: TYPE,
     usage: '<lvl, xp, @user>',
-    cooldown: 5,
     async execute(message, args) {
 
         if (message.author.id !== process.env.IdOwner) {

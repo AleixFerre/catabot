@@ -13,7 +13,6 @@ module.exports = {
     description: 'Et mostra els diners que tens',
     usage: '[ @user ]',
     aliases: ['diners'],
-    cooldown: 10,
     type: TYPE,
     async execute(message) {
 

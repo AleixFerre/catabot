@@ -13,7 +13,6 @@ module.exports = {
     name: 'slotmachine',
     description: 'Maquina tragaperras de toda la vida.\nNecessites que totes siguin iguals',
     type: TYPE,
-    cooldown: 0,
     usage: '< amount/all >',
     aliases: ['slot'],
     async execute(message, args, server) {

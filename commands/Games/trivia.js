@@ -11,13 +11,14 @@ const {
 
 const TYPE = "games";
 
+// TODO: ES PODRIA TRADUIR LES PREGUNTES I RESPOSTES AL CATALÀ AMB EL PAQUET TRANSLATE
+
 module.exports = {
     name: 'trivia',
     description: 'Joc 2: [BETA] Juga amb els teus amics al joc de les preguntes!',
     aliases: ['quiz', 'playq'],
     usage: '[ quantitat_preguntes ]',
     type: TYPE,
-    cooldown: 30,
     async execute(message, args, server) {
 
         // Només cal ABCD, però per si un cas

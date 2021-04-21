@@ -11,7 +11,6 @@ module.exports = {
     description: 'Mostra les notes d\'una actualització del bot escollida. Si no es posa cap paràmetre s\'escolleix la actual',
     usage: '[ versió: x.x ]',
     type: TYPE,
-    cooldown: 0,
     example: '1.3',
     aliases: ['parche', 'notes', 'changes', 'changelog', 'canvis'],
     async execute(message, args, server) {

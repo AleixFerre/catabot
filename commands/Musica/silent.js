@@ -12,7 +12,6 @@ module.exports = {
     aliases: [
         "silentmode"
     ],
-    cooldown: 0,
     async execute(message) {
 
         const voice_channel = message.member.voice.channel;

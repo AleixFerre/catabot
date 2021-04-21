@@ -7,12 +7,11 @@ module.exports = {
     type: TYPE,
     aliases: ['esborrarrol', 'treurerol', 'esborrarrol', 'delrole'],
     example: '@CatalaHD Admin',
-    cooldown: 5,
     execute(message, args, server) {
 
         const targetUser = message.mentions.users.first();
         const prefix = server.prefix;
-        
+
         if (!targetUser) {
             message.reply("siusplau, menciona a qui li vols esborrar un rol.");
             return message.channel.send(prefix + "help removerole");
@@ -21,7 +20,9 @@ module.exports = {
         args.shift();
         const roleName = args.join(" ");
 
-        const { guild } = message;
+        const {
+            guild
+        } = message;
 
         const role = guild.roles.cache.find((role) => {
             return role.name === roleName;
@@ -33,7 +34,7 @@ module.exports = {
         }
 
         const member = guild.members.cache.get(targetUser.id);
-        
+
         if (member.roles.cache.get(role.id)) {
             member.roles.remove(role);
             message.reply("s'ha tret el rol `" + roleName + "` de l'usuari `" + member.user.username + "` correctament!");

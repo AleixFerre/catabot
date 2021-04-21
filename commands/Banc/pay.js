@@ -9,7 +9,7 @@ module.exports = {
     name: 'pay',
     description: 'Paga una quantitat a una persona',
     type: TYPE,
-    cooldown: 60,
+    aliases: ['bizum'],
     usage: '< amount/all > < @user >',
     async execute(message, args, server) {
 

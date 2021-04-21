@@ -10,7 +10,6 @@ module.exports = {
     description: 'Deix que el bot escolleixi per tu.\n**SI QUE ES PERMETEN ESPAIS** mentre es repectin les comes',
     type: TYPE,
     aliases: ['escolleix'],
-    cooldown: 0,
     usage: '< choice 1, choice2, ...>',
     execute(message, args, server) {
 

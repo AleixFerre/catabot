@@ -12,7 +12,6 @@ module.exports = {
     description: 'Insulta a qui vulguis',
     usage: "[ who ]",
     type: TYPE,
-    cooldown: 10,
     async execute(message, args) {
 
         let insultLink = "https://insult.mattbas.org/api/insult.json";

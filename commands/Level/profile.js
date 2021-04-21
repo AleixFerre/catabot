@@ -16,7 +16,6 @@ module.exports = {
     description: 'Mostra el teu perfil',
     type: TYPE,
     aliases: ['perfil'],
-    cooldown: 0,
     async execute(message) {
 
         let mention = {};

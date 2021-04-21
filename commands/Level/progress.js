@@ -16,7 +16,6 @@ module.exports = {
     name: 'progress',
     description: 'Et permet pujar de nivell. Comanda interna del bot.',
     type: TYPE,
-    cooldown: 0,
     async execute(message, args) {
 
         if (!message.author.bot && message.author.id !== process.env.IdOwner) {

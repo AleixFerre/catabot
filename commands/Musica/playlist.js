@@ -11,7 +11,6 @@ module.exports = {
     description: "Posa totes les cançons que vulguis en una fracció de segon!",
     usage: '< URL >',
     type: TYPE,
-    cooldown: 0,
     async execute(message, args) {
 
         const voice_channel = message.member.voice.channel;

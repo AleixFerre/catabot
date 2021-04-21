@@ -9,9 +9,8 @@ const TYPE = "entreteniment";
 module.exports = {
     name: 'translate',
     description: 'Tradueix el que vulguis al català!',
-    usage: "< text >",
+    usage: "< codi d'idioma > < text >",
     type: TYPE,
-    cooldown: 10,
     async execute(message, args, server) {
 
         let txt = "";

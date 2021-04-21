@@ -9,7 +9,6 @@ module.exports = {
     name: 'info',
     description: 'Diu la informació del bot.',
     type: TYPE,
-    cooldown: 0,
     aliases: ['stats', 'bot'],
     execute(message, _args, server, client) {
 

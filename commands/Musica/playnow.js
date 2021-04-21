@@ -11,7 +11,6 @@ module.exports = {
     description: "Posa una cançó ara mateix.\nLa comanda respectarà la cua següent però es passarà la cançó actual.",
     usage: '< URL / cerca >',
     type: TYPE,
-    cooldown: 0,
     async execute(message, args, server) {
 
         const voice_channel = message.member.voice.channel;

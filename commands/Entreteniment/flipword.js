@@ -10,7 +10,6 @@ module.exports = {
     description: 'Posa la paraula al revés',
     type: TYPE,
     usage: '< word >',
-    cooldown: 0,
     aliases: ['flip'],
     execute(message, args, server) {
 
