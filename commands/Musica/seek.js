@@ -9,7 +9,7 @@ module.exports = {
     name: "seek",
     description: "Ves a un segon de la cançó actual.",
     type: TYPE,
-    execute(message, args, server) {
+    execute(message, args) {
 
         if (!args) {
             return message.channel.send("**❌ Error: Cal que em diguis a quin segon vols anar!**");
