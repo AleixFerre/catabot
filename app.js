@@ -165,17 +165,19 @@ client.on("guildCreate", (guild) => {
     }
 
     // Enviem el missatge al owner de la guild
-    let introMessage = "**DONA LA BENVINGUDA AL CATABOT!**\n" +
-        "El primer bot de Discord en català!\n\n" +
-        "**CONFIGURACIÓ GENERAL**\n" +
-        "El bot permet executar una serie de comandes automàtiques sempre que un ADMINISTRADOR ho decideixi. També cal saber que totes les comandes de tipus MOD requereixen un rol d'ADMINISTRADOR per ser executades.\n" +
-        "- El bot permet cambiar el prefix per defecte amb la comanda `" + process.env.prefix + "prefix [prefix nou]` amb un màxim de 5 caràcters.\n" +
-        "- També es pot configurar un canal de benvinguda perque digui Hola i Adeu a tots els integrants nous i passats del servidor amb `" + process.env.prefix + "setwelcome`. També pots provar amb `" + process.env.prefix + "welcome` i `" + process.env.prefix + "bye`\n" +
-        "- Es pot configurar un canal d'avisos amb `" + process.env.prefix + "setalert`. En aquest canal s'avisarà de totes les novetats del bot.\n" +
-        "- Finalment, es pot configurar un canal del bot amb `" + process.env.prefix + "setbot`. Això el que farà serà avisar a tothom qui estigui usant el bot fora d'aquest canal.\n" +
-        "Aquestes tres comandes es poden desactivar en qualsevol moment amb el paràmetre `null`. P.E. `" + process.env.prefix + "setwelcome null`\n" +
-        "Per veure tota la informació dels canals, fes servir la comanda `" + process.env.prefix + "server`.\n\n" +
-        "Més informació de les comandes amb `" + process.env.prefix + "help` o `" + process.env.prefix + "help [nom de la comanda]`.";
+    let introMessage = `**DONA LA BENVINGUDA AL CATABOT!**
+El primer bot de Discord en català!
+
+**CONFIGURACIÓ GENERAL**
+El bot permet executar una serie de comandes automàtiques sempre que un ADMINISTRADOR ho decideixi. També cal saber que totes les comandes de tipus MOD requereixen un rol d'ADMINISTRADOR per ser executades.
+- El bot permet cambiar el prefix per defecte amb la comanda \`${process.env.prefix}prefix [prefix nou]\` amb un màxim de 5 caràcters.
+- També es pot configurar un canal de benvinguda perque digui Hola i Adeu a tots els integrants nous i passats del servidor amb \`${process.env.prefix}setwelcome\`. També pots provar amb \`${process.env.prefix}welcome\` i \`${process.env.prefix}bye\`
+- Es pot configurar un canal d'avisos amb \`${process.env.prefix}setalert\`. En aquest canal s'avisarà de totes les novetats del bot.
+- Finalment, es pot configurar un canal del bot amb \`${process.env.prefix}setbot\`. Això el que farà serà avisar a tothom qui estigui usant el bot fora d'aquest canal.
+Aquestes tres comandes es poden desactivar en qualsevol moment amb el paràmetre \`null\`. P.E. \`${process.env.prefix}setwelcome null\`
+Per veure tota la informació dels canals, fes servir la comanda \`${process.env.prefix}server\`.
+
+Més informació de les comandes amb \`${process.env.prefix}help\` o \`${process.env.prefix}help [nom de la comanda]\`.`;
 
     try {
         guild.members.fetch(guild.ownerID).then((owner) => {
