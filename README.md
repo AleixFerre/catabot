@@ -2,8 +2,10 @@
 
 ## Say hi to CataBOT! Welcome the best open source Catalan Discord Bot
 
-![ ](https://img.shields.io/github/repo-size/Catalahd/catabot)
-![ ](https://img.shields.io/github/issues/catalahd/catabot)
+![ ](https://img.shields.io/github/repo-size/CatalaHD/CataBot)
+![ ](https://img.shields.io/github/issues/CatalaHD/CataBot)
+![ ](https://img.shields.io/github/stars/CatalaHD/CataBot)
+![ ](https://img.shields.io/github/license/CatalaHD/CataBot)
 
 ![icon_gif](https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif)
 
@@ -15,7 +17,7 @@ First install [Node.js](https://nodejs.org/en/) LTS Version if you don't have it
 
 Clone it and install dependencies with
 
-```txt
+```sh
 npm install discord.js ytdl-core yt-search canvas node-fetch express moment @vitalets/google-translate-api weather-js chalk mathjs mongoose dotenv
 ```
 
@@ -23,7 +25,7 @@ npm install discord.js ytdl-core yt-search canvas node-fetch express moment @vit
 
 You also need to install [FFmpeg](https://www.youtube.com/watch?v=qjtmgCb8NcE).
 
-```txt
+```sh
 sudo apt-get install ffmpeg
 npm install ffmpeg
 ```
@@ -42,6 +44,10 @@ Copyright 2021 © All rights reserved
 
 Under MIT License, see [here](LICENSE)
 
+## Tips
+
+[![ ](https://cdn.ko-fi.com/cdn/kofi2.png?v=2)](https://ko-fi.com/catabot)
+
 ## CURRENT VERSION
 
-1.3
+1.4
