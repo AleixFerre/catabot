@@ -45,10 +45,9 @@ Copyright 2021 © All rights reserved
 
 Under MIT License, see [here](LICENSE)
 
-
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FCatalaHD%2FCataBot.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FCatalaHD%2FCataBot?ref=badge_large)
 
-## Tips
+## TIPS
 
 [![ ](https://cdn.ko-fi.com/cdn/kofi2.png?v=2)](https://ko-fi.com/catabot)
 
