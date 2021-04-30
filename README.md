@@ -6,6 +6,7 @@
 ![ ](https://img.shields.io/github/issues/CatalaHD/CataBot)
 ![ ](https://img.shields.io/github/stars/CatalaHD/CataBot)
 ![ ](https://img.shields.io/github/license/CatalaHD/CataBot)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FCatalaHD%2FCataBot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FCatalaHD%2FCataBot?ref=badge_shield)
 
 ![icon_gif](https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif)
 
@@ -43,6 +44,9 @@ You can now visit our page [here](https://catalahd.github.io/CataBot/) and see a
 Copyright 2021 © All rights reserved
 
 Under MIT License, see [here](LICENSE)
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FCatalaHD%2FCataBot.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FCatalaHD%2FCataBot?ref=badge_large)
 
 ## Tips
 
