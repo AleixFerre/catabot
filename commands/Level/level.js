@@ -1,92 +1,86 @@
-const Discord = require("discord.js");
-const {
-    ranks
-} = require("../../storage/ranks.json");
-const {
-    getColorFromCommand
-} = require('../../lib/common.js');
-const {
-    getUsersFromServer
-} = require('../../lib/database.js');
+const Discord = require('discord.js');
+const { ranks } = require('../../storage/ranks.json');
+const { getColorFromCommand } = require('../../lib/common.js');
+const { getUsersFromServer } = require('../../lib/database.js');
 
-const TYPE = "level";
+const TYPE = 'level';
 
 module.exports = {
-    name: 'level',
-    description: 'Et mostra el nivell que ets',
-    type: TYPE,
-    aliases: ['xp', 'lvl'],
-    async execute(message) {
+  name: 'level',
+  description: 'Et mostra el nivell que ets',
+  type: TYPE,
+  aliases: ['xp', 'lvl'],
+  async execute(message) {
+    let mention = {};
+    let posicio = 1;
 
-        let mention = {};
-        let posicio = 1;
+    if (message.mentions.users.first()) {
+      mention = message.mentions.users.first();
+    } else {
+      mention = message.author;
+    }
 
-        if (message.mentions.users.first()) {
-            mention = message.mentions.users.first();
-        } else {
-            mention = message.author;
+    if (mention.bot) {
+      return message.reply('els Bots no tenen nivell... pobres Bots 😫');
+    }
+
+    let usersData = await getUsersFromServer(message.guild.id);
+
+    let userData = usersData.find((user) => user.IDs.userID === mention.id);
+    let level = userData.level;
+    let xp = userData.xp;
+
+    usersData.forEach((member) => {
+      if (member.level > level) {
+        posicio++;
+      } else if (member.level === level) {
+        if (member.xp > xp) {
+          posicio++;
         }
+      }
+    });
 
-        if (mention.bot) {
-            return message.reply("els Bots no tenen nivell... pobres Bots 😫");
-        }
+    let progress = xp / 10;
+    if (progress > 100) {
+      progress = 100;
+    }
 
-        let usersData = await getUsersFromServer(message.guild.id);
+    // ▰▰▰▰▰▱▱▱▱▱▱▱
+    let barra = '';
+    let max = 10;
 
-        let userData = usersData.find((user) => user.IDs.userID === mention.id);
-        let level = userData.level;
-        let xp = userData.xp;
+    for (let i = 0; i < progress / 10; i++) {
+      barra += '▰';
+      max--;
+    }
 
-        usersData.forEach(member => {
-            if (member.level > level) {
-                posicio++;
-            } else if (member.level === level) {
-                if (member.xp > xp) {
-                    posicio++;
-                }
-            }
-        });
+    while (max > 0) {
+      barra += '▱';
+      max--;
+    }
 
-        let progress = xp / 10;
-        if (progress > 100) {
-            progress = 100;
-        }
+    // Calculem el rank de l'usuari
+    let rankIndex = Math.floor(level / 10) + 1;
+    if (rankIndex > 19) {
+      // Maxim rank -> 19
+      rankIndex = 19;
+    }
 
-        // ▰▰▰▰▰▱▱▱▱▱▱▱
-        let barra = "";
-        let max = 10;
+    let rankLink = 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/rank_icons/' + rankIndex + '.png';
 
-        for (let i = 0; i < (progress / 10); i++) {
-            barra += "▰";
-            max--;
-        }
+    let msg = new Discord.MessageEmbed()
+      .setColor(getColorFromCommand(TYPE))
+      .setTitle('💠 Nivell 💠')
+      .setThumbnail(rankLink)
+      .addField('❯ Compte', mention.username, true)
+      .addField('❯ Nivell', level, true)
+      .addField('❯ XP', xp + '/1000', true)
+      .addField('❯ Top', posicio || -1, true)
+      .addField('❯ Rang', `${ranks[rankIndex - 1]} _[${rankIndex}/19]_`, true)
+      .addField('❯ Barra', barra + ' *[' + progress + '%]*', false)
+      .setTimestamp()
+      .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
-        while (max > 0) {
-            barra += "▱";
-            max--;
-        }
-
-
-        // Calculem el rank de l'usuari
-        let rankIndex = Math.floor(level / 10) + 1;
-        if (rankIndex > 19) { // Maxim rank -> 19
-            rankIndex = 19;
-        }
-
-        let rankLink = "https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/rank_icons/" + rankIndex + ".png";
-
-        let msg = new Discord.MessageEmbed()
-            .setColor(getColorFromCommand(TYPE))
-            .setTitle("💠 Nivell 💠")
-            .setThumbnail(rankLink)
-            .addField('❯ Compte', mention.username, true)
-            .addField('❯ Nivell', level, true)
-            .addField('❯ XP', xp + "/1000", true)
-            .addField('❯ Top', posicio || -1, true)
-            .addField('❯ Rang', `${ranks[rankIndex - 1]} _[${rankIndex}/19]_`, true)
-            .addField('❯ Barra', barra + " *[" + progress + "%]*", false)
-            .setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
-
-        message.channel.send(msg);
-    },
+    message.channel.send(msg);
+  },
 };
