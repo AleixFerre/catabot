@@ -22,18 +22,18 @@
     "dependencies": {
         "@vitalets/google-translate-api": "^7.0.0",
         "canvas": "^2.7.0",
-        "chalk": "^4.1.0",
-        "discord.js": "^12.5.1",
+        "chalk": "^4.1.1",
+        "discord.js": "^12.5.3",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
-        "mathjs": "^9.1.0",
+        "mathjs": "^9.3.2",
         "moment": "^2.29.1",
-        "mongoose": "^5.11.17",
+        "mongoose": "^5.12.7",
         "node-fetch": "^2.6.1",
         "opusscript": "^0.0.8",
         "simple-youtube-api": "^5.2.1",
         "weather-js": "^2.0.0",
-        "yt-search": "^2.7.3",
+        "yt-search": "^2.8.0",
         "ytdl-core": "^4.5.0"
     },
     "bugs": {
