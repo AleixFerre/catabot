@@ -311,7 +311,7 @@ client.on('message', async (message) => {
 
   if (!message.channel.members && commandName != 'help' && commandName != 'h') {
     // Estem a DM, només funciona el help
-    message.author.send('Prova millor `' + prefix + 'help`');
+    message.author.send('⚠️ COMPTE: Als canals privats només funciona la comanda `catahelp`');
     return;
   }
 
