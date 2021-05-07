@@ -184,7 +184,7 @@ Més informació de les comandes amb \`${process.env.prefix}help\` o \`${process
     console.error(err);
   }
 
-  console.log(bot('El bot ha entrat al servidor "' + guild.name + '"\n'));
+  console.log(bot(`El bot ha entrat al servidor "${guild.name}"`));
 });
 
 client.on('guildDelete', (guild) => {
@@ -201,7 +201,7 @@ client.on('guildDelete', (guild) => {
 
   deleteServer(guild.id).then(console.log(db(`DB: Esborrat el server ${guild.name} correctament!`)));
 
-  console.log(remove('El bot ha sortit del servidor "' + guild.name + '"\n'));
+  console.log(remove(`El bot ha sortit del servidor "${guild.name}"`));
 });
 
 const applyText = (canvas, text) => {
@@ -217,10 +217,10 @@ const applyText = (canvas, text) => {
 
 client.on('guildMemberAdd', async (member) => {
   if (member.user.bot) {
-    console.log(bot('Nou bot "' + member.user.username + '" afegit a la guild ' + member.guild.name + '\n'));
+    console.log(bot(`Nou bot "${member.user.username}" afegit a la guild ${member.guild.name}`));
     console.log(db("DB: L'usuari és un bot, ignorant..."));
   } else {
-    console.log(log('Nou membre "' + member.user.username + '" afegit a la guild ' + member.guild.name + '\n'));
+    console.log(log(`Nou membre "${member.user.username}" afegit a la guild ${member.guild.name}`));
 
     updateUser([member.id, member.guild.id], {
       'IDs.userID': member.id,
@@ -244,7 +244,7 @@ client.on('guildMemberRemove', async (member) => {
   // Per resetejar les seves monedes o recollir el daily altre cop
   // El que vulgui parlar-ho, que contacti amb l'admin corresponent
 
-  console.log(remove('El membre "' + member.user.username + '" ha sortit de la guild ' + member.guild.name + '\n'));
+  console.log(remove(`El membre "${member.user.username}" ha sortit de la guild ${member.guild.name}`));
 
   let channelID = await getServer(member.guild.id);
   channelID = channelID.welcomeChannel;
@@ -307,6 +307,11 @@ client.on('message', async (message) => {
   const commandName = args.shift().toLowerCase();
 
   if (!message.content.startsWith(prefix)) return;
+
+  console.log(`\nAutor: ${message.author} - ${message.author.tag}
+Contingut: ${message.content}
+Servidor: ${message.guild}
+Canal: ${message.channel.name}\n`);
 
   if (!message.channel.members && commandName != 'help' && commandName != 'h') {
     // Estem a DM, només funciona el help
