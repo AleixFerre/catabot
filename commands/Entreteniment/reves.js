@@ -8,7 +8,7 @@ module.exports = {
   description: 'Posa un text al revés',
   type: TYPE,
   usage: '< text >',
-  aliases: ['flip'],
+  aliases: ['flip', 'alreves'],
   execute(message, args, server) {
     if (!args[0]) {
       message.reply('no se què girar!');

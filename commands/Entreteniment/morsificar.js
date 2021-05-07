@@ -127,8 +127,8 @@ module.exports = {
 
     let msg = new Discord.MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
-      .setTitle('**' + title + '**')
-      .addField('❯ Entrada', '`' + str + '`')
+      .setTitle(`**${title}**`)
+      .addField('❯ Entrada', `\`${str}\``)
       .addField(
         '❯ Resultat',
         error ? "`Error d'entrada, prova amb només lletres sense accent i números!`" : `\`${out}\``

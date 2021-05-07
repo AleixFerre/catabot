@@ -13,19 +13,19 @@ module.exports = {
   execute(message, args, server) {
     if (!args[0]) {
       message.reply('No se el que vols buscar!');
-      message.channel.send(server.prefix + 'help pokedex');
+      message.channel.send(`${server.prefix}help pokedex`);
       return;
     }
 
     let APIname = args.join('-');
     let realName = args.join(' ');
 
-    fetch('https://some-random-api.ml/pokedex?pokemon=' + APIname)
+    fetch(`https://some-random-api.ml/pokedex?pokemon=${APIname}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          message.channel.send('```No hi ha cap pokemon que es digui ' + realName + '```');
-          message.channel.send(server.prefix + 'help pokedex');
+          message.channel.send(`\`\`\`No hi ha cap pokemon que es digui ${realName}\`\`\``);
+          message.channel.send(`${server.prefix}help pokedex`);
           return;
         }
 
@@ -34,43 +34,43 @@ module.exports = {
         }
 
         let body =
-          '• Height: `' +
+          '• Altura: `' +
           data.height.substring(0, data.height.indexOf('(')).slice(0, -1) +
           '`\n' +
-          '• Weight: `' +
+          '• Pes: `' +
           data.weight.substring(0, data.weight.indexOf('(')).slice(0, -1) +
           '`\n' +
-          '• Base experience: `' +
+          '• Experiència base: `' +
           data.base_experience +
           ' xp`';
 
         let gender = '';
         if (data.gender === 'Genderless') {
-          gender = 'Genderless';
+          gender = 'Sense Genère';
         } else {
           gender = data.gender.join('\n').replace('male', '♂️').replace('female', '♀');
         }
 
         // Si te un sol tipus, posem Type, sino posem Types
-        let type = data.type.length === 1 ? 'Type' : 'Types';
+        let type = 'Tipus';
 
         let stats =
-          '• HP: `' +
+          '• Vida: `' +
           data.stats.hp +
           '`\n' +
-          '• Attack: `' +
+          '• Atac: `' +
           data.stats.attack +
           '`\n' +
-          '• Defense: `' +
+          '• Defensa: `' +
           data.stats.defense +
           '`\n' +
-          '• Special Attck: `' +
+          '• Atac Especial: `' +
           data.stats.sp_atk +
           '`\n' +
-          '• Special Defense: `' +
+          '• Defensa Especial: `' +
           data.stats.sp_def +
           '`\n' +
-          '• Speed: `' +
+          '• Velocitat: `' +
           data.stats.speed +
           '`\n' +
           '• Total: `' +
@@ -84,16 +84,16 @@ module.exports = {
             'https://pngimage.net/wp-content/uploads/2018/06/pokemon-go-icon-png-3.png',
             'https://pokemon.fandom.com/es/wiki/' + args.join('_')
           )
-          .setTitle('**#' + data.id + ' | ' + capitalize(data.name) + ' | ' + data.generation + 'º GEN**') // Capitalize the first letter
+          .setTitle('**#' + data.id + ' | ' + capitalize(data.name) + ' | ' + data.generation + 'º GENERACIÓ**') // Capitalize the first letter
           .setDescription(data.description)
           .setThumbnail('http://i.some-random-api.ml/pokemon/' + APIname + '.gif')
           .addField('❯ ' + type + ':', data.type.join(', '), true)
-          .addField('❯ Abilities:', data.abilities.join(', '), true)
-          .addField('❯ Species:', data.species.join(', '), true)
-          .addField('❯ Stats: ', stats, true)
-          .addField('❯ Body:', body, true)
-          .addField('❯ Gender: ', gender, true)
-          .addField('❯ Egg groups:', data.egg_groups.join(', '), true);
+          .addField('❯ Abilitats:', data.abilities.join(', '), true)
+          .addField('❯ Especies:', data.species.join(', '), true)
+          .addField('❯ Estadístiques: ', stats, true)
+          .addField('❯ Cos:', body, true)
+          .addField('❯ Gènere: ', gender, true)
+          .addField("❯ Grups d'ous:", data.egg_groups.join(', '), true);
 
         if (data.family.evolutionLine.length > 0) {
           // Treu els repetits ja que està en un Set
@@ -103,7 +103,7 @@ module.exports = {
               uniqueEvos[i] = '**' + uniqueEvos[i] + '**';
             }
           }
-          pokeEmbed.addField('❯ Evolutions:', uniqueEvos.join(', '), true);
+          pokeEmbed.addField('❯ Evolucions:', uniqueEvos.join(', '), true);
         }
 
         pokeEmbed.setTimestamp().setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
