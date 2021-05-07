@@ -32,7 +32,7 @@ npm install ffmpeg
 
 ## **COMMANDS**
 
-You can now visit our page [here](https://catalahd.github.io/CataBot/) and see all the [commands](https://catalahd.github.io/CataBot/commands.html)
+You can now visit our page [here](https://catalahd.github.io/CataBot/) and see all the [commands](https://catalahd.github.io/CataBot/commands)
 
 ## LICENSE
 
