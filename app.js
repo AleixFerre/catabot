@@ -308,11 +308,6 @@ client.on('message', async (message) => {
 
   if (!message.content.startsWith(prefix)) return;
 
-  console.log(`\nAutor: ${message.author} - ${message.author.tag}
-Contingut: ${message.content}
-Servidor: ${message.guild}
-Canal: ${message.channel.name}\n`);
-
   if (!message.channel.members && commandName != 'help' && commandName != 'h') {
     // Estem a DM, només funciona el help
     message.author.send(
@@ -332,6 +327,11 @@ Canal: ${message.channel.name}\n`);
       return;
     }
   }
+
+  console.log(`\nAutor: ${message.author} - ${message.author.tag}
+    Contingut: ${message.content}
+    Servidor: ${message.guild}
+    Canal: ${message.channel.name}`);
 
   try {
     command.execute(message, args, server, client, commandName);
