@@ -328,10 +328,11 @@ client.on('message', async (message) => {
     }
   }
 
-  console.log(`\nAutor: ${message.author} - ${message.author.tag}
-    Contingut: ${message.content}
-    Servidor: ${message.guild}
-    Canal: ${message.channel.name}`);
+  console.log(`--- Nova comanda ---
+Autor: ${message.author} - ${message.author.tag}
+Contingut: ${message.content}
+Servidor: ${message.guild}
+Canal: ${message.channel.name}`);
 
   try {
     command.execute(message, args, server, client, commandName);
@@ -348,7 +349,10 @@ client.on('message', async (message) => {
 
     message.channel.send(errorEmbed); // Enviem la info pel canal
 
-    errorEmbed.addField('Guild', message.guild.name, true).addField('Channel', message.channel.name, true);
+    errorEmbed
+      .addField('Guild', message.guild.name, true)
+      .addField('Channel', message.channel.name, true)
+      .addField('Contingut', message.content, true);
 
     // Enviem info adicional al admin
     let owner = await message.client.users.fetch(process.env.IdOwner);

@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { re } = require('mathjs');
 const { getColorFromCommand } = require('../../lib/common.js');
 const { getUsersFromServer } = require('../../lib/database.js');
 
@@ -54,16 +55,20 @@ module.exports = {
       board.splice(i, 0, inserit);
     }
 
-    let usersData = await getUsersFromServer(message.guild.id);
+    const usersData = await getUsersFromServer(message.guild.id);
 
     usersData.forEach((member) => {
       // Per cada membre del servidor, apliquem aquesta funció
-      insercioOrdenada(member, message.guild.members.resolve(member.IDs.userID).user.username);
+      const resolvedMember = message.guild.members.resolve(member.IDs.userID);
+      if (resolvedMember) {
+        message.guild.members.resolve(member.IDs.userID);
+        insercioOrdenada(member, resolvedMember.user.username);
 
-      // Mantenim la taula sempre com a maxim amb size elements
-      // This is really an IF statement but just in case
-      while (board.length > size) {
-        board.pop();
+        // Mantenim la taula sempre com a maxim amb size elements
+        // This is really an IF statement but just in case
+        while (board.length > size) {
+          board.pop();
+        }
       }
     });
 
