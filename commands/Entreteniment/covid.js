@@ -55,7 +55,7 @@ module.exports = {
       await getInfo();
     } catch (err) {
       message.reply('el país no existeix! Recorda que ho has de posar en anglès!');
-      return message.channel.send(server.prefix + 'help covid');
+      return message.channel.send(`${server.prefix}help covid`);
     }
 
     if (!isWorld) {
@@ -72,7 +72,7 @@ module.exports = {
       let result = camp.replace(/([A-Z])/g, ' $1');
       let finalResult = result.charAt(0).toUpperCase() + result.slice(1);
       if (covidData[camp]) {
-        covidEmbed.addField('❯ ' + finalResult, separateWithCommas(covidData[camp]), true);
+        covidEmbed.addField(`❯ ${finalResult}`, separateWithCommas(covidData[camp]), true);
       }
     });
 

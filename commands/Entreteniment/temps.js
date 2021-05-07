@@ -34,7 +34,7 @@ module.exports = {
         result = _result[0];
 
         if (!result) {
-          return message.reply(`la ciutat / país ${city} no existeix`);
+          return message.reply(`la ciutat / país \`${city}\` no existeix`);
         }
 
         let msg = new Discord.MessageEmbed()
@@ -45,6 +45,9 @@ module.exports = {
           .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
         Object.keys(result.current).forEach((camp) => {
+          // Si es el link de la img, ignorem
+          if (camp === 'imageUrl') return;
+
           // Convertimos el campo en space case
           let majTxt = camp.replace(/([A-Z])/g, ' $1');
           let finalResult = majTxt.charAt(0).toUpperCase() + majTxt.slice(1);
