@@ -10,7 +10,6 @@ const { log, remove, bot, db } = require('./lib/common.js');
 const { updateUser, updateServer, getServer, deleteUser, deleteServer } = require('./lib/database.js');
 
 const Discord = require('discord.js');
-const chalk = require('chalk');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
