@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const { re } = require('mathjs');
 const { getColorFromCommand } = require('../../lib/common.js');
 const { getUsersFromServer } = require('../../lib/database.js');
 
@@ -61,7 +60,6 @@ module.exports = {
       // Per cada membre del servidor, apliquem aquesta funció
       const resolvedMember = message.guild.members.resolve(member.IDs.userID);
       if (resolvedMember) {
-        message.guild.members.resolve(member.IDs.userID);
         insercioOrdenada(member, resolvedMember.user.username);
 
         // Mantenim la taula sempre com a maxim amb size elements

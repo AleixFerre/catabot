@@ -61,13 +61,15 @@ module.exports = {
 
     usersData.forEach((member) => {
       // Per cada membre del servidor, apliquem aquesta funció
+      const resolvedMember = message.guild.members.resolve(member.IDs.userID);
+      if (resolvedMember) {
+        insercioOrdenada(member, resolvedMember.user.username);
 
-      insercioOrdenada(member, message.guild.members.resolve(member.IDs.userID).user.username);
-
-      // Mantenim la taula sempre com a maxim amb size elements
-      // This is really an IF statement but just in case
-      while (board.length > size) {
-        board.pop();
+        // Mantenim la taula sempre com a maxim amb size elements
+        // This is really an IF statement but just in case
+        while (board.length > size) {
+          board.pop();
+        }
       }
     });
 
