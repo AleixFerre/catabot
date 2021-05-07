@@ -18,7 +18,7 @@ First install [Node.js](https://nodejs.org/en/) LTS Version if you don't have it
 Clone it and install dependencies with
 
 ```sh
-npm install discord.js ytdl-core yt-search canvas node-fetch express moment @vitalets/google-translate-api weather-js chalk mathjs mongoose dotenv
+npm i -d
 ```
 
 #### If you are running this locally
@@ -48,7 +48,7 @@ Under MIT License, see [here](LICENSE)
 
 ## TIPS
 
-[![ ](https://cdn.ko-fi.com/cdn/kofi2.png?v=2)](https://ko-fi.com/catabot)
+[![Buy me a coffe image](https://cdn.ko-fi.com/cdn/kofi2.png?v=2)](https://ko-fi.com/catabot)
 
 ## CURRENT VERSION
 

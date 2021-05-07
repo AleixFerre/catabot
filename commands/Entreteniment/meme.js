@@ -7,7 +7,7 @@ const TYPE = 'entreteniment';
 
 module.exports = {
   name: 'meme',
-  description: 'Mostra un meme aleatori de reddit',
+  description: 'Mostra un meme aleatori de reddit traduit al català',
   type: TYPE,
   execute(message) {
     fetch('https://meme-api.herokuapp.com/gimme')

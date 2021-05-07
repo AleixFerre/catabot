@@ -9,33 +9,20 @@ module.exports = {
   type: TYPE,
   aliases: ['stats', 'bot'],
   execute(message, _args, server, client) {
-    let description =
-      'Soc un **BOT** de discord **en català**! Espero que sigui agradable la meva presencia en aquest servidor, ' +
-      message.author.username +
-      '. Pots veure totes les meves comandes amb ' +
-      server.prefix +
-      'help.';
+    const description = `Soc un **BOT** de discord **en català**! Espero que sigui agradable la meva presencia en aquest servidor, ${message.author.username}. Pots veure totes les meves comandes amb ${server.prefix}help.`;
 
-    let info =
-      `• **Desenvolupador:** ${process.env.ownerDiscordUsername}\n` +
-      `• **Pagina web: [catalahd.github.io/CataBot](${process.env.website})**\n` +
-      `• **Servidor Oficial: [discord.gg/k75qvYM](${process.env.officialServerLink})**`;
+    const info = `• **Desenvolupador:** ${process.env.ownerDiscordUsername}
+• **Pagina web: [Pàgina del CataBot](${process.env.website})**
+• **Servidor Oficial: [Vull entrar-hi](${process.env.officialServerLink})**`;
 
     let nMembers = 0;
     client.guilds.cache.forEach((guild) => {
       nMembers += guild.memberCount;
     });
 
-    let stats =
-      '• **Membres:** `' +
-      nMembers +
-      '`\n' +
-      '• **Servers:** `' +
-      client.guilds.cache.size +
-      '`\n' +
-      '• **Comandes:** `' +
-      client.commands.size +
-      '`';
+    let stats = `• **Membres:** \`${nMembers}\`
+• **Servers:** \`${client.guilds.cache.size}\`
+• **Comandes:** \`${client.commands.size}\``;
 
     let msg = new Discord.MessageEmbed()
       .setColor(getColorFromCommand(TYPE))

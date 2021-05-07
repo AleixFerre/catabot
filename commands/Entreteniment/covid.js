@@ -8,7 +8,7 @@ module.exports = {
   name: 'covid',
   description: 'Mostra la info del Coronavirus actualment',
   type: TYPE,
-  usage: '[ country ]',
+  usage: '[ pais ]',
   aliases: ['coronavirus'],
   async execute(message, args, server) {
     let covidUrl = 'https://coronavirus-19-api.herokuapp.com/';
@@ -19,7 +19,7 @@ module.exports = {
     let isWorld = false;
 
     if (args[0]) {
-      covidUrl += 'countries/' + args[0].toLowerCase();
+      covidUrl += `countries/${args[0].toLowerCase()}`;
       country = args[0];
       if (country.toLowerCase() === 'world') {
         isWorld = true;
@@ -47,7 +47,7 @@ module.exports = {
               code = element.code;
             }
           });
-          flag = 'https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/png250px/' + code.toLowerCase() + '.png';
+          flag = `https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/png250px/${code.toLowerCase()}.png`;
         });
     }
 
@@ -64,7 +64,7 @@ module.exports = {
 
     const covidEmbed = new Discord.MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
-      .setTitle(isWorld ? '**CORONAVIRUS AL MON**' : '**CORONAVIRUS A ' + country.toUpperCase() + '**')
+      .setTitle(isWorld ? '**CORONAVIRUS AL MON**' : `**CORONAVIRUS A ${country.toUpperCase()}**`)
       .setThumbnail(flag);
 
     Object.keys(covidData).forEach((camp) => {

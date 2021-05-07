@@ -6,9 +6,10 @@ const { getColorFromCommand } = require('../../lib/common.js');
 const TYPE = 'entreteniment';
 
 module.exports = {
-  name: 'insult',
+  name: 'insulta',
   description: 'Insulta a qui vulguis',
-  usage: '[ who ]',
+  usage: '[ @usuari ]',
+  aliases: ['insult'],
   type: TYPE,
   async execute(message, args) {
     let insultLink = 'https://insult.mattbas.org/api/insult.json';
@@ -20,7 +21,7 @@ module.exports = {
       if (message.mentions.users.first()) {
         who = message.mentions.users.first().username;
       }
-      title += ' to ' + who + '**';
+      title += ' a ' + who + '**';
       insultLink += '?who=' + who;
     } else {
       title += '**';

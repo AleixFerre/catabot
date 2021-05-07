@@ -10,6 +10,7 @@ const { log, remove, bot, db } = require('./lib/common.js');
 const { updateUser, updateServer, getServer, deleteUser, deleteServer } = require('./lib/database.js');
 
 const Discord = require('discord.js');
+const chalk = require('chalk');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
@@ -230,12 +231,11 @@ client.on('guildMemberAdd', async (member) => {
   }
 
   let channelInfo = await getServer(member.guild.id);
-  if (!channelInfo) {
-    // Si no hi ha el canal configurat, no enviem res
-    return;
-  }
+  // Si no hi ha el canal configurat, no enviem res
+  if (!channelInfo) return;
 
   let channel = client.channels.resolve(channelInfo.welcomeChannel);
+  if (!channel) return;
 
   channel.send(`${channelInfo.prefix}welcome ${member.user}`);
 });
@@ -311,7 +311,9 @@ client.on('message', async (message) => {
 
   if (!message.channel.members && commandName != 'help' && commandName != 'h') {
     // Estem a DM, només funciona el help
-    message.author.send('⚠️ COMPTE: Als canals privats només funciona la comanda `catahelp`');
+    message.author.send(
+      "**⚠️ Als canals privats només funciona la comanda `catahelp`. Prova d'executar-la a un servidor.**"
+    );
     return;
   }
 

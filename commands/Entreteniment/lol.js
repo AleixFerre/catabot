@@ -88,65 +88,38 @@ function predict(nameToPredict, namesArray) {
 async function showChampStats(champName) {
   let champ;
   try {
-    champ = await fetch('http://ddragon.leagueoflegends.com/cdn/11.2.1/data/en_US/champion/' + champName + '.json');
+    champ = await fetch(`http://ddragon.leagueoflegends.com/cdn/11.2.1/data/en_US/champion/${champName}.json`);
     champ = await champ.json();
   } catch (err) {
-    return 'Ho sentim, però no existeix cap campió de nom **' + champName + '** 😦';
+    return `Ho sentim, però no existeix cap campió de nom **${champName}** 😦`;
   }
 
   champ = champ.data[champName];
 
-  let info =
-    '• Attack: `' +
-    champ.info.attack +
-    '`\n' +
-    '• Deffense: `' +
-    champ.info.defense +
-    '`\n' +
-    '• Magic: `' +
-    champ.info.magic +
-    '`\n' +
-    '• Difficulty: `' +
-    champ.info.difficulty +
-    '`';
+  let info = `• Attack: \`${champ.info.attack}\`
+• Deffense: \`${champ.info.defense}\`
+• Magic: \`${champ.info.magic}\`
+• Difficulty: \`${champ.info.difficulty}\``;
 
-  let stats =
-    '• HP: `' +
-    champ.stats.hp +
-    '`\n' +
-    '• Mana: `' +
-    champ.stats.mp +
-    '`\n' +
-    '• Move Speed: `' +
-    champ.stats.movespeed +
-    '`\n' +
-    '• Armor: `' +
-    champ.stats.armor +
-    '`\n' +
-    '• Spell Block: `' +
-    champ.stats.spellblock +
-    '`\n' +
-    '• Attack Damage: `' +
-    champ.stats.attackdamage +
-    '`\n' +
-    '• Attack Range: `' +
-    champ.stats.attackrange +
-    '`\n' +
-    '• Attack Speed: `' +
-    champ.stats.attackspeed +
-    '`';
+  let stats = `• HP: \`${champ.stats.hp}\`
+• Mana: \`${champ.stats.mp}\`
+• Move Speed: \`${champ.stats.movespeed}\`
+• Armor: \`${champ.stats.armor}\`
+• Spell Block: \`${champ.stats.spellblock}\`
+• Attack Damage: \`${champ.stats.attackdamage}\`
+• Attack Range: \`${champ.stats.attackrange}\`
+• Attack Speed: \`${champ.stats.attackspeed}\``;
 
   let embed = new Discord.MessageEmbed()
     .setColor(getColorFromCommand(TYPE))
-    .setTitle('**' + champ.name + ', ' + champ.title + '**');
-  // .setDescription(champ.blurb); // Mucho texto
+    .setTitle(`**${champ.name}, ${champ.title}**`);
 
   if (champ.allytips.length !== 0) {
-    embed.addField('❯ Ally tips', ' 🔘 ' + champ.allytips.join('\n 🔘 '), false);
+    embed.addField('❯ Ally tips', ` 🔘 ${champ.allytips.join('\n 🔘 ')}`, false);
   }
 
   if (champ.enemytips.length !== 0) {
-    embed.addField('❯ Enemy tips', ' 🔴 ' + champ.enemytips.join('\n 🔴 '), false);
+    embed.addField('❯ Enemy tips', ` 🔴 ${champ.enemytips.join('\n 🔴 ')}`, false);
   }
 
   embed
@@ -169,17 +142,17 @@ async function showSpellStats(spellName) {
   let predictedSpell = predict(spellName, names);
 
   if (predictedSpell === '-1') {
-    return (
-      "No s'ha trobat cap spell de nom **" + spellName + "**\nPots provar amb algun d'aquests:\n" + names.join(', ')
-    );
+    return `No s'ha trobat cap spell de nom **${spellName}**
+Pots provar amb algun d'aquests:
+${names.join(', ')}`;
   } else {
     spell = spells['Summoner' + predictedSpell];
   }
 
   let embed = new Discord.MessageEmbed()
     .setColor(getColorFromCommand(TYPE))
-    .setTitle('**' + spell.name + '**')
-    .setThumbnail('http://ddragon.leagueoflegends.com/cdn/11.2.1/img/spell/Summoner' + predictedSpell + '.png')
+    .setTitle(`**${spell.name}**`)
+    .setThumbnail(`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/spell/Summoner${predictedSpell}.png`)
     .setDescription(spell.description)
     .addField('❯ Cooldown', spell.cooldownBurn, true)
     .addField('❯ Summoner Level', spell.summonerLevel, true)
@@ -196,14 +169,14 @@ async function showItemStats(itemName) {
   );
 
   if (filteredItems.length === 0) {
-    return "No s'ha trobat cap item amb nom **" + itemName + '**';
+    return `No s'ha trobat cap item amb nom **${itemName}**`;
   }
 
   const item = filteredItems[0];
 
   let embed = new Discord.MessageEmbed()
     .setColor(getColorFromCommand(TYPE))
-    .setThumbnail('http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/' + item.image.full)
+    .setThumbnail(`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/${item.image.full}`)
     .setTitle('**' + item.name + '**')
     .setDescription(item.plaintext)
     .setTimestamp()
@@ -236,7 +209,7 @@ async function showItemStats(itemName) {
 module.exports = {
   name: 'lol',
   description: 'Busca la info del LoL que vulguis',
-  usage: 'champ < champName >\n [ or ] spell < spellName >\n [ or ] item < itemName >',
+  usage: 'champ < nom_champ >\n [ o ] spell < nom_spell >\n [ o ] item < nom_item >',
   type: TYPE,
   async execute(message, args, server) {
     if (args.length < 1) {
@@ -257,7 +230,7 @@ module.exports = {
 
       let predictedName = predictChamp(theName);
       if (predictedName === '-1') {
-        messageToReply = 'Ho sentim, però no existeix cap campió de nom **' + args.join(' ') + '** 😦';
+        messageToReply = `Ho sentim, però no existeix cap campió de nom **${args.join(' ')}** 😦`;
       } else {
         messageToReply = await showChampStats(predictedName, message);
       }
@@ -272,7 +245,7 @@ module.exports = {
     } else {
       // Cap de les que toca, avisar amb un missatge
       message.reply('no has escollit cap de les opcions!');
-      message.channel.send(server.prefix + 'help lol');
+      message.channel.send(`${server.prefix}help lol`);
       return;
     }
 

@@ -7,7 +7,7 @@ module.exports = {
   name: 'report',
   description: "Avisa al propietari del servidor d'algun usuari amb mal comportament.",
   type: TYPE,
-  usage: '< @userToReport >',
+  usage: '< @usuari_a_reportar >',
   async execute(message, _args, server) {
     let reported = message.mentions.members.first();
 

@@ -8,7 +8,7 @@ module.exports = {
   name: 'prefix',
   description: 'Et mostra el prefix i et permet cambiar-lo amb un segon argument',
   type: TYPE,
-  usage: '[ new ]',
+  usage: '[ nou ]',
   async execute(message, args, server) {
     let prefixEmbed = new Discord.MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
@@ -19,8 +19,8 @@ module.exports = {
     if (!args[0]) {
       prefixEmbed.setDescription('Pots canviar el prefix del CataBOT');
       prefixEmbed.addField('❯ Prefix actual', '`' + server.prefix + '`');
-      prefixEmbed.addField('❯ Per cambiar el prefix', '`' + server.prefix + 'prefix [ new ]`');
-      prefixEmbed.addField('❯ Validació', '`Qualsevol string com a màxim 5 caràcters`');
+      prefixEmbed.addField('❯ Per cambiar el prefix', '`' + server.prefix + 'prefix [ nou ]`');
+      prefixEmbed.addField('❯ Validació', '`Qualsevol text sense espais de com a màxim 5 caràcters`');
       message.channel.send(prefixEmbed);
     } else {
       // Si hi ha un segon argument, intentem cambiar el prefix

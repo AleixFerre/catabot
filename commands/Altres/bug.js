@@ -7,6 +7,7 @@ module.exports = {
   name: 'bug',
   description: "Avisa al propietari del bot d'algun bug.",
   type: TYPE,
+  aliases: ['error'],
   async execute(message) {
     message.reply('has rebut tota la info necessaria per DM');
 
@@ -59,7 +60,7 @@ module.exports = {
     }
 
     await seleccionar_tipus_msg.delete();
-    let msg = await titol.channel.send('**1.- ASSUMPTE ' + c + '**');
+    let msg = await titol.channel.send(`**1.- ASSUMPTE ${c}**`);
 
     // Esperem resposta
     const filter = (_m) => true;
@@ -77,7 +78,7 @@ module.exports = {
         return message.author.send("S'ha acabat el temps! La pròxima vegada vés més ràpid!");
       });
 
-    await message.author.send('**2.- COS ' + c + '**');
+    await message.author.send(`**2.- COS ${c}**`);
     // Esperem resposta
     await msg.channel
       .awaitMessages(filter, {
@@ -116,7 +117,7 @@ module.exports = {
     // Confirmem l'enviament
     await message.author.send(embed);
     await message.author.send(
-      "**Gràcies per informar.** Aquí tens un confirmant de l'avís. " + 'Hem avisat al propietari del bot.\n'
+      "**Gràcies per informar.** Aquí tens un confirmant de l'avís. Hem avisat al propietari del bot."
     );
   },
 };

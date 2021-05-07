@@ -4,10 +4,11 @@ const { getColorFromCommand } = require('../../lib/common.js');
 const TYPE = 'entreteniment';
 
 module.exports = {
-  name: 'rps',
+  name: 'pedrapapertisora',
   description: 'Juga a pedra-paper-tissora amb el bot',
   type: TYPE,
   usage: '< rock/paper/scissors >',
+  aliases: ['rps'],
   execute(message, args, server) {
     let player = 'rock';
     if (!args[0]) {
