@@ -75,8 +75,7 @@ module.exports = {
 
     let msg = new Discord.MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
-      .setTitle('💠 XPLeaderboard de ' + message.guild.name + ' 💠')
-      // .setThumbnail(message.guild.iconURL())
+      .setTitle('💠 Classificació de ' + message.guild.name + ' 💠')
       .setTimestamp()
       .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 

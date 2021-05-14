@@ -73,7 +73,6 @@ module.exports = {
     let msg = new Discord.MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle('🏆 Classificació de ' + message.guild.name + ' 🏆')
-      //.setThumbnail(message.guild.iconURL())
       .setTimestamp()
       .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
