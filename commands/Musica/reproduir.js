@@ -7,7 +7,7 @@ module.exports = {
   description: "El bot s'unirà al teu canal de veu i reproduirà les cançons que vulguis.",
   usage: '< URL / cerca >',
   type: TYPE,
-  aliases: ['p', 'play', 'cançó', 'musica', 'posa'],
+  aliases: ['p', 'play', 'cançó', 'music', 'posa'],
   async execute(message, args, server) {
     const voice_channel = message.member.voice.channel;
     if (!voice_channel) {
