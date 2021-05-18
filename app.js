@@ -373,4 +373,6 @@ mongoose
   .catch(console.error);
 
 // DISCORD BOT CONNECTION
-client.login(testing ? process.env.tokenTest : process.env.token);
+client
+  .login(testing ? process.env.tokenTest : process.env.token)
+  .then(() => console.log(log('CONNECTAT CORRECTAMENT AMB Discord!')));

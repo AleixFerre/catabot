@@ -1,44 +1,72 @@
 {
+  "1.5": {
+    "nom": "v1.5",
+    "dades": [
+      {
+        "main": "S'han esborrat diverses comandes.",
+        "secondary": ["Comandes que no s'utilitzaven (penis i gay) que a part es consideraven NSFW."]
+      },
+      {
+        "main": "Noves funcionalitats de musica.",
+        "secondary": [
+          "`ÇÇseek`: Posa la cançó actual al segon dit.",
+          "Ara es detecta quan el bot s'enva del canal i es borra la llista corresponentment."
+        ]
+      },
+      {
+        "main": "Totes les comandes al Català!",
+        "secondary": ["Ara totes les comandes tenen la seva traducció al català."]
+      },
+      {
+        "main": "Actualització del Backend",
+        "secondary": ["Actualitzats els paquets de les dependències i nova versió de Node.js."]
+      }
+    ]
+  },
   "1.4": {
     "nom": "v1.4",
-    "dades": [{
-      "main": "Esborrats els cooldowns de les comandes i els avisos de no fer servir els canals correctament.",
-      "secondary": [
-        "Molestaven massa, millor esborrar una cosa que molesta més que ajuda."
-      ]
-    }, {
-      "main": "[1]: Afegides noves comandes de musica.",
-      "secondary": [
-        "`ÇÇplayNow`: Posa una cançó ara mateix. La comanda respectarà la cua següent però es passarà la cançó actual.",
-        "`ÇÇplayNext`: Posa una cançó al principi de la cua.",
-        "`ÇÇnp`: Et mostra la cançó que s'està reproduint ara mateix.",
-        "`ÇÇq [ nPagina ]`: Et mostra la llista de reproducció.",
-        "`ÇÇclear [ n ]`: Esborra algunes o totes les cançons de la llista.",
-        "`ÇÇpause`: Posa la reproducció en pausa.",
-        "`ÇÇresume`: Repren la reproducció pausada."
-      ]
-    }, {
-      "main": "[2]: Afegides noves comandes de musica.",
-      "secondary": [
-        "`ÇÇvolume`: Posa un nou volum de la reproducció. Et mostra el volum actual si no es passa cap paràmetre.",
-        "`ÇÇloop`: Alterna el mode LOOP. Quan està activat, el bot reproduirà la mateixa cançó una i altra vegada.",
-        "`ÇÇsilent`: Alterna el mode SILENT. Aquest fa que el bot no mostri la cançó actual quan passa a la següent cançó.",
-        "`ÇÇshuffle`: Barreja la cua de reproducció.",
-        "`ÇÇinvert`: Inverteix la cua de reproducció.",
-        "Ara es pot veure la duració de les cançons i el temps al afegir cançons a la cua.",
-        "Ara el bot s'espera uns segons abans de desconnectar-se.",
-        "Més info amb la comanda `ÇÇmusic`."
-      ]
-    }, {
-      "main": "S'ha afegit una nova comanda de `ÇÇpoll` per generar enquestes",
-      "secondary": [
-        "Es recomana que es facin servir al canal adequat perque quedin guardades i que es vegin en el temps."
-      ]
-    }]
+    "dades": [
+      {
+        "main": "Esborrats els cooldowns de les comandes i els avisos de no fer servir els canals correctament.",
+        "secondary": ["Molestaven massa, millor esborrar una cosa que molesta més que ajuda."]
+      },
+      {
+        "main": "[1]: Afegides noves comandes de musica.",
+        "secondary": [
+          "`ÇÇplayNow`: Posa una cançó ara mateix. La comanda respectarà la cua següent però es passarà la cançó actual.",
+          "`ÇÇplayNext`: Posa una cançó al principi de la cua.",
+          "`ÇÇnp`: Et mostra la cançó que s'està reproduint ara mateix.",
+          "`ÇÇq [ nPagina ]`: Et mostra la llista de reproducció.",
+          "`ÇÇclear [ n ]`: Esborra algunes o totes les cançons de la llista.",
+          "`ÇÇpause`: Posa la reproducció en pausa.",
+          "`ÇÇresume`: Repren la reproducció pausada."
+        ]
+      },
+      {
+        "main": "[2]: Afegides noves comandes de musica.",
+        "secondary": [
+          "`ÇÇvolume`: Posa un nou volum de la reproducció. Et mostra el volum actual si no es passa cap paràmetre.",
+          "`ÇÇloop`: Alterna el mode LOOP. Quan està activat, el bot reproduirà la mateixa cançó una i altra vegada.",
+          "`ÇÇsilent`: Alterna el mode SILENT. Aquest fa que el bot no mostri la cançó actual quan passa a la següent cançó.",
+          "`ÇÇshuffle`: Barreja la cua de reproducció.",
+          "`ÇÇinvert`: Inverteix la cua de reproducció.",
+          "Ara es pot veure la duració de les cançons i el temps al afegir cançons a la cua.",
+          "Ara el bot s'espera uns segons abans de desconnectar-se.",
+          "Més info amb la comanda `ÇÇmusic`."
+        ]
+      },
+      {
+        "main": "S'ha afegit una nova comanda de `ÇÇpoll` per generar enquestes",
+        "secondary": [
+          "Es recomana que es facin servir al canal adequat perque quedin guardades i que es vegin en el temps."
+        ]
+      }
+    ]
   },
   "1.3": {
     "nom": "v1.3",
-    "dades": [{
+    "dades": [
+      {
         "main": "Nova comanda `lol` amb la que pots buscar tota la informació del League of Legends.",
         "secondary": [
           "Aquesta comanda té diferents subcomandes: `champ`, `spell` i `item`.",
@@ -59,11 +87,16 @@
       },
       {
         "main": "Nou sistema de Mod per administrar els Rols. Si ets Administrador pots:",
-        "secondary": ["Afegir un Rol a un Usuari amb `ÇÇaddrole < @user > < @rol >`. Més info amb la comanda `ÇÇhelp addrole`.", "Esborrar un Rol d'un Usuari amb `ÇÇremoverole < @user > < @rol >`. Més info amb la comanda `ÇÇhelp removerole`."]
+        "secondary": [
+          "Afegir un Rol a un Usuari amb `ÇÇaddrole < @user > < @rol >`. Més info amb la comanda `ÇÇhelp addrole`.",
+          "Esborrar un Rol d'un Usuari amb `ÇÇremoverole < @user > < @rol >`. Més info amb la comanda `ÇÇhelp removerole`."
+        ]
       },
       {
         "main": "Afegida nova comanda `setcounter` que adjudica el canal de text com a contador de membres.",
-        "secondary": ["El comptador s'actualitza cada 12h o manualment amb la comanda `refresh` que només poden executar els Administradors."]
+        "secondary": [
+          "El comptador s'actualitza cada 12h o manualment amb la comanda `refresh` que només poden executar els Administradors."
+        ]
       },
       {
         "main": "Nova comanda `morsify` / `demorsify` que tradueix un text a Morse i al revés.",
@@ -91,7 +124,8 @@
   },
   "1.2": {
     "nom": "v1.2",
-    "dades": [{
+    "dades": [
+      {
         "main": "Ara l'esborrat de missatges és més ràpid i pot arribar a esborrar fins a 100 missatges alhora contant el missatge enviat amb la comanda.",
         "secondary": []
       },
@@ -103,7 +137,8 @@
   },
   "1.1": {
     "nom": "v1.1",
-    "dades": [{
+    "dades": [
+      {
         "main": "Ara, per fi, el bot es **PÚBLIC**, per tant se'l pot convidar a qualsevol servidor.",
         "secondary": []
       },
@@ -122,15 +157,11 @@
       },
       {
         "main": "Ara el prefix per defecte és `cata` així que, si el bot s'uneix al teu servidor, es farà servir aquest prefix.",
-        "secondary": [
-          "Recordar que també es pot cambiar amb la comanada `cataprefix [nou prefix]`."
-        ]
+        "secondary": ["Recordar que també es pot cambiar amb la comanada `cataprefix [nou prefix]`."]
       },
       {
         "main": "Arreglat el bug que impeia fer servir la pokedex de forma correcta.",
-        "secondary": [
-          "Arreglats bugs menors."
-        ]
+        "secondary": ["Arreglats bugs menors."]
       }
     ]
   }
