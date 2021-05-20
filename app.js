@@ -127,12 +127,14 @@ client.on('ready', async () => {
     )
   );
 
-  let owner = await client.users.fetch(process.env.IdOwner);
-  let embed = new Discord.MessageEmbed()
-    .setTitle('✅ CARREGANT MOTORS. TOT LLEST.')
-    .setDescription('Estic online correctament!')
-    .setColor('0x00FF00');
-  owner.send(embed);
+  if (!process.env.testing) {
+    let owner = await client.users.fetch(process.env.IdOwner);
+    let embed = new Discord.MessageEmbed()
+      .setTitle('✅ TOT LLEST.')
+      .setDescription('Estic online correctament!')
+      .setColor('0x00FF00');
+    owner.send(embed);
+  }
 });
 
 client.on('guildCreate', (guild) => {
