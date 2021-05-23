@@ -7,7 +7,7 @@
 ![ ](https://img.shields.io/github/stars/CatalaHD/CataBot)
 ![ ](https://img.shields.io/github/license/CatalaHD/CataBot)
 
-![icon_gif](https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif)
+![icon_image](https://raw.githubusercontent.com/CatalaHD/CataBot/main/imgs/icon_cat.png)
 
 ## Contribuiting
 
