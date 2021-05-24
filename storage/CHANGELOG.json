@@ -3,6 +3,10 @@
     "nom": "v1.5",
     "dades": [
       {
+        "main": "Nova icona!",
+        "secondary": ["Nou disseny de la icona del bot. Ara es veu més modern i xulo!"]
+      },
+      {
         "main": "S'han esborrat diverses comandes.",
         "secondary": ["Comandes que no s'utilitzaven (penis i gay) que a part es consideraven NSFW."]
       },

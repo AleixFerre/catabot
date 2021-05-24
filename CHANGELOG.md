@@ -4,6 +4,7 @@ _All **ÇÇ** strings are representations of the server prefix_
 
 \[v1.5\]
 
+- S'ha actualitzat la icona del bot apuntant cap un disseny més modern.
 - Noves comandes de musica.
   - `ÇÇseek`: Posa la cançó actual al segon dit.
   - Ara es detecta quan el bot s'enva del canal i es borra la llista corresponentment.
