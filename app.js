@@ -53,12 +53,31 @@ for (const dir of commandDirs) {
 }
 
 if (wantToSaveCommands) {
-  fs.writeFile('docs/storage/commands.json', JSON.stringify(cmds), (err) => {
+  const path = 'docs/storage/commands.json';
+  fs.writeFile(path, JSON.stringify(cmds), (err) => {
     if (err) console.error(err);
   });
+  console.log(`Comandes escrites correctament a "${path}"`);
 }
 
 client.on('ready', async () => {
+  if (wantToSaveCommands) {
+    let nMembers = 0;
+    client.guilds.cache.forEach((guild) => {
+      nMembers += guild.memberCount;
+    });
+
+    const path = 'docs/Storage/info.json';
+    fs.writeFile(
+      path,
+      JSON.stringify({ nMembers: nMembers, nServers: client.guilds.cache.size, nCommands: client.commands.size }),
+      (err) => {
+        if (err) console.error(err);
+      }
+    );
+    console.log(`Comandes escrites correctament a "${path}"`);
+  }
+
   for (let guild of client.guilds.cache) {
     guild = guild[1];
 
