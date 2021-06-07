@@ -16,13 +16,10 @@ module.exports = {
 • **Servidor Oficial: [Vull entrar-hi](${process.env.officialServerLink})**`;
 
     let nMembers = 0;
-    console.log('Start');
     await client.guilds.cache.forEach(async (guild) => {
-      console.log(`Guild: ${guild.name}`);
       await guild.members.fetch();
       nMembers += guild.members.cache.filter((member) => !member.user.bot).size;
     });
-    console.log(`Show`);
 
     const stats = `• **Membres:** \`${nMembers}\`
 • **Servers:** \`${client.guilds.cache.size}\`
