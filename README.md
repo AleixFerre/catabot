@@ -6,10 +6,9 @@
 ![ ](https://img.shields.io/github/issues/CatalaHD/CataBot)
 ![ ](https://img.shields.io/github/stars/CatalaHD/CataBot)
 ![ ](https://img.shields.io/github/license/CatalaHD/CataBot)
-
-[![Discord Bots](https://top.gg/api/widget/servers/529787494510624768.svg)](https://top.gg/bot/529787494510624768)
 [![Discord Bots](https://top.gg/api/widget/status/529787494510624768.svg)](https://top.gg/bot/529787494510624768)
 
+[![Discord Bots](https://top.gg/api/widget/529787494510624768.svg)](https://top.gg/bot/529787494510624768)
 
 ![icon_image](https://raw.githubusercontent.com/CatalaHD/CataBot/main/imgs/icon_cat.png)
 
