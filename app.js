@@ -83,8 +83,6 @@ client.on('ready', async () => {
 
     updateServer(guild.id, {
       serverID: guild.id,
-    }).then(() => {
-      console.log(db(`DB: Actualitzat server ${guild.name} correctament!`));
     });
 
     let members = await guild.members.fetch();
@@ -99,12 +97,12 @@ client.on('ready', async () => {
       }
     });
 
-    console.log(log(guild.name + ': ' + guild.memberCount + ' membres'));
+    console.log(log(`${guild.name}: ${guild.memberCount} membres`));
 
     let server = await getServer(guild.id);
 
     try {
-      let newName = '[ ' + server.prefix + ' ] CataBOT';
+      let newName = `[ ${server.prefix} ] CataBOT`;
       let member;
       if (testing) {
         newName += ' Test';
@@ -135,14 +133,9 @@ client.on('ready', async () => {
 
   console.log(
     log(
-      '\nREADY :: Version ' +
-        process.env.version +
-        '\nON ' +
-        client.guilds.cache.size +
-        ' servers with ' +
-        client.commands.size +
-        ' commands\n' +
-        '---------------------------------'
+      `READY :: Version ${process.env.version}
+ON ${client.guilds.cache.size} servers with ${client.commands.size} commands
+---------------------------------`
     )
   );
 
@@ -176,7 +169,7 @@ client.on('guildCreate', (guild) => {
   }).then(console.log(db(`DB: Guardada la nova guild ${guild.name} correctament!`)));
 
   try {
-    let newName = '[ ' + process.env.prefix + ' ] CataBOT';
+    let newName = `[ ${process.env.prefix} ] CataBOT`;
     let member;
     if (testing) {
       newName += ' Test';
@@ -245,17 +238,16 @@ const applyText = (canvas, text) => {
 
 client.on('guildMemberAdd', async (member) => {
   if (member.user.bot) {
-    console.log(bot(`Nou bot "${member.user.username}" afegit a la guild ${member.guild.name}`));
-    console.log(db("DB: L'usuari és un bot, ignorant..."));
-  } else {
-    console.log(log(`Nou membre "${member.user.username}" afegit a la guild ${member.guild.name}`));
-
-    updateUser([member.id, member.guild.id], {
-      'IDs.userID': member.id,
-      'IDs.serverID': member.guild.id,
-      'money': Math.floor(Math.random() * 1000),
-    }).then(console.log(db(`DB: Guardat el nou usuari ${member.user.username} correctament!`)));
+    return;
   }
+
+  console.log(log(`Nou membre "${member.user.username}" afegit a la guild ${member.guild.name}`));
+
+  updateUser([member.id, member.guild.id], {
+    'IDs.userID': member.id,
+    'IDs.serverID': member.guild.id,
+    'money': Math.floor(Math.random() * 1000),
+  }).then(console.log(db(`DB: Guardat el nou usuari ${member.user.username} correctament!`)));
 
   let channelInfo = await getServer(member.guild.id);
   // Si no hi ha el canal configurat, no enviem res
@@ -271,6 +263,17 @@ client.on('guildMemberRemove', async (member) => {
   // Es guardarà la info de cada membre SEMPRE perque no pugui fer relogin
   // Per resetejar les seves monedes o recollir el daily altre cop
   // El que vulgui parlar-ho, que contacti amb l'admin corresponent
+  //
+  // 7 June 2021
+  // UPDATE: Ara s'esborra per no guardar membres innecessariament
+
+  if (member.user.bot) {
+    return;
+  }
+
+  deleteUser([member.id, member.guild.id]).then(
+    console.log(db(`DB: Esborrat el nou usuari ${member.user.username} correctament!`))
+  );
 
   console.log(remove(`El membre "${member.user.username}" ha sortit de la guild ${member.guild.name}`));
 

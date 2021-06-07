@@ -8,7 +8,7 @@ module.exports = {
   description: 'Diu la informació del bot.',
   type: TYPE,
   aliases: ['stats', 'bot'],
-  execute(message, _args, server, client) {
+  async execute(message, _args, server, client) {
     const description = `Soc un **BOT** de discord **en català**! Espero que sigui agradable la meva presencia en aquest servidor, ${message.author.username}. Pots veure totes les meves comandes amb ${server.prefix}help.`;
 
     const info = `• **Desenvolupador:** ${process.env.ownerDiscordUsername}
@@ -16,15 +16,19 @@ module.exports = {
 • **Servidor Oficial: [Vull entrar-hi](${process.env.officialServerLink})**`;
 
     let nMembers = 0;
-    client.guilds.cache.forEach((guild) => {
-      nMembers += guild.memberCount;
+    console.log('Start');
+    await client.guilds.cache.forEach(async (guild) => {
+      console.log(`Guild: ${guild.name}`);
+      await guild.members.fetch();
+      nMembers += guild.members.cache.filter((member) => !member.user.bot).size;
     });
+    console.log(`Show`);
 
-    let stats = `• **Membres:** \`${nMembers}\`
+    const stats = `• **Membres:** \`${nMembers}\`
 • **Servers:** \`${client.guilds.cache.size}\`
 • **Comandes:** \`${client.commands.size}\``;
 
-    let msg = new Discord.MessageEmbed()
+    const msg = new Discord.MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setAuthor(
         `CataBOT [v${process.env.version}] by Català HD`,
