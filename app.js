@@ -37,15 +37,11 @@ for (const dir of commandDirs) {
     const command = require(`./commands/${dir}/${file}`);
     client.commands.set(command.name, command);
     if (wantToSaveCommands) {
-      let usage = '';
-      if (command.usage) {
-        usage = command.usage;
-      }
       cmds.push({
         name: command.name,
         description: command.description,
         type: command.type,
-        usage: `!${command.name}${usage.length !== 0 ? ' ' + usage : ''}`,
+        usage: `!${command.name}${command.usage || ''}`,
         aliases: command.aliases,
       });
     }
@@ -85,19 +81,20 @@ client.on('ready', async () => {
       serverID: guild.id,
     });
 
-    let members = await guild.members.fetch();
+    // let members = await guild.members.fetch();
 
-    members.forEach((member) => {
-      if (!member.user.bot) {
-        // Si es un bot, no el guardo que no farà res!
-        updateUser([member.id, guild.id], {
-          'IDs.userID': member.id,
-          'IDs.serverID': guild.id,
-        });
-      }
-    });
-
-    console.log(log(`${guild.name}: ${guild.memberCount} membres`));
+    // TODO: OPTIMITZAR PER FER NOMÉS UNA CRIDA A LA BD.
+    // És molt lent cridar a cada usuari per separat.
+    // S'ha de fer una condició que comprovi tots de cop i que els crei si no hi son
+    // members.forEach((member) => {
+    //   if (!member.user.bot) {
+    //     // Si es un bot, no el guardo que no farà res!
+    //     updateUser([member.id, guild.id], {
+    //       'IDs.userID': member.id,
+    //       'IDs.serverID': guild.id,
+    //     });
+    //   }
+    // });
 
     let server = await getServer(guild.id);
 
@@ -110,7 +107,9 @@ client.on('ready', async () => {
       } else {
         member = await guild.members.fetch(process.env.clientid);
       }
-      member.setNickname(newName);
+      member.setNickname(newName).catch(() => {
+        console.log("No s'ha pogut canviar el Nickname per culpa de falta de permissos");
+      });
     } catch (err) {
       console.error(err);
     }
@@ -406,4 +405,5 @@ mongoose
 // DISCORD BOT CONNECTION
 client
   .login(testing ? process.env.tokenTest : process.env.token)
-  .then(() => console.log(log('CONNECTAT CORRECTAMENT AMB Discord!')));
+  .then(() => console.log(log('CONNECTAT CORRECTAMENT AMB Discord!')))
+  .catch(console.log);
