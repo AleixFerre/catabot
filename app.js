@@ -148,6 +148,16 @@ ON ${client.guilds.cache.size} servers with ${client.commands.size} commands
   }
 });
 
+client.on('error', (err) => {
+  console.log(remove(err.toString()));
+});
+
+client.on('rateLimit', async (rateLimitData) => {
+  let owner = await client.members.fetch(process.env.IdOwner);
+  owner.send("T'has passat el limit de rate!\n" + rateLimitData.toString());
+  console.log(rateLimitData);
+});
+
 client.on('guildCreate', (guild) => {
   guild.members.fetch().then((members) => {
     members.forEach((member) => {
