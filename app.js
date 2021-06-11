@@ -4,7 +4,7 @@ const moment = require('moment');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-const { log, remove, bot, db } = require('./lib/common.js');
+const { log, remove, bot, db, getOwner } = require('./lib/common.js');
 
 // Database facade functions
 const { updateUser, updateServer, getServer, deleteUser, deleteServer } = require('./lib/database.js');
@@ -76,6 +76,7 @@ client.on('ready', async () => {
 
   for (let guild of client.guilds.cache) {
     guild = guild[1];
+    console.log(log(`${guild.name}: ${guild.memberCount} membres`));
 
     updateServer(guild.id, {
       serverID: guild.id,
@@ -97,22 +98,6 @@ client.on('ready', async () => {
     // });
 
     let server = await getServer(guild.id);
-
-    try {
-      let newName = `[ ${server.prefix} ] CataBOT`;
-      let member;
-      if (testing) {
-        newName += ' Test';
-        member = await guild.members.fetch(process.env.clientidTest);
-      } else {
-        member = await guild.members.fetch(process.env.clientid);
-      }
-      member.setNickname(newName).catch(() => {
-        console.log("No s'ha pogut canviar el Nickname per culpa de falta de permissos");
-      });
-    } catch (err) {
-      console.error(err);
-    }
 
     if (server.counterChannel) {
       // Existeix un canal de contador, afegim un setInterval cada 12h
@@ -139,7 +124,7 @@ ON ${client.guilds.cache.size} servers with ${client.commands.size} commands
   );
 
   if (!process.env.testing) {
-    let owner = await client.users.fetch(process.env.IdOwner);
+    let owner = await getOwner(client);
     let embed = new Discord.MessageEmbed()
       .setTitle('✅ TOT LLEST.')
       .setDescription('Estic online correctament!')
@@ -153,8 +138,9 @@ client.on('error', (err) => {
 });
 
 client.on('rateLimit', async (rateLimitData) => {
-  let owner = await client.members.fetch(process.env.IdOwner);
-  owner.send("T'has passat el limit de rate!\n" + rateLimitData.toString());
+  let owner = await getOwner(client);
+  owner.send(`T'has passat el limit de rate!
+${rateLimitData.toString()}`);
   console.log(rateLimitData);
 });
 
@@ -395,7 +381,7 @@ Canal: ${message.channel.name}`);
       .addField('Contingut', message.content, true);
 
     // Enviem info adicional al admin
-    let owner = await message.client.users.fetch(process.env.IdOwner);
+    let owner = await getOwner(client);
     owner.send(errorEmbed);
   }
 });

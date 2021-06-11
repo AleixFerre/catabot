@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { getColorFromCommand } = require('../../lib/common.js');
+const { getColorFromCommand, getOwner } = require('../../lib/common.js');
 
 const TYPE = 'altres';
 
@@ -111,7 +111,7 @@ module.exports = {
       .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
     // Envia el missatge al owner del bot
-    let owner = await message.client.users.fetch(process.env.IdOwner);
+    let owner = await getOwner(message.client);
     await owner.send(embed);
 
     // Confirmem l'enviament

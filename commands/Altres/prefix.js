@@ -18,8 +18,8 @@ module.exports = {
 
     if (!args[0]) {
       prefixEmbed.setDescription('Pots canviar el prefix del CataBOT');
-      prefixEmbed.addField('❯ Prefix actual', '`' + server.prefix + '`');
-      prefixEmbed.addField('❯ Per cambiar el prefix', '`' + server.prefix + 'prefix [ nou ]`');
+      prefixEmbed.addField('❯ Prefix actual', `\`${server.prefix}\``);
+      prefixEmbed.addField('❯ Per cambiar el prefix', `\`${server.prefix}prefix [ nou ]\``);
       prefixEmbed.addField('❯ Validació', '`Qualsevol text sense espais de com a màxim 5 caràcters`');
       message.channel.send(prefixEmbed);
     } else {
@@ -28,7 +28,8 @@ module.exports = {
       const roleNeeded = 'ADMINISTRATOR';
 
       if (!message.member.hasPermission(roleNeeded)) {
-        return message.reply('no tens permisos per executar aquesta comanda!\nEs necessita `' + roleNeeded + '`');
+        return message.reply(`no tens permisos per executar aquesta comanda!
+Es necessita \`${roleNeeded}\``);
       }
 
       if (newPrefix.length > 5) {
@@ -43,8 +44,6 @@ module.exports = {
         prefix: newPrefix,
       }).then(console.log(db("DB: S'ha guardat el nou prefix correctament!")));
 
-      let newName = '[ ' + newPrefix + ' ] CataBOT';
-      await message.guild.me.setNickname(newName);
       message.channel.send(prefixEmbed);
     }
   },
