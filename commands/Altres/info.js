@@ -15,11 +15,7 @@ module.exports = {
 • **Pagina web: [Pàgina del CataBot](${process.env.website})**
 • **Servidor Oficial: [Vull entrar-hi](${process.env.officialServerLink})**`;
 
-    let nMembers = 0;
-    await client.guilds.cache.forEach(async (guild) => {
-      await guild.members.fetch();
-      nMembers += guild.members.cache.filter((member) => !member.user.bot).size;
-    });
+    let nMembers = await getUserCount();
 
     const stats = `• **Membres:** \`${nMembers}\`
 • **Servers:** \`${client.guilds.cache.size}\`
