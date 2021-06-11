@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const { getColorFromCommand } = require('../../lib/common.js');
+const { getUserCount } = require('../../lib/database.js');
 
 const TYPE = 'altres';
 
