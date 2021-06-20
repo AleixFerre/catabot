@@ -38,29 +38,7 @@ module.exports = {
     }
 
     let userData = await getUsersFromServer(message.guild.id);
-
-    userData.forEach((member) => {
-      let id = member.IDs.userID;
-
-      if (member.money > mesRicDiners) {
-        mesRicDiners = member.money;
-        mesRicNom = message.guild.members.resolve(id).user.username;
-      }
-
-      if (member.level > mesNivellLevel) {
-        mesNivellLevel = member.level;
-        mesNivellXP = member.xp;
-        mesNivellNom = message.guild.members.resolve(id).user.username;
-      } else if (member.level === mesNivellLevel) {
-        if (member.xp > mesNivellXP) {
-          mesNivellLevel = member.level;
-          mesNivellXP = member.xp;
-          mesNivellNom = message.guild.members.resolve(id).user.username;
-        }
-      }
-
-      totalMoney += member.money;
-    });
+    let usersCount = userData.length;
 
     let msg = new Discord.MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
@@ -68,15 +46,47 @@ module.exports = {
       .setThumbnail(message.guild.iconURL())
       .addField('❯ Propietari', message.guild.owner.user.username, true)
       .addField('❯ Num Membres', message.guild.memberCount, true)
-      .addField('❯ Diners totals', `$${totalMoney}`, true)
-      .addField('❯ El mes ric', `${mesRicNom} | $${mesRicDiners}` || '*Ningu*', true)
-      .addField('❯ Amb mes nivell', `${mesNivellNom} | Nivell ${mesNivellLevel} | ${mesNivellXP} xp` || '*Ningu*', true)
+      .addField('❯ Num Perfils', usersCount, true)
       .addField("❯ Canal d'avisos", canalAvisos, true)
       .addField('❯ Canal del bot', canalBot, true)
       .addField('❯ Canal de benvinguda', canalBenvinguda, true)
       .addField('❯ Canal comptador', canalCounter, true)
-      .setTimestamp()
-      .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+      .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`)
+      .setTimestamp();
+
+    if (usersCount !== 0) {
+      userData.forEach((member) => {
+        let id = member.IDs.userID;
+
+        if (member.money > mesRicDiners) {
+          mesRicDiners = member.money;
+          mesRicNom = message.guild.members.resolve(id).user.username;
+        }
+
+        if (member.level > mesNivellLevel) {
+          mesNivellLevel = member.level;
+          mesNivellXP = member.xp;
+          mesNivellNom = message.guild.members.resolve(id).user.username;
+        } else if (member.level === mesNivellLevel) {
+          if (member.xp > mesNivellXP) {
+            mesNivellLevel = member.level;
+            mesNivellXP = member.xp;
+            mesNivellNom = message.guild.members.resolve(id).user.username;
+          }
+        }
+
+        totalMoney += member.money;
+      });
+
+      msg
+        .addField('❯ Diners totals', `$${totalMoney}`, true)
+        .addField('❯ El mes ric', `${mesRicNom} | $${mesRicDiners}` || '*Ningu*', true)
+        .addField(
+          '❯ Amb mes nivell',
+          `${mesNivellNom} | Nivell ${mesNivellLevel} | ${mesNivellXP} xp` || '*Ningu*',
+          true
+        );
+    }
 
     message.channel.send(msg);
   },

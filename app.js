@@ -178,13 +178,13 @@ Més informació de les comandes amb \`${process.env.prefix}help\` o \`${process
 });
 
 client.on('guildDelete', (guild) => {
-  deleteUsersFromServer(guild.id).then(
-    console.log(db(`DB: Esborrats els usuaris de la guild ${guild.name} correctament!`))
-        );
+  console.log(remove(`El bot ha sortit del servidor "${guild.name}"`));
+
+  deleteUsersFromServer(guild.id).then((deletedCount) => {
+    console.log(db(`Esborrats els ${deletedCount} usuaris de la guild ${guild.name}`));
+  });
 
   deleteServer(guild.id).then(console.log(db(`DB: Esborrat el server ${guild.name} correctament!`)));
-
-  console.log(remove(`El bot ha sortit del servidor "${guild.name}"`));
 });
 
 const applyText = (canvas, text) => {
