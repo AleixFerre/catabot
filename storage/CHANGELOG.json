@@ -24,6 +24,12 @@
       {
         "main": "Actualització del Backend",
         "secondary": ["Actualitzats els paquets de les dependències i nova versió de Node.js."]
+      },
+      {
+        "main": "Sistema de perfils",
+        "secondary": [
+          "Ara cal crear un perfil abans de fer servir qualsevol comanda de tipus **Jocs**, **Nivell** o **Banc**."
+        ]
       }
     ]
   },

@@ -11,6 +11,7 @@ _All **ÇÇ** strings are representations of the server prefix_
 - S'han esborrat diverses comandes que no s'utilitzaven (penis i gay) que a part es consideraven NSFW.
 - Ara totes les comandes tenen la seva traducció al català.
 - Actualitzats els paquets de les dependències i nova versió de Node.js.
+- Ara cal crear un perfil abans de fer servir qualsevol comanda de tipus **Jocs**, **Nivell** o **Banc**.
 
 \[v1.4\]
 
