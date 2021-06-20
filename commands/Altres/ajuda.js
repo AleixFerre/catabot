@@ -72,8 +72,8 @@ module.exports = {
         .setTitle('El **CataBOT** té ' + commands.size + ' comandes')
         .setAuthor(
           'CataBOT',
-          'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif',
-          'https://github.com/CatalaHD/CataBot'
+          'https://raw.githubusercontent.com/AleixFerre/CataBot/master/imgs/icon_cat.png',
+          'https://github.com/aleixferre/CataBot'
         )
         .setThumbnail('https://i.imgur.com/OMp4api.png')
         .setTimestamp()
@@ -113,10 +113,9 @@ module.exports = {
 
       data.push(helpContent);
       data.push(
-        '\n • Pots enviar ' +
-          prefix +
-          'help [nom comanda] per obtenir informació més detallada de la comanda!\n' +
-          ' • Pots veure totes les comandes [aquí](https://catalahd.github.io/CataBot/commands).'
+        `
+ • Pots enviar ${prefix}help [nom comanda] per obtenir informació més detallada de la comanda!
+ • Pots veure totes les comandes [aquí](https://aleixferre.github.io/CataBot/commands).`
       );
 
       fullHelpEmbed.setDescription(data);
@@ -151,8 +150,8 @@ module.exports = {
     const helpEmbed = new Discord.MessageEmbed()
       .setAuthor(
         'CataBOT',
-        'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif',
-        'https://github.com/CatalaHD/CataBot'
+        'https://raw.githubusercontent.com/AleixFerre/CataBot/master/imgs/icon_cat.png',
+        'https://github.com/aleixferre/CataBot'
       )
       .setTitle(command.name.toUpperCase())
       .setThumbnail('https://i.imgur.com/OMp4api.png')
@@ -186,9 +185,9 @@ module.exports = {
 
       if (command.aliases) helpEmbed.addField('Alies', command.aliases.join(', '));
 
-      if (command.usage) helpEmbed.addField('Ús', prefix + command.name + ' ' + command.usage);
+      if (command.usage) helpEmbed.addField('Ús', `${prefix + command.name} ${command.usage}`);
 
-      if (command.example) helpEmbed.addField('Exemple', prefix + command.name + ' ' + command.example);
+      if (command.example) helpEmbed.addField('Exemple', `${prefix + command.name} ${command.example}`);
     }
 
     message.channel.send(helpEmbed);

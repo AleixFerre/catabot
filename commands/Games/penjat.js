@@ -116,7 +116,7 @@ module.exports = {
         .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
       for (let i = 0; i < participants.length; i++) {
-        embed.addField('❯ Participant ' + (i + 1) + ': ', participants[i].tag, false);
+        embed.addField(`❯ Participant ${i + 1}: `, participants[i].tag, false);
       }
 
       await msg.edit(embed);
@@ -133,11 +133,9 @@ module.exports = {
     }
 
     async function demanar_paraula() {
-      const contingut =
-        '**EL JOC DEL PENJAT**\n' +
-        "Com a host de la partida, has d'escollir la paraula\n" +
-        '**RECORDA QUE HAS DE SUBTITUIR TOTS ELS ACCENTS PER LA SEVA RESPECTIVA LLETRA SENSE**' +
-        '[ p.e. àcid => acid ]';
+      const contingut = `**EL JOC DEL PENJAT**
+Com a host de la partida, has d'escollir la paraula
+**RECORDA QUE HAS DE SUBTITUIR TOTS ELS ACCENTS PER LA SEVA RESPECTIVA LLETRA SENSE**[ p.e. àcid => acid ]`;
 
       let demanar_msg = await message.author.send(contingut);
       let server_msg = await message.channel.send('El host està escollint la paraula...');
@@ -179,22 +177,13 @@ module.exports = {
 
       let embed_paraula = new Discord.MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
-        .setTitle('**EL JOC DEL PENJAT -- TORN ' + torn + '**')
+        .setTitle(`**EL JOC DEL PENJAT -- TORN ${torn}**`)
         .setDescription(
-          '**PARAULA => **' +
-            generar_paraula() +
-            '\n' +
-            'Lletres dites => [ ' +
-            dites.join(' ').toUpperCase() +
-            ' ]\n' +
-            'Errades => ' +
-            errades +
-            '/' +
-            max_errades
+          `**PARAULA => **${generar_paraula()}
+Lletres dites => [ ${dites.join(' ').toUpperCase()} ]
+Errades => ${errades}/${max_errades}`
         )
-        .setThumbnail(
-          'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/hangman/white_' + errades + '.png'
-        )
+        .setThumbnail(`https://raw.githubusercontent.com/AleixFerre/CataBot/master/imgs/hangman/white_${errades}.png`)
         .setTimestamp()
         .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
@@ -205,22 +194,13 @@ module.exports = {
       // Actualitzem el missatge de la paraula
       let embed_paraula = new Discord.MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
-        .setTitle('**EL JOC DEL PENJAT -- TORN ' + torn + '**')
+        .setTitle(`**EL JOC DEL PENJAT -- TORN ${torn}**`)
         .setDescription(
-          '**PARAULA => **' +
-            generar_paraula() +
-            '\n' +
-            'Lletres dites => [ ' +
-            dites.join(' ').toUpperCase() +
-            ' ]\n' +
-            'Errades => ' +
-            errades +
-            '/' +
-            max_errades
+          `**PARAULA => **${generar_paraula()}
+Lletres dites => [ ${dites.join(' ').toUpperCase()} ]
+Errades => ${errades}/${max_errades}`
         )
-        .setThumbnail(
-          'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/hangman/white_' + errades + '.png'
-        )
+        .setThumbnail(`https://raw.githubusercontent.com/AleixFerre/CataBot/master/imgs/hangman/white_${errades}.png`)
         .setTimestamp()
         .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
@@ -349,11 +329,11 @@ module.exports = {
 
       let emoji = '🏆';
       let desc = '';
-      let link = 'https://dlc.iec.cat/Results?DecEntradaText=' + paraula;
-      let questionLink = 'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/hangman/question.png';
+      let link = `https://dlc.iec.cat/Results?DecEntradaText=${paraula}`;
+      let questionLink = 'https://raw.githubusercontent.com/AleixFerre/CataBot/master/imgs/hangman/question.png';
 
       if (acabat === 1) {
-        desc = 'Hem guanyat! Tots els integrants guanyen 💰`' + recompensa + ' monedes`💰!\n';
+        desc = `Hem guanyat! Tots els integrants guanyen 💰\`${recompensa} monedes\`💰!`;
         participants.forEach(async (participant) => {
           message.channel.send(`${server.prefix}progresa ${xp_recompensa} ${participant}`);
           let user = await getUser(participant.id, message.guild.id);
@@ -370,7 +350,7 @@ module.exports = {
 
       let embed_final = new Discord.MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
-        .setTitle('**' + emoji + ' FINAL DE LA PARTIDA ' + emoji + '**')
+        .setTitle(`**${emoji} FINAL DE LA PARTIDA ${emoji}**`)
         .setDescription(desc)
         .setAuthor(paraula.toUpperCase(), questionLink, link)
         .setTimestamp()

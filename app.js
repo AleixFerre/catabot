@@ -7,7 +7,14 @@ require('dotenv').config();
 const { log, remove, bot, db, getOwner } = require('./lib/common.js');
 
 // Database facade functions
-const { updateUser, updateServer, getServer, deleteUser, deleteServer } = require('./lib/database.js');
+const {
+  updateServer,
+  getServer,
+  deleteUser,
+  deleteServer,
+  deleteUsersFromServer,
+  getUser,
+} = require('./lib/database.js');
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -74,28 +81,9 @@ client.on('ready', async () => {
     console.log(`Comandes escrites correctament a "${path}"`);
   }
 
-  for (let guild of client.guilds.cache) {
+  for await (let guild of client.guilds.cache) {
     guild = guild[1];
     console.log(log(`${guild.name}: ${guild.memberCount} membres`));
-
-    updateServer(guild.id, {
-      serverID: guild.id,
-    });
-
-    // let members = await guild.members.fetch();
-
-    // TODO: OPTIMITZAR PER FER NOMÉS UNA CRIDA A LA BD.
-    // És molt lent cridar a cada usuari per separat.
-    // S'ha de fer una condició que comprovi tots de cop i que els crei si no hi son
-    // members.forEach((member) => {
-    //   if (!member.user.bot) {
-    //     // Si es un bot, no el guardo que no farà res!
-    //     updateUser([member.id, guild.id], {
-    //       'IDs.userID': member.id,
-    //       'IDs.serverID': guild.id,
-    //     });
-    //   }
-    // });
 
     let server = await getServer(guild.id);
 
@@ -115,7 +103,7 @@ client.on('ready', async () => {
   client.user.setPresence({
     status: 'online',
     activity: {
-      name: 'catalahd.github.io/CataBot',
+      name: 'aleixferre.github.io/CataBot',
       type: 'WATCHING',
     },
   });
@@ -145,24 +133,12 @@ client.on('error', (err) => {
 client.on('rateLimit', async (rateLimitData) => {
   let owner = await getOwner(client);
   owner.send(`T'has passat el limit de rate!
+--------------- INFO --------------- 
 ${JSON.stringify(rateLimitData, null, 2)}`);
   console.log(rateLimitData);
 });
 
 client.on('guildCreate', (guild) => {
-  guild.members.fetch().then((members) => {
-    members.forEach((member) => {
-      if (!member.user.bot) {
-        // Si es un bot, no el guardo que no farà res!
-        updateUser([member.id, guild.id], {
-          'IDs.userID': member.id,
-          'IDs.serverID': guild.id,
-          'money': Math.floor(Math.random() * 1000),
-        }).then(console.log(db(`DB: Guardat el nou usuari ${member.user.username} correctament!`)));
-      }
-    });
-  });
-
   updateServer(guild.id, {
     serverID: guild.id,
     prefix: process.env.prefix,
@@ -170,14 +146,7 @@ client.on('guildCreate', (guild) => {
 
   try {
     let newName = `[ ${process.env.prefix} ] CataBOT`;
-    let member;
-    if (testing) {
-      newName += ' Test';
-      member = guild.members.cache.get(process.env.clientidTest);
-    } else {
-      member = guild.members.cache.get(process.env.clientid);
-    }
-    member.setNickname(newName);
+    guild.me.setNickname(newName);
   } catch (err) {
     console.error(err);
   }
@@ -209,16 +178,9 @@ Més informació de les comandes amb \`${process.env.prefix}help\` o \`${process
 });
 
 client.on('guildDelete', (guild) => {
-  guild.members.fetch().then((members) => {
-    members.forEach((member) => {
-      if (!member.user.bot) {
-        // Si es un bot, no el guardo que no farà res!
-        deleteUser([member.id, guild.id]).then(
-          console.log(db(`DB: Esborrat l'usuari ${member.user.username} correctament!`))
+  deleteUsersFromServer(guild.id).then(
+    console.log(db(`DB: Esborrats els usuaris de la guild ${guild.name} correctament!`))
         );
-      }
-    });
-  });
 
   deleteServer(guild.id).then(console.log(db(`DB: Esborrat el server ${guild.name} correctament!`)));
 
@@ -243,12 +205,6 @@ client.on('guildMemberAdd', async (member) => {
 
   console.log(log(`Nou membre "${member.user.username}" afegit a la guild ${member.guild.name}`));
 
-  updateUser([member.id, member.guild.id], {
-    'IDs.userID': member.id,
-    'IDs.serverID': member.guild.id,
-    'money': Math.floor(Math.random() * 1000),
-  }).then(console.log(db(`DB: Guardat el nou usuari ${member.user.username} correctament!`)));
-
   let channelInfo = await getServer(member.guild.id);
   // Si no hi ha el canal configurat, no enviem res
   if (!channelInfo) return;
@@ -260,13 +216,6 @@ client.on('guildMemberAdd', async (member) => {
 });
 
 client.on('guildMemberRemove', async (member) => {
-  // Es guardarà la info de cada membre SEMPRE perque no pugui fer relogin
-  // Per resetejar les seves monedes o recollir el daily altre cop
-  // El que vulgui parlar-ho, que contacti amb l'admin corresponent
-  //
-  // 7 June 2021
-  // UPDATE: Ara s'esborra per no guardar membres innecessariament
-
   if (member.user.bot) {
     return;
   }
@@ -364,6 +313,14 @@ client.on('message', async (message) => {
       message.reply("no tens els permisos d'Administrador necessaris per executar aquesta comanda!");
       return;
     }
+  }
+
+  let perfil = await getUser(message.author.id, message.guild.id);
+  if ((command.type === 'games' || command.type === 'banc' || command.type === 'level') && !perfil) {
+    return message.channel.send(
+      `**️️️⚠️ Alerta: Encara no tens un Perfil, el pots crear amb la comanda** \`${server.prefix}crearPerfil\`
+Amb un **Perfil** tindràs accés a totes les comandes de tipus **Banc**, **Nivell** i **Jocs**.`
+    );
   }
 
   console.log(`--- Nova comanda ---

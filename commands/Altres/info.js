@@ -16,8 +16,8 @@ module.exports = {
 • **Pagina web: [Pàgina del CataBot](${process.env.website})**
 • **Servidor Oficial: [Vull entrar-hi](${process.env.officialServerLink})**`;
 
-    let nMembresSenseBots = 0;
-    let nMembresAmbBots = 0;
+    let nMembresSenseBots = 0,
+      nMembresAmbBots = 0;
     for await (let guild of client.guilds.cache) {
       guild = guild[1];
       nMembresAmbBots += guild.memberCount;
@@ -35,7 +35,7 @@ module.exports = {
       .setColor(getColorFromCommand(TYPE))
       .setAuthor(
         `CataBOT [v${process.env.version}] by Català HD`,
-        'https://raw.githubusercontent.com/CatalaHD/CataBot/master/imgs/gif_frames/icon_new.gif',
+        'https://raw.githubusercontent.com/AleixFerre/CataBot/master/imgs/icon_cat.png',
         'https://github.com/CatalaHD/CataBot'
       )
       .setDescription(description)

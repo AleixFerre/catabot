@@ -36,7 +36,7 @@ module.exports = {
       }
     }
 
-    const link = 'https://opentdb.com/api.php?amount=' + n_preguntes + '&encode=base64';
+    const link = `https://opentdb.com/api.php?amount=${n_preguntes}&encode=base64`;
 
     await fetch(link)
       .then((response) => response.json())
@@ -57,11 +57,11 @@ module.exports = {
     async function fase_sala() {
       let embed_sala = new Discord.MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
-        .setTitle('**TRIVIA AMB ' + n_preguntes + ' PREGUNTES**')
+        .setTitle(`**TRIVIA AMB ${n_preguntes} PREGUNTES**`)
         .setDescription(
-          '=> [🚪] UNIR-SE / SORTIR DE LA SALA\n=> [✅] COMENÇAR PARTIDA\n' +
-            '=> [❌] CANCEL·LAR' +
-            '**[ Màxim 5 persones per sala! ]**'
+          `=> [🚪] UNIR-SE / SORTIR DE LA SALA
+=> [✅] COMENÇAR PARTIDA
+=> [❌] CANCEL·LAR**[ Màxim 5 persones per sala! ]**`
         )
         .addField('❯ Participant 1: ', message.author.tag, false)
         .setTimestamp()
@@ -128,15 +128,15 @@ module.exports = {
         .setColor(getColorFromCommand(TYPE))
         .setTitle('**TRIVIA**')
         .setDescription(
-          '=> [🚪] UNIR-SE / SORTIR DE LA SALA\n=> [✅] COMENÇAR PARTIDA\n' +
-            '=> [❌] CANCEL·LAR' +
-            '**[ Màxim 5 persones per sala! ]**'
+          `=> [🚪] UNIR-SE / SORTIR DE LA SALA
+=> [✅] COMENÇAR PARTIDA
+=> [❌] CANCEL·LAR**[ Màxim 5 persones per sala! ]**`
         )
         .setTimestamp()
         .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
       for (let i = 0; i < participants.length; i++) {
-        embed.addField('❯ Participant ' + (i + 1) + ': ', participants[i].tag, false);
+        embed.addField(`❯ Participant ${i + 1}: `, participants[i].tag, false);
       }
 
       await msg.edit(embed);
@@ -160,7 +160,7 @@ module.exports = {
 
       let embed = new Discord.MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
-        .setTitle('**TRIVIA - PREGUNTA ' + (q_index + 1) + '/' + n_preguntes + '**')
+        .setTitle(`**TRIVIA - PREGUNTA ${q_index + 1}/${n_preguntes}**`)
         .setDescription(pregunta_decoded)
         .setTimestamp()
         .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
@@ -297,7 +297,7 @@ module.exports = {
         } else if (i === 3) {
           num = '🥉';
         }
-        msg.addField(num + '.- ' + result.user.username, result.money);
+        msg.addField(`${num}.- ${result.user.username}`, result.money);
         progresses.push(`${server.prefix}progresa ${xp_recompensa} ${result.user}`);
         i++;
       });

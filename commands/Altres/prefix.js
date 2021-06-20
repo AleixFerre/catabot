@@ -44,6 +44,13 @@ Es necessita \`${roleNeeded}\``);
         prefix: newPrefix,
       }).then(console.log(db("DB: S'ha guardat el nou prefix correctament!")));
 
+      try {
+        let newName = `[ ${newPrefix} ] CataBOT`;
+        message.guild.me.setNickname(newName);
+      } catch (err) {
+        console.error(err);
+      }
+
       message.channel.send(prefixEmbed);
     }
   },

@@ -66,13 +66,9 @@ module.exports = {
     }
 
     async function mostrar_tauler() {
-      let tauler_str =
-        '**TORN ' +
-        n_torn +
-        ' -- ' +
-        player.username +
-        '**\n_ESCRIU EL NUMERO DE LA COLUMNA QUE VOLS JUGAR_\n' +
-        generar_str_tauler();
+      let tauler_str = `**TORN ${n_torn} -- ${player.username}**
+_ESCRIU EL NUMERO DE LA COLUMNA QUE VOLS JUGAR_
+${generar_str_tauler()}`;
       msg_tauler = await message.channel.send(tauler_str);
     }
 
@@ -197,8 +193,9 @@ module.exports = {
       let tauler_str = '';
 
       if (acabat === -1) {
-        tauler_str +=
-          '**TORN ' + n_torn + ' -- ' + jugador_actual + '**\n_ESCRIU EL NUMERO DE LA COLUMNA QUE VOLS JUGAR_\n';
+        tauler_str += `**TORN ${n_torn} -- ${jugador_actual}**
+_ESCRIU EL NUMERO DE LA COLUMNA QUE VOLS JUGAR_
+`;
       } else if (acabat === 1) {
         tauler_str += `**${player.username}, HAS GUANYAT**\n`;
       } else if (acabat === 2) {
@@ -624,7 +621,12 @@ module.exports = {
       let embed_sala = new Discord.MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle('**QUATRE EN RATLLA**')
-        .setDescription('=> [🚪] UNIR-SE A LA SALA\n=> [🤖] VS IA\n=> [👾] VS IA DIFÍCIL\n' + '=> [❌] CANCEL·LAR')
+        .setDescription(
+          `=> [🚪] UNIR-SE A LA SALA
+=> [🤖] VS IA
+=> [👾] VS IA DIFÍCIL
+=> [❌] CANCEL·LAR`
+        )
         .setTimestamp()
         .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 

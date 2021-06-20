@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/CatalaHD/CataBot.git"
+    "url": "https://github.com/AleixFerre/CataBot.git"
   },
   "keywords": [],
   "author": "CatalaHD",
@@ -26,19 +26,19 @@
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "mathjs": "^9.4.0",
+    "mathjs": "^9.4.2",
     "moment": "^2.29.1",
-    "mongoose": "^5.12.12",
+    "mongoose": "^5.12.14",
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.7",
     "opusscript": "^0.0.8",
     "simple-youtube-api": "^5.2.1",
     "weather-js": "^2.0.0",
-    "yt-search": "^2.8.0",
+    "yt-search": "^2.9.0",
     "ytdl-core": "^4.8.2"
   },
   "bugs": {
-    "url": "https://github.com/CatalaHD/CataBot/issues"
+    "url": "https://github.com/AleixFerre/CataBot/issues"
   },
-  "homepage": "https://catalahd.github.io/CataBot/"
+  "homepage": "https://aleixferre.github.io/CataBot/"
 }

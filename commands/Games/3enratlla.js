@@ -54,7 +54,10 @@ module.exports = {
       let msg = new Discord.MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle('**TRES EN RATLLA**')
-        .setDescription(`Torn de <@${player.id}>` + '\nEscriu la lletra de la posició a la que vols jugar')
+        .setDescription(
+          `Torn de <@${player.id}>
+Escriu la lletra de la posició a la que vols jugar`
+        )
         .addField('❯ Tauler', tauler_string, true)
         .setTimestamp()
         .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
@@ -80,7 +83,8 @@ module.exports = {
         } else {
           c = `Torn de <@${player2.id}>`;
         }
-        msg.setDescription(c + '\nEscriu la lletra de la posició a la que vols jugar');
+        msg.setDescription(`${c}
+Escriu la lletra de la posició a la que vols jugar`);
       } else {
         msg.setDescription("La partida s'ha acabat!");
       }
@@ -483,7 +487,12 @@ module.exports = {
       let embed_sala = new Discord.MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle('**TRES EN RATLLA**')
-        .setDescription('=> [🚪] UNIR-SE A LA SALA\n=> [🤖] IA FÀCIL\n=> [👾] IA DIFÍCIL\n' + '=> [❌] CANCEL·LAR')
+        .setDescription(
+          `=> [🚪] UNIR-SE A LA SALA
+=> [🤖] IA FÀCIL
+=> [👾] IA DIFÍCIL
+=> [❌] CANCEL·LAR`
+        )
         .setTimestamp()
         .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
