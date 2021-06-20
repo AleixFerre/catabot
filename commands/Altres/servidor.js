@@ -44,7 +44,7 @@ module.exports = {
       .setColor(getColorFromCommand(TYPE))
       .setTitle(message.guild.name)
       .setThumbnail(message.guild.iconURL())
-      .addField('❯ Propietari', message.guild.owner.user.username, true)
+      .addField('❯ Propietari', message.guild.owner || '*Ningú*', true)
       .addField('❯ Num Membres', message.guild.memberCount, true)
       .addField('❯ Num Perfils', usersCount, true)
       .addField("❯ Canal d'avisos", canalAvisos, true)
