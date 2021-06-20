@@ -34,7 +34,8 @@ Gràcies per recollir la teva recompensa diaria!`;
 
       message.channel.send(`${server.prefix}progresa ${xpMax} <@${message.author.id}>`);
     } else {
-      content = 'Ja has recollit la teva recompensa diaria!\nPots tornar-hi ' + moment().endOf('day').fromNow();
+      content = `Ja has recollit la teva recompensa diaria!
+Pots tornar-hi ${moment().endOf('day').fromNow()}`;
     }
 
     let msg = new Discord.MessageEmbed()

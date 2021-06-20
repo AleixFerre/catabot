@@ -20,7 +20,7 @@ module.exports = {
 
     if (size > 10 || size <= 0) {
       message.reply('la mida ha de ser entre 1 i 10');
-      return message.channel.send(server.prefix + 'help xpl');
+      return message.channel.send(`${server.prefix}help xpl`);
     }
 
     if (!message.guild.available) {
@@ -59,9 +59,9 @@ module.exports = {
 
     let usersData = await getUsersFromServer(message.guild.id);
 
-    usersData.forEach((member) => {
+    for await (let member of usersData) {
       // Per cada membre del servidor, apliquem aquesta funció
-      const resolvedMember = message.guild.members.resolve(member.IDs.userID);
+      const resolvedMember = await message.guild.members.fetch(member.IDs.userID);
       if (resolvedMember) {
         insercioOrdenada(member, resolvedMember.user.username);
 
@@ -71,11 +71,11 @@ module.exports = {
           board.pop();
         }
       }
-    });
+    }
 
     let msg = new Discord.MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
-      .setTitle('💠 Classificació de ' + message.guild.name + ' 💠')
+      .setTitle(`💠 Classificació de ${message.guild.name} 💠`)
       .setTimestamp()
       .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
@@ -92,7 +92,7 @@ module.exports = {
       } else if (i === 3) {
         num = '🥉';
       }
-      msg.addField(num + '.- ' + user.name, 'Nivell: ' + user.level + ' - ' + user.xp + 'xp');
+      msg.addField(`${num}.- ${user.name}`, `Nivell: ${user.level} - ${user.xp}xp`);
       i++;
     });
 

@@ -61,18 +61,18 @@ module.exports = {
 
         if (member.money > mesRicDiners) {
           mesRicDiners = member.money;
-          mesRicNom = message.guild.members.resolve(id).user.username;
+          mesRicNom = (await message.guild.members.fetch(id)).user.username;
         }
 
         if (member.level > mesNivellLevel) {
           mesNivellLevel = member.level;
           mesNivellXP = member.xp;
-          mesNivellNom = message.guild.members.resolve(id).user.username;
+          mesNivellNom = (await message.guild.members.fetch(id)).user.username;
         } else if (member.level === mesNivellLevel) {
           if (member.xp > mesNivellXP) {
             mesNivellLevel = member.level;
             mesNivellXP = member.xp;
-            mesNivellNom = message.guild.members.resolve(id).user.username;
+            mesNivellNom = (await message.guild.members.fetch(id)).user.username;
           }
         }
 

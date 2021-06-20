@@ -56,9 +56,9 @@ module.exports = {
 
     const usersData = await getUsersFromServer(message.guild.id);
 
-    usersData.forEach((member) => {
+    for await (let member of usersData) {
       // Per cada membre del servidor, apliquem aquesta funció
-      const resolvedMember = message.guild.members.resolve(member.IDs.userID);
+      const resolvedMember = await message.guild.members.fetch(member.IDs.userID);
       if (resolvedMember) {
         insercioOrdenada(member, resolvedMember.user.username);
 
@@ -68,11 +68,11 @@ module.exports = {
           board.pop();
         }
       }
-    });
+    }
 
     let msg = new Discord.MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
-      .setTitle('🏆 Classificació de ' + message.guild.name + ' 🏆')
+      .setTitle(`🏆 Classificació de ${message.guild.name} 🏆`)
       .setTimestamp()
       .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
