@@ -18,11 +18,11 @@ module.exports = {
       .setURL(link)
       .setAuthor(
         'CataBOT',
-        'https://raw.githubusercontent.com/AleixFerre/CataBot/master/imgs/icon_cat.png',
+        'https://raw.githubusercontent.com/AleixFerre/CataBot/master/img/icon_cat.png',
         'https://github.com/AleixFerre/CataBot'
       )
       .setDescription('Aqui tens el link')
-      .setThumbnail('https://raw.githubusercontent.com/AleixFerre/CataBot/master/imgs/icon_cat.png')
+      .setThumbnail('https://raw.githubusercontent.com/AleixFerre/CataBot/master/img/icon_cat.png')
       .setTimestamp()
       .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 

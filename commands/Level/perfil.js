@@ -72,7 +72,7 @@ module.exports = {
       rankIndex = 19;
     }
 
-    let rankLink = `https://raw.githubusercontent.com/AleixFerre/CataBot/master/imgs/rank_icons/${rankIndex}.png`;
+    let rankLink = `https://raw.githubusercontent.com/AleixFerre/CataBot/master/img/rank_icons/${rankIndex}.png`;
 
     let msg = new Discord.MessageEmbed()
       .setColor(getColorFromCommand(TYPE))

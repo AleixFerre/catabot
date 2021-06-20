@@ -35,7 +35,7 @@ module.exports = {
       .setColor(getColorFromCommand(TYPE))
       .setAuthor(
         `CataBOT [v${process.env.version}] by Català HD`,
-        'https://raw.githubusercontent.com/AleixFerre/CataBot/master/imgs/icon_cat.png',
+        'https://raw.githubusercontent.com/AleixFerre/CataBot/master/img/icon_cat.png',
         'https://github.com/CatalaHD/CataBot'
       )
       .setDescription(description)

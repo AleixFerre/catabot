@@ -183,7 +183,7 @@ Com a host de la partida, has d'escollir la paraula
 Lletres dites => [ ${dites.join(' ').toUpperCase()} ]
 Errades => ${errades}/${max_errades}`
         )
-        .setThumbnail(`https://raw.githubusercontent.com/AleixFerre/CataBot/master/imgs/hangman/white_${errades}.png`)
+        .setThumbnail(`https://raw.githubusercontent.com/AleixFerre/CataBot/master/img/hangman/white_${errades}.png`)
         .setTimestamp()
         .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
@@ -200,7 +200,7 @@ Errades => ${errades}/${max_errades}`
 Lletres dites => [ ${dites.join(' ').toUpperCase()} ]
 Errades => ${errades}/${max_errades}`
         )
-        .setThumbnail(`https://raw.githubusercontent.com/AleixFerre/CataBot/master/imgs/hangman/white_${errades}.png`)
+        .setThumbnail(`https://raw.githubusercontent.com/AleixFerre/CataBot/master/img/hangman/white_${errades}.png`)
         .setTimestamp()
         .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
@@ -330,7 +330,7 @@ Errades => ${errades}/${max_errades}`
       let emoji = '🏆';
       let desc = '';
       let link = `https://dlc.iec.cat/Results?DecEntradaText=${paraula}`;
-      let questionLink = 'https://raw.githubusercontent.com/AleixFerre/CataBot/master/imgs/hangman/question.png';
+      let questionLink = 'https://raw.githubusercontent.com/AleixFerre/CataBot/master/img/hangman/question.png';
 
       if (acabat === 1) {
         desc = `Hem guanyat! Tots els integrants guanyen 💰\`${recompensa} monedes\`💰!`;

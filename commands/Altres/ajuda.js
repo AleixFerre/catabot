@@ -72,7 +72,7 @@ module.exports = {
         .setTitle('El **CataBOT** té ' + commands.size + ' comandes')
         .setAuthor(
           'CataBOT',
-          'https://raw.githubusercontent.com/AleixFerre/CataBot/master/imgs/icon_cat.png',
+          'https://raw.githubusercontent.com/AleixFerre/CataBot/master/img/icon_cat.png',
           'https://github.com/aleixferre/CataBot'
         )
         .setThumbnail('https://i.imgur.com/OMp4api.png')
@@ -150,7 +150,7 @@ module.exports = {
     const helpEmbed = new Discord.MessageEmbed()
       .setAuthor(
         'CataBOT',
-        'https://raw.githubusercontent.com/AleixFerre/CataBot/master/imgs/icon_cat.png',
+        'https://raw.githubusercontent.com/AleixFerre/CataBot/master/img/icon_cat.png',
         'https://github.com/aleixferre/CataBot'
       )
       .setTitle(command.name.toUpperCase())
