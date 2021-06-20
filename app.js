@@ -187,7 +187,7 @@ El bot permet executar una serie de comandes automàtiques sempre que un ADMINIS
 - També es pot configurar un canal de benvinguda perque digui Hola i Adeu a tots els integrants nous i passats del servidor amb \`${process.env.prefix}setwelcome\`. També pots provar amb \`${process.env.prefix}welcome\` i \`${process.env.prefix}bye\`
 - Es pot configurar un canal d'avisos amb \`${process.env.prefix}setalert\`. En aquest canal s'avisarà de totes les novetats del bot.
 - Finalment, es pot configurar un canal del bot amb \`${process.env.prefix}setbot\`. Això el que farà serà avisar a tothom qui estigui usant el bot fora d'aquest canal.
-Aquestes tres comandes es poden desactivar en qualsevol moment amb el paràmetre \`null\`. P.E. \`${process.env.prefix}setwelcome null\`
+Aquestes tres comandes es poden desactivar en qualsevol moment amb el paràmetre \`treure\`. P.E. \`${process.env.prefix}setwelcome treure\`
 Per veure tota la informació dels canals, fes servir la comanda \`${process.env.prefix}server\`.
 
 Més informació de les comandes amb \`${process.env.prefix}help\` o \`${process.env.prefix}help [nom de la comanda]\`.`;
@@ -337,9 +337,17 @@ client.on('message', async (message) => {
   if (!message.channel.members && commandName != 'help' && commandName != 'h') {
     // Estem a DM, només funciona el help
     message.author.send(
-      "**⚠️ Als canals privats només funciona la comanda `catahelp`. Prova d'executar-la a un servidor.**"
+      "**⚠️ Als canals privats només funciona la comanda `catahelp`. Prova millor d'executar aquesta comanda a un servidor.**"
     );
     return;
+  }
+
+  // Només si el servidor té el canal de bot adjudicat,
+  if (server.botChannel && message.channel.id !== server.botChannel) {
+    // Si el missatge està en un altre canal,
+    const channel = await client.channels.fetch(server.botChannel);
+    message.author.send(`Prova d'enviar el missatge pel canal del bot: ${channel}`);
+    return; // ignorar
   }
 
   const command =
