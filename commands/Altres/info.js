@@ -16,11 +16,20 @@ module.exports = {
 • **Pagina web: [Pàgina del CataBot](${process.env.website})**
 • **Servidor Oficial: [Vull entrar-hi](${process.env.officialServerLink})**`;
 
-    let nMembers = await getUserCount();
+    let nMembresSenseBots = 0;
+    let nMembresAmbBots = 0;
+    for await (let guild of client.guilds.cache) {
+      guild = guild[1];
+      nMembresAmbBots += guild.memberCount;
+      await guild.members.fetch();
+      nMembresSenseBots += guild.members.cache.filter((member) => !member.user.bot).size;
+    }
 
-    const stats = `• **Membres:** \`${nMembers}\`
-• **Servers:** \`${client.guilds.cache.size}\`
-• **Comandes:** \`${client.commands.size}\``;
+    const stats = `• **Membres Totals: **\`${nMembresAmbBots}\`
+• **Membres Sense Bots: **\`${nMembresSenseBots}\`
+• **Perfils Guardats: **\`${await getUserCount()}\`
+• **Servidors: **\`${client.guilds.cache.size}\`
+• **Comandes: **\`${client.commands.size}\``;
 
     const msg = new Discord.MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
@@ -30,8 +39,8 @@ module.exports = {
         'https://github.com/CatalaHD/CataBot'
       )
       .setDescription(description)
-      .addField('❯ Informació:', info, true)
       .addField('❯ Estadistiques:', stats, true)
+      .addField('❯ Informació:', info, true)
       .setTimestamp()
       .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 

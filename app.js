@@ -101,9 +101,14 @@ client.on('ready', async () => {
 
     if (server.counterChannel) {
       // Existeix un canal de contador, afegim un setInterval cada 12h
-      setInterval(() => {
+      setInterval(
+        (guild, server) => {
         guild.channels.resolve(server.counterChannel).setName(`${guild.memberCount} membres`);
-      }, Math.random() * 12 * 3600000);
+        },
+        Math.random() * 12 * 3600000,
+        guild,
+        server
+      );
     }
   }
 
@@ -140,7 +145,7 @@ client.on('error', (err) => {
 client.on('rateLimit', async (rateLimitData) => {
   let owner = await getOwner(client);
   owner.send(`T'has passat el limit de rate!
-${rateLimitData.toString()}`);
+${JSON.stringify(rateLimitData, null, 2)}`);
   console.log(rateLimitData);
 });
 
@@ -342,11 +347,10 @@ client.on('message', async (message) => {
     return;
   }
 
-  // Només si el servidor té el canal de bot adjudicat,
-  if (server.botChannel && message.channel.id !== server.botChannel) {
+  // Només si el servidor té el canal de bot adjudicat i no soc jo,
+  if (message.author.id !== process.env.IdOwner && server.botChannel && message.channel.id !== server.botChannel) {
     // Si el missatge està en un altre canal,
-    const channel = await client.channels.fetch(server.botChannel);
-    message.author.send(`Prova d'enviar el missatge pel canal del bot: ${channel}`);
+    message.author.send(`Prova d'enviar el missatge pel canal del bot: <#${server.botChannel}>`);
     return; // ignorar
   }
 
