@@ -9,7 +9,7 @@ module.exports = {
   type: TYPE,
   description: 'Diu la informació del servidor.',
   aliases: ['serverinfo', 'guild', 'server'],
-  async execute(message, _args, server) {
+  async execute(message, _args, server, client) {
     let mesRicNom = '';
     let mesRicDiners = -1;
     let totalMoney = 0;
@@ -39,12 +39,13 @@ module.exports = {
 
     let userData = await getUsersFromServer(message.guild.id);
     let usersCount = userData.length;
+    let owner = await message.guild.members.fetch(message.guild.ownerID);
 
     let msg = new Discord.MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle(message.guild.name)
       .setThumbnail(message.guild.iconURL())
-      .addField('❯ Propietari', message.guild.owner || '*Ningú*', true)
+      .addField('❯ Propietari', owner || '*Ningú*', true)
       .addField('❯ Num Membres', message.guild.memberCount, true)
       .addField('❯ Num Perfils', usersCount, true)
       .addField("❯ Canal d'avisos", canalAvisos, true)
@@ -55,7 +56,7 @@ module.exports = {
       .setTimestamp();
 
     if (usersCount !== 0) {
-      userData.forEach((member) => {
+      for (let member of userData) {
         let id = member.IDs.userID;
 
         if (member.money > mesRicDiners) {
@@ -76,7 +77,7 @@ module.exports = {
         }
 
         totalMoney += member.money;
-      });
+      }
 
       msg
         .addField('❯ Diners totals', `$${totalMoney}`, true)
