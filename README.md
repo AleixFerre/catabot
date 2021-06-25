@@ -10,7 +10,7 @@
 
 [![Discord Bots](https://top.gg/api/widget/529787494510624768.svg)](https://top.gg/bot/529787494510624768)
 
-![icon_image](https://raw.githubusercontent.com/AleixFerre/CataBot/main/imgs/icon_cat.png)
+![icon_image](https://raw.githubusercontent.com/AleixFerre/CataBot/main/img/icon_cat.png)
 
 ## Contribuiting
 
