@@ -19,7 +19,7 @@ const {
 const Discord = require('discord.js');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
-client.events = new Discord.Collection();
+// client.events = new Discord.Collection();
 
 moment().utcOffset('120');
 
@@ -56,10 +56,10 @@ for (const dir of commandDirs) {
   }
 }
 
-const eventsFiles = fs.readdirSync('./events').filter((file) => file.endsWith('.js'));
-for (const eventFile of eventsFiles) {
-  client.events.set(eventFile.name, eventFile);
-}
+// const eventsFiles = fs.readdirSync('./events').filter((file) => file.endsWith('.js'));
+// for (const eventFile of eventsFiles) {
+//   client.events.set(eventFile.name, eventFile);
+// }
 
 if (wantToSaveCommands) {
   const path = 'docs/storage/commands.json';
