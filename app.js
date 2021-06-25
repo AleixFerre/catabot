@@ -19,6 +19,7 @@ const {
 const Discord = require('discord.js');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
+client.events = new Discord.Collection();
 
 moment().utcOffset('120');
 
@@ -53,6 +54,11 @@ for (const dir of commandDirs) {
       });
     }
   }
+}
+
+const eventsFiles = fs.readdirSync('./events').filter((file) => file.endsWith('.js'));
+for (const eventFile of eventsFiles) {
+  client.events.set(eventFile.name, eventFile);
 }
 
 if (wantToSaveCommands) {
@@ -91,7 +97,7 @@ client.on('ready', async () => {
       // Existeix un canal de contador, afegim un setInterval cada 12h
       setInterval(
         (guild, server) => {
-        guild.channels.resolve(server.counterChannel).setName(`${guild.memberCount} membres`);
+          guild.channels.resolve(server.counterChannel).setName(`${guild.memberCount} membres`);
         },
         Math.random() * 12 * 3600000,
         guild,
@@ -239,7 +245,7 @@ client.on('guildMemberRemove', async (member) => {
   const canvas = Canvas.createCanvas(700, 250);
   const ctx = canvas.getContext('2d');
 
-  const background = await Canvas.loadImage('./imgs/wallpaper.png');
+  const background = await Canvas.loadImage('./img/wallpaper.png');
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
   ctx.strokeStyle = '#74037b';
@@ -313,6 +319,9 @@ client.on('message', async (message) => {
       message.reply("no tens els permisos d'Administrador necessaris per executar aquesta comanda!");
       return;
     }
+  } else if (command.type === 'musica') {
+	message.channel.send("**⚠️ Ara el modul de música està en manteniment per un error!\nIntentaré arreglar-lo el més ràpid possible.**");
+	return;
   }
 
   let perfil = await getUser(message.author.id, message.guild.id);
