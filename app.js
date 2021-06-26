@@ -302,11 +302,14 @@ client.on('message', async (message) => {
     return;
   }
 
-  // Només si el servidor té el canal de bot adjudicat i no soc jo,
-  if (message.author.id !== process.env.IdOwner && server.botChannel && message.channel.id !== server.botChannel) {
-    // Si el missatge està en un altre canal,
-    message.author.send(`Prova d'enviar el missatge pel canal del bot: <#${server.botChannel}>`);
-    return; // ignorar
+  // Si no soc jo, el bot
+  if (message.author.id !== client.user.id) {
+    // Només si el servidor té el canal de bot adjudicat i no soc jo,
+    if (message.author.id !== process.env.IdOwner && server.botChannel && message.channel.id !== server.botChannel) {
+      // Si el missatge està en un altre canal,
+      message.author.send(`Prova d'enviar el missatge pel canal del bot: <#${server.botChannel}>`);
+      return; // ignorar
+    }
   }
 
   const command =
