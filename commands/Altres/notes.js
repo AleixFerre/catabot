@@ -22,16 +22,17 @@ module.exports = {
         versio = args[0];
       } else {
         message.reply('la versió té un format incorrecte!');
-        return message.channel.send(prefix + 'help lastupdate');
+        return message.channel.send(`${prefix}help notes`);
       }
     }
 
     changes = changelog[versio];
     if (!changes) {
       let keys = Object.keys(changelog);
-      keys = keys.map((i) => '`' + i + '`');
+      keys = keys.map((i) => `\`${i}\``);
       return message.reply(
-        'no existeix aquesta versió!\nPots escollir entre les versions disponibles: ' + keys.join(', ')
+        `no existeix aquesta versió!
+Pots escollir entre les versions disponibles: ${keys.join(', ')}`
       );
     }
 
@@ -40,17 +41,17 @@ module.exports = {
 
     const embed = new Discord.MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
-      .setTitle('**NOTES DEL CATABOT ' + versio + '**')
+      .setTitle(`**NOTES DEL CATABOT ${versio}**`)
       .setTimestamp()
-      .setFooter('CataBOT ' + new Date().getFullYear() + ' © All rights reserved');
+      .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
     for (let nota of dades) {
       let cos = nota.secondary;
-      nota.main = '❯ ' + nota.main.replace(/ÇÇ/gi, prefix);
+      nota.main = `❯ ${nota.main.replace(/ÇÇ/gi, prefix)}`;
       if (cos.length === 0) {
         embed.addField(nota.main, '_No hi ha més informació._', false);
       } else {
-        cos = cos.map((i) => '• ' + i.replace(/ÇÇ/gi, prefix));
+        cos = cos.map((i) => `• ${i.replace(/ÇÇ/gi, prefix)}`);
         embed.addField(nota.main, cos.join('\n'), false);
       }
     }

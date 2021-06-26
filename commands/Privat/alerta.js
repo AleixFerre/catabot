@@ -1,4 +1,5 @@
 const { getAllServers } = require('../../lib/database.js');
+const notes = require('../altres/notes.js');
 
 const TYPE = 'privat';
 
@@ -23,14 +24,16 @@ module.exports = {
 
     servers.forEach(async (guild) => {
       let channelID = guild.alertChannel;
-      let channel = client.channels.cache.get(channelID);
+      if (channelID) {
+        let channel = client.channels.resolve(channelID);
 
-      // Només si hi ha algun canal de text en tot el servidor
-      if (channel) {
-        if (msg.toLowerCase() === 'changelog') {
-          await channel.send(`${guild.prefix}notes`); // Envia la comanda de notes
-        } else {
-          await channel.send(msg); // Envia el missatge d'alerta
+        // Només si hi ha algun canal de text en tot el servidor
+        if (channel) {
+          if (msg.toLowerCase() === 'changelog') {
+            notes.execute(message, [], server); // Envia la comanda de notes
+          } else {
+            await channel.send(msg); // Envia el missatge d'alerta
+          }
         }
       }
     });
