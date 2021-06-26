@@ -319,17 +319,16 @@ client.on('message', async (message) => {
       message.reply("no tens els permisos d'Administrador necessaris per executar aquesta comanda!");
       return;
     }
-  } else if (command.type === 'musica') {
-	message.channel.send("**⚠️ Ara el modul de música està en manteniment per un error!\nIntentaré arreglar-lo el més ràpid possible.**");
-	return;
   }
 
-  let perfil = await getUser(message.author.id, message.guild.id);
-  if ((command.type === 'games' || command.type === 'banc' || command.type === 'level') && !perfil) {
-    return message.channel.send(
-      `**️️️⚠️ Alerta: Encara no tens un Perfil, el pots crear amb la comanda** \`${server.prefix}crearPerfil\`
+  if (command.type === 'games' || command.type === 'banc' || command.type === 'level') {
+    let perfil = await getUser(message.author.id, message.guild.id);
+    if (!perfil) {
+      return message.channel.send(
+        `**️️️⚠️ Alerta: Encara no tens un Perfil, el pots crear amb la comanda** \`${server.prefix}crearPerfil\`
 Amb un **Perfil** tindràs accés a totes les comandes de tipus **Banc**, **Nivell** i **Jocs**.`
-    );
+      );
+    }
   }
 
   console.log(`--- Nova comanda ---
