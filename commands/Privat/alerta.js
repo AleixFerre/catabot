@@ -29,7 +29,7 @@ module.exports = {
         // Només si hi ha algun canal de text en tot el servidor
         if (channel) {
           if (msg.toLowerCase() === 'changelog') {
-            await message.channel.send(`${server.prefix}notes`); // Envia la comanda de notes
+            await channel.send(`${server.prefix}notes`); // Envia la comanda de notes
           } else {
             await channel.send(msg); // Envia el missatge d'alerta
           }

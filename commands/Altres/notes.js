@@ -47,12 +47,12 @@ Pots escollir entre les versions disponibles: ${keys.join(', ')}`
 
     for (let nota of dades) {
       let cos = nota.secondary;
-      nota.main = `❯ ${nota.main.replace(/ÇÇ/gi, prefix)}`;
+      let main = `❯ ${nota.main.replace(/ÇÇ/gi, prefix)}`;
       if (cos.length === 0) {
-        embed.addField(nota.main, '_No hi ha més informació._', false);
+        embed.addField(main, '_No hi ha més informació._', false);
       } else {
         cos = cos.map((i) => `• ${i.replace(/ÇÇ/gi, prefix)}`);
-        embed.addField(nota.main, cos.join('\n'), false);
+        embed.addField(main, cos.join('\n'), false);
       }
     }
 
