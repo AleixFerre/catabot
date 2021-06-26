@@ -30,6 +30,12 @@
         "secondary": [
           "Ara cal crear un perfil abans de fer servir qualsevol comanda de tipus **Jocs**, **Nivell** o **Banc**."
         ]
+      },
+      {
+        "main": "Modul de musica funcional",
+        "secondary": [
+          "El modul de la música deix d'estar en manteniment. El bug de `Error: input stream 404` ja està arreglat."
+        ]
       }
     ]
   },

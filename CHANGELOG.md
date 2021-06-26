@@ -12,6 +12,7 @@ _All **ÇÇ** strings are representations of the server prefix_
 - Ara totes les comandes tenen la seva traducció al català.
 - Actualitzats els paquets de les dependències i nova versió de Node.js.
 - Ara cal crear un perfil abans de fer servir qualsevol comanda de tipus **Jocs**, **Nivell** o **Banc**.
+- El modul de la música deix d'estar en manteniment. El bug de `Error: input stream 404` ja està arreglat.
 
 \[v1.4\]
 
