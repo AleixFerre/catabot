@@ -12,7 +12,7 @@ const applyText = (canvas, text) => {
   return ctx.font;
 };
 
-const TYPE = 'entreteniment';
+const TYPE = 'altres';
 
 module.exports = {
   name: 'adeu',

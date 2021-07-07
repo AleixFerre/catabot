@@ -84,7 +84,7 @@ client.on('ready', async () => {
         if (err) console.error(err);
       }
     );
-    console.log(`Comandes escrites correctament a "${path}"`);
+    console.log(`Info escrita correctament a "${path}"`);
   }
 
   for await (let guild of client.guilds.cache) {
