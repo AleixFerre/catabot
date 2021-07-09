@@ -61,7 +61,7 @@ module.exports = {
 
     for await (let member of usersData) {
       // Per cada membre del servidor, apliquem aquesta funció
-      const resolvedMember = await message.guild.members.fetch(member.IDs.userID);
+      const resolvedMember = await message.guild.members.resolve(member.IDs.userID);
       if (resolvedMember) {
         insercioOrdenada(member, resolvedMember.user.username);
 
