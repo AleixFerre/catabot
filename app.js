@@ -121,15 +121,6 @@ ON ${client.guilds.cache.size} servers with ${client.commands.size} commands
 ---------------------------------`
     )
   );
-
-  if (!process.env.testing) {
-    let owner = await getOwner(client);
-    let embed = new Discord.MessageEmbed()
-      .setTitle('✅ TOT LLEST.')
-      .setDescription('Estic online correctament!')
-      .setColor('0x00FF00');
-    owner.send(embed);
-  }
 });
 
 client.on('error', (err) => {
