@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 let conversions = require('../../storage/conversions.json');
 const { getColorFromCommand } = require('../../lib/common.js');
 
@@ -36,7 +36,7 @@ module.exports = {
     let canviDeUSD = conversions[args[2].toUpperCase()];
     let res = ((parseFloat(args[0]) * canviAUSD) / canviDeUSD).toFixed(3);
 
-    const msg = new Discord.MessageEmbed()
+    const msg = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle('**CANVI**')
       .setDescription(`Quants ${args[2].toUpperCase()} són ${args[0]} ${args[1].toUpperCase()}?`)

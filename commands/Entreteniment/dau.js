@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { getColorFromCommand } = require('../../lib/common.js');
 
 const TYPE = 'entreteniment';
@@ -32,7 +32,7 @@ module.exports = {
       return message.reply('el numero de tirades no pot ser major que 25!');
     }
 
-    let msg = new Discord.MessageEmbed()
+    let msg = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle('**TIRA ELS DAUS**')
       .setThumbnail('https://i.imgur.com/h2c4xWd.png')

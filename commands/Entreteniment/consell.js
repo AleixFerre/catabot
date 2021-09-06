@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 const translate = require('@vitalets/google-translate-api');
 const { getColorFromCommand } = require('../../lib/common.js');
@@ -48,7 +48,7 @@ module.exports = {
       traducido = res.text;
     });
 
-    let msg = new Discord.MessageEmbed()
+    let msg = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle(title + advice.id + '**')
       .setDescription(traducido)

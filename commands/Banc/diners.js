@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { getColorFromCommand } = require('../../lib/common.js');
 const { getUsersFromServer } = require('../../lib/database.js');
 
@@ -33,7 +33,7 @@ module.exports = {
       }
     });
 
-    let msg = new Discord.MessageEmbed()
+    let msg = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle(`💰 MONEDES DE ${mention.username} 💰`)
       .setThumbnail(mention.avatarURL)

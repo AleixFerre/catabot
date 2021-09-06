@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { ranks } = require('../../storage/ranks.json');
 const { getColorFromCommand } = require('../../lib/common.js');
 const { getUsersFromServer } = require('../../lib/database.js');
@@ -69,7 +69,7 @@ module.exports = {
 
     let rankLink = `https://raw.githubusercontent.com/AleixFerre/CataBot/master/img/rank_icons/${rankIndex}.png`;
 
-    let msg = new Discord.MessageEmbed()
+    let msg = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle('💠 Nivell 💠')
       .setThumbnail(rankLink)

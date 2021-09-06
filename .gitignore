@@ -1,7 +1,6 @@
 .vscode/
 .idea/
 node_modules/
-events/
 DISCORD.pem
 config.json
 config_test.json

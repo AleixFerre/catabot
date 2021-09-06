@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 const translate = require('@vitalets/google-translate-api');
 const { getColorFromCommand } = require('../../lib/common.js');
@@ -39,7 +39,7 @@ module.exports = {
         });
       });
 
-    let msg = new Discord.MessageEmbed()
+    let msg = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle('**BOLA DE LA SORT**')
       .setThumbnail('http://bit.ly/CataBot_' + type)

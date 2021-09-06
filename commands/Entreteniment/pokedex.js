@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 const { getColorFromCommand } = require('../../lib/common.js');
 
@@ -77,7 +77,7 @@ module.exports = {
           data.stats.total +
           '`';
 
-        const pokeEmbed = new Discord.MessageEmbed()
+        const pokeEmbed = new MessageEmbed()
           .setColor(getColorFromCommand(TYPE))
           .setAuthor(
             'POKEDEX',

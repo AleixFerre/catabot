@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const translate = require('@vitalets/google-translate-api');
 const { getColorFromCommand } = require('../../lib/common.js');
 
@@ -41,7 +41,7 @@ Recorda que el format és: \`${server.prefix}traduir ${usage}\``);
       traduit = res.text;
     });
 
-    let msg = new Discord.MessageEmbed()
+    let msg = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle('**TRADUCTOR**')
       .setDescription(traduit)

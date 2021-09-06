@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const weather = require('weather-js');
 const { getColorFromCommand } = require('../../lib/common.js');
 
@@ -37,7 +37,7 @@ module.exports = {
           return message.reply(`la ciutat / país \`${city}\` no existeix`);
         }
 
-        let msg = new Discord.MessageEmbed()
+        let msg = new MessageEmbed()
           .setColor(getColorFromCommand(TYPE))
           .setTitle(`**TEMPS a ${result.location.name}**`)
           .setThumbnail(result.current.imageUrl)

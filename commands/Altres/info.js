@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { getColorFromCommand } = require('../../lib/common.js');
 const { getUserCount } = require('../../lib/database.js');
 
@@ -31,7 +31,7 @@ module.exports = {
 • **Servidors: **\`${client.guilds.cache.size}\`
 • **Comandes: **\`${client.commands.size}\``;
 
-    const msg = new Discord.MessageEmbed()
+    const msg = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setAuthor(
         `CataBOT [v${process.env.version}] by Català HD`,

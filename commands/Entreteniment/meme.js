@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 const translate = require('@vitalets/google-translate-api');
 const { getColorFromCommand } = require('../../lib/common.js');
@@ -19,7 +19,7 @@ module.exports = {
           title = res.text;
         });
 
-        const memeEmbed = new Discord.MessageEmbed()
+        const memeEmbed = new MessageEmbed()
           .setColor(getColorFromCommand(TYPE))
           .setURL(data.postLink)
           .setTitle(data.subreddit.toUpperCase())

@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { getColorFromCommand } = require('../../lib/common.js');
 
 const TYPE = 'altres';
@@ -79,7 +79,7 @@ module.exports = {
     }
 
     // Enviem el missatge a l'owner del servidor
-    let embed = new Discord.MessageEmbed()
+    let embed = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle('**REPORT**')
       .addField('❯ Reportant', message.author.tag, true)

@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 const { getColorFromCommand, separateWithCommas } = require('../../lib/common.js');
 
@@ -62,7 +62,7 @@ module.exports = {
       await getFlag().catch(console.error);
     }
 
-    const covidEmbed = new Discord.MessageEmbed()
+    const covidEmbed = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle(isWorld ? '**CORONAVIRUS AL MON**' : `**CORONAVIRUS A ${country.toUpperCase()}**`)
       .setThumbnail(flag);

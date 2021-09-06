@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { getColorFromCommand, db } = require('../../lib/common.js');
 const { getUser, updateUser } = require('../../lib/database');
 
@@ -55,7 +55,7 @@ module.exports = {
     await acabar_joc();
 
     async function fase_sala() {
-      let embed_sala = new Discord.MessageEmbed()
+      let embed_sala = new MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle(`**TRIVIA AMB ${n_preguntes} PREGUNTES**`)
         .setDescription(
@@ -124,7 +124,7 @@ module.exports = {
     }
 
     async function actualitzar_msg_sala(msg) {
-      let embed = new Discord.MessageEmbed()
+      let embed = new MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle('**TRIVIA**')
         .setDescription(
@@ -158,7 +158,7 @@ module.exports = {
       let buff = Buffer.from(pregunta.question, 'base64');
       let pregunta_decoded = buff.toString('ascii');
 
-      let embed = new Discord.MessageEmbed()
+      let embed = new MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle(`**TRIVIA - PREGUNTA ${q_index + 1}/${n_preguntes}**`)
         .setDescription(pregunta_decoded)
@@ -267,7 +267,7 @@ module.exports = {
       // Per cada entrada de resultats
       // Mostrar posicio, nom i monedes
 
-      let msg = new Discord.MessageEmbed()
+      let msg = new MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle('🏆 Resultat de la partida 🏆')
         .setDescription('Només el primer recolleix el premi!')

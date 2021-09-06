@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { getColorFromCommand } = require('../../lib/common.js');
 const { getUser, updateUser } = require('../../lib/database');
 
@@ -90,7 +90,7 @@ module.exports = {
       money: user.money,
     });
 
-    let embed = new Discord.MessageEmbed()
+    let embed = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle('**🎰 SLOT MACHINE 🎰**')
       .setTimestamp()

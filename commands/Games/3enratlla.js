@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { getColorFromCommand } = require('../../lib/common.js');
 const { getUser, updateUser } = require('../../lib/database.js');
 
@@ -51,7 +51,7 @@ module.exports = {
     async function mostrar_tauler() {
       let tauler_string = montar_tauler_string();
 
-      let msg = new Discord.MessageEmbed()
+      let msg = new MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle('**TRES EN RATLLA**')
         .setDescription(
@@ -68,7 +68,7 @@ Escriu la lletra de la posició a la que vols jugar`
     async function editar_msg_tauler(acabat) {
       let tauler_string = montar_tauler_string();
 
-      let msg = new Discord.MessageEmbed()
+      let msg = new MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle('**TRES EN RATLLA**')
         .addField('❯ Tauler', tauler_string, true)
@@ -484,7 +484,7 @@ Escriu la lletra de la posició a la que vols jugar`);
 
     // Fase anterior al joc on s'escolleix quin mode volem jugar
     async function fase_sala() {
-      let embed_sala = new Discord.MessageEmbed()
+      let embed_sala = new MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle('**TRES EN RATLLA**')
         .setDescription(

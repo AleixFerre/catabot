@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { getColorFromCommand, getOwner } = require('../../lib/common.js');
 
 const TYPE = 'altres';
@@ -99,7 +99,7 @@ module.exports = {
       return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
-    let embed = new Discord.MessageEmbed()
+    let embed = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle('**AVÍS del BOT**')
       .addField('❯ Autor', message.author.tag, true)

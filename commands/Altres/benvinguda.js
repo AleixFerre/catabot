@@ -1,5 +1,5 @@
 const Canvas = require('canvas');
-const Discord = require('discord.js');
+const { MessageAttachment } = require('discord.js');
 
 const applyText = (canvas, text) => {
   const ctx = canvas.getContext('2d');
@@ -70,7 +70,7 @@ module.exports = {
     );
     ctx.drawImage(avatar, 289, 28, 125, 125);
 
-    const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
+    const attachment = new MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
 
     await channel.send(`Benvingut/da al servidor, ${member}!`, attachment);
 

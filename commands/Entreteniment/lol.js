@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 const champs = Object.keys(require('../../storage/lol/champion.json').data);
 const spells = require('../../storage/lol/summoner.json').data;
@@ -110,9 +110,7 @@ async function showChampStats(champName) {
 • Attack Range: \`${champ.stats.attackrange}\`
 • Attack Speed: \`${champ.stats.attackspeed}\``;
 
-  let embed = new Discord.MessageEmbed()
-    .setColor(getColorFromCommand(TYPE))
-    .setTitle(`**${champ.name}, ${champ.title}**`);
+  let embed = new MessageEmbed().setColor(getColorFromCommand(TYPE)).setTitle(`**${champ.name}, ${champ.title}**`);
 
   if (champ.allytips.length !== 0) {
     embed.addField('❯ Ally tips', ` 🔘 ${champ.allytips.join('\n 🔘 ')}`, false);
@@ -149,7 +147,7 @@ ${names.join(', ')}`;
     spell = spells['Summoner' + predictedSpell];
   }
 
-  let embed = new Discord.MessageEmbed()
+  let embed = new MessageEmbed()
     .setColor(getColorFromCommand(TYPE))
     .setTitle(`**${spell.name}**`)
     .setThumbnail(`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/spell/Summoner${predictedSpell}.png`)
@@ -174,7 +172,7 @@ async function showItemStats(itemName) {
 
   const item = filteredItems[0];
 
-  let embed = new Discord.MessageEmbed()
+  let embed = new MessageEmbed()
     .setColor(getColorFromCommand(TYPE))
     .setThumbnail(`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/${item.image.full}`)
     .setTitle('**' + item.name + '**')

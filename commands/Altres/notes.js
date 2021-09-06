@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { getColorFromCommand } = require('../../lib/common.js');
 const changelog = require('../../storage/CHANGELOG.json');
 
@@ -39,7 +39,7 @@ Pots escollir entre les versions disponibles: ${keys.join(', ')}`
     versio = changes.nom;
     const dades = changes.dades;
 
-    const embed = new Discord.MessageEmbed()
+    const embed = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle(`**NOTES DEL CATABOT ${versio}**`)
       .setTimestamp()

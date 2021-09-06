@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { evaluate } = require('mathjs');
 const { getColorFromCommand } = require('../../lib/common.js');
 
@@ -55,7 +55,7 @@ module.exports = {
       resultat = str;
     }
 
-    let msg = new Discord.MessageEmbed()
+    let msg = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle('**CALCULADORA**')
       .addField('❯ Entrada', '```js\n' + expressions.join(', ') + '```')

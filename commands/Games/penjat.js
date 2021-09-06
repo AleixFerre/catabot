@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { paraules } = require('../../storage/paraules.json');
 const { getColorFromCommand, db } = require('../../lib/common.js');
 const { getUser, updateUser } = require('../../lib/database');
@@ -36,7 +36,7 @@ module.exports = {
     await acabar_joc(acabat);
 
     async function fase_sala() {
-      let embed_sala = new Discord.MessageEmbed()
+      let embed_sala = new MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle('**EL JOC DEL PENJAT**')
         .setDescription(
@@ -104,7 +104,7 @@ module.exports = {
     }
 
     async function actualitzar_msg_sala(msg) {
-      let embed = new Discord.MessageEmbed()
+      let embed = new MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle('**EL JOC DEL PENJAT**')
         .setDescription(
@@ -175,7 +175,7 @@ Com a host de la partida, has d'escollir la paraula
     async function escriure_missatge() {
       // Escriu el missatge de la paraula
 
-      let embed_paraula = new Discord.MessageEmbed()
+      let embed_paraula = new MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle(`**EL JOC DEL PENJAT -- TORN ${torn}**`)
         .setDescription(
@@ -192,7 +192,7 @@ Errades => ${errades}/${max_errades}`
 
     async function actualitzar_msg_paraula(missatge) {
       // Actualitzem el missatge de la paraula
-      let embed_paraula = new Discord.MessageEmbed()
+      let embed_paraula = new MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle(`**EL JOC DEL PENJAT -- TORN ${torn}**`)
         .setDescription(
@@ -348,7 +348,7 @@ Errades => ${errades}/${max_errades}`
         desc = 'Hem perdut, no hi ha premi...';
       }
 
-      let embed_final = new Discord.MessageEmbed()
+      let embed_final = new MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle(`**${emoji} FINAL DE LA PARTIDA ${emoji}**`)
         .setDescription(desc)

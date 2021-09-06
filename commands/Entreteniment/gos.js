@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 const translate = require('@vitalets/google-translate-api');
 const { getColorFromCommand } = require('../../lib/common.js');
@@ -38,7 +38,7 @@ module.exports = {
     await getCat().catch(console.error);
     await getTitle().catch(console.error);
 
-    const catEmbed = new Discord.MessageEmbed()
+    const catEmbed = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle('🐶 GOSSETS!! 🐶')
       .setDescription(desc)

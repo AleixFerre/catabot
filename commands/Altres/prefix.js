@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { getColorFromCommand, db } = require('../../lib/common.js');
 const { updateServer } = require('../../lib/database.js');
 
@@ -10,7 +10,7 @@ module.exports = {
   type: TYPE,
   usage: '[ nou ]',
   async execute(message, args, server) {
-    let prefixEmbed = new Discord.MessageEmbed()
+    let prefixEmbed = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle('**PREFIX**')
       .setTimestamp()

@@ -1,5 +1,5 @@
 const Canvas = require('canvas');
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { getRandomColor } = require('../../lib/common.js');
 
 const TYPE = 'entreteniment';

@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { getColorFromCommand } = require('../../lib/common.js');
 
 const TYPE = 'altres';
@@ -12,7 +12,7 @@ module.exports = {
     // Get the invite link With admin permissions
     let link = `https://discordapp.com/oauth2/authorize?client_id=${process.env.clientid}&permissions=8&scope=bot`;
 
-    const embedMessage = new Discord.MessageEmbed()
+    const embedMessage = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle('Invite link')
       .setURL(link)

@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { getColorFromCommand } = require('../../lib/common.js');
 
 const TYPE = 'entreteniment';
@@ -18,7 +18,7 @@ module.exports = {
     let choices = args.join(' ').split(', ');
     let choice = choices[Math.floor(Math.random() * choices.length)];
 
-    let msg = new Discord.MessageEmbed()
+    let msg = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle('**ESCOLLEIX**')
       .addField('❯ He escollit...', choice, true)

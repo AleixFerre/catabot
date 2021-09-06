@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { getColorFromCommand } = require('../../lib/common.js');
 
 const TYPE = 'altres';
@@ -15,7 +15,7 @@ module.exports = {
     }
 
     // Create the embed message
-    let embed = new Discord.MessageEmbed()
+    let embed = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle(args.join(' '))
       .setFooter(`Enquesta inciada per ${message.author.tag}`);

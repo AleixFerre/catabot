@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const commandTypes = require('../../storage/commandTypes.json');
 const { getColorFromCommand } = require('../../lib/common.js');
 
@@ -67,7 +67,7 @@ module.exports = {
       });
 
       // Creem l'embed i l'anem omplint
-      const fullHelpEmbed = new Discord.MessageEmbed()
+      const fullHelpEmbed = new MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle('El **CataBOT** té ' + commands.size + ' comandes')
         .setAuthor(
@@ -147,7 +147,7 @@ module.exports = {
       }
     }
 
-    const helpEmbed = new Discord.MessageEmbed()
+    const helpEmbed = new MessageEmbed()
       .setAuthor(
         'CataBOT',
         'https://raw.githubusercontent.com/AleixFerre/CataBot/master/img/icon_cat.png',

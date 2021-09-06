@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { getColorFromCommand } = require('../../lib/common.js');
 const { getUser, updateUser } = require('../../lib/database.js');
 
@@ -618,7 +618,7 @@ _ESCRIU EL NUMERO DE LA COLUMNA QUE VOLS JUGAR_
 
     // Fase anterior al joc on s'escolleix quin mode volem jugar
     async function fase_sala() {
-      let embed_sala = new Discord.MessageEmbed()
+      let embed_sala = new MessageEmbed()
         .setColor(getColorFromCommand(TYPE))
         .setTitle('**QUATRE EN RATLLA**')
         .setDescription(

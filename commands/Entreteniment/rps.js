@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { getColorFromCommand } = require('../../lib/common.js');
 
 const TYPE = 'entreteniment';
@@ -56,7 +56,7 @@ module.exports = {
       }
     }
 
-    let msg = new Discord.MessageEmbed()
+    let msg = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle('**PEDRA PAPER TISORA**')
       .setThumbnail('https://bit.ly/CataBot_RawIcon')

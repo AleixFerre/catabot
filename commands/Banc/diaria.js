@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const moment = require('moment');
 const { getColorFromCommand } = require('../../lib/common.js');
 const { getUser, updateUser } = require('../../lib/database.js');
@@ -38,7 +38,7 @@ Gràcies per recollir la teva recompensa diaria!`;
 Pots tornar-hi ${moment().endOf('day').fromNow()}`;
     }
 
-    let msg = new Discord.MessageEmbed()
+    let msg = new MessageEmbed()
       .setColor(getColorFromCommand(TYPE))
       .setTitle('💰 **DAILY** 💰')
       .setDescription(content)
