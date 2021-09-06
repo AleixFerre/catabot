@@ -175,6 +175,8 @@ Més informació de les comandes amb \`${process.env.prefix}help\` o \`${process
 });
 
 client.on('guildDelete', (guild) => {
+  if (guild.deleted) return;
+
   console.log(remove(`El bot ha sortit del servidor "${guild.name}"`));
 
   deleteUsersFromServer(guild.id).then((deletedCount) => {
