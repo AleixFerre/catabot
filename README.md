@@ -55,4 +55,4 @@ Under MIT License, see [here](LICENSE)
 
 ## CURRENT VERSION
 
-1.4
+1.5
