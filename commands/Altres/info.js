@@ -16,17 +16,13 @@ module.exports = {
 • **Pagina web: [Pàgina del CataBot](${process.env.website})**
 • **Servidor Oficial: [Vull entrar-hi](${process.env.officialServerLink})**`;
 
-    let nMembresSenseBots = 0,
-      nMembresAmbBots = 0;
-    for await (let guild of client.guilds.cache) {
+    nMembresAmbBots = 0;
+    for (let guild of client.guilds.cache) {
       guild = guild[1];
       nMembresAmbBots += guild.memberCount;
-      await guild.members.fetch();
-      nMembresSenseBots += guild.members.cache.filter((member) => !member.user.bot).size;
     }
 
     const stats = `• **Membres Totals: **\`${nMembresAmbBots}\`
-• **Membres Sense Bots: **\`${nMembresSenseBots}\`
 • **Perfils Guardats: **\`${await getUserCount()}\`
 • **Servidors: **\`${client.guilds.cache.size}\`
 • **Comandes: **\`${client.commands.size}\``;
