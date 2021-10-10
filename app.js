@@ -60,11 +60,7 @@ if (SAVE_COMMANDS) {
 
 // MONGODB CONNECTION
 mongoose
-  .connect(TESTING ? process.env.MONGODBSRVTest : process.env.MONGODBSRV, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  })
+  .connect(TESTING ? process.env.MONGODBSRVTest : process.env.MONGODBSRV)
   .then(() => {
     console.log(db('CONNECTAT CORRECTAMENT A LA BASE DE DADES!'));
   })

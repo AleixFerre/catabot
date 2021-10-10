@@ -1,3 +1,5 @@
+const { getOwner } = require('../lib/common.js');
+
 module.exports = {
   name: 'rateLimit',
   async execute(rateLimitData, client) {
