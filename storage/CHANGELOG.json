@@ -1,4 +1,40 @@
 {
+  "1.5.1": {
+    "nom": "v1.5.1",
+    "dades": [
+      {
+        "main": "Arreglat el bug de `Error: input stream: Status code: 403`",
+        "secondary": [
+          "Ara el bot comprova si hi ha hagut un error en la reproducció de la cançó i ho torna a intentar un màxim de 5 cops."
+        ]
+      },
+      {
+        "main": "Ja es pot fer ÇÇplay d'una playlist!",
+        "secondary": [
+          "Ara es detecta si el link és una playlist o no i es reprodueix respectivament.",
+          "Això fa que puguis fer `ÇÇplay <URL>` d'una playlist i funcioni correctament."
+        ]
+      },
+      {
+        "main": "Es reprèn la reproducció automàticament",
+        "secondary": [
+          "Ara el `ÇÇplay` reprèn la reproducció si aquesta està pausada.",
+          "També funciona amb altres comandes com `ÇÇplaynow` que reprenen el reproductor si aquest està pausat abans de reproduir la nova cançó."
+        ]
+      },
+      {
+        "main": "La comanda ÇÇbot no tarda 3s en executar-se",
+        "secondary": ["S'ha optimitzat el conteig de membres i ara es instantàni!."]
+      },
+      {
+        "main": "Altres canvis",
+        "secondary": [
+          "Arreglats bugs menors i errors gramaticals.",
+          "S'ha actualitzat totes les dependències a la ultima versió."
+        ]
+      }
+    ]
+  },
   "1.5": {
     "nom": "v1.5",
     "dades": [

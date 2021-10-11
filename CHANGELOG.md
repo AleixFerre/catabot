@@ -2,6 +2,22 @@
 
 _All **ÇÇ** strings are representations of the server prefix_
 
+\[v1.5.1\]
+
+- Arreglat el bug de `Error: input stream: Status code: 403`
+  - Ara el bot comprova si hi ha hagut un error en la reproducció de la cançó i ho torna a intentar un màxim de 5 cops.
+- Ja es pot fer ÇÇplay d'una playlist!
+  - Ara es detecta si el link és una playlist o no i es reprodueix respectivament.
+  - Això fa que puguis fer `ÇÇplay <URL>` d'una playlist i funcioni correctament.
+- Es reprèn la reproducció automàticament
+  - Ara el `ÇÇplay` reprèn la reproducció si aquesta està pausada.,
+  - També funciona amb altres comandes com `ÇÇplaynow` que reprenen el reproductor si aquest està pausat abans de reproduir la nova cançó.
+- La comanda ÇÇbot no tarda 3s en executar-se
+  - S'ha optimitzat el conteig de membres i ara es instantàni!.
+- Altres canvis
+  - Arreglats bugs menors i errors gramaticals.
+  - S'ha actualitzat totes les dependències a la ultima versió.
+
 \[v1.5\]
 
 - S'ha actualitzat la icona del bot apuntant cap un disseny més modern.
