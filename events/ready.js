@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { log } = require('../lib/common.js');
+const { log, getOwner } = require('../lib/common.js');
 const { getServer } = require('../lib/database.js');
 
 module.exports = {
@@ -47,6 +47,10 @@ module.exports = {
         name: 'aleixferre.github.io/CataBot',
         type: 'WATCHING',
       },
+    });
+
+    getOwner(client).then((owner) => {
+      owner.send('EL BOT ESTÀ ACTIU');
     });
 
     console.log(
