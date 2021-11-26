@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { log } = require('../lib/common.js');
+const { log, getColorFromCommand } = require('../lib/common.js');
 const { getLastForceReset, resetLastForceReset } = require('../lib/database.js');
 const { getServer } = require('../lib/database.js');
 const { MessageEmbed } = require('discord.js');
