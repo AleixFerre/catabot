@@ -80,7 +80,7 @@ async function checkForceRestart(client) {
     await resetLastForceReset();
 
     const msg = new MessageEmbed()
-      .setColor(getColorFromCommand(TYPE))
+      .setColor('#00ff00')
       .setTitle('El bot està llest!')
       .setDescription("Prova d'enviar una comanda per aquest canal de text!");
 
