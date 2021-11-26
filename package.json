@@ -1,7 +1,7 @@
 {
   "name": "catabot",
   "description": "Discord BOT en Catala!",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "main": "app.js",
   "readme": "README.md",
   "scripts": {
@@ -30,7 +30,7 @@
     "moment": "^2.29.1",
     "mongoose": "^6.0.10",
     "node-fetch": "^2.6.5",
-    "nodemon": "^2.0.7",
+    "nodemon": "^2.0.15",
     "opusscript": "^0.0.8",
     "simple-youtube-api": "^5.2.1",
     "weather-js": "^2.0.0",

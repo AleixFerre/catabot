@@ -1,5 +1,6 @@
 const fs = require('fs');
-const { log, getOwner } = require('../lib/common.js');
+const { log } = require('../lib/common.js');
+const { getLastForceReset, resetLastForceReset } = require('../lib/database.js');
 const { getServer } = require('../lib/database.js');
 
 module.exports = {
@@ -49,9 +50,7 @@ module.exports = {
       },
     });
 
-    getOwner(client).then((owner) => {
-      owner.send('EL BOT ESTÀ ACTIU');
-    });
+    checkForceRestart(client);
 
     console.log(
       log(
@@ -66,3 +65,24 @@ module.exports = {
     );
   },
 };
+
+async function checkForceRestart(client) {
+  const info = await getLastForceReset();
+  if (!info) return;
+  console.log('Enviant el missatge del reset amb la info:');
+  console.log(info);
+  const channel = await client.channels.fetch(info.channelID).catch(() => {
+    console.log("No s'ha trobat el canal");
+    return null;
+  });
+  if (channel) {
+    await resetLastForceReset();
+
+    const msg = new MessageEmbed()
+      .setColor(getColorFromCommand(TYPE))
+      .setTitle('El bot està llest!')
+      .setDescription("Prova d'enviar una comanda per aquest canal de text!");
+
+    channel.send(msg);
+  }
+}
