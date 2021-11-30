@@ -9,7 +9,13 @@ module.exports = {
   aliases: ['playlist'],
   type: TYPE,
   async execute(message, args) {
-    const voice_channel = message.member.voice.channel;
+    let voice_channel;
+    if (message.author.bot) {
+      voice_channel = message.mentions.members.first().voice.channel;
+    } else {
+      voice_channel = message.member.voice.channel;
+    }
+
     if (!voice_channel) {
       return message.channel.send('**❌ Error: Necessites estar en un canal de veu per executar aquesta comanda!**');
     }
