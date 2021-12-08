@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { log, getColorFromCommand } = require('../lib/common.js');
+const { log } = require('../lib/common.js');
 const { getLastForceReset, resetLastForceReset } = require('../lib/database.js');
 const { getServer } = require('../lib/database.js');
 const { MessageEmbed } = require('discord.js');
@@ -8,6 +8,7 @@ module.exports = {
   name: 'ready',
   async execute(_args, client) {
     if (process.env.SAVE_COMMANDS === 'true') {
+      console.log('Guardant info...');
       let nMembers = 0;
       client.guilds.cache.forEach((guild) => {
         nMembers += guild.memberCount;
@@ -24,24 +25,7 @@ module.exports = {
       console.log(`Info escrita correctament a "${path}"`);
     }
 
-    for await (let guild of client.guilds.cache) {
-      guild = guild[1];
-      console.log(log(`${guild.name}: ${guild.memberCount} membres`));
-
-      let server = await getServer(guild.id);
-
-      if (server.counterChannel) {
-        // Existeix un canal de contador, afegim un setInterval cada 12h
-        setInterval(
-          (guild, server) => {
-            guild.channels.resolve(server.counterChannel).setName(`${guild.memberCount} membres`);
-          },
-          Math.random() * 12 * 3600000,
-          guild,
-          server
-        );
-      }
-    }
+    await initServers(client);
 
     client.user.setPresence({
       status: 'online',
@@ -66,6 +50,27 @@ module.exports = {
     );
   },
 };
+
+async function initServers(client) {
+  for (let guild of client.guilds.cache) {
+    guild = guild[1];
+    console.log(log(`${guild.name}: ${guild.memberCount} membres`));
+
+    let server = await getServer(guild.id);
+
+    if (server.counterChannel) {
+      // Existeix un canal de contador, afegim un setInterval cada 12h
+      setInterval(
+        (guild, server) => {
+          guild.channels.resolve(server.counterChannel).setName(`${guild.memberCount} membres`);
+        },
+        Math.random() * 12 * 3600000,
+        guild,
+        server
+      );
+    }
+  }
+}
 
 async function checkForceRestart(client) {
   const info = await getLastForceReset();
