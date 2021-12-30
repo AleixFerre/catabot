@@ -9,7 +9,7 @@
     "start": "node app.js"
   },
   "engines": {
-    "node": "*",
+    "node": "16.13.1",
     "npm": "*"
   },
   "repository": {
