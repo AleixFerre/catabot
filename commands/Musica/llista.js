@@ -10,9 +10,12 @@ module.exports = {
   type: TYPE,
   async execute(message, args) {
     let voice_channel;
+    let author;
     if (message.author.bot) {
+      author = message.mentions.members.first();
       voice_channel = message.mentions.members.first().voice.channel;
     } else {
+      author = message.member;
       voice_channel = message.member.voice.channel;
     }
 
