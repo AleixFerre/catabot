@@ -39,6 +39,6 @@ module.exports = {
       }
     }
 
-    playlist_songs(message, args, server_queue, voice_channel);
+    playlist_songs(message, args, server_queue, voice_channel, author);
   },
 };
