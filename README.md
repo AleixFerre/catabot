@@ -10,7 +10,9 @@
 
 [![Discord Bots](https://top.gg/api/widget/529787494510624768.svg)](https://top.gg/bot/529787494510624768)
 
-![icon_image](https://raw.githubusercontent.com/AleixFerre/CataBot/main/img/icon_cat.png)
+[ADD IT TO DISCORD](https://discord.com/oauth2/authorize?client_id=529787494510624768&permissions=8&scope=bot)
+
+[![icon_image](https://raw.githubusercontent.com/AleixFerre/CataBot/main/img/icon_cat.png)](https://aleixferre.github.io/CataBot/)
 
 ## Contribuiting
 
@@ -55,4 +57,4 @@ Under MIT License, see [here](LICENSE)
 
 ## CURRENT VERSION
 
-1.5
+1.5.1
