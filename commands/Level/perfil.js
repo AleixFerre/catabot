@@ -6,89 +6,89 @@ const { getUsersFromServer } = require('../../lib/database.js');
 const TYPE = 'level';
 
 module.exports = {
-  name: 'perfil',
-  description: 'Mostra el teu perfil',
-  type: TYPE,
-  usage: '[ @usuari ]',
-  aliases: ['profile'],
-  async execute(message) {
-    let mention = {};
-    let posicio = 1;
-    let posicioMoney = 1;
+	name: 'perfil',
+	description: 'Mostra el teu perfil',
+	type: TYPE,
+	usage: '[ @usuari ]',
+	aliases: ['profile'],
+	async execute(message) {
+		let mention = {};
+		let posicio = 1;
+		let posicioMoney = 1;
 
-    if (message.mentions.users.first()) {
-      mention = message.mentions.users.first();
-    } else {
-      mention = message.author;
-    }
+		if (message.mentions.users.first()) {
+			mention = message.mentions.users.first();
+		} else {
+			mention = message.author;
+		}
 
-    if (mention.bot) {
-      return message.reply('els Bots no tenen perfil... pobres Bots 😫');
-    }
+		if (mention.bot) {
+			return message.reply('els Bots no tenen perfil... pobres Bots 😫');
+		}
 
-    let usersData = await getUsersFromServer(message.guild.id);
+		const usersData = await getUsersFromServer(message.guild.id);
 
-    let userData = usersData.find((user) => user.IDs.userID === mention.id);
-    let level = userData.level;
-    let xp = userData.xp;
-    let money = userData.money;
+		const userData = usersData.find((user) => user.IDs.userID === mention.id);
+		const level = userData.level;
+		const xp = userData.xp;
+		const money = userData.money;
 
-    usersData.forEach((member) => {
-      if (member.level > level) {
-        posicio++;
-      } else if (member.level === level) {
-        if (member.xp > xp) {
-          posicio++;
-        }
-      }
-      if (member.money > money) {
-        posicioMoney++;
-      }
-    });
+		usersData.forEach((member) => {
+			if (member.level > level) {
+				posicio++;
+			} else if (member.level === level) {
+				if (member.xp > xp) {
+					posicio++;
+				}
+			}
+			if (member.money > money) {
+				posicioMoney++;
+			}
+		});
 
-    let progress = xp / 10;
-    if (progress > 100) {
-      progress = 100;
-    }
+		let progress = xp / 10;
+		if (progress > 100) {
+			progress = 100;
+		}
 
-    let barra = '';
-    let max = 10;
+		let barra = '';
+		let max = 10;
 
-    // ▰▰▰▰▰▱▱▱▱▱▱▱
-    for (let i = 0; i < progress / 10; i++) {
-      barra += '▰';
-      max--;
-    }
+		// ▰▰▰▰▰▱▱▱▱▱▱▱
+		for (let i = 0; i < progress / 10; i++) {
+			barra += '▰';
+			max--;
+		}
 
-    while (max > 0) {
-      barra += '▱';
-      max--;
-    }
+		while (max > 0) {
+			barra += '▱';
+			max--;
+		}
 
-    // Calculem el rank de l'usuari
-    let rankIndex = Math.floor(level / 10) + 1;
-    if (rankIndex > 19) {
-      // Maxim rank -> 19
-      rankIndex = 19;
-    }
+		// Calculem el rank de l'usuari
+		let rankIndex = Math.floor(level / 10) + 1;
+		if (rankIndex > 19) {
+			// Maxim rank -> 19
+			rankIndex = 19;
+		}
 
-    let rankLink = `https://raw.githubusercontent.com/AleixFerre/CataBot/master/img/rank_icons/${rankIndex}.png`;
+		const rankLink = `https://raw.githubusercontent.com/AleixFerre/CataBot/master/img/rank_icons/${rankIndex}.png`;
 
-    let msg = new MessageEmbed()
-      .setColor(getColorFromCommand(TYPE))
-      .setTitle('💠 Perfil 💠')
-      .setThumbnail(rankLink)
-      .addField('❯ Compte', mention.username, true)
-      .addField('❯ Nivell', level, true)
-      .addField('❯ XP', `${xp}/1000`, true)
-      .addField('❯ Top XP', posicio || -1, true)
-      .addField('❯ Rang', `${ranks[rankIndex - 1]} _[${rankIndex}/19]_`, true)
-      .addField('❯ BarraXP', `${barra} *[${progress}%]*`, false)
-      .addField('❯ Diners', `$${money}`, true)
-      .addField('❯ Top Diners', posicioMoney, true)
-      .setTimestamp()
-      .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+		const msg = new MessageEmbed()
+			.setColor(getColorFromCommand(TYPE))
+			.setTitle('💠 Perfil 💠')
+			.setThumbnail(rankLink)
+			.addField('❯ Compte', mention.username, true)
+			.addField('❯ Nivell', level, true)
+			.addField('❯ XP', `${xp}/1000`, true)
+			.addField('❯ Top XP', posicio || -1, true)
+			.addField('❯ Rang', `${ranks[rankIndex - 1]} _[${rankIndex}/19]_`, true)
+			.addField('❯ BarraXP', `${barra} *[${progress}%]*`, false)
+			.addField('❯ Diners', `$${money}`, true)
+			.addField('❯ Top Diners', posicioMoney, true)
+			.setTimestamp()
+			.setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
-    message.channel.send(msg);
-  },
+		message.channel.send(msg);
+	},
 };
