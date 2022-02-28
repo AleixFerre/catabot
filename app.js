@@ -2,8 +2,10 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-const { Collection, Client } = require('discord.js');
-const client = new Client();
+const { Collection, Client, Intents } = require('discord.js');
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 client.commands = new Collection();
 
 const { log, remove, db } = require('./lib/common.js');
@@ -17,57 +19,56 @@ const SAVE_COMMANDS = process.env.SAVE_COMMANDS === 'true';
 const TESTING = process.env.TESTING === 'true'; // TESTING BOT
 
 if (TESTING) {
-  console.log(remove('AVÍS: TESTING ACTIVAT!'));
+	console.debug(remove('AVÍS: TESTING ACTIVAT!'));
 }
 if (SAVE_COMMANDS) {
-  console.log(remove('AVÍS: GUARDAT DE COMANDES ACTIVAT!'));
+	console.debug(remove('AVÍS: GUARDAT DE COMANDES ACTIVAT!'));
 }
 
-let cmds = []; // Array that will store all the bot commands
+const cmds = []; // Array that will store all the bot commands
 
-/// Load the commands from all the folders -> files
+// Load the commands from all the folders -> files
 const commandDirs = fs.readdirSync('./commands');
 for (const dir of commandDirs) {
-  const files = fs.readdirSync(`./commands/${dir}`).filter((file) => file.endsWith('.js'));
-  for (const file of files) {
-    const command = require(`./commands/${dir}/${file}`);
-    client.commands.set(command.name, command);
-    if (SAVE_COMMANDS) {
-      cmds.push({
-        name: command.name,
-        description: command.description,
-        type: command.type,
-        usage: `!${command.name}${command.usage || ''}`,
-        aliases: command.aliases,
-      });
-    }
-  }
+	const files = fs.readdirSync(`./commands/${dir}`).filter((file) => file.endsWith('.js'));
+	for (const file of files) {
+		const command = require(`./commands/${dir}/${file}`);
+		client.commands.set(command.name, command);
+		if (SAVE_COMMANDS) {
+			cmds.push({
+				name: command.name,
+				description: command.description,
+				type: command.type,
+				usage: `!${command.name}${command.usage || ''}`,
+				aliases: command.aliases,
+			});
+		}
+	}
 }
 
 const eventsFiles = fs.readdirSync('./events').filter((file) => file.endsWith('.js'));
 for (const eventFile of eventsFiles) {
-  const event = require(`./events/${eventFile}`);
-  client.on(event.name, (args) => event.execute(args, client));
+	const event = require(`./events/${eventFile}`);
+	client.on(event.name, (args) => event.execute(args, client));
 }
 
 if (SAVE_COMMANDS) {
-  const path = 'docs/storage/commands.json';
-  fs.writeFile(path, JSON.stringify(cmds), (err) => {
-    if (err) console.error(err);
-  });
-  console.log(`Comandes escrites correctament a "${path}"`);
+	const path = 'docs/storage/commands.json';
+	fs.writeFile(path, JSON.stringify(cmds), (err) => {
+		if (err) console.error(err);
+	});
 }
 
 // MONGODB CONNECTION
 mongoose
-  .connect(TESTING ? process.env.MONGODBSRVTest : process.env.MONGODBSRV)
-  .then(() => {
-    console.log(db('CONNECTAT CORRECTAMENT A LA BASE DE DADES!'));
-  })
-  .catch(console.error);
+	.connect(TESTING ? process.env.MONGODBSRVTest : process.env.MONGODBSRV)
+	.then(() => {
+		console.debug(db('CONNECTAT CORRECTAMENT A LA BASE DE DADES!'));
+	})
+	.catch(console.error);
 
 // DISCORD BOT CONNECTION
 client
-  .login(TESTING ? process.env.tokenTest : process.env.token)
-  .then(() => console.log(log('CONNECTAT CORRECTAMENT AMB Discord!')))
-  .catch(console.log);
+	.login(TESTING ? process.env.tokenTest : process.env.token)
+	.then(() => console.debug(log('CONNECTAT CORRECTAMENT AMB Discord!')))
+	.catch(console.error);

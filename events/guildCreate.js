@@ -1,23 +1,23 @@
-const { bot, db } = require('../lib/common.js');
+const { bot } = require('../lib/common.js');
 const { updateServer } = require('../lib/database.js');
 
 module.exports = {
-  name: 'guildCreate',
-  execute(guild) {
-    updateServer(guild.id, {
-      serverID: guild.id,
-      prefix: process.env.prefix,
-    }).then(console.log(db(`DB: Guardada la nova guild ${guild.name} correctament!`)));
+	name: 'guildCreate',
+	execute(guild) {
+		updateServer(guild.id, {
+			serverID: guild.id,
+			prefix: process.env.prefix,
+		});
 
-    try {
-      let newName = `[ ${process.env.prefix} ] CataBOT`;
-      guild.me.setNickname(newName);
-    } catch (err) {
-      console.error(err);
-    }
+		try {
+			const newName = `[ ${process.env.prefix} ] CataBOT`;
+			guild.me.setNickname(newName);
+		} catch (err) {
+			console.error(err);
+		}
 
-    // Enviem el missatge al owner de la guild
-    let introMessage = `**DONA LA BENVINGUDA AL CATABOT!**
+		// Enviem el missatge al owner de la guild
+		const introMessage = `**DONA LA BENVINGUDA AL CATABOT!**
   El primer bot de Discord en català!
   
   **CONFIGURACIÓ GENERAL**
@@ -31,14 +31,14 @@ module.exports = {
   
   Més informació de les comandes amb \`${process.env.prefix}help\` o \`${process.env.prefix}help [nom de la comanda]\`.`;
 
-    try {
-      guild.members.fetch(guild.ownerID).then((owner) => {
-        owner.send(introMessage);
-      });
-    } catch (err) {
-      console.error(err);
-    }
+		try {
+			guild.members.fetch(guild.ownerID).then((owner) => {
+				owner.send(introMessage);
+			});
+		} catch (err) {
+			console.error(err);
+		}
 
-    console.log(bot(`El bot ha entrat al servidor "${guild.name}"`));
-  },
+		console.debug(bot(`El bot ha entrat al servidor "${guild.name}"`));
+	},
 };

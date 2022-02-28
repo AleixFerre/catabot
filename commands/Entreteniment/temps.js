@@ -5,58 +5,58 @@ const { getColorFromCommand } = require('../../lib/common.js');
 const TYPE = 'entreteniment';
 
 module.exports = {
-  name: 'temps',
-  description: 'Mostra el temps que fa.',
-  type: TYPE,
-  usage: '< ciutat/país >',
-  aliases: ['weather', 'tiempo'],
-  async execute(message, args, server) {
-    if (!args[0]) {
-      message.reply('no has posat la ciutat o país!');
-      return message.channel.send(server.prefix + 'help temps');
-    }
+	name: 'temps',
+	description: 'Mostra el temps que fa.',
+	type: TYPE,
+	usage: '< ciutat/país >',
+	aliases: ['weather', 'tiempo'],
+	async execute(message, args, server) {
+		if (!args[0]) {
+			message.reply('no has posat la ciutat o país!');
+			return message.channel.send(server.prefix + 'help temps');
+		}
 
-    let city = args.join(' ');
-    let result = null;
+		const city = args.join(' ');
+		let result = null;
 
-    await weather.find(
-      {
-        search: city,
-        degreeType: 'C',
-        lang: 'ca',
-      },
-      (err, _result) => {
-        if (err) {
-          console.log(err);
-          return message.channel.send('Hi ha hagut un error al buscar\n' + err);
-        }
+		await weather.find(
+			{
+				search: city,
+				degreeType: 'C',
+				lang: 'ca',
+			},
+			(err, _result) => {
+				if (err) {
+					console.error(err);
+					return message.channel.send('Hi ha hagut un error al buscar\n' + err);
+				}
 
-        result = _result[0];
+				result = _result[0];
 
-        if (!result) {
-          return message.reply(`la ciutat / país \`${city}\` no existeix`);
-        }
+				if (!result) {
+					return message.reply(`la ciutat / país \`${city}\` no existeix`);
+				}
 
-        let msg = new MessageEmbed()
-          .setColor(getColorFromCommand(TYPE))
-          .setTitle(`**TEMPS a ${result.location.name}**`)
-          .setThumbnail(result.current.imageUrl)
-          .setTimestamp()
-          .setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
+				const msg = new MessageEmbed()
+					.setColor(getColorFromCommand(TYPE))
+					.setTitle(`**TEMPS a ${result.location.name}**`)
+					.setThumbnail(result.current.imageUrl)
+					.setTimestamp()
+					.setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
-        Object.keys(result.current).forEach((camp) => {
-          // Si es el link de la img, ignorem
-          if (camp === 'imageUrl') return;
+				Object.keys(result.current).forEach((camp) => {
+					// Si es el link de la img, ignorem
+					if (camp === 'imageUrl') return;
 
-          // Convertimos el campo en space case
-          let majTxt = camp.replace(/([A-Z])/g, ' $1');
-          let finalResult = majTxt.charAt(0).toUpperCase() + majTxt.slice(1);
+					// Convertimos el campo en space case
+					const majTxt = camp.replace(/([A-Z])/g, ' $1');
+					const finalResult = majTxt.charAt(0).toUpperCase() + majTxt.slice(1);
 
-          msg.addField(`❯ ${finalResult}`, result.current[camp], true);
-        });
+					msg.addField(`❯ ${finalResult}`, result.current[camp], true);
+				});
 
-        message.channel.send(msg);
-      }
-    );
-  },
+				message.channel.send(msg);
+			},
+		);
+	},
 };
