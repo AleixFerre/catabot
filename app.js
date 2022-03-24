@@ -39,7 +39,7 @@ for (const dir of commandDirs) {
 				name: command.name,
 				description: command.description,
 				type: command.type,
-				usage: `!${command.name}${command.usage || ''}`,
+				usage: `cata${command.name} ${command.usage || ''}`,
 				aliases: command.aliases,
 			});
 		}
