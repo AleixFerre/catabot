@@ -80,42 +80,54 @@ module.exports = {
 				.setFooter(`CataBOT ${new Date().getFullYear()} © All rights reserved`);
 
 			let aux = mod.map((c) => c.name);
-			helpContent += '**' + commandTypes.mod.displayName + '** [' + aux.length + ']\n';
+			helpContent +=
+				'**' + commandTypes.mod.displayName + '** [' + aux.length + ']\n';
 			helpContent += '`' + aux.join(', ') + '`';
 
 			aux = entreteniment.map((c) => c.name);
-			helpContent += '\n\n**' + commandTypes.entreteniment.displayName + '** [' + aux.length + ']\n';
+			helpContent +=
+				'\n\n**' +
+				commandTypes.entreteniment.displayName +
+				'** [' +
+				aux.length +
+				']\n';
 			helpContent += '`' + aux.join(', ') + '`';
 
 			aux = musica.map((c) => c.name);
-			helpContent += '\n\n**' + commandTypes.musica.displayName + '** [' + aux.length + ']\n';
+			helpContent +=
+				'\n\n**' + commandTypes.musica.displayName + '** [' + aux.length + ']\n';
 			helpContent += '`' + aux.join(', ') + '`';
 
 			aux = banc.map((c) => c.name);
-			helpContent += '\n\n**' + commandTypes.banc.displayName + '** [' + aux.length + ']\n';
+			helpContent +=
+				'\n\n**' + commandTypes.banc.displayName + '** [' + aux.length + ']\n';
 			helpContent += '`' + aux.join(', ') + '`';
 
 			aux = level.map((c) => c.name);
-			helpContent += '\n\n**' + commandTypes.level.displayName + '** [' + aux.length + ']\n';
+			helpContent +=
+				'\n\n**' + commandTypes.level.displayName + '** [' + aux.length + ']\n';
 			helpContent += '`' + aux.join(', ') + '`';
 
 			aux = games.map((c) => c.name);
-			helpContent += '\n\n**' + commandTypes.games.displayName + '** [' + aux.length + ']\n';
+			helpContent +=
+				'\n\n**' + commandTypes.games.displayName + '** [' + aux.length + ']\n';
 			helpContent += '`' + aux.join(', ') + '`';
 
 			aux = privat.map((c) => c.name);
-			helpContent += '\n\n**' + commandTypes.privat.displayName + '** [' + aux.length + ']\n';
+			helpContent +=
+				'\n\n**' + commandTypes.privat.displayName + '** [' + aux.length + ']\n';
 			helpContent += '`' + aux.join(', ') + '`';
 
 			aux = altres.map((c) => c.name);
-			helpContent += '\n\n**' + commandTypes.altres.displayName + '** [' + aux.length + ']\n';
+			helpContent +=
+				'\n\n**' + commandTypes.altres.displayName + '** [' + aux.length + ']\n';
 			helpContent += '`' + aux.join(', ') + '`';
 
 			data.push(helpContent);
 			data.push(
 				`
  • Pots enviar ${prefix}help [nom comanda] per obtenir informació més detallada de la comanda!
- • Pots veure totes les comandes [aquí](https://aleixferre.github.io/CataBot/commands).`,
+ • Pots veure totes les comandes [aquí](https://aleixferre.github.io/CataBot/#/commands).`,
 			);
 
 			fullHelpEmbed.setDescription(data);
@@ -131,19 +143,30 @@ module.exports = {
 					});
 				})
 				.catch((error) => {
-					console.error(`No puc enviar un DM a ${message.author.username}.\n`, error);
+					console.error(
+						`No puc enviar un DM a ${message.author.username}.\n`,
+						error,
+					);
 					message.reply('sembla que no et puc enviar un DM!');
 				});
 		}
 
 		const name = args[0].toLowerCase();
-		let command = commands.get(name) || commands.find((c) => c.aliases && c.aliases.includes(name));
+		let command =
+			commands.get(name) ||
+			commands.find((c) => c.aliases && c.aliases.includes(name));
 		const isType = !command;
 
 		if (isType) {
-			command = commandTypes[name] || Object.values(commandTypes).find((c) => c.aliases && c.aliases.includes(name));
+			command =
+				commandTypes[name] ||
+				Object.values(commandTypes).find(
+					(c) => c.aliases && c.aliases.includes(name),
+				);
 			if (!command) {
-				return message.reply(`${name} no és una comanda vàlida ni un tipus de comandes!`);
+				return message.reply(
+					`${name} no és una comanda vàlida ni un tipus de comandes!`,
+				);
 			}
 		}
 
@@ -185,9 +208,14 @@ module.exports = {
 
 			if (command.aliases) helpEmbed.addField('Alies', command.aliases.join(', '));
 
-			if (command.usage) helpEmbed.addField('Ús', `${prefix + command.name} ${command.usage}`);
+			if (command.usage)
+				helpEmbed.addField('Ús', `${prefix + command.name} ${command.usage}`);
 
-			if (command.example) helpEmbed.addField('Exemple', `${prefix + command.name} ${command.example}`);
+			if (command.example)
+				helpEmbed.addField(
+					'Exemple',
+					`${prefix + command.name} ${command.example}`,
+				);
 		}
 
 		message.channel.send(helpEmbed);
