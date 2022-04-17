@@ -51,7 +51,7 @@ for (const eventFile of eventsFiles) {
 }
 
 if (SAVE_COMMANDS) {
-  const path = 'docs/storage/commands.json';
+  const path = 'storage/commands.json';
   fs.writeFile(path, JSON.stringify(cmds), (err) => {
     if (err) console.error(err);
   });
