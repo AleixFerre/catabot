@@ -26,6 +26,17 @@ Clone it and install dependencies with
 npm i -d
 ```
 
+#### To setup deployment to Heroku
+
+Install the Heroku CLI with
+
+Checkout to the `heroku-prod` branch and run
+
+```sh
+heroku login
+heroku git:remote -a catabot
+```
+
 #### To deploy to Heroku
 
 Checkout to the `heroku-prod` branch and run
