@@ -12,7 +12,7 @@
 
 [ADD IT TO DISCORD](https://discord.com/oauth2/authorize?client_id=529787494510624768&permissions=8&scope=bot)
 
-[![icon_image](https://raw.githubusercontent.com/AleixFerre/CataBot/main/img/icon_cat.png)](https://aleixferre.github.io/CataBot/)
+[![icon_image](https://raw.githubusercontent.com/AleixFerre/CataBot/main/img/new-logo.png)](https://aleixferre.github.io/CataBot/)
 
 ## Contribuiting
 
@@ -24,6 +24,16 @@ Clone it and install dependencies with
 
 ```sh
 npm i -d
+```
+
+#### To deploy to Heroku
+
+Checkout to the `heroku-prod` branch and run
+
+```sh
+git add .
+git commit -m "Manual Deploy: {Message}"
+git push heroku heroku-prod:main
 ```
 
 #### If you are running this locally
