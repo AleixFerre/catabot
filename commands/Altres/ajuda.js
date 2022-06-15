@@ -115,7 +115,7 @@ module.exports = {
       data.push(
         `
  • Pots enviar ${prefix}help [nom comanda] per obtenir informació més detallada de la comanda!
- • Pots veure totes les comandes [aquí](https://aleixferre.github.io/CataBot/#/commands).`
+ • Pots veure totes les comandes [aquí](${process.env.website}).`
       );
 
       fullHelpEmbed.setDescription(data);

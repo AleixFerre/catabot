@@ -2,17 +2,17 @@
 
 ## Say hi to CataBOT! Welcome the best open source Catalan Discord Bot
 
-![ ](https://img.shields.io/github/repo-size/CatalaHD/CataBot)
-![ ](https://img.shields.io/github/issues/CatalaHD/CataBot)
-![ ](https://img.shields.io/github/stars/CatalaHD/CataBot)
-![ ](https://img.shields.io/github/license/CatalaHD/CataBot)
+![ ](https://img.shields.io/github/repo-size/CatalaHD/catabot)
+![ ](https://img.shields.io/github/issues/CatalaHD/catabot)
+![ ](https://img.shields.io/github/stars/CatalaHD/catabot)
+![ ](https://img.shields.io/github/license/CatalaHD/catabot)
 [![Discord Bots](https://top.gg/api/widget/status/529787494510624768.svg)](https://top.gg/bot/529787494510624768)
 
 [![Discord Bots](https://top.gg/api/widget/529787494510624768.svg)](https://top.gg/bot/529787494510624768)
 
 [ADD IT TO DISCORD](https://discord.com/oauth2/authorize?client_id=529787494510624768&permissions=8&scope=bot)
 
-[![icon_image](https://raw.githubusercontent.com/AleixFerre/CataBot/main/img/new-logo.png)](https://aleixferre.github.io/CataBot/)
+[![icon_image](https://raw.githubusercontent.com/AleixFerre/catabot/main/img/icon_cat.png)](https://aleixferre.github.io/catabot/)
 
 ## Contribuiting
 
@@ -58,7 +58,7 @@ npm install ffmpeg
 
 ## **COMMANDS**
 
-You can now visit our page [here](https://aleixferre.github.io/CataBot/) and see all the [commands](https://aleixferre.github.io/CataBot/commands)
+You can now visit our page [here](https://aleixferre.github.io/catabot/) and see all the [commands](https://aleixferre.github.io/catabot/#/commands)
 
 ## LICENSE
 

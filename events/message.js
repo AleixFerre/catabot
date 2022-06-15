@@ -52,7 +52,7 @@ module.exports = {
       let perfil = await getUser(message.author.id, message.guild.id);
       if (!perfil) {
         return message.channel.send(
-          `**️️️⚠️ Alerta: Encara no tens un Perfil, el pots crear amb la comanda** \`${server.prefix}crearPerfil\`
+          `**️️️⚠️ Alerta: Encara no tens un Perfil, el pots crear amb la comanda** \`${prefix}crearPerfil\`
   Amb un **Perfil** tindràs accés a totes les comandes de tipus **Banc**, **Nivell** i **Jocs**.`
         );
       }

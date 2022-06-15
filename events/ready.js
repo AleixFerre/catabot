@@ -30,7 +30,7 @@ module.exports = {
     client.user.setPresence({
       status: 'online',
       activity: {
-        name: 'aleixferre.github.io/CataBot',
+        name: process.env.website,
         type: 'WATCHING',
       },
     });
