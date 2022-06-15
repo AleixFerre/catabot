@@ -1,18 +1,18 @@
 const { Schema, model } = require('mongoose');
 
 const userSchema = Schema({
-  IDs: {
-    type: {
-      userID: { type: String },
-      serverID: { type: String },
-    },
-    require: true,
-    unique: true,
-  },
-  money: { type: Number, default: 1000 },
-  lastDaily: { type: String, default: null },
-  xp: { type: Number, default: 0 },
-  level: { type: Number, default: 1 },
+	IDs: {
+		type: {
+			userID: { type: String },
+			serverID: { type: String },
+		},
+		require: true,
+		unique: true,
+	},
+	money: { type: Number, default: 1000 },
+	lastDaily: { type: String, default: null },
+	xp: { type: Number, default: 0 },
+	level: { type: Number, default: 1 },
 });
 
 /**

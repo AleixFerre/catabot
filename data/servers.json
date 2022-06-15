@@ -1,0 +1,296 @@
+[
+	{
+		"prefix": "!",
+		"serverID": "356928052099416068",
+
+		"alertChannel": "700345879894294548",
+		"botChannel": "692772616641183854",
+		"welcomeChannel": "692072662708650005"
+	},
+
+	{
+		"prefix": "!",
+		"serverID": "667675227181940746",
+
+		"alertChannel": "713118833916772433",
+		"botChannel": "670993070548058113",
+		"welcomeChannel": "716286500836212756",
+		"counterChannel": "817207824302997535",
+		"counterChannelName": "members-33"
+	},
+
+	{
+		"serverID": "813957803492114442",
+
+		"prefix": "!",
+		"welcomeChannel": "814166646310174732",
+		"botChannel": "814207234761818212",
+		"alertChannel": "814166955178721300"
+	},
+
+	{
+		"serverID": "804473669556109333",
+
+		"prefix": "!",
+		"counterChannel": "817207407050227733",
+		"counterChannelName": "comptador",
+		"botChannel": "804473670135054356",
+		"welcomeChannel": "805534340967563326"
+	},
+
+	{
+		"serverID": "827469093643747338",
+
+		"prefix": "!",
+		"welcomeChannel": "829688536092377120"
+	},
+
+	{
+		"serverID": "780093774101610496",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "688682306390851607",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "752985364473315478",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "621113087398772748",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "757544079784542229",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "845960603130134569",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "842783010638266398",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "707936301835354204",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "848333408006438973",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "850499590289489930",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "840173619651805206",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "838375774930468864",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "847150667255906324",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "518208906162601995",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "858248776167063583",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "737318953768189992",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "838895927263100929",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "849460014204977202",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "879638387169058826",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "885776722014928906",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "857216280389484585",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "479359605848277023",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "888812496293597194",
+
+		"prefix": "!",
+		"botChannel": "889839561457418271"
+	},
+
+	{
+		"serverID": "890637669346971659",
+
+		"prefix": "!",
+		"botChannel": "890637669804163084"
+	},
+
+	{
+		"serverID": "898378092916146176",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "900297028993687632",
+
+		"prefix": "!",
+		"welcomeChannel": "900297121297743913",
+		"botChannel": "900299794357035028"
+	},
+
+	{
+		"serverID": "804684018489884682",
+
+		"prefix": "!"
+	},
+
+	{
+		"serverID": "905859233352937492",
+
+		"prefix": "!",
+		"botChannel": "905859233352937498",
+		"welcomeChannel": "905859233352937494"
+	},
+
+	{
+		"serverID": "905359966670577706",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "466688113494982656",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "912599354244730901",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "903917888572882954",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "727128923082719283",
+
+		"prefix": "."
+	},
+
+	{
+		"serverID": "703933959872184341",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "820454379550146620",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "736562471002701838",
+
+		"prefix": "!",
+		"botChannel": "920428990450266153"
+	},
+
+	{
+		"serverID": "930413047200247818",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "932596499550965781",
+
+		"prefix": "!",
+		"welcomeChannel": "932596500054286370",
+		"botChannel": "932596500054286371"
+	},
+
+	{
+		"serverID": "913928865632645140",
+
+		"prefix": "cata"
+	},
+
+	{
+		"serverID": "941042849988902963",
+
+		"prefix": "!"
+	}
+]

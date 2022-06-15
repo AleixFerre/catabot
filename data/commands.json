@@ -1,0 +1,398 @@
+[
+	{
+		"name": "adeu",
+		"description": "Et despedeix del servidor, adeu!",
+		"type": "altres",
+		"usage": "cataAdeu",
+		"aliases": ["bye"]
+	},
+	{
+		"name": "ajuda",
+		"description": "Mostra informació de les comandes",
+		"type": "altres",
+		"usage": "cataAjuda [ nom / tipus de la comanda ]",
+		"aliases": ["h", "help"]
+	},
+
+	{
+		"name": "benvinguda",
+		"description": "Et dona la benvinguda al servidor",
+		"type": "altres",
+		"usage": "cataBenvinguda",
+		"aliases": ["welcome", "benvingut"]
+	},
+
+	{
+		"name": "bug",
+		"description": "Avisa al propietari del bot d'algun bug.",
+		"type": "altres",
+		"usage": "cataBug",
+		"aliases": ["error"]
+	},
+
+	{
+		"name": "convida",
+		"description": "Vols convidar el bot? Aqui tens l'enllaç.",
+		"type": "altres",
+		"usage": "cataConvida",
+		"aliases": ["invite"]
+	},
+
+	{
+		"name": "crearperfil",
+		"description": "Et crea un perfil si no el tens. Aquesta comanda et dona accés a totes les comandes de tipus **Jocs**, **Nivell** i **Banc**",
+		"type": "altres",
+		"usage": "cataCrearperfil",
+		"aliases": []
+	},
+
+	{
+		"name": "enquesta",
+		"description": "Genera una enquesta.",
+		"type": "altres",
+		"usage": "cataEnquesta",
+		"aliases": ["vote", "poll"]
+	},
+
+	{
+		"name": "info",
+		"description": "Diu la informació del bot.",
+		"type": "altres",
+		"usage": "cataInfo",
+		"aliases": ["stats", "bot"]
+	},
+
+	{
+		"name": "notes",
+		"description": "Mostra les notes d'una actualització del bot escollida. Si no es posa cap paràmetre s'escolleix la actual",
+		"type": "altres",
+		"usage": "cataNotes [ versió: x.x ]",
+		"aliases": ["lastupdate", "changes", "changelog", "canvis"]
+	},
+
+	{
+		"name": "ping",
+		"description": "Retorna el ping del servidor i de la API!",
+		"type": "altres",
+		"usage": "cataPing",
+		"aliases": ["status", "estat", "check"]
+	},
+
+	{
+		"name": "prefix",
+		"description": "Et mostra el prefix i et permet cambiar-lo amb un segon argument",
+		"type": "altres",
+		"usage": "cataPrefix [ nou ]",
+		"aliases": []
+	},
+
+	{
+		"name": "report",
+		"description": "Avisa al propietari del servidor d'algun usuari amb mal comportament.",
+		"type": "altres",
+		"usage": "cataReport < @usuari_a_reportar >",
+		"aliases": []
+	},
+
+	{
+		"name": "restart",
+		"description": "Fes que el bot es reiniciï perque la musica no funciona.",
+		"type": "altres",
+		"usage": "cataRestart",
+		"aliases": ["refresh"]
+	},
+
+	{
+		"name": "servidor",
+		"description": "Diu la informació del servidor.",
+		"type": "altres",
+		"usage": "cataServidor",
+		"aliases": ["serverinfo", "guild", "server"]
+	},
+
+	{
+		"name": "apostar",
+		"description": "Tens un 50% de guanyar apostant monedes.",
+		"type": "banc",
+		"usage": "cataApostar < quantitat/tot > [ multiplicador ]",
+		"aliases": ["gamble"]
+	},
+
+	{
+		"name": "apostaramb",
+		"description": "Aposta en un 50% de guanyar monedes amb un altre usuari",
+		"type": "banc",
+		"usage": "cataApostaramb < quantitat/tot > < @usuari >",
+		"aliases": ["bet"]
+	},
+
+	{
+		"name": "classificacio",
+		"description": "Mostra la classificació de monedes del servidor",
+		"type": "banc",
+		"usage": "cataClassificacio [ quantitat ]",
+		"aliases": ["top", "leader", "leaderboard"]
+	},
+
+	{
+		"name": "diaria",
+		"description": "Recolleix la teva recompensa diaria!",
+		"type": "banc",
+		"usage": "cataDiaria",
+		"aliases": ["recompensa", "daily"]
+	},
+
+	{
+		"name": "diners",
+		"description": "Et mostra els diners que tens",
+		"type": "banc",
+		"usage": "cataDiners [ @usuari ]",
+		"aliases": ["money", "monedes"]
+	},
+
+	{
+		"name": "escurabutxaques",
+		"description": "Maquina escurabutxaques de toda la vida.\nNecessites que totes siguin iguals per guanyar recompenses!",
+		"type": "banc",
+		"usage": "cataEscurabutxaques < quantitat/tot >",
+		"aliases": ["slotmachine", "tragaperras"]
+	},
+
+	{
+		"name": "pagar",
+		"description": "Paga una quantitat a una persona",
+		"type": "banc",
+		"usage": "cataPagar < quantitat/tot > < @usuari >",
+		"aliases": ["bizum", "pay", "paga"]
+	},
+
+	{
+		"name": "bola",
+		"description": "Et permet preguntar-li a la bola de la sort el que et passarà al futur...",
+		"type": "entreteniment",
+		"usage": "cataBola < pregunta >",
+		"aliases": ["8", "8ball"]
+	},
+
+	{
+		"name": "calcula",
+		"description": "No tens calculadora? Aquí en tens una.",
+		"type": "entreteniment",
+		"usage": "cataCalcula < expressió > or < multiple/M expr1;; expr2>",
+		"aliases": ["math", "calc", "calculadora", "eval"]
+	},
+
+	{
+		"name": "canvi",
+		"description": "Et permet canviar de moneda facilment",
+		"type": "entreteniment",
+		"usage": "cataCanvi < quantitat > < de_moneda > < a_moneda >",
+		"aliases": ["exchange"]
+	},
+
+	{
+		"name": "captcha",
+		"description": "Et genera un nou parell imatge-text de Captcha",
+		"type": "entreteniment",
+		"usage": "cataCaptcha",
+		"aliases": []
+	},
+
+	{
+		"name": "caraocreu",
+		"description": "Te la jugues al 50%",
+		"type": "entreteniment",
+		"usage": "cataCaraocreu",
+		"aliases": ["cflip", "coin"]
+	},
+
+	{
+		"name": "consell",
+		"description": "Et diu un consell de la vida aleatori",
+		"type": "entreteniment",
+		"usage": "cataConsell [ search ]",
+		"aliases": ["advice"]
+	},
+
+	{
+		"name": "covid",
+		"description": "Mostra la info del Coronavirus actualment",
+		"type": "entreteniment",
+		"usage": "cataCovid [ pais ]",
+		"aliases": ["coronavirus"]
+	},
+
+	{
+		"name": "dau",
+		"description": "Tira els daus que vulguis de la mida que vulguis",
+		"type": "entreteniment",
+		"usage": "cataDau [ mida ] [ quantitat ]",
+		"aliases": ["roll", "dice"]
+	},
+
+	{
+		"name": "digues",
+		"description": "Fes que el bot digui el que vulguis",
+		"type": "entreteniment",
+		"usage": "cataDigues < text >",
+		"aliases": ["say"]
+	},
+
+	{
+		"name": "escolleix",
+		"description": "Deix que el bot escolleixi per tu.\n**SI QUE ES PERMETEN ESPAIS** mentre es repectin les comes",
+		"type": "entreteniment",
+		"usage": "cataEscolleix < opció1, opció2, ...>",
+		"aliases": ["choice", "escull"]
+	},
+
+	{
+		"name": "gat",
+		"description": "Mostra una imatge d'un gat aleatori",
+		"type": "entreteniment",
+		"usage": "cataGat",
+		"aliases": ["cat"]
+	},
+
+	{
+		"name": "gos",
+		"description": "Mostra una imatge d'un gos aleatori",
+		"type": "entreteniment",
+		"usage": "cataGos",
+		"aliases": ["dog"]
+	},
+
+	{
+		"name": "insulta",
+		"description": "Insulta a qui vulguis",
+		"type": "entreteniment",
+		"usage": "cataInsulta [ @usuari ]",
+		"aliases": ["insult"]
+	},
+
+	{
+		"name": "lol",
+		"description": "Busca la info del LoL que vulguis",
+		"type": "entreteniment",
+		"usage": "cataLol champ < nom_champ >\n [ o ] spell < nom_spell >\n [ o ] item < nom_item >",
+		"aliases": []
+	},
+
+	{
+		"name": "meme",
+		"description": "Mostra un meme aleatori de reddit traduit al català",
+		"type": "entreteniment",
+		"usage": "cataMeme",
+		"aliases": []
+	},
+
+	{
+		"name": "morsificar",
+		"description": "No saps codi Morse? Aqui tens un des/codificador.\nSi poses un text normal, te'l tradueix a Morse i viceversa.",
+		"type": "entreteniment",
+		"usage": "cataMorsificar < morse/ASCII >",
+		"aliases": ["morse", "demorsificar"]
+	},
+
+	{
+		"name": "pokedex",
+		"description": "Mostra la pokedex del pokemon que li entris",
+		"type": "entreteniment",
+		"usage": "cataPokedex < pokemon >",
+		"aliases": ["poke", "pokemon"]
+	},
+
+	{
+		"name": "reves",
+		"description": "Posa un text al revés",
+		"type": "entreteniment",
+		"usage": "cataReves < text >",
+		"aliases": ["flip", "alreves"]
+	},
+
+	{
+		"name": "pedrapapertisora",
+		"description": "Juga a pedra-paper-tissora amb el bot",
+		"type": "entreteniment",
+		"usage": "cataPedrapapertisora < rock/paper/scissors >",
+		"aliases": ["rps"]
+	},
+
+	{
+		"name": "temps",
+		"description": "Mostra el temps que fa.",
+		"type": "entreteniment",
+		"usage": "cataTemps < ciutat/país >",
+		"aliases": ["weather", "tiempo"]
+	},
+
+	{
+		"name": "traductor",
+		"description": "Tradueix el que vulguis a l'idioma que vulguis!",
+		"type": "entreteniment",
+		"usage": "cataTraductor < codi de l'idioma a traduir > < text >",
+		"aliases": ["translate", "traduir", "tradueix"]
+	},
+
+	{
+		"name": "3enratlla",
+		"description": "Joc 1: [BETA] Juga al tres en ratlla!\nEscriu pel xat **NOMÉS LA LLETRA** de la posició on vols jugar.",
+		"type": "games",
+		"usage": "cata3enratlla",
+		"aliases": ["tresenratlla", "tictactoe", "play1"]
+	},
+
+	{
+		"name": "4enratlla",
+		"description": "Joc 2: [BETA] Juga al 4 en ratlla amb els teus amics o contra la IA!",
+		"type": "games",
+		"usage": "cata4enratlla",
+		"aliases": ["connect4", "play2"]
+	},
+
+	{
+		"name": "penjat",
+		"description": "Joc 3: [BETA] Juga amb els teus amics al joc del penjat!",
+		"type": "games",
+		"usage": "cataPenjat",
+		"aliases": ["ahorcado", "hangman", "play3"]
+	},
+
+	{
+		"name": "trivial",
+		"description": "Joc 4: [BETA] Juga amb els teus amics al joc de les preguntes!",
+		"type": "games",
+		"usage": "cataTrivial [ quantitat_preguntes ]",
+		"aliases": ["quiz", "trivia", "play4"]
+	},
+
+	{
+		"name": "nivell",
+		"description": "Et mostra el nivell que ets",
+		"type": "level",
+		"usage": "cataNivell [ @usuari ]",
+		"aliases": ["xp", "lvl"]
+	},
+
+	{
+		"name": "perfil",
+		"description": "Mostra el teu perfil",
+		"type": "level",
+		"usage": "cataPerfil [ @usuari ]",
+		"aliases": ["profile"]
+	},
+	{
+		"name": "topnivell",
+		"description": "Mostra la classificació de nivell del servidor",
+		"type": "level",
+		"usage": "cataTopnivell [ quantitat ]",
+		"aliases": ["xpl", "toplevel"]
+	},
+	{
+		"name": "afegirrol",
+		"description": "Afegeix un Rol a un Usuari en concret (si tens permisos)",
+		"type": "mod",
+		"usage": "cataAfegirrol < @usuari > < nom_del_rol >",
+		"aliases": ["addrole", "giverole"]
+	}
+]

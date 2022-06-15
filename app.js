@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const { Collection, Client, Intents } = require('discord.js');
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+const client = new Client({
+	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+});
 client.commands = new Collection();
 
-const { log, remove, db } = require('./lib/common.js');
+const { log, remove, db } = require('./lib/common');
 
 const moment = require('moment');
 moment().utcOffset('120');
@@ -30,7 +30,9 @@ const cmds = []; // Array that will store all the bot commands
 // Load the commands from all the folders -> files
 const commandDirs = fs.readdirSync('./commands');
 for (const dir of commandDirs) {
-	const files = fs.readdirSync(`./commands/${dir}`).filter((file) => file.endsWith('.js'));
+	const files = fs
+		.readdirSync(`./commands/${dir}`)
+		.filter((file) => file.endsWith('.ts'));
 	for (const file of files) {
 		const command = require(`./commands/${dir}/${file}`);
 		client.commands.set(command.name, command);
@@ -46,18 +48,20 @@ for (const dir of commandDirs) {
 	}
 }
 
-const eventsFiles = fs.readdirSync('./events').filter((file) => file.endsWith('.js'));
+const eventsFiles = fs
+	.readdirSync('./events')
+	.filter((file) => file.endsWith('.js'));
 for (const eventFile of eventsFiles) {
 	const event = require(`./events/${eventFile}`);
 	client.on(event.name, (args) => event.execute(args, client));
 }
 
 if (SAVE_COMMANDS) {
-  const path = 'storage/commands.json';
-  fs.writeFile(path, JSON.stringify(cmds), (err) => {
-    if (err) console.error(err);
-  });
-  console.log(`Comandes escrites correctament a "${path}"`);
+	const path = 'storage/commands.json';
+	fs.writeFile(path, JSON.stringify(cmds), (err) => {
+		if (err) console.error(err);
+	});
+	console.log(`Comandes escrites correctament a "${path}"`);
 }
 
 // MONGODB CONNECTION

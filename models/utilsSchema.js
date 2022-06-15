@@ -1,15 +1,15 @@
 const { Schema, model } = require('mongoose');
 
 const utilsSchema = Schema({
-  lastForceReset: {
-    type: {
-      date: Date,
-      userID: String,
-      channelID: String,
-    },
-    require: true,
-    unique: true,
-  },
+	lastForceReset: {
+		type: {
+			date: Date,
+			userID: String,
+			channelID: String,
+		},
+		require: true,
+		unique: true,
+	},
 });
 
 /**
