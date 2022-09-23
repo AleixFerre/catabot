@@ -1,3 +1,5 @@
+# DISCONTINUED BOT
+
 # CataBOT
 
 ## Say hi to CataBOT! Welcome the best open source Catalan Discord Bot
